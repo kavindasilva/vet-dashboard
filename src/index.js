@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-import 'bootstrap/dist/css/bootstrap.css'; // working
+//import 'bootstrap/dist/css/bootstrap.css'; // working
 
 //import { Counter } from "./components/counter";
-import Counter from "./components/counter";
+//import Counter from "./components/counter";
+import Pets from "./components/pets";
 
 
 var ele1=<h2>heading2</h2>;
@@ -84,5 +85,5 @@ class Game extends React.Component {
     ReactDOM.render( elementObj , htmlElement );
 */
 
-ReactDOM.render(  <Counter />,  document.getElementById('root') );
+ReactDOM.render(  <Pets />,  document.getElementById('root') );
 //ReactDOM.render(  <Game />,  document.getElementById('root') );
