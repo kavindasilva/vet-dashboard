@@ -15,6 +15,8 @@ import React, { Component } from 'react';
 //import Popup from "../components/popupModal";
 import Popup from "reactjs-popup";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 class Pet extends Component {
 	state = {
@@ -63,11 +65,11 @@ class Pet extends Component {
 			<tr> 
 				<td> { this.state.id } </td>
 				<td> 
-					<Popup trigger={ <button className="btn btn-sm btn-link" > { this.state.name } , </button>  } position="top left">
+					<Popup trigger={ <span > { this.state.name }  </span>  } position="bottom left">
 					    {close => (
 						    <div>
-						     	<a className="close" onClick={close}> &times; </a>
-						     	{ this.tempValue=this.state.name }
+						     	<a href="#" className="close" onClick={close}> &times; </a>
+						     	{ /*this.tempValue=this.state.name*/ }
 						     	<b>Change Name</b> <br/>
 						     	<input type="text" name="txtName" value={this.props.name} onChange={ this.handleChange }  /> <br/>
 						     	<button onClick={ () => this.updateValue('gender', this.tempValue) } className="btn btn-sm btn-link" >OK</button>
@@ -75,16 +77,31 @@ class Pet extends Component {
 						    </div>
 					    )}
 					</Popup>
-					{ this.state.name } </td>
+				</td>
 
-				<td> { this.state.speci } </td>
+				<td> 
+					<Popup trigger={ <button className="btn btn-sm btn-link" > { this.state.speci }  </button>  } position="bottom left">
+					    {close => (
+						    <div>
+						     	<a href="#" className="close" onClick={close}> &times; </a>
+						     	{ /*this.tempValue=this.state.name*/ }
+						     	<b>Change speci</b> <br/>
+						     	<select>
+						     		<option value="Bird">Bird</option>
+						     		<option value="Cat">Cat</option>
+						     		<option value="Dog">Dog</option>
+						     	</select>
+						    </div>
+					    )}
+					</Popup>
+				</td>
 
 				
-				<td><Popup trigger={ <button className="btn btn-sm btn-link" > { this.state.gender } , </button>  } position="top left">
+				<td><Popup trigger={ <button className="btn btn-sm btn-link" > { this.state.gender } , </button>  } position="bottom left">
 				    {close => (
 				    <div>
-				     	<a className="close" onClick={close}> &times; </a>
-				     	{ this.tempValue=this.state.gender }
+				     	<a href="#" className="close" onClick={close}> &times; </a>
+				     	{ /*this.tempValue=this.state.gender*/ }
 				     	<b>Select gender</b> <br/>
 				     	Male<input type="radio" name="radioGender" value="Male" onChange={ this.handleChange } checked={this.state.gender==="Male"} /> <br/>
 				     	Female<input type="radio" name="radioGender" value="Female" onChange={ this.handleChange } checked={this.state.gender==="Female"} /> <br/>
@@ -98,9 +115,39 @@ class Pet extends Component {
 				    )}
 				</Popup></td>
 
-				<td> { this.state.years } </td>
+				<td> 
+					<Popup trigger={ <span > { this.state.years }  </span>  } position="top left">
+					    {close => (
+						    <div>
+						     	<a href="#" className="close" onClick={close}> &times; </a>
+						     	{ this.tempValue=this.state.name }
+						     	<b>Change Name</b> <br/>
+						     	<input type="number" name="txtAge" value={this.props.year} onChange={ this.handleChange }  /> <br/>
+						     	<button onClick={ () => this.updateValue('gender', this.tempValue) } className="btn btn-sm btn-link" >OK</button>
+						     	<button onClick={ () => this.updateValue('gender', this.state.gender) } className="btn btn-sm btn-link" >Cancel</button>
+						    </div>
+					    )}
+					</Popup>
+				</td>
+
+
 				<td> { this.state.symptoms } </td>
-				<td> { this.state.admittedDate } </td>
+
+				<td> 
+					<Popup trigger={ <span > { this.state.admittedDate }  </span>  } position="bottom left">
+					    {close => (
+						    <div>
+						     	<a href="#" className="close" onClick={close}> &times; </a>
+						     	{ /*this.tempValue=this.state.admittedDate*/ }
+						     	<b>Change Admitted Date</b> <br/>
+						     	<DatePicker selected={this.state.admittedDate} onChange={this.changeAdmitDate} dateFormat="YYYY-MM-DD" /> <br/>
+						     	<br/>
+						     	<button onClick={ () => this.updateValue('gender', this.tempValue) } className="btn btn-sm btn-link" >OK</button>
+						     	<button onClick={ () => this.updateValue('gender', this.state.gender) } className="btn btn-sm btn-link" >Cancel</button>
+						    </div>
+					    )}
+					</Popup>
+				</td>
 			</tr>
 
 		);
@@ -120,6 +167,12 @@ class Pet extends Component {
 	}*/
 	updateValue=( property, value )=>{
 		this.setState( { property : value } )
+	}
+
+	changeAdmitDate=(event)=>{
+		console.log(event);
+		//this.setState({ admittedDate: event.target.value })
+		this.setState({ admittedDate: event })
 	}
 
 	/*changeGender(){
