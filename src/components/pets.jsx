@@ -15,7 +15,7 @@ class Pets extends Component {
 			{ id:1 , name:"King" , speci:"Cat" , gender:"Female" , years:1.2 , symptoms:"Bleeding" , admittedDate:"2019-04-02" },
 			{ id:2 , name:"Kitty" , speci:"Cat" , gender:"Male" , years:3 , symptoms:"Swating , Refusing Food" , admittedDate:"2019-04-02" },
 			{ id:3 , name:"Peter" , speci:"Bird" , gender:"Male" , years:1 , symptoms:"Sleeping" , admittedDate:"2019-04-03" },
-			{ id:4 , name:"Tommy" , speci:"Dog" , gender:"Femal" , years:2 , symptoms:"Cold" , admittedDate:"2019-04-03" },
+			{ id:4 , name:"Tommy" , speci:"Dog" , gender:"Female" , years:2 , symptoms:"Cold" , admittedDate:"2019-04-03" },
 
 		],
 	}
@@ -37,7 +37,20 @@ class Pets extends Component {
 		return (
 			<div>
 				{ /* passes petAdmission data to the pet object */ }
-				{ this.viewAll() }
+				<table border="1">
+					<thead><tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Speci</th>
+						<th>Gender</th>
+						<th>Age</th>
+						<th>Symptoms</th>
+						<th>Admitted Date</th>
+					</tr></thead>
+					<tbody>
+						{ this.viewAll() }
+					</tbody>
+				</table>
 			</div>
 		) ;
 
@@ -55,6 +68,8 @@ class Pets extends Component {
 						years={pet.years}
 						symptoms={pet.symptoms}
 						admittedDate={pet.admittedDate}
+
+						updateGender={ this.handleGender /*pass by reference*/ }
 					> 
 					</Pet>
 				 )
@@ -62,6 +77,17 @@ class Pets extends Component {
 
 			//this.state.petAdmission.map( pet => <Pet key={pet.id}  /> ) 
 		}
+	}
+
+
+	handleGender = ( petID, value) =>{
+		//console.log("pets handleGender", petID);
+		//console.log(prop);
+		//let newPets= this.state.petAdmission.filter( p => p.id !==  petID ); // delete
+		//let newPets= this.state.petAdmission.filter( p => p.id !==  petID );
+		//this.setState( { petAdmission : newPets } );
+
+		this.setState( {  } );
 	}
 
 }
