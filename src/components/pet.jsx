@@ -18,6 +18,7 @@ import Popup from "reactjs-popup";
 import Select from 'react-select';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+//const dd=window.
 
 class Pet extends Component {
 	state = {
@@ -38,6 +39,15 @@ class Pet extends Component {
 		{ value: "Cat",  label: "Cat" },
 		{ value: "Dog",  label: "Dog" },
 	];
+
+	symptomsInfo =[
+		 { id:0, name:"Bleeding", value:"Bleeding" },
+		 { id:1, name:"Cold", value:"Cold"  },
+		 { id:2, name:"RefusingFood", value:"Refusing Food"  },
+		 { id:3, name:"Sleeping", value:"Sleeping"  },
+		 { id:4, name:"Swating", value:"Swating"  },
+		 //"Cold Bleeding Sleeping Swating Refusing Food }
+	]
 
 	render() {
 
@@ -146,7 +156,8 @@ class Pet extends Component {
 						     	<a href="#" className="close" onClick={close}> &times; </a>
 						     	{ /*this.tempValue=this.state.years*/ }
 						     	<b>Change Age (years)</b> <br/>
-						     	<input type="number" name="txtAge" value={this.state.years} 
+						     	<input type="number" name="txtAge"  min={0}
+						     		value={this.state.years} 
 						     		onChange={ e => this.setState({ years: e.target.value }) }  /> <br/>
 
 						     	<a onClick={close} >
@@ -162,12 +173,56 @@ class Pet extends Component {
 
 
 				<td> 
-					<Popup trigger={ <span > { this.state.name }  </span>  } position="bottom left">
+					<Popup trigger={ <span > { this.state.symptoms }  </span>  } position="bottom left">
 					    {close => (
 						    <div>
 						     	<a href="#" className="close" onClick={close}> &times; </a>
-						     	{ /*this.tempValue=this.state.name*/ }
-						     	<b>Change Name</b> <br/>
+						     	{ /*this.tempValue=this.state.name*/ console.log(this.symptomsInfo["Cold"]) }
+						     	{ console.log(this.symptomsInfo ) }
+						     	{ console.log(this.state.symptoms) }
+
+						     	<b>Change Symptoms</b> <br/>
+
+						     	
+						     	{ /* 
+						     		this.symptomsInfo.map( 
+						     			(sym) => 
+						     				<p>
+						     					<li key={sym.id}>  
+						     						<input type="checkbox" 
+						     						defaultChecked={ sym.name === this.state.symptoms } 
+						     						onChange={this.handleChangeChk} /> {sym.value}
+						     					</li>
+						     				</p>
+						     		)
+						     	*/ }
+
+						     	{ 
+						     		this.symptomsInfo.map( 
+						     			(sym, index) => (
+						     				//console.log();
+											<p>
+												<li key={sym.id}>  
+						     						<input type="checkbox" 
+						     							defaultChecked=
+								     					{ //false
+									     				this.state.symptoms.map(
+									     					(stateSym) => 
+									     						 //(sym.name === stateSym)?true:false
+									     						 //console.log('sym=', sym.name, '\nstt=', stateSym)
+									     						 console.log(sym.name === stateSym)
+									     					
+									     				)/**/
+									     				} 
+								     					onChange={this.handleChangeChk} /> {sym.value}
+
+						     							{  /*console.log("sym=", sym, "\nstateSym=", stateSym)*/ }
+						     					</li>
+						     				</p>
+						     			)
+						     		)
+						     	}
+
 						     	<input type="text" name="txtName" value={this.state.name} 
 						     		onChange={ e => this.setState({ name: e.target.value }) }  /> <br/>
 
@@ -189,10 +244,13 @@ class Pet extends Component {
 						     	<a href="#" className="close" onClick={close}> &times; </a>
 						     	{ /*this.tempValue=this.state.admittedDate*/ }
 						     	<b>Change Admitted Date</b> <br/>
-						     	<DatePicker selected={this.state.admittedDate} onChange={this.changeAdmitDate} dateFormat="YYYY-MM-DD" /> <br/>
+						     	<DatePicker selected={this.state.admittedDate} 
+						     		onChange={this.changeAdmitDate} 
+						     		dateFormat="YYYY-MM-DD" /> <br/>
+
 						     	<br/>
-						     	<button onClick={ () => this.updateValue('gender', this.tempValue) } className="btn btn-sm btn-link" >OK</button>
-						     	<button onClick={ () => this.updateValue('gender', this.state.gender) } className="btn btn-sm btn-link" >Cancel</button>
+						     	<button onClick={ () => this.updateValue('admitDate', this.props.admittedDate) } className="btn btn-sm btn-link" >OK</button>
+						     	<button onClick={ () => this.updateValue('admitDate', this.state.admittedDate) } className="btn btn-sm btn-link" >Cancel</button>
 						    </div>
 					    )}
 					</Popup>
@@ -220,7 +278,7 @@ class Pet extends Component {
 	}
 
 	changeAdmitDate=(event)=>{
-		event=event.format('YYYY-MM-DD');
+		//{ event=event.format('YYYY-MM-DD');} // Wed Apr 24 2019 00:00:00 GMT+0530 (India Standard Time)
 		console.log(event);
 		//this.setState({ admittedDate: event.target.value })
 		this.setState({ admittedDate: event });
