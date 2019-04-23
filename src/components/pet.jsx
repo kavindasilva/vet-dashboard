@@ -96,7 +96,7 @@ class Pet extends Component {
 						    <div>
 						     	<a href="#" className="close" onClick={close}> &times; </a>
 						     	{ /*this.tempValue=this.state.speci*/ }
-						     	<b>Change Name</b> <br/>
+						     	<b>Change Speci</b> <br/>
 						     	{/* <input type="text" name="txtName" value={this.state.speci} 
 						     		onChange={ e => this.setState({ speci: e.target.value }) }  /> */} 
 						     	<Select options={ this.species }
@@ -122,7 +122,7 @@ class Pet extends Component {
 				    <div>
 				     	<a href="#" className="close" onClick={close}> &times; </a>
 				     	{ /*this.tempValue=this.state.gender*/ }
-				     	<b>Select gender</b> <br/>
+				     	<b>Change gender</b> <br/>
 				     	Male<input type="radio" name="radioGender" value="Male" onChange={ this.handleChange } checked={this.state.gender==="Male"} /> <br/>
 				     	Female<input type="radio" name="radioGender" value="Female" onChange={ this.handleChange } checked={this.state.gender==="Female"} /> <br/>
 
@@ -193,14 +193,14 @@ class Pet extends Component {
 												<li key={sym.id}>  
 						     						<input type="checkbox" 
 						     							defaultChecked=
-								     					{ //false
-									     				this.state.symptoms.map(
-									     					(stateSym) => 
-									     						 //(sym.name === stateSym)?true:false
-									     						 //console.log('sym=', sym.name, '\nstt=', stateSym)
-									     						 console.log(sym.name === stateSym)
-									     					
-									     				)/**/
+								     					{ //false //working. all unchecked
+										     				this.state.symptoms.map(
+										     					(stateSym) =>( 
+										     						 (sym.name === stateSym)?false:false,
+										     						 //console.log('sym=', sym.name, '\nstt=', stateSym),
+										     						 console.log(sym.name === stateSym)
+										     					)
+										     				)/**/
 									     				} 
 								     					onChange={this.handleChangeChk} /> {sym.value}
 
