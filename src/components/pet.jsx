@@ -64,6 +64,7 @@ class Pet extends Component {
 		return (
 			<tr> 
 				<td> { this.state.id } </td>
+
 				<td> 
 					<Popup trigger={ <span > { this.state.name }  </span>  } position="bottom left">
 					    {close => (
@@ -71,9 +72,15 @@ class Pet extends Component {
 						     	<a href="#" className="close" onClick={close}> &times; </a>
 						     	{ /*this.tempValue=this.state.name*/ }
 						     	<b>Change Name</b> <br/>
-						     	<input type="text" name="txtName" value={this.props.name} onChange={ this.handleChange }  /> <br/>
-						     	<button onClick={ () => this.updateValue('gender', this.tempValue) } className="btn btn-sm btn-link" >OK</button>
-						     	<button onClick={ () => this.updateValue('gender', this.state.gender) } className="btn btn-sm btn-link" >Cancel</button>
+						     	<input type="text" name="txtName" value={this.state.name} 
+						     		onChange={ e => this.setState({ name: e.target.value }) }  /> <br/>
+
+						     	<a onClick={close} >
+						     		<button onClick={ () => { this.setState({ name:this.state.name }); } } className="btn btn-sm btn-link" >OK</button>
+						     	</a>
+						     	{<a onClick={close} >
+									<button onClick={ () => this.setState({ name:this.props.name }) } className="btn btn-sm btn-link" >Cancel</button>
+								</a>}
 						    </div>
 					    )}
 					</Popup>
@@ -166,13 +173,23 @@ class Pet extends Component {
 		});
 	}*/
 	updateValue=( property, value )=>{
+		console.log("property=", property, "\nvalue=", value);
 		this.setState( { property : value } )
 	}
 
 	changeAdmitDate=(event)=>{
+		event=event.format('YYYY-MM-DD');
 		console.log(event);
 		//this.setState({ admittedDate: event.target.value })
-		this.setState({ admittedDate: event })
+		this.setState({ admittedDate: event });
+	}
+
+	changeName = (text) => {
+		this.setState({ name: text });
+	}
+
+	changeAge = (text) => {
+		this.setState({ years: text });
 	}
 
 	/*changeGender(){
