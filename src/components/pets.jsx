@@ -6,6 +6,9 @@
 import React, { Component } from 'react';
 import Pet from '../components/pet';
 
+
+//import Clock from '../components/clock';
+
 class Pets extends Component {
 	state = {
 		title: "Pets Details",
@@ -36,6 +39,7 @@ class Pets extends Component {
 		//let varClass="btn btn-sm btn-";
 		return (
 			<div>
+				{ /*<Clock />
 				{ /* passes petAdmission data to the pet object */ }
 				<table border="1">
 					<thead><tr>

@@ -18,6 +18,9 @@ import Popup from "reactjs-popup";
 import Select from 'react-select';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
+import PopDialog from "./popupModal";
+
 //const dd=window.
 
 class Pet extends Component {
@@ -82,24 +85,9 @@ class Pet extends Component {
 				<td> { this.state.id } </td>
 
 				<td> 
-					<Popup trigger={ <span > { this.state.name }  </span>  } position="bottom left">
-					    {close => (
-						    <div>
-						     	<a href="#" className="close" onClick={close}> &times; </a>
-						     	{ /*this.tempValue=this.state.name*/ }
-						     	<b>Change Name</b> <br/>
-						     	<input type="text" name="txtName" value={this.state.name} 
-						     		onChange={ e => this.setState({ name: e.target.value }) }  /> <br/>
-
-						     	<a onClick={close} >
-						     		<button onClick={ () => { this.setState({ name:this.state.name }); } } className="btn btn-sm btn-link" >OK</button>
-						     	</a>
-						     	{<a onClick={close} >
-									<button onClick={ () => this.setState({ name:this.props.name }) } className="btn btn-sm btn-link" >Cancel</button>
-								</a>}
-						    </div>
-					    )}
-					</Popup>
+					{ console.log(this.state.name) }
+					<PopDialog attr={ this.state.name }  >
+					</PopDialog>
 				</td>
 
 				<td> 
@@ -244,13 +232,14 @@ class Pet extends Component {
 						     	<a href="#" className="close" onClick={close}> &times; </a>
 						     	{ /*this.tempValue=this.state.admittedDate*/ }
 						     	<b>Change Admitted Date</b> <br/>
-						     	<DatePicker selected={this.state.admittedDate} 
+						     	<DatePicker 
+						     		selected={ new Date(this.state.admittedDate)} 
 						     		onChange={this.changeAdmitDate} 
-						     		dateFormat="YYYY-MM-DD" /> <br/>
+						     		dateFormat="YYYY-MM-dd" /> <br/>
 
 						     	<br/>
-						     	<button onClick={ () => this.updateValue('admitDate', this.props.admittedDate) } className="btn btn-sm btn-link" >OK</button>
-						     	<button onClick={ () => this.updateValue('admitDate', this.state.admittedDate) } className="btn btn-sm btn-link" >Cancel</button>
+						     	<button onClick={ () => this.changeAdmitDate( this.props.admittedDate) } className="btn btn-sm btn-link" >OK</button>
+						     	<button onClick={ () => this.setState({ admittedDate:this.props.admittedDate }) } className="btn btn-sm btn-link" >Cancel</button>
 						    </div>
 					    )}
 					</Popup>
@@ -277,11 +266,16 @@ class Pet extends Component {
 		this.setState( { property : value } )
 	}
 
-	changeAdmitDate=(event)=>{
-		//{ event=event.format('YYYY-MM-DD');} // Wed Apr 24 2019 00:00:00 GMT+0530 (India Standard Time)
-		console.log(event);
-		//this.setState({ admittedDate: event.target.value })
-		this.setState({ admittedDate: event });
+	changeAdmitDate=(admitDate)=>{
+		//{ admitDate=admitDate.format('YYYY-MM-DD');} // Wed Apr 24 2019 00:00:00 GMT+0530 (India Standard Time)
+		admitDate =  new Date( admitDate );
+		admitDate = admitDate.getFullYear()+"-"+
+			( admitDate.getMonth()<=8 ? "0"+(admitDate.getMonth()+1) : (admitDate.getMonth()+1) ) +"-"+
+			( admitDate.getDate()<=9 ? "0"+admitDate.getDate() : admitDate.getDate() );
+
+		console.log(admitDate);
+		//this.setState({ admittedDate: admitDate.target.value })
+		this.setState({ admittedDate: admitDate });
 	}
 
 	changeName = (text) => {
