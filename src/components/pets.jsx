@@ -33,7 +33,7 @@ class Pets extends Component {
 	*/
 
 	render() {
-		let varClass="btn btn-sm btn-";
+		//let varClass="btn btn-sm btn-";
 		return (
 			<div>
 				{ /* passes petAdmission data to the pet object */ }
@@ -57,26 +57,24 @@ class Pets extends Component {
 	}
 
 	viewAll(){
-		{ 
-			return (
-				this.state.petAdmission.map( pet => 
-					<Pet key={pet.id} 
-						id={pet.id} 
-						name={pet.name}
-						speci= {pet.speci}
-						gender= {pet.gender}
-						years={pet.years}
-						symptoms={pet.symptoms}
-						admittedDate={pet.admittedDate}
+		return (
+			this.state.petAdmission.map( pet => 
+				<Pet key={pet.id} 
+					id={pet.id} 
+					name={pet.name}
+					speci= {pet.speci}
+					gender= {pet.gender}
+					years={pet.years}
+					symptoms={pet.symptoms}
+					admittedDate={pet.admittedDate}
 
-						updateGender={ this.handleGender /*pass by reference*/ }
-					> 
-					</Pet>
-				 )
-			);
+					updateGender={ this.handleGender /*pass by reference*/ }
+				> 
+				</Pet>
+			 )
+		);
 
-			//this.state.petAdmission.map( pet => <Pet key={pet.id}  /> ) 
-		}
+		//this.state.petAdmission.map( pet => <Pet key={pet.id}  /> ) 
 	}
 
 

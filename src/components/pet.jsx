@@ -15,6 +15,7 @@ import React, { Component } from 'react';
 //import Popup from "../components/popupModal";
 import Popup from "reactjs-popup";
 
+import Select from 'react-select';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -32,11 +33,16 @@ class Pet extends Component {
 		
 	}
 	tempValue=null;
+	species = [
+		{ value: "Bird", label: "Bird" },
+		{ value: "Cat",  label: "Cat" },
+		{ value: "Dog",  label: "Dog" },
+	];
 
 	render() {
 
 		//console.log("props= ", this.props);
-		let varClass="btn btn-sm btn-";
+		//let varClass="btn btn-sm btn-";
 		return (
 			<React.Fragment>
 
@@ -87,17 +93,26 @@ class Pet extends Component {
 				</td>
 
 				<td> 
-					<Popup trigger={ <button className="btn btn-sm btn-link" > { this.state.speci }  </button>  } position="bottom left">
+					<Popup trigger={ <span > { this.state.speci }  </span>  } position="bottom left">
 					    {close => (
 						    <div>
 						     	<a href="#" className="close" onClick={close}> &times; </a>
-						     	{ /*this.tempValue=this.state.name*/ }
-						     	<b>Change speci</b> <br/>
-						     	<select>
-						     		<option value="Bird">Bird</option>
-						     		<option value="Cat">Cat</option>
-						     		<option value="Dog">Dog</option>
-						     	</select>
+						     	{ /*this.tempValue=this.state.speci*/ }
+						     	<b>Change Name</b> <br/>
+						     	{/* <input type="text" name="txtName" value={this.state.speci} 
+						     		onChange={ e => this.setState({ speci: e.target.value }) }  /> */} 
+						     	<Select options={ this.species }
+						     		defaultValue={{ value: this.state.speci , label: this.state.speci }}
+						     		onChange={ e => this.setState({ speci: e.label }) }
+						     		/*value={"cat"}*/ />
+						     	<br/>
+
+						     	<a onClick={close} >
+						     		<button onClick={ () => { this.setState({ speci:this.state.speci }); } } className="btn btn-sm btn-link" >OK</button>
+						     	</a>
+						     	{<a onClick={close} >
+									<button onClick={ () => this.setState({ speci:this.props.speci }) } className="btn btn-sm btn-link" >Cancel</button>
+								</a>}
 						    </div>
 					    )}
 					</Popup>
@@ -113,32 +128,59 @@ class Pet extends Component {
 				     	Male<input type="radio" name="radioGender" value="Male" onChange={ this.handleChange } checked={this.state.gender==="Male"} /> <br/>
 				     	Female<input type="radio" name="radioGender" value="Female" onChange={ this.handleChange } checked={this.state.gender==="Female"} /> <br/>
 
-				     	<button onClick={ () => this.props.updateGender(this.props.id, this.tempValue) } className="btn btn-sm btn-link" >OK0</button>
-				     	<button onClick={ () => this.props.updateGender(this.props.id, this.state.gender) } className="btn btn-sm btn-link" >Cancel0</button>
-
-				     	<button onClick={ () => this.updateValue('gender', this.tempValue) } className="btn btn-sm btn-link" >OK</button>
-				     	<button onClick={ () => this.updateValue('gender', this.state.gender) } className="btn btn-sm btn-link" >Cancel</button>
+				     	<a onClick={close} >
+				     		<button onClick={ () => { this.setState({ gender:this.state.gender }); } } className="btn btn-sm btn-link" >OK</button>
+				     	</a>
+				     	<a onClick={close} >
+							<button onClick={ () => this.setState({ gender:this.props.gender }) } className="btn btn-sm btn-link" >Cancel</button>
+						</a>
+				     	
 				      </div>
 				    )}
 				</Popup></td>
 
 				<td> 
-					<Popup trigger={ <span > { this.state.years }  </span>  } position="top left">
+					<Popup trigger={ <span > { this.state.years }  </span>  } position="bottom left">
 					    {close => (
 						    <div>
 						     	<a href="#" className="close" onClick={close}> &times; </a>
-						     	{ this.tempValue=this.state.name }
-						     	<b>Change Name</b> <br/>
-						     	<input type="number" name="txtAge" value={this.props.year} onChange={ this.handleChange }  /> <br/>
-						     	<button onClick={ () => this.updateValue('gender', this.tempValue) } className="btn btn-sm btn-link" >OK</button>
-						     	<button onClick={ () => this.updateValue('gender', this.state.gender) } className="btn btn-sm btn-link" >Cancel</button>
+						     	{ /*this.tempValue=this.state.years*/ }
+						     	<b>Change Age (years)</b> <br/>
+						     	<input type="number" name="txtAge" value={this.state.years} 
+						     		onChange={ e => this.setState({ years: e.target.value }) }  /> <br/>
+
+						     	<a onClick={close} >
+						     		<button onClick={ () => { this.setState({ years:this.state.years }); } } className="btn btn-sm btn-link" >OK</button>
+						     	</a>
+						     	{<a onClick={close} >
+									<button onClick={ () => this.setState({ years:this.props.years }) } className="btn btn-sm btn-link" >Cancel</button>
+								</a>}
 						    </div>
 					    )}
 					</Popup>
 				</td>
 
 
-				<td> { this.state.symptoms } </td>
+				<td> 
+					<Popup trigger={ <span > { this.state.name }  </span>  } position="bottom left">
+					    {close => (
+						    <div>
+						     	<a href="#" className="close" onClick={close}> &times; </a>
+						     	{ /*this.tempValue=this.state.name*/ }
+						     	<b>Change Name</b> <br/>
+						     	<input type="text" name="txtName" value={this.state.name} 
+						     		onChange={ e => this.setState({ name: e.target.value }) }  /> <br/>
+
+						     	<a onClick={close} >
+						     		<button onClick={ () => { this.setState({ name:this.state.name }); } } className="btn btn-sm btn-link" >OK</button>
+						     	</a>
+						     	{<a onClick={close} >
+									<button onClick={ () => this.setState({ name:this.props.name }) } className="btn btn-sm btn-link" >Cancel</button>
+								</a>}
+						    </div>
+					    )}
+					</Popup>
+				</td>
 
 				<td> 
 					<Popup trigger={ <span > { this.state.admittedDate }  </span>  } position="bottom left">
