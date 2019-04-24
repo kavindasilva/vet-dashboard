@@ -86,163 +86,40 @@ class Pet extends Component {
 
 				<td> 
 					{ console.log(this.state.name) }
-					<PopDialog attr={ this.state.name }  >
+					<PopDialog attr={ this.state.name }
+						elementType="text"
+						property="name"  >
 					</PopDialog>
 				</td>
 
 				<td> 
-					<Popup trigger={ <span > { this.state.speci }  </span>  } position="bottom left">
-					    {close => (
-						    <div>
-						     	<a href="#" className="close" onClick={close}> &times; </a>
-						     	{ /*this.tempValue=this.state.speci*/ }
-						     	<b>Change Speci</b> <br/>
-						     	{/* <input type="text" name="txtName" value={this.state.speci} 
-						     		onChange={ e => this.setState({ speci: e.target.value }) }  /> */} 
-						     	<Select options={ this.species }
-						     		defaultValue={{ value: this.state.speci , label: this.state.speci }}
-						     		onChange={ e => this.setState({ speci: e.label }) }
-						     		/*value={"cat"}*/ />
-						     	<br/>
-
-						     	<a onClick={close} >
-						     		<button onClick={ () => { this.setState({ speci:this.state.speci }); } } className="btn btn-sm btn-link" >OK</button>
-						     	</a>
-						     	{<a onClick={close} >
-									<button onClick={ () => this.setState({ speci:this.props.speci }) } className="btn btn-sm btn-link" >Cancel</button>
-								</a>}
-						    </div>
-					    )}
-					</Popup>
+				<PopDialog attr={ this.state.speci } 
+					property="speci" >
+					</PopDialog>
 				</td>
 
 				
-				<td><Popup trigger={ <button className="btn btn-sm btn-link" > { this.state.gender } , </button>  } position="bottom left">
-				    {close => (
-				    <div>
-				     	<a href="#" className="close" onClick={close}> &times; </a>
-				     	{ /*this.tempValue=this.state.gender*/ }
-				     	<b>Change gender</b> <br/>
-				     	Male<input type="radio" name="radioGender" value="Male" onChange={ this.handleChange } checked={this.state.gender==="Male"} /> <br/>
-				     	Female<input type="radio" name="radioGender" value="Female" onChange={ this.handleChange } checked={this.state.gender==="Female"} /> <br/>
-
-				     	<a onClick={close} >
-				     		<button onClick={ () => { this.setState({ gender:this.state.gender }); } } className="btn btn-sm btn-link" >OK</button>
-				     	</a>
-				     	<a onClick={close} >
-							<button onClick={ () => this.setState({ gender:this.props.gender }) } className="btn btn-sm btn-link" >Cancel</button>
-						</a>
-				     	
-				      </div>
-				    )}
-				</Popup></td>
+				<td><PopDialog attr={ this.state.gender }  
+					property="gender">
+					</PopDialog></td>
 
 				<td> 
-					<Popup trigger={ <span > { this.state.years }  </span>  } position="bottom left">
-					    {close => (
-						    <div>
-						     	<a href="#" className="close" onClick={close}> &times; </a>
-						     	{ /*this.tempValue=this.state.years*/ }
-						     	<b>Change Age (years)</b> <br/>
-						     	<input type="number" name="txtAge"  min={0}
-						     		value={this.state.years} 
-						     		onChange={ e => this.setState({ years: e.target.value }) }  /> <br/>
-
-						     	<a onClick={close} >
-						     		<button onClick={ () => { this.setState({ years:this.state.years }); } } className="btn btn-sm btn-link" >OK</button>
-						     	</a>
-						     	{<a onClick={close} >
-									<button onClick={ () => this.setState({ years:this.props.years }) } className="btn btn-sm btn-link" >Cancel</button>
-								</a>}
-						    </div>
-					    )}
-					</Popup>
+				<PopDialog attr={ this.state.years }  
+					property="age(years)">
+					</PopDialog>
 				</td>
 
 
 				<td> 
-					<Popup trigger={ <span > { this.state.symptoms }  </span>  } position="bottom left">
-					    {close => (
-						    <div>
-						     	<a href="#" className="close" onClick={close}> &times; </a>
-						     	{ /*this.tempValue=this.state.name*/ console.log(this.symptomsInfo["Cold"]) }
-						     	{ console.log(this.symptomsInfo ) }
-						     	{ console.log(this.state.symptoms) }
-
-						     	<b>Change Symptoms</b> <br/>
-
-						     	
-						     	{ /* 
-						     		this.symptomsInfo.map( 
-						     			(sym) => 
-						     				<p>
-						     					<li key={sym.id}>  
-						     						<input type="checkbox" 
-						     						defaultChecked={ sym.name === this.state.symptoms } 
-						     						onChange={this.handleChangeChk} /> {sym.value}
-						     					</li>
-						     				</p>
-						     		)
-						     	*/ }
-
-						     	{ 
-						     		this.symptomsInfo.map( 
-						     			(sym, index) => (
-						     				//console.log();
-											<p>
-												<li key={sym.id}>  
-						     						<input type="checkbox" 
-						     							defaultChecked=
-								     					{ //false //working. all unchecked
-										     				this.state.symptoms.map(
-										     					(stateSym) =>( 
-										     						 (sym.name === stateSym)?false:false,
-										     						 //console.log('sym=', sym.name, '\nstt=', stateSym),
-										     						 console.log(sym.name === stateSym)
-										     					)
-										     				)/**/
-									     				} 
-								     					onChange={this.handleChangeChk} /> {sym.value}
-
-						     							{  /*console.log("sym=", sym, "\nstateSym=", stateSym)*/ }
-						     					</li>
-						     				</p>
-						     			)
-						     		)
-						     	}
-
-						     	<input type="text" name="txtName" value={this.state.name} 
-						     		onChange={ e => this.setState({ name: e.target.value }) }  /> <br/>
-
-						     	<a onClick={close} >
-						     		<button onClick={ () => { this.setState({ name:this.state.name }); } } className="btn btn-sm btn-link" >OK</button>
-						     	</a>
-						     	{<a onClick={close} >
-									<button onClick={ () => this.setState({ name:this.props.name }) } className="btn btn-sm btn-link" >Cancel</button>
-								</a>}
-						    </div>
-					    )}
-					</Popup>
+				<PopDialog attr={ this.state.symptoms }  
+					property="symptoms">
+					</PopDialog>
 				</td>
 
 				<td> 
-					<Popup trigger={ <span > { this.state.admittedDate }  </span>  } position="bottom left">
-					    {close => (
-						    <div>
-						     	<a href="#" className="close" onClick={close}> &times; </a>
-						     	{ /*this.tempValue=this.state.admittedDate*/ }
-						     	<b>Change Admitted Date</b> <br/>
-						     	<DatePicker 
-						     		selected={ new Date(this.state.admittedDate)} 
-						     		onChange={this.changeAdmitDate} 
-						     		dateFormat="YYYY-MM-dd" /> <br/>
-
-						     	<br/>
-						     	<button onClick={ () => this.changeAdmitDate( this.props.admittedDate) } className="btn btn-sm btn-link" >OK</button>
-						     	<button onClick={ () => this.setState({ admittedDate:this.props.admittedDate }) } className="btn btn-sm btn-link" >Cancel</button>
-						    </div>
-					    )}
-					</Popup>
+				<PopDialog attr={ this.state.admittedDate }  
+					property="admitted date">
+					</PopDialog>
 				</td>
 			</tr>
 
