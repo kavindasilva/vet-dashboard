@@ -17,7 +17,15 @@ export default class PopDialog extends Component {
 	}*/
 
 	state = {
-		attribute: this.props.attr
+		/** property value */     attributeValue:	this.props.attr  ,
+		/** property name */      attributeName:	this.props.property,
+		/** element input type */ elementType:		this.props.elementType,
+		popOpen: false,
+	}
+
+	styleTD={
+		width: "100%" ,
+		color: "#111111"
 	}
 
 	render(){
@@ -28,61 +36,92 @@ export default class PopDialog extends Component {
 		)
 	}
 
+	captureOpen=()=>{
+		this.setState({ popOpen: true });
+		//console.log("pop opened", this);
+	}
+
 	showPop( attribute1 ){
 		return(
-	  		<Popup trigger={ <span > { this.state.attribute }  </span>  } position="bottom left">
+		  <Popup 
+				//open={false}
+		  		//open={ window.popupOpen===1 }
+				//onOpen={ console.log( "Popoup opened: ",this ) }
+				onOpen={ ()=> this.setState({ popOpen: true }) }
+				onClose={ ()=>this.setState({ popOpen:false })}
+				//defaultOpen={false}
+		  		trigger={
+					<div style={this.styleTD} 
+						onClick={ ()=>{ console.log( "Popoup clicked: ",this ); 
+						//this.captureOpen();
+						/*window.popupOpen=1;*/  } } >
+						{ this.state.attributeValue } { this.state.popOpen ? 'Y' : 'N' }  
+					</div>
+				} 
+				//open={ this.captureOpen() }				
+				position="bottom left">
 			{
 				close => (
-				    <div>
-				     	<a href="#" className="close" onClick={close}> &times; </a>
-				     	{ /*this.tempValue=this.state.attribute*/ }
+					<div>
+						<a href="#" className="close" onClick={close}> &times; </a>
+						{ /*this.tempValue=this.state.attribute*/ }
+						
+						<b>Change { this.state.attributeName }</b> <br/>
+						{ /* Starting of Column specific input attributes */ }
+						
+						{/* <input type="text" name="txtName" value={this.state.attributeName} 
+								onChange={ e => this.setState({ attributeName: e.target.value }) }  /> <br/> */}
+						
+						<input type={this.state.elementType} value={this.state.attributeValue}
+							onChange={ e => this.setState({ attributeValue: e.target.value }) } />
 
-				     	<b>Change Name</b> <br/>
-				     	
-				     	<input type="text" name="txtName" value={this.state.attribute} 
-				     		onChange={ e => this.setState({ attribute: e.target.value }) }  /> <br/>
+						{ /* End of Column specific input attributes */ }
 
-				     	<a onClick={close} >
-				     		<button onClick={ () => { this.setState({ attribute:this.state.attribute }); } } className="btn btn-sm btn-link" >OK</button>
-				     	</a>
-				     	{<a onClick={close} >
-							<button onClick={ () => this.setState({ attribute:this.props.attr }) } className="btn btn-sm btn-link" >Cancel</button>
-						</a>}
-				    </div>
-			    )
+						<button onClick={ () => { 
+							this.setState({ attributeValue:this.state.attributeValue }); 
+							close(); 
+							} } 
+							className="btn btn-sm btn-link" >OK</button>
+
+							
+						{/*<a onClick={close} >
+						<button onClick={ () => this.setState({ attributeValue:this.props.attr }) } 
+							className="btn btn-sm btn-warning" >Cancel</button>
+							</a> */}
+					</div>
+				)
 			}
 			</Popup>
 		);
 	}
 
-  	showPop0(){
-  		return(
-	  		<Popup trigger={ <span > { this.state.name }  </span>  } position="bottom left">
+	showPop0(){
+		return(
+			<Popup trigger={ <span > { this.state.name }  </span>  } position="bottom left">
 			{
 				close => (
-				    <div>
-				     	<a href="#" className="close" onClick={close}> &times; </a>
-				     	{ /*this.tempValue=this.state.name*/ }
+						<div>
+							<a href="#" className="close" onClick={close}> &times; </a>
+							{ /*this.tempValue=this.state.name*/ }
 
-				     	<b>Change Name</b> <br/>
+							<b>Change Name</b> <br/>
 
-				     	<input type="text" name="txtName" value={this.state.name} 
-				     		onChange={ e => this.setState({ name: e.target.value }) }  /> <br/>
+							<input type="text" name="txtName" value={this.state.name} 
+								onChange={ e => this.setState({ name: e.target.value }) }  /> <br/>
 
-				     	<a onClick={close} >
-				     		<button onClick={ () => { this.setState({ name:this.state.name }); } } className="btn btn-sm btn-link" >OK</button>
-				     	</a>
-				     	{<a onClick={close} >
+							<a onClick={close} >
+								<button onClick={ () => { this.setState({ name:this.state.name }); } } className="btn btn-sm btn-link" >OK</button>
+							</a>
+							{<a onClick={close} >
 							<button onClick={ () => this.setState({ name:this.props.name }) } className="btn btn-sm btn-link" >Cancel</button>
 						</a>}
-				    </div>
-			    )
+						</div>
+					)
 			}
 			</Popup>
 		);
 	}
 }
-
 
 /*const Modal =  () => (
   <Popup
