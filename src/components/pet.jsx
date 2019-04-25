@@ -94,17 +94,23 @@ class Pet extends Component {
 
 				<td> 
 				<PopDialog attr={ this.state.speci } 
+					elementType="select"
+					data={ {defaultVal="" , valueSet="" } } {/* {-1 for js exp, {-2 for jsObj */}
 					property="speci" >
 					</PopDialog>
 				</td>
 
 				
 				<td><PopDialog attr={ this.state.gender }  
+					elementType="radio"
+					data={ { valueSet=["male", "female"], defaultVal=this.state.gender } }
 					property="gender">
 					</PopDialog></td>
 
 				<td> 
 				<PopDialog attr={ this.state.years }  
+					elementType="number"
+					data={  }
 					property="age(years)">
 					</PopDialog>
 				</td>
@@ -112,12 +118,16 @@ class Pet extends Component {
 
 				<td> 
 				<PopDialog attr={ this.state.symptoms }  
+					elementType="checkBox"
+					data={  }
 					property="symptoms">
 					</PopDialog>
 				</td>
 
 				<td> 
 				<PopDialog attr={ this.state.admittedDate }  
+					elementType="date"
+					data={  }
 					property="admitted date">
 					</PopDialog>
 				</td>
