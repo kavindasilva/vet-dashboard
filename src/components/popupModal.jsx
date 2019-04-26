@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import Popup from "reactjs-popup";
- 
-/*export default () => (
-  <Popup trigger={<button> Trigger</button>} position="right center">
-    <div>Popup content here !!</div>
-  </Popup>
-);*/
+
+import Select from 'react-select';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default class PopDialog extends Component {
   
@@ -17,10 +15,10 @@ export default class PopDialog extends Component {
 	}*/
 
 	state = {
-		/** property value */     attributeValue:	this.props.attr  ,
-		/** property name */      attributeName:	this.props.property,
-		/** element input type */ elementType:		this.props.elementType,
-		popOpen: false,
+		/** property value */     				attributeValue	:this.props.attr  ,
+		/** property name */      				attributeName	:this.props.property,
+		/** element input type */ 				elementType		:this.props.elementType,
+		/** Detect popup modal open state */	popOpen			:false,
 	}
 
 	styleTD={
@@ -43,19 +41,16 @@ export default class PopDialog extends Component {
 
 	showPop( attribute1 ){
 		return(
-		  <Popup 
-				//open={false}
-		  		//open={ window.popupOpen===1 }
-				//onOpen={ console.log( "Popoup opened: ",this ) }
+		  	<Popup 
 				onOpen={ ()=> this.setState({ popOpen: true }) }
-				onClose={ ()=>this.setState({ popOpen:false })}
+				onClose={ ()=>this.setState({ popOpen:false }) }
 				//defaultOpen={false}
 		  		trigger={
 					<div style={this.styleTD} 
 						onClick={ ()=>{ console.log( "Popoup clicked: ",this ); 
 						//this.captureOpen();
 						/*window.popupOpen=1;*/  } } >
-						{ this.state.attributeValue } { this.state.popOpen ? 'Y' : 'N' }  
+						{ this.props.attr } { this.state.popOpen ? 'Y' : 'N' }  
 					</div>
 				} 
 				//open={ this.captureOpen() }				
@@ -63,8 +58,9 @@ export default class PopDialog extends Component {
 			{
 				close => (
 					<div>
-						<a href="#" className="close" onClick={close}> &times; </a>
-						{ /*this.tempValue=this.state.attribute*/ }
+						<a href="#" className="close" onClick={ ()=>{
+							this.setState({ attributeValue: this.props.attr });
+							close()} } > &times; </a>
 						
 						<b>Change { this.state.attributeName }</b> <br/>
 						{ /* Starting of Column specific input attributes */ }
@@ -72,27 +68,139 @@ export default class PopDialog extends Component {
 						{/* <input type="text" name="txtName" value={this.state.attributeName} 
 								onChange={ e => this.setState({ attributeName: e.target.value }) }  /> <br/> */}
 						
+						{ this.makeInputElements() }
+						{/*
+
 						<input type={this.state.elementType} value={this.state.attributeValue}
-							onChange={ e => this.setState({ attributeValue: e.target.value }) } />
+							onChange={ (e) => (
+								this.setState({ attributeValue: e.target.value })
+								//this.props.sendToParent()
+								//console.log("onChange data")
+								) } />
+						*/}
+
 
 						{ /* End of Column specific input attributes */ }
-
 						<button onClick={ () => { 
-							this.setState({ attributeValue:this.state.attributeValue }); 
+							this.setState({ attributeValue:this.state.attributeValue });
+							this.props.sendToParent( this.state.attributeName , this.state.attributeValue );
 							close(); 
 							} } 
 							className="btn btn-sm btn-link" >OK</button>
-
 							
 						{/*<a onClick={close} >
 						<button onClick={ () => this.setState({ attributeValue:this.props.attr }) } 
 							className="btn btn-sm btn-warning" >Cancel</button>
-							</a> */}
+							</a> 
+							*/}
 					</div>
 				)
 			}
 			</Popup>
 		);
+	}
+
+	makeInputElements= (  ) =>{
+				{
+					switch (this.state.elementType) {
+						case "text": case "number":
+							return (
+								<input type={this.state.elementType} value={this.state.attributeValue}
+									onChange={ (e) => (
+										this.setState({ attributeValue: e.target.value })
+										//this.props.sendToParent()
+										//console.log("onChange data")
+										) } />
+							);
+							break;
+
+						case "select":
+							return (
+								<Select options={ this.props.data.valueSet }
+						     		defaultValue={{ value: this.props.data.defaultValue , label: this.props.data.defValDisp }}
+						     		onChange={ e => this.setState({ attributeValue: e.label }) }
+						     		 />
+							);
+							break;
+
+						case "radio":
+							return (
+								<ul>
+								{
+									this.props.data.valueSet.map( val => (
+										//console.log("def=",this.state.attributeValue,"val=",val),
+										<li key={val}>
+											<input type="radio" value={val}
+												checked={ (this.state.attributeValue===val)? true : false }
+												name={this.state.attributeName}
+												onChange={ (e)=>(
+													this.setState({ attributeValue: e.target.value}),
+													console.log(e)
+													)
+												}
+											/> {val}
+										</li>
+										)
+									)
+								}
+								</ul>
+							);
+							break;
+
+						case "checkBox":
+							return (
+								<ul>
+								{
+									//symptomsInfo =[{ id:0, name:"Bleeding", value:"Bleeding" }]
+									this.props.data.valueSet.map( val => (
+										console.log("def=",this.state.attributeValue,"val=",val),
+										<li key={val.id}>
+											<input type="checkbox" value={val.name}
+												defaultChecked={ (this.state.attributeValue===val.name)? true : false }
+												name={this.state.attributeName}
+												onChange={ (e)=>(
+													this.setState({ attributeValue: e.target.value}),
+													console.log(e)
+													)
+												}
+											/> {val.value}
+										</li>
+										)
+									)
+								}
+								</ul>
+							);
+							break;
+
+						case "date":
+							return (
+								<ul>
+									<DatePicker 
+						     		selected={ new Date(this.state.attributeValue)} 
+						     		onChange={this.changeAdmitDate} 
+						     		dateFormat="YYYY-MM-dd" /> <br/>
+
+								</ul>
+							);
+							break;
+						
+						default:
+							// code...
+							break;
+					}
+				}
+	}
+
+	changeAdmitDate=(admitDate)=>{
+		//{ admitDate=admitDate.format('YYYY-MM-DD');} // Wed Apr 24 2019 00:00:00 GMT+0530 (India Standard Time)
+		admitDate =  new Date( admitDate );
+		admitDate = admitDate.getFullYear()+"-"+
+			( admitDate.getMonth()<=8 ? "0"+(admitDate.getMonth()+1) : (admitDate.getMonth()+1) ) +"-"+
+			( admitDate.getDate()<=9 ? "0"+admitDate.getDate() : admitDate.getDate() );
+
+		console.log(admitDate);
+		//this.setState({ admittedDate: admitDate.target.value })
+		this.setState({ attributeValue: admitDate });
 	}
 
 	showPop0(){
@@ -122,6 +230,13 @@ export default class PopDialog extends Component {
 		);
 	}
 }
+
+ 
+/*export default () => (
+  <Popup trigger={<button> Trigger</button>} position="right center">
+    <div>Popup content here !!</div>
+  </Popup>
+);*/
 
 /*const Modal =  () => (
   <Popup

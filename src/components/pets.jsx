@@ -64,21 +64,23 @@ class Pets extends Component {
 		return (
 			this.state.petAdmission.map( pet => 
 				<Pet key={pet.id} 
-					id={pet.id} 
-					name={pet.name}
-					speci= {pet.speci}
-					gender= {pet.gender}
-					years={pet.years}
-					symptoms={pet.symptoms}
-					admittedDate={pet.admittedDate}
+				  petRecord = {pet}
 
 					updateGender={ this.handleGender /*pass by reference*/ }
+					sendToPets={ this.retriveFromPet }
 				> 
 				</Pet>
 			 )
 		);
 
 		//this.state.petAdmission.map( pet => <Pet key={pet.id}  /> ) 
+	}
+
+	retriveFromPet = (property, value)=>{
+		switch(property){
+			case "0":
+				console.log(""); break;
+		}
 	}
 
 

@@ -5,3 +5,8 @@ remove <a> tag
 make use of full width of td when click
 check popup open state before opening a new popup
 try passing data to parent
+
+--april 25
+install redux. 
+npm install --save redux
+npm install react-redux

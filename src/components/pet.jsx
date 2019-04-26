@@ -26,13 +26,13 @@ import PopDialog from "./popupModal";
 class Pet extends Component {
 	state = {
 		title: "Dynamic title",
-		id:this.props.id , 
-		name:this.props.name , 
-		speci:this.props.speci , 
-		gender:this.props.gender , 
-		years:this.props.years , 
-		symptoms:this.props.symptoms , 
-		admittedDate:this.props.admittedDate, 
+		id:this.props.petRecord.id , 
+		name:this.props.petRecord.name , 
+		speci:this.props.petRecord.speci , 
+		gender:this.props.petRecord.gender , 
+		years:this.props.petRecord.years , 
+		symptoms:this.props.petRecord.symptoms , 
+		admittedDate:this.props.petRecord.admittedDate, 
 
 		
 	}
@@ -58,25 +58,38 @@ class Pet extends Component {
 		//let varClass="btn btn-sm btn-";
 		return (
 			<React.Fragment>
-
 				{ this.viewPet() }
-				{ /* <button className="btn btn-sm btn-primary" >className= &#123; {} &#125;</button>
-				<Popup trigger={<button>Trigger</button>} position="top left">
-				    {close => (
-				      <div>
-				        Content here
-				        <a className="close" onClick={close}>
-				          &times;
-				        </a>
-				      </div>
-				    )}
-				  </Popup> */ }
-
-				{ /*this.state.name */}
-
 			</React.Fragment>
 		) ;
 
+	}
+
+	/** Sample method to check child to parent data passing working */
+	retrieveFromPopup = (property, value) => {
+		switch(property){
+			case "name":
+				this.setState({ name : value }); console.log("Name=", this.state.name);
+				break;
+			case "speci": 
+				this.setState({ speci : value }); console.log("Speci=", this.state.speci);
+				break;
+
+			case "gender" :
+				this.setState({ gender : value }); console.log("Gender=", this.state.gender);
+				break;
+			case "years" :
+				this.setState({ years : value }); console.log("years=", this.state.years);
+				break;
+
+			case "symptoms" :
+				this.setState({ years : value }); console.log("symptoms=", this.state.years);
+				break;
+			case "admittedDate" :
+				this.setState({ admittedDate : value }); console.log("admitDate=", this.state.years);
+				break;
+		}
+
+		console.log("retrieve data called");
 	}
 
 	viewPet(){
@@ -87,6 +100,7 @@ class Pet extends Component {
 				<td> 
 					{ console.log(this.state.name) }
 					<PopDialog attr={ this.state.name }
+						sendToParent={this.retrieveFromPopup}
 						elementType="text"
 						property="name"  >
 					</PopDialog>
@@ -94,24 +108,26 @@ class Pet extends Component {
 
 				<td> 
 				<PopDialog attr={ this.state.speci } 
+					sendToParent={this.retrieveFromPopup}
 					elementType="select"
-					data={ {defaultVal="" , valueSet="" } } {/* {-1 for js exp, {-2 for jsObj */}
+					data={ {defaultVal:this.state.speci , defValDisp:this.state.speci, valueSet:this.species } /* {-1 for js exp, {-2 for jsObj */}
 					property="speci" >
 					</PopDialog>
 				</td>
 
 				
 				<td><PopDialog attr={ this.state.gender }  
+					sendToParent={this.retrieveFromPopup}
 					elementType="radio"
-					data={ { valueSet=["male", "female"], defaultVal=this.state.gender } }
+					data={ { valueSet:["Male", "Female"], defaultVal:this.state.gender } }
 					property="gender">
 					</PopDialog></td>
 
 				<td> 
 				<PopDialog attr={ this.state.years }  
+					sendToParent={this.retrieveFromPopup}
 					elementType="number"
-					data={  }
-					property="age(years)">
+					property="years">
 					</PopDialog>
 				</td>
 
@@ -119,7 +135,7 @@ class Pet extends Component {
 				<td> 
 				<PopDialog attr={ this.state.symptoms }  
 					elementType="checkBox"
-					data={  }
+					data={ { defaultVal:this.state.symptoms, valueSet:this.symptomsInfo }  }
 					property="symptoms">
 					</PopDialog>
 				</td>
@@ -127,8 +143,9 @@ class Pet extends Component {
 				<td> 
 				<PopDialog attr={ this.state.admittedDate }  
 					elementType="date"
-					data={  }
-					property="admitted date">
+					sendToParent={this.retrieveFromPopup}
+					data={ {val:this.state.admittedDate} }
+					property="admittedDate">
 					</PopDialog>
 				</td>
 			</tr>
@@ -173,7 +190,8 @@ class Pet extends Component {
 		this.setState({ years: text });
 	}
 
-	/*changeGender(){
+	/* 
+	 changeGender(){
 		<Popup trigger={ <button className="button"> Open Moddal </button> } modal>
 		    {close => (
 			    <div className="modal">
@@ -203,7 +221,8 @@ class Pet extends Component {
 			    </div>
 		    )}
 		</Popup>
-	}*/
+	 } 
+	*/
 
 }
 
