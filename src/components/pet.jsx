@@ -49,7 +49,7 @@ class Pet extends Component {
 		 { id:2, name:"RefusingFood", value:"Refusing Food"  },
 		 { id:3, name:"Sleeping", value:"Sleeping"  },
 		 { id:4, name:"Swating", value:"Swating"  },
-		 //"Cold Bleeding Sleeping Swating Refusing Food }
+		 // { key:0, name:0, label:0 }
 	]
 
 	render() {
@@ -82,7 +82,7 @@ class Pet extends Component {
 				break;
 
 			case "symptoms" :
-				this.setState({ years : value }); console.log("symptoms=", this.state.years);
+				this.setState({ symptoms : value }); console.log("symptoms=", this.state.symptoms);
 				break;
 			case "admittedDate" :
 				this.setState({ admittedDate : value }); console.log("admitDate=", this.state.years);
@@ -110,7 +110,9 @@ class Pet extends Component {
 				<PopDialog attr={ this.state.speci } 
 					sendToParent={this.retrieveFromPopup}
 					elementType="select"
-					data={ {defaultVal:this.state.speci , defValDisp:this.state.speci, valueSet:this.species } /* {-1 for js exp, {-2 for jsObj */}
+					data={ {defaultVal:this.state.speci , 
+						defValDisp:this.state.speci, 
+						valueSet:this.species } /* {-1 for js exp, {-2 for jsObj */}
 					property="speci" >
 					</PopDialog>
 				</td>
@@ -135,6 +137,7 @@ class Pet extends Component {
 				<td> 
 				<PopDialog attr={ this.state.symptoms }  
 					elementType="checkBox"
+					sendToParent={this.retrieveFromPopup}
 					data={ { defaultVal:this.state.symptoms, valueSet:this.symptomsInfo }  }
 					property="symptoms">
 					</PopDialog>

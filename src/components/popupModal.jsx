@@ -6,6 +6,8 @@ import Select from 'react-select';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+//import Checkbox from "./checkBoxComp";
+
 export default class PopDialog extends Component {
   
   	/*constructor() {
@@ -152,18 +154,38 @@ export default class PopDialog extends Component {
 								<ul>
 								{
 									//symptomsInfo =[{ id:0, name:"Bleeding", value:"Bleeding" }]
-									this.props.data.valueSet.map( val => (
-										console.log("def=",this.state.attributeValue,"val=",val),
+									this.props.data.valueSet.map( (val, index) => (
+										//console.log("def=",this.state.attributeValue,"val=",val),
 										<li key={val.id}>
-											<input type="checkbox" value={val.name}
-												defaultChecked={ (this.state.attributeValue===val.name)? true : false }
-												name={this.state.attributeName}
-												onChange={ (e)=>(
-													this.setState({ attributeValue: e.target.value}),
-													console.log(e)
-													)
+											{val.value}
+											<input type="checkbox"
+											 	name={val.name}
+												value={val.name}
+												checked={ //(index%2==0)?true:false 
+													//this.props.data.defaultVal.includes( val.name)/**/
+													this.state.attributeValue.includes( val.name)/**/
 												}
-											/> {val.value}
+												onChange={ (e)=>{
+													//this.setState({ attributeValue: e.target.value}),
+													console.log(e);
+
+													if(e.target.checked){
+										                this.setState({
+										                    attributeValue: [...this.state.attributeValue, e.target.value]
+										                })
+										            }else{ 
+										                var index = this.state.attributeValue.indexOf(e.target.value);
+										                if (index > -1) {
+										                    this.state.attributeValue.splice(index, 1);
+										                    this.setState({
+										                        attributeValue: this.state.attributeValue
+										                    })
+										                } 
+										            }
+
+													}
+												}
+											 />
 										</li>
 										)
 									)
