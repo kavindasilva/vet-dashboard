@@ -67,19 +67,10 @@ export default class PopDialog extends Component {
 						<b>Change { this.state.attributeName }</b> <br/>
 						{ /* Starting of Column specific input attributes */ }
 						
+
 						{/* <input type="text" name="txtName" value={this.state.attributeName} 
 								onChange={ e => this.setState({ attributeName: e.target.value }) }  /> <br/> */}
-						
 						{ this.makeInputElements() }
-						{/*
-
-						<input type={this.state.elementType} value={this.state.attributeValue}
-							onChange={ (e) => (
-								this.setState({ attributeValue: e.target.value })
-								//this.props.sendToParent()
-								//console.log("onChange data")
-								) } />
-						*/}
 
 
 						{ /* End of Column specific input attributes */ }
@@ -103,114 +94,112 @@ export default class PopDialog extends Component {
 	}
 
 	makeInputElements= (  ) =>{
-				{
-					switch (this.state.elementType) {
-						case "text": case "number":
-							return (
-								<input type={this.state.elementType} value={this.state.attributeValue}
-									onChange={ (e) => (
-										this.setState({ attributeValue: e.target.value })
-										//this.props.sendToParent()
-										//console.log("onChange data")
-										) } />
-							);
-							break;
+		{
+			switch (this.state.elementType) {
+				case "text": case "number":
+					return (
+						<input type={this.state.elementType} value={this.state.attributeValue}
+							onChange={ (e) => (
+								this.setState({ attributeValue: e.target.value })
+								//this.props.sendToParent()
+								//console.log("onChange data")
+								) } />
+					);
+					break;
 
-						case "select":
-							return (
-								<Select options={ this.props.data.valueSet }
-						     		defaultValue={{ value: this.props.data.defaultValue , label: this.props.data.defValDisp }}
-						     		onChange={ e => this.setState({ attributeValue: e.label }) }
-						     		 />
-							);
-							break;
+				case "select":
+					return (
+						<Select options={ this.props.data.valueSet }
+				     		defaultValue={{ value: this.props.data.defaultValue , label: this.props.data.defValDisp }}
+				     		onChange={ e => this.setState({ attributeValue: e.label }) }
+				     		 />
+					);
+					break;
 
-						case "radio":
-							return (
-								<ul>
-								{
-									this.props.data.valueSet.map( val => (
-										//console.log("def=",this.state.attributeValue,"val=",val),
-										<li key={val}>
-											<input type="radio" value={val}
-												checked={ (this.state.attributeValue===val)? true : false }
-												name={this.state.attributeName}
-												onChange={ (e)=>(
-													this.setState({ attributeValue: e.target.value}),
-													console.log(e)
-													)
-												}
-											/> {val}
-										</li>
-										)
-									)
-								}
-								</ul>
-							);
-							break;
+				case "radio":
+					return (
+						<ul>
+						{
+							this.props.data.valueSet.map( val => (
+								//console.log("def=",this.state.attributeValue,"val=",val),
+								<li key={val}>
+									<input type="radio" value={val}
+										checked={ (this.state.attributeValue===val)? true : false }
+										name={this.state.attributeName}
+										onChange={ (e)=>(
+											this.setState({ attributeValue: e.target.value}),
+											console.log(e)
+											)
+										}
+									/> {val}
+								</li>
+								)
+							)
+						}
+						</ul>
+					);
+					break;
 
-						case "checkBox":
-							return (
-								<ul>
-								{
-									//symptomsInfo =[{ id:0, name:"Bleeding", value:"Bleeding" }]
-									this.props.data.valueSet.map( (val, index) => (
-										//console.log("def=",this.state.attributeValue,"val=",val),
-										<li key={val.id}>
-											{val.value}
-											<input type="checkbox"
-											 	name={val.name}
-												value={val.name}
-												checked={ //(index%2==0)?true:false 
-													//this.props.data.defaultVal.includes( val.name)/**/
-													this.state.attributeValue.includes( val.name)/**/
-												}
-												onChange={ (e)=>{
-													//this.setState({ attributeValue: e.target.value}),
-													console.log(e);
+				case "checkBox":
+					return (
+						<ul>
+						{
+							//symptomsInfo =[{ id:0, name:"Bleeding", value:"Bleeding" }]
+							this.props.data.valueSet.map( (val, index) => (
+								//console.log("def=",this.state.attributeValue,"val=",val),
+								<li key={val.id}>
+									{val.value}
+									<input type="checkbox"
+									 	name={val.name}
+										value={val.name}
+										checked={
+											this.state.attributeValue.includes( val.name)/**/
+										}
+										onChange={ (e)=>{
+											if(e.target.checked){
+								                this.setState({
+								                    attributeValue: [...this.state.attributeValue, e.target.value]
+								                })
+								            }
+								            else{ 
+								                var index = this.state.attributeValue.indexOf(e.target.value);
+								                if (index > -1) {
+								                    this.state.attributeValue.splice(index, 1);
+								                    this.setState({
+								                        attributeValue: this.state.attributeValue
+								                    })
+								                } 
+								            }
 
-													if(e.target.checked){
-										                this.setState({
-										                    attributeValue: [...this.state.attributeValue, e.target.value]
-										                })
-										            }else{ 
-										                var index = this.state.attributeValue.indexOf(e.target.value);
-										                if (index > -1) {
-										                    this.state.attributeValue.splice(index, 1);
-										                    this.setState({
-										                        attributeValue: this.state.attributeValue
-										                    })
-										                } 
-										            }
+											}
+										}
+									 />
+								</li>
+								)
+							)
+						}
+						</ul>
+					);
+					break;
 
-													}
-												}
-											 />
-										</li>
-										)
-									)
-								}
-								</ul>
-							);
-							break;
-
-						case "date":
-							return (
-								<ul>
-									<DatePicker 
-						     		selected={ new Date(this.state.attributeValue)} 
-						     		onChange={this.changeAdmitDate} 
-						     		dateFormat="YYYY-MM-dd" /> <br/>
-
-								</ul>
-							);
-							break;
-						
-						default:
-							// code...
-							break;
-					}
-				}
+				case "date":
+					return (
+						<ul>
+							<DatePicker 
+					     		selected={ new Date(this.state.attributeValue)} 
+					     		onChange={this.changeAdmitDate} 
+					     		dateFormat="YYYY-MM-dd" 
+					     	/>
+					     	<br/>
+						</ul>
+					);
+					break;
+				
+				default:
+					console.log("invalid case");
+					break;
+			}
+		}
 	}
 
 	changeAdmitDate=(admitDate)=>{

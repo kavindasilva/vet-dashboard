@@ -6,6 +6,9 @@
 import React, { Component } from 'react';
 import Pet from '../components/pet';
 
+//import petAPI from "../apicalls/petAPI";
+//const petAPIobj = new petAPI();
+
 
 //import Clock from '../components/clock';
 
@@ -13,14 +16,15 @@ class Pets extends Component {
 	state = {
 		title: "Pets Details",
 
-		petAdmission: [ 
+		petAdmission: [],
+		/**petAdmission: [ 
 			{ id:0 , name:"Rover" , speci:"Dog" , gender:"Male" , years:3.5 , symptoms:["Fever", "Cold"] , admittedDate:"2019-04-01" },
 			{ id:1 , name:"King" , speci:"Cat" , gender:"Female" , years:1.2 , symptoms:["Bleeding"] , admittedDate:"2019-04-02" },
 			{ id:2 , name:"Kitty" , speci:"Cat" , gender:"Male" , years:3 , symptoms:["Swating" , "RefusingFood"] , admittedDate:"2019-04-02" },
 			{ id:3 , name:"Peter" , speci:"Bird" , gender:"Male" , years:1 , symptoms:["Sleeping"] , admittedDate:"2019-04-03" },
 			{ id:4 , name:"Tommy" , speci:"Dog" , gender:"Female" , years:2 , symptoms:["Cold"] , admittedDate:"2019-04-03" },
 
-		],
+		],/**/
 	}
 
 	styles1 = {
@@ -28,14 +32,22 @@ class Pets extends Component {
 		fontWeight: "bold"
 	};
 
-	/*
+	/**/
 	constructor(){
 		super();
-		this.eventHandle2 = this.eventHandle2.bind(this);
+		//this.eventHandle2 = this.eventHandle2.bind(this);
 	}
-	*/
+	/**/
+
+	/**/componentDidMount(){
+		console.log("Pets - Mount");
+		//this.callApi();
+		let data = this.callApi0(); console.log("data", data);
+
+	}/**/
 
 	render() {
+		//data
 		//let varClass="btn btn-sm btn-";
 		return (
 			<div>
@@ -74,6 +86,24 @@ class Pets extends Component {
 		);
 
 		//this.state.petAdmission.map( pet => <Pet key={pet.id}  /> ) 
+	}
+
+
+	callApi0(){
+		// Github fetch library : https://github.com/github/fetch
+		// Call the API page
+		fetch('http://127.0.0.1/ucsc5/vet-dashboard/phpApi/getData.php')
+			.then((result) => {
+				// Get the result
+				// If we want text, call result.text()
+				return result.json();
+			})
+			.then((jsonResult) => {
+				// Do something with the result
+				//console.log(jsonResult);
+				this.setState({ petAdmission: jsonResult });
+				return jsonResult;
+			})
 	}
 
 	retriveFromPet = (property, value)=>{

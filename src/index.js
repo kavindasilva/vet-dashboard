@@ -10,7 +10,7 @@ import Pets from "./components/pets";
 
 
 var ele1=<h2>heading2</h2>;
-console.log(ele1);
+//console.log(ele1);
 
 /** 
 	class Square extends React.Component {  // makes a class
