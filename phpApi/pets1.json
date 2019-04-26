@@ -1,0 +1,25 @@
+[
+    {
+        "id": "1",
+        "name": "n1",
+        "speci": "spc1",
+        "gender": "male",
+        "years": "2",
+        "symptoms": [
+            "c",
+            "b"
+        ],
+        "admittedDate": "2010-10-01"
+    },
+    {
+        "id": "2",
+        "name": "n2",
+        "speci": "spc2",
+        "gender": "female",
+        "years": "4",
+        "symptoms": [
+            "c"
+        ],
+        "admittedDate": "2010-10-02"
+    }
+]
