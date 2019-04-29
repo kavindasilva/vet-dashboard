@@ -1,17 +1,45 @@
 
 import React, { Component } from 'react';
-//import Popup from "../components/popupModal";
-//import Popup from "reactjs-popup";
+import axios from 'axios';
 
-//import Select from 'react-select';
-//import DatePicker from "react-datepicker";
-//import "react-datepicker/dist/react-datepicker.css";
+const API = 'http://127.0.0.1/ucsc5/vet-dashboard/phpApi/getData.php?q=';
+const DEFAULT_QUERY = 'redux';
 
-//import PopDialog from "./popupModal";
 
 class petAPI extends Component{
+  /*state ={}
+
+  constructor(){
+    super();
+  }*/
 
   callApi(){
+    //var retStr;
+    return axios.get(API + DEFAULT_QUERY)
+      .then(result => {
+        //console.log(result);
+        //retStr=result;
+        return result;
+      })
+      .catch(error => {
+        console.log( error);
+        return error;
+      });
+
+     //return retStr;
+
+    /**axios.get(API + DEFAULT_QUERY)
+      .then(result => this.setState({
+        hits: result.data.hits,
+        isLoading: false
+      }))
+      .catch(error => this.setState({
+        error,
+        isLoading: false
+      }));/**/
+  }
+
+  callApi1(){
     // Github fetch library : https://github.com/github/fetch
     // Call the API page
     fetch('http://127.0.0.1/ucsc5/vet-dashboard/phpApi/getData.php')

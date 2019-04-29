@@ -231,9 +231,9 @@ export default class PopDialog extends Component {
 							<a onClick={close} >
 								<button onClick={ () => { this.setState({ name:this.state.name }); } } className="btn btn-sm btn-link" >OK</button>
 							</a>
-							{<a onClick={close} >
+							{/*<a onClick={close} >
 							<button onClick={ () => this.setState({ name:this.props.name }) } className="btn btn-sm btn-link" >Cancel</button>
-						</a>}
+						</a>*/}
 						</div>
 					)
 			}

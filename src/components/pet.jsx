@@ -13,10 +13,10 @@
 
 import React, { Component } from 'react';
 //import Popup from "../components/popupModal";
-import Popup from "reactjs-popup";
+//import Popup from "reactjs-popup";
 
-import Select from 'react-select';
-import DatePicker from "react-datepicker";
+//import Select from 'react-select';
+//import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import PopDialog from "./popupModal";
@@ -49,6 +49,7 @@ class Pet extends Component {
 		 { id:2, name:"RefusingFood", value:"Refusing Food"  },
 		 { id:3, name:"Sleeping", value:"Sleeping"  },
 		 { id:4, name:"Swating", value:"Swating"  },
+		 { id:5, name:"Fever", value:"Fever"  },
 		 // { key:0, name:0, label:0 }
 	]
 
@@ -87,6 +88,9 @@ class Pet extends Component {
 			case "admittedDate" :
 				this.setState({ admittedDate : value }); console.log("admitDate=", this.state.years);
 				break;
+
+			default:
+				console.log("pet.jsx -> default case");
 		}
 
 		console.log("retrieve data called");

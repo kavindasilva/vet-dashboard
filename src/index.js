@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.css'; // working
 import Pets from "./components/pets";
 
 
-var ele1=<h2>heading2</h2>;
+//var ele1=<h2>heading2</h2>;
 //console.log(ele1);
 
 /** 

@@ -6,9 +6,9 @@
 import React, { Component } from 'react';
 import Pet from '../components/pet';
 
-//import petAPI from "../apicalls/petAPI";
-//const petAPIobj = new petAPI();
-
+import petAPI from "../apicalls/petAPI";
+const petAPIobj = new petAPI();
+//console.log(petAPIobj);
 
 //import Clock from '../components/clock';
 
@@ -41,8 +41,18 @@ class Pets extends Component {
 
 	/**/componentDidMount(){
 		console.log("Pets - Mount");
-		//this.callApi();
-		let data = this.callApi0(); console.log("data", data);
+		let data = petAPIobj.callApi()
+			.then( response => {
+				console.log(response);
+				if(response.data){
+					//console.log("A");
+					this.setState({ petAdmission: response.data })
+				}
+				return response;
+			})
+	
+		//console.log(data);
+		//let data = this.callApi0(); console.log("data", data);
 
 	}/**/
 
