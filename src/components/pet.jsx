@@ -12,19 +12,17 @@
 */
 
 import React, { Component } from 'react';
-//import Popup from "../components/popupModal";
-//import Popup from "reactjs-popup";
-
-//import Select from 'react-select';
-//import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
 import PopDialog from "./popupModal";
+
+import { connect } from 'react-redux';
+import { INCREMENT, DECREMENT } from '../actions/index';
 
 //const dd=window.
 
 class Pet extends Component {
-	state = {
+	state ={ name: "pet_defaultName" }
+	/*state = {
 		title: "Dynamic title",
 		id:this.props.petRecord.id , 
 		name:this.props.petRecord.name , 
@@ -33,9 +31,8 @@ class Pet extends Component {
 		years:this.props.petRecord.years , 
 		symptoms:this.props.petRecord.symptoms , 
 		admittedDate:this.props.petRecord.admittedDate, 
+	}*/
 
-		
-	}
 	tempValue=null;
 	species = [
 		{ value: "Bird", label: "Bird" },
@@ -160,21 +157,25 @@ class Pet extends Component {
 		);
 	}
 
+	// before redux
+	updateValue0=( property, value )=>{
+		console.log("property=", property, "\nvalue=", value);
+		this.setState( { property : value } )
+	}
+	
+	// with redux
+	updateValue = (property, value) => {
+		console.log("property=", property, "\nvalue=", value);
+		this.props.dispatch({ type: "INCREMENT" });
+	};
+
+
 	handleChange=(event)=> {
 		//this.props.
 		this.setState({
 			gender: event.target.value
 
 		});
-	}
-	/*handleChange(event) {
-		this.setState({
-			gender: event.target.value
-		});
-	}*/
-	updateValue=( property, value )=>{
-		console.log("property=", property, "\nvalue=", value);
-		this.setState( { property : value } )
 	}
 
 	changeAdmitDate=(admitDate)=>{
@@ -197,40 +198,20 @@ class Pet extends Component {
 		this.setState({ years: text });
 	}
 
-	/* 
-	 changeGender(){
-		<Popup trigger={ <button className="button"> Open Moddal </button> } modal>
-		    {close => (
-			    <div className="modal">
-			        <a className="close" onClick={close}> &times; </a>
-			        <div className="header"> Modal Title </div>
-			        <div className="content">
-				        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur sit
-			        </div>
-			        <div className="actions">
-						<Popup
-							trigger={<button className="button"> Trigger </button>}	position="top center" closeOnDocumentClick
-						>
-							<span>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae
-							</span>
-						</Popup>
-			          	<button
-			            	className="button"
-			            	onClick={() => {
-			              		console.log('modal closed ')
-			              	close()
-			            	}}
-			          	>
-			            	close modal
-			          	</button>
-			        </div>
-			    </div>
-		    )}
-		</Popup>
-	 } 
-	*/
-
 }
 
-export default Pet;
+const mapDispatchToProps = {
+	//increment
+	//updateValue
+	//decrement
+};
+
+function mapStateToProps(state) {
+//mapStateToProps(state) {
+	return {
+		count: state.count
+	};
+}
+
+//export default Pet;
+export default connect(mapStateToProps, mapDispatchToProps)(Pet);
