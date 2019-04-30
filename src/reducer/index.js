@@ -13,12 +13,17 @@
 }
 const store = createStore(reducer);*/
 
-const PetReducer = (state = [], action) => {
+const PetReducer = (state, action) => {
     switch (action.type) {
-        case 'VIEW':
+        case 'VIEWALL':
+            console.log("reducer_VIEW") 
             return state;
 
+
+
+
         case 'ADD_TODO':
+            console.log("reducer_ADDTODO")
             return [
             ...state,
             {
@@ -34,6 +39,7 @@ const PetReducer = (state = [], action) => {
                 ? {...todo, completed: !todo.completed}
                 : todo
             )
+
         default:
             return state
         }
