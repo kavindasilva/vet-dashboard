@@ -1,13 +1,28 @@
 
 import React from 'react';
-import Pet2 from '../containers/contPets';
+import PetSingle from './pet2p';
+//import ContPet2 from '../containers/contPets';
 
-const Pet =() => {
+/*const Pet2 =( pets=0 ) => {
     return(
         <div>
-            <Pet2 />
+            <ul>
+                <Pet2 />
+            </ul>
         </div>
         );
-}
+}*/
+
+const Pet2 = ( pets ) => (
+    <ul>
+      {pets.map(pet =>
+        <PetSingle
+          key={pet.id}
+          {...pet}
+          
+        />
+      )}
+    </ul>
+  )
 
 export default Pet2;

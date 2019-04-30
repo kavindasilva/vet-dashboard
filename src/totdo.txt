@@ -10,3 +10,10 @@ try passing data to parent
 install redux. 
 npm install --save redux
 npm install react-redux
+
+
+--april 30
+this.state --> reducerName
+make modal dialog
+[checkbox] text, check/uncheck on text click
+Redux Example: https://github.com/reduxjs/redux

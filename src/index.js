@@ -35,7 +35,8 @@ function reducer1(state, action) {
   }
 }
 
-const store = createStore(PetReducer);
+//  const store = createStore(PetReducer, { INITIAL_STATE });
+const store = createStore(PetReducer, { });
 
 
 ReactDOM.render(
