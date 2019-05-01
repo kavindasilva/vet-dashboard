@@ -4,15 +4,16 @@ import './index.css';
 
 //import { Counter } from "./components/counter";
 //import Counter from "./components/counter";
+
 import Pets from "./components/pets";
+import PetReducer from './reducer/index'
+//import Pet from './components/pet2'
 
 import 'bootstrap/dist/css/bootstrap.css'; // working
 
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 //import Pet from "./components/pet";
-import PetReducer from './reducer/index'
-import Pet from './components/pet2'
 //import rootReducer from './reducers'
 
 
@@ -35,13 +36,20 @@ function reducer1(state, action) {
   }
 }
 
-//  const store = createStore(PetReducer, { INITIAL_STATE });
-const store = createStore(PetReducer, { });
+//  const store = createStore(PetReducer, INITIAL_STATE );
+const store = createStore(PetReducer,  { petAdmission:[ 
+      { "id":'0' , "name":"Rover" , "speci":"Dog" , 'gender':"Male" , 'years':"3.5" , 'symptoms':["Fever", "Cold"] , 'admittedDate':"2019-04-01" },
+      { "id":'1' , "name":"King" , "speci":"Cat" , 'gender':"Female" , 'years':"1.2" , 'symptoms':["Bleeding"] , 'admittedDate':"2019-04-02" },
+      { "id":'2' , "name":"Kitty" , "speci":"Cat" , 'gender':"Male" , 'years':'3' , 'symptoms':["Swating" , "RefusingFood"] , 'admittedDate':"2019-04-02" },
+      { "id":'3' , "name":"Peter" , 'speci':"Bird" , 'gender':"Male" , 'years':'1' , 'symptoms':["Sleeping"] , 'admittedDate':"2019-04-03" },
+      { "id":'4' , "name":"Tommy" , 'speci':"Dog" , 'gender':"Female" , 'years':'2' , 'symptoms':["Cold"] , 'admittedDate':"2019-04-03" }
+
+    ]}  );
 
 
 ReactDOM.render(
   <Provider store={store}>
-    <Pet />
+    <Pets />
   </Provider>,
   document.getElementById('root')
 );

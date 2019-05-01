@@ -14,6 +14,7 @@
 const store = createStore(reducer);*/
 
 const PetReducer = (state, action) => {
+    console.log("Reducer: state: ", state, "\naction: ", action)
     switch (action.type) {
         case 'VIEWALL':
             console.log("reducer_VIEW") 
@@ -33,12 +34,6 @@ const PetReducer = (state, action) => {
             }
             ]
 
-        case 'TOGGLE_TODO':
-            return state.map(todo =>
-            (todo.id === action.id)
-                ? {...todo, completed: !todo.completed}
-                : todo
-            )
 
         default:
             return state

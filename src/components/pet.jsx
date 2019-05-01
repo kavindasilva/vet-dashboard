@@ -21,8 +21,8 @@ import { INCREMENT, DECREMENT } from '../actions/index';
 //const dd=window.
 
 class Pet extends Component {
-	state ={ name: "pet_defaultName" }
-	/*state = {
+	//state ={ name: "pet_defaultName" }
+	state = {
 		title: "Dynamic title",
 		id:this.props.petRecord.id , 
 		name:this.props.petRecord.name , 
@@ -31,7 +31,7 @@ class Pet extends Component {
 		years:this.props.petRecord.years , 
 		symptoms:this.props.petRecord.symptoms , 
 		admittedDate:this.props.petRecord.admittedDate, 
-	}*/
+	}/**/
 
 	tempValue=null;
 	species = [

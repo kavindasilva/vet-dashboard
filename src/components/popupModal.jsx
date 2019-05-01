@@ -56,7 +56,7 @@ export default class PopDialog extends Component {
 					</div>
 				} 
 				//open={ this.captureOpen() }				
-				position="bottom left">
+				position="bottom left" modal>
 			{
 				close => (
 					<div>
