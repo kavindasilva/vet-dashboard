@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import Popup from "reactjs-popup";
-import Modal from 'react-modal';
+//import Modal from 'react-modal';
 
 import Select from 'react-select';
 import DatePicker from "react-datepicker";
@@ -58,18 +58,6 @@ export default class PopDialog extends Component {
 				} 
 				//open={ this.captureOpen() }				
 				position="bottom left" modal>
-<<<<<<< HEAD
-			{
-				close => (
-					<div>
-						<a href="#" className="close" onClick={ ()=>{
-							this.setState({ attributeValue: this.props.attr });
-							close()} } > &times; </a>
-						
-						<b>Change { this.state.attributeName }</b> <br/>
-						{ /* Starting of Column specific input attributes */ }
-						
-=======
 				{
 					close => (
 						<div>
@@ -80,7 +68,6 @@ export default class PopDialog extends Component {
 							<b>Change { this.state.attributeName }</b> <br/>
 							{ /* Starting of Column specific input attributes */ }
 							
->>>>>>> refs/remotes/origin/master
 
 							{/* <input type="text" name="txtName" value={this.state.attributeName} 
 									onChange={ e => this.setState({ attributeName: e.target.value }) }  /> <br/> */}
@@ -108,7 +95,6 @@ export default class PopDialog extends Component {
 	}
 
 	makeInputElements= (  ) =>{
-		{
 			switch (this.state.elementType) {
 				case "text": case "number":
 					return (
@@ -218,7 +204,6 @@ export default class PopDialog extends Component {
 					console.log("invalid case");
 					break;
 			}
-		}
 	}
 
 	changeAdmitDate=(admitDate)=>{
