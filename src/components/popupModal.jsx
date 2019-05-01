@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import Popup from "reactjs-popup";
+import Modal from 'react-modal';
 
 import Select from 'react-select';
 import DatePicker from "react-datepicker";
@@ -56,39 +57,39 @@ export default class PopDialog extends Component {
 					</div>
 				} 
 				//open={ this.captureOpen() }				
-				position="bottom left">
-			{
-				close => (
-					<div>
-						<a href="#" className="close" onClick={ ()=>{
-							this.setState({ attributeValue: this.props.attr });
-							close()} } > &times; </a>
-						
-						<b>Change { this.state.attributeName }</b> <br/>
-						{ /* Starting of Column specific input attributes */ }
-						
-
-						{/* <input type="text" name="txtName" value={this.state.attributeName} 
-								onChange={ e => this.setState({ attributeName: e.target.value }) }  /> <br/> */}
-						{ this.makeInputElements() }
-
-
-						{ /* End of Column specific input attributes */ }
-						<button onClick={ () => { 
-							this.setState({ attributeValue:this.state.attributeValue });
-							this.props.sendToParent( this.state.attributeName , this.state.attributeValue );
-							close(); 
-							} } 
-							className="btn btn-sm btn-link" >OK</button>
+				position="bottom left" modal>
+				{
+					close => (
+						<div>
+							<a href="#" className="close" onClick={ ()=>{
+								this.setState({ attributeValue: this.props.attr });
+								close()} } > &times; </a>
 							
-						{/*<a onClick={close} >
-						<button onClick={ () => this.setState({ attributeValue:this.props.attr }) } 
-							className="btn btn-sm btn-warning" >Cancel</button>
-							</a> 
-							*/}
-					</div>
-				)
-			}
+							<b>Change { this.state.attributeName }</b> <br/>
+							{ /* Starting of Column specific input attributes */ }
+							
+
+							{/* <input type="text" name="txtName" value={this.state.attributeName} 
+									onChange={ e => this.setState({ attributeName: e.target.value }) }  /> <br/> */}
+							{ this.makeInputElements() }
+
+
+							{ /* End of Column specific input attributes */ }
+							<button onClick={ () => { 
+								this.setState({ attributeValue:this.state.attributeValue });
+								this.props.sendToParent( this.state.attributeName , this.state.attributeValue );
+								close(); 
+								} } 
+								className="btn btn-sm btn-link" >OK</button>
+								
+							{/*<a onClick={close} >
+							<button onClick={ () => this.setState({ attributeValue:this.props.attr }) } 
+								className="btn btn-sm btn-warning" >Cancel</button>
+								</a> 
+								*/}
+						</div>
+					)
+				}
 			</Popup>
 		);
 	}
@@ -98,12 +99,14 @@ export default class PopDialog extends Component {
 			switch (this.state.elementType) {
 				case "text": case "number":
 					return (
-						<input type={this.state.elementType} value={this.state.attributeValue}
-							onChange={ (e) => (
-								this.setState({ attributeValue: e.target.value })
-								//this.props.sendToParent()
-								//console.log("onChange data")
-								) } />
+						<div>
+							<input type={this.state.elementType} value={this.state.attributeValue}
+								onChange={ (e) => (
+									this.setState({ attributeValue: e.target.value })
+									//this.props.sendToParent()
+									//console.log("onChange data")
+									) } />
+						</div>
 					);
 					break;
 
@@ -142,43 +145,46 @@ export default class PopDialog extends Component {
 
 				case "checkBox":
 					return (
-						<ul>
+						<div>
 						{
 							//symptomsInfo =[{ id:0, name:"Bleeding", value:"Bleeding" }]
 							this.props.data.valueSet.map( (val, index) => (
 								//console.log("def=",this.state.attributeValue,"val=",val),
-								<li key={val.id}>
-									{val.value}
-									<input type="checkbox"
-									 	name={val.name}
-										value={val.name}
-										checked={
-											this.state.attributeValue.includes( val.name)/**/
-										}
-										onChange={ (e)=>{
-											if(e.target.checked){
-								                this.setState({
-								                    attributeValue: [...this.state.attributeValue, e.target.value]
-								                })
-								            }
-								            else{ 
-								                var index = this.state.attributeValue.indexOf(e.target.value);
-								                if (index > -1) {
-								                    this.state.attributeValue.splice(index, 1);
-								                    this.setState({
-								                        attributeValue: this.state.attributeValue
-								                    })
-								                } 
-								            }
-
+								<div>
+									<label key={val.id}>
+										<input type="checkbox"
+										 	name={val.name}
+											value={val.name}
+											checked={
+												this.state.attributeValue.includes( val.name)/**/
 											}
-										}
-									 />
-								</li>
+											onChange={ (e)=>{
+												if(e.target.checked){
+									                this.setState({
+									                    attributeValue: [...this.state.attributeValue, e.target.value]
+									                })
+									            }
+									            else{ 
+									                var index = this.state.attributeValue.indexOf(e.target.value);
+									                if (index > -1) {
+									                    this.state.attributeValue.splice(index, 1);
+									                    this.setState({
+									                        attributeValue: this.state.attributeValue
+									                    })
+									                } 
+									            }
+
+												}
+											}
+										 />
+										{val.value}
+									</label>
+								</div>
+
 								)
 							)
 						}
-						</ul>
+						</div>
 					);
 					break;
 
