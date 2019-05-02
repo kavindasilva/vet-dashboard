@@ -56,6 +56,7 @@ export default class PopDialog extends Component {
 						onClick={ ()=>{ console.log( "Popoup clicked: ",this ); 
 						//this.captureOpen();
 						/*window.popupOpen=1;*/  } } >
+						{/* this.props.value } { this.state.popOpen ? 'Y' : 'N' */}  
 						{ this.props.value } { this.state.popOpen ? 'Y' : 'N' }  
 					</div>
 				} 
@@ -64,9 +65,9 @@ export default class PopDialog extends Component {
 				{
 					close => (
 						<div>
-							<a href="#" className="close" onClick={ ()=>{
-								this.setState({ attributeValue: this.props.attr });
-								close()} } > &times; </a>
+							<button className="close" onClick={ ()=>{
+								this.setState({ attributeValue: this.props.value });
+								close()} } > &times; </button>
 							
 							<b>Change { this.state.attributeName }</b> <br/>
 							{ /* Starting of Column specific input attributes */ }
@@ -235,7 +236,7 @@ export default class PopDialog extends Component {
 			{
 				close => (
 						<div>
-							<a href="#" className="close" onClick={close}> &times; </a>
+							<button className="close" onClick={close}> &times; </button>
 							{ /*this.tempValue=this.state.name*/ }
 
 							<b>Change Name</b> <br/>

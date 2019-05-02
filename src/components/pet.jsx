@@ -69,7 +69,7 @@ class Pet extends Component {
 	/** Sample method to check child to parent data passing working */
 	retrieveFromPopup = (property, value) => {
 		//console.log("Pet store: ", store.getState() ); // whole store
-		PetReducer( petStore.getState(), updatePet( { propert: property, val: value, idd: this.props.id } ) );
+		//PetReducer( petStore.getState(), updatePet( { propert: property, val: value, idd: this.props.id } ) );
 
 		switch(property){
 			case "name":

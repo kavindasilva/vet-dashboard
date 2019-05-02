@@ -116,39 +116,7 @@ class Pets extends Component {
 			})
 	}
 
-	retriveFromPet = (property, value)=>{
-		switch(property){
-			case "0":
-				console.log(""); break;
-		}
-	}
-
-
-	handleGender = ( petID, value) =>{
-		//console.log("pets handleGender", petID);
-		//console.log(prop);
-		console.log(value);
-		//let newPets= this.state.petAdmission.filter( p => p.id !==  petID ); // delete
-		//let newPets= this.state.petAdmission.filter( p => p.id !==  petID );
-		//this.setState( { petAdmission : newPets } );
-
-		this.setState({
-		  data: this.state.petAdmission.map(el => (el.id === petID ? {...el, value} : el))
-		});
-
-		/*var update = require('immutability-helper');
-		var commentIndex = this.state.petAdmission.findIndex(function(c) { 
-        	return c.id == petID; 
-    	});
-    	var updatedComment = update(this.state.petAdmission[commentIndex], {gender: {$set: value}}); 
-	    var newData = update(this.state.petAdmission, {
-	        $splice: [[commentIndex, 1, updatedComment]]
-	    });
-	    this.setState({petAdmission: newData});*/
-
-		//this.setState( {  } );
-	}
-
+	
 }
 
 export default Pets;

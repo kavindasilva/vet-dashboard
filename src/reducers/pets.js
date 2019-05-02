@@ -29,8 +29,8 @@ const PetReducer = (state, action) => {
                             ...data
                         }
                     }
-
-                    return record;
+                    else
+                        return record;
                 })
             }
 
