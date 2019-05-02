@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-const API = 'http://127.0.0.1/ucsc5/vet-dashboard/phpApi/getData.php?q=';
-//const API = 'http://127.0.0.1/phpApi/getData.php?q=';
+//const API = 'http://127.0.0.1/ucsc5/vet-dashboard/phpApi/getData.php?q=';
+const API = 'http://127.0.0.1/phpApi/getData.php?q=';
 const DEFAULT_QUERY = 'redux';
 
 

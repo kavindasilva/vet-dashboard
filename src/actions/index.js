@@ -7,7 +7,12 @@ export const addTodo = text => ({
 
 export const viewPet = () =>({
     type: 'VIEWALL',
-    
+
+})
+
+export const updatePet = data => ({
+  type: 'UPDATEPET',
+  id: data.id
 })
 
 
