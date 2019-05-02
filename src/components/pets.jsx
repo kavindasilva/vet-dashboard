@@ -6,11 +6,12 @@
 
 import React, { Component } from 'react';
 import Pet from '../components/pet';
+// import { petStore } from "../stores/pets";
 
-import PetReducer from '../reducer/index'
+ // import PetReducer from '../reducers/pets'
 import { connect } from "react-redux";
 import { Provider } from 'react-redux'
-import { viewPet, updatePet } from '../actions/index'
+import { viewPet, updatePet, viewNewPet } from '../actions/index'
 
 
 import petAPI from "../apicalls/petAPI";
@@ -20,35 +21,19 @@ const petAPIobj = new petAPI();
 //import Clock from '../components/clock';
 
 class Pets extends Component {
-	/*state = {
-		title: "Pets Details",
 
-		petAdmission: [],
-		/**petAdmission: [ 
-			{ id:0 , name:"Rover" , speci:"Dog" , gender:"Male" , years:3.5 , symptoms:["Fever", "Cold"] , admittedDate:"2019-04-01" },
-			{ id:1 , name:"King" , speci:"Cat" , gender:"Female" , years:1.2 , symptoms:["Bleeding"] , admittedDate:"2019-04-02" },
-			{ id:2 , name:"Kitty" , speci:"Cat" , gender:"Male" , years:3 , symptoms:["Swating" , "RefusingFood"] , admittedDate:"2019-04-02" },
-			{ id:3 , name:"Peter" , speci:"Bird" , gender:"Male" , years:1 , symptoms:["Sleeping"] , admittedDate:"2019-04-03" },
-			{ id:4 , name:"Tommy" , speci:"Dog" , gender:"Female" , years:2 , symptoms:["Cold"] , admittedDate:"2019-04-03" },
-
-		],/**/
-	//}
-
+	state = { ...this.props.stateInfo };
+	
 	styles1 = {
 		fontSize:18,
 		fontWeight: "bold"
 	};
 
-	/**/
-	constructor( data ){
-		super();
-		this.stateData=data.stateInfo; console.log("Pets.stateData: ",this.stateData);
-		//this.eventHandle2 = this.eventHandle2.bind(this);
+	constructor(props){
+		super(props);
 	}
-	stateData = {}
-	/**/
 
-	/**/componentDidMount(){
+	componentDidMount(){
 		//PetReducer( this.stateData, viewPet );
 		//console.log(store);
 		//this.setState({ petAdmission: this.props.stateInfo.petAdmission })
@@ -101,12 +86,10 @@ class Pets extends Component {
 	viewAll(){
 		return (
 			//this.state.petAdmission.map( pet => 
-			PetReducer( this.stateData, 0).petAdmission.map( pet => 
+			// PetReducer( this.stateData, 0).admissions.map( pet => 
+			this.state.admissions.map( pet =>
 				<Pet key={pet.id} 
 				  petRecord = {pet}
-
-					updateGender={ this.handleGender /*pass by reference*/ }
-					sendToPets={ this.retriveFromPet }
 				> 
 				</Pet>
 			 )

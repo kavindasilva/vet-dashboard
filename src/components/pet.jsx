@@ -16,7 +16,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import PopDialog from "./popupModal";
 
 import { connect } from 'react-redux';
-import {  } from '../actions/index';
+import { viewPet, updatePet, viewNewPet } from '../actions/index'
+import { petStore } from "../stores/pets";
+import PetReducer from '../reducers/pets';
+
 
 //const dd=window.
 
@@ -24,14 +27,18 @@ class Pet extends Component {
 	//state ={ name: "pet_defaultName" }
 	state = {
 		title: "Dynamic title",
-		id:this.props.petRecord.id , 
-		name:this.props.petRecord.name , 
-		speci:this.props.petRecord.speci , 
-		gender:this.props.petRecord.gender , 
-		years:this.props.petRecord.years , 
-		symptoms:this.props.petRecord.symptoms , 
-		admittedDate:this.props.petRecord.admittedDate, 
-	}/**/
+		...this.props.petRecord
+	}
+
+	//state = petStore.getState().admissions.filter(pet => pet.id == this.props.key);
+	
+
+	constructor(props){
+		console.log(props);
+		super(props);
+	}
+
+	stateData = {  }
 
 	tempValue=null;
 	species = [
@@ -51,9 +58,6 @@ class Pet extends Component {
 	]
 
 	render() {
-
-		//console.log("props= ", this.props);
-		//let varClass="btn btn-sm btn-";
 		return (
 			<React.Fragment>
 				{ this.viewPet() }
@@ -64,6 +68,9 @@ class Pet extends Component {
 
 	/** Sample method to check child to parent data passing working */
 	retrieveFromPopup = (property, value) => {
+		//console.log("Pet store: ", store.getState() ); // whole store
+		PetReducer( petStore.getState(), updatePet( { propert: property, val: value, idd: this.props.id } ) );
+
 		switch(property){
 			case "name":
 				this.setState({ name : value }); console.log("Name=", this.state.name);
@@ -83,7 +90,7 @@ class Pet extends Component {
 				this.setState({ symptoms : value }); console.log("symptoms=", this.state.symptoms);
 				break;
 			case "admittedDate" :
-				this.setState({ admittedDate : value }); console.log("admitDate=", this.state.years);
+				this.setState({ admittedDate : value }); console.log("admitDate=", this.state.admittedDate);
 				break;
 
 			default:
@@ -98,62 +105,64 @@ class Pet extends Component {
 			<tr> 
 				<td> { this.state.id } </td>
 
-				<td> 
-					{ console.log(this.state.name) }
-					<PopDialog attr={ this.state.name }
-						sendToParent={this.retrieveFromPopup}
+				<td>
+					<PopDialog
+						//sendToParent={this.retrieveFromPopup}
 						elementType="text"
-						property="name"  >
+						identifier={ this.state.id }
+						property="name"
+						value={ this.state.name }>
 					</PopDialog>
 				</td>
 
+				{/**/} 
 				<td> 
-				<PopDialog attr={ this.state.speci } 
-					sendToParent={this.retrieveFromPopup}
-					elementType="select"
-					data={ {defaultVal:this.state.speci , 
-						defValDisp:this.state.speci, 
-						valueSet:this.species } /* {-1 for js exp, {-2 for jsObj */}
-					property="speci" >
+					<PopDialog 
+						value={ this.state.speci } 
+						elementType="select"
+						identifier={ this.state.id }
+						data={ {defaultVal:this.state.speci , 
+							defValDisp:this.state.speci, 
+							valueSet:this.species }}
+						property="speci" >
 					</PopDialog>
 				</td>
-
-				
-				<td><PopDialog attr={ this.state.gender }  
-					sendToParent={this.retrieveFromPopup}
-					elementType="radio"
-					data={ { valueSet:["Male", "Female"], defaultVal:this.state.gender } }
-					property="gender">
-					</PopDialog></td>
-
+				<td>
+					<PopDialog 
+						value={ this.state.gender }  
+						elementType="radio"
+						identifier={ this.state.id }
+						data={ { valueSet:["Male", "Female"], defaultVal:this.state.gender } }
+						property="gender">
+					</PopDialog>
+				</td>
 				<td> 
-				<PopDialog attr={ this.state.years }  
-					sendToParent={this.retrieveFromPopup}
-					elementType="number"
-					property="years">
+					<PopDialog 
+						value={ this.state.years }  
+						identifier={ this.state.id }
+						elementType="number"
+						property="years">
 					</PopDialog>
 				</td>
-
-
 				<td> 
-				<PopDialog attr={ this.state.symptoms }  
-					elementType="checkBox"
-					sendToParent={this.retrieveFromPopup}
-					data={ { defaultVal:this.state.symptoms, valueSet:this.symptomsInfo }  }
-					property="symptoms">
+					<PopDialog 
+						value={ this.state.symptoms } 
+						identifier={ this.state.id }
+						elementType="checkBox"
+						data={ { defaultVal:this.state.symptoms, valueSet:this.symptomsInfo }  }
+						property="symptoms">
 					</PopDialog>
 				</td>
-
 				<td> 
-				<PopDialog attr={ this.state.admittedDate }  
-					elementType="date"
-					sendToParent={this.retrieveFromPopup}
-					data={ {val:this.state.admittedDate} }
-					property="admittedDate">
+					<PopDialog 
+						value={ this.state.admittedDate } 
+						identifier={ this.state.id } 
+						elementType="date"
+						data={ {val:this.state.admittedDate} }
+						property="admittedDate">
 					</PopDialog>
-				</td>
+				</td> { /* */}
 			</tr>
-
 		);
 	}
 

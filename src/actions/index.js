@@ -12,7 +12,13 @@ export const viewPet = () =>({
 
 export const updatePet = data => ({
   type: 'UPDATEPET',
-  id: data.id
+  id: data.id,
+  details: data
+})
+
+export const viewNewPet = () =>({
+  type: 'VIEWNEW',
+
 })
 
 

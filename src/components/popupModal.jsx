@@ -7,6 +7,8 @@ import Select from 'react-select';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import { petStore } from "../stores/pets";
+
 //import Checkbox from "./checkBoxComp";
 
 export default class PopDialog extends Component {
@@ -18,7 +20,8 @@ export default class PopDialog extends Component {
 	}*/
 
 	state = {
-		/** property value */     				attributeValue	:this.props.attr  ,
+		/** record key */         				identifier	:this.props.identifier,
+		/** property value */     				attributeValue	:this.props.value,
 		/** property name */      				attributeName	:this.props.property,
 		/** element input type */ 				elementType		:this.props.elementType,
 		/** Detect popup modal open state */	popOpen			:false,
@@ -53,7 +56,7 @@ export default class PopDialog extends Component {
 						onClick={ ()=>{ console.log( "Popoup clicked: ",this ); 
 						//this.captureOpen();
 						/*window.popupOpen=1;*/  } } >
-						{ this.props.attr } { this.state.popOpen ? 'Y' : 'N' }  
+						{ this.props.value } { this.state.popOpen ? 'Y' : 'N' }  
 					</div>
 				} 
 				//open={ this.captureOpen() }				
@@ -77,7 +80,15 @@ export default class PopDialog extends Component {
 							{ /* End of Column specific input attributes */ }
 							<button onClick={ () => { 
 								this.setState({ attributeValue:this.state.attributeValue });
-								this.props.sendToParent( this.state.attributeName , this.state.attributeValue );
+								petStore.dispatch({
+									type: 'UPDATE_PET_DETAIL',
+									payload: {
+										identifier: this.state.identifier,
+										attribute: this.state.attributeName,
+										value: this.state.attributeValue
+									}
+								})
+								//this.props.sendToParent( this.state.attributeName , this.state.attributeValue );
 								close(); 
 								} } 
 								className="btn btn-sm btn-link" >OK</button>
