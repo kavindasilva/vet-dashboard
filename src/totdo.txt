@@ -17,3 +17,5 @@ this.state --> reducerName
 make modal dialog
 [checkbox] text, check/uncheck on text click
 Redux Example: https://github.com/reduxjs/redux
+
+https://medium.freecodecamp.org/understanding-redux-the-worlds-easiest-guide-to-beginning-redux-c695f45546f6?gi=3d3acd559a80

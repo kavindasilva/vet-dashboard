@@ -39,7 +39,6 @@ class Pets extends Component {
 	}
 	/**/
 
-	/**/componentDidMount(){
 		console.log("Pets - Mount");
 		let data = petAPIobj.callApi()
 			.then( response => {
