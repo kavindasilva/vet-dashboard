@@ -14,12 +14,15 @@
 const store = createStore(reducer);*/
 
 const PetReducer = (state, action) => {
-    console.log("Reducer: state: ", state, "\naction: ", action)
+    console.log("PetReducer: state: ", state, "\naction: ", action)
     switch (action.type) {
         case 'VIEWALL':
             console.log("reducer_VIEW") 
             return state;
-
+            
+        case 'UPDATEPET':
+            console.log("reducer_UPDATEPET") 
+            return state;
 
 
 
@@ -36,6 +39,7 @@ const PetReducer = (state, action) => {
 
 
         default:
+            console.log("reducer_DEFAULT")
             return state
         }
   }

@@ -16,7 +16,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import PopDialog from "./popupModal";
 
 import { connect } from 'react-redux';
-import { INCREMENT, DECREMENT } from '../actions/index';
+import {  } from '../actions/index';
 
 //const dd=window.
 

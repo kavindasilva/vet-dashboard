@@ -1,10 +1,17 @@
 
+
 /**
 	Details about all pets
 */
 
 import React, { Component } from 'react';
 import Pet from '../components/pet';
+
+import PetReducer from '../reducer/index'
+import { connect } from "react-redux";
+import { Provider } from 'react-redux'
+import { viewPet, updatePet } from '../actions/index'
+
 
 import petAPI from "../apicalls/petAPI";
 const petAPIobj = new petAPI();
@@ -13,7 +20,7 @@ const petAPIobj = new petAPI();
 //import Clock from '../components/clock';
 
 class Pets extends Component {
-	state = {
+	/*state = {
 		title: "Pets Details",
 
 		petAdmission: [],
@@ -25,7 +32,7 @@ class Pets extends Component {
 			{ id:4 , name:"Tommy" , speci:"Dog" , gender:"Female" , years:2 , symptoms:["Cold"] , admittedDate:"2019-04-03" },
 
 		],/**/
-	}
+	//}
 
 	styles1 = {
 		fontSize:18,
@@ -33,13 +40,22 @@ class Pets extends Component {
 	};
 
 	/**/
-	constructor(){
+	constructor( data ){
 		super();
+		this.stateData=data.stateInfo; console.log("Pets.stateData: ",this.stateData);
 		//this.eventHandle2 = this.eventHandle2.bind(this);
 	}
+	stateData = {}
 	/**/
 
 	/**/componentDidMount(){
+		//PetReducer( this.stateData, viewPet );
+		//console.log(store);
+		//this.setState({ petAdmission: this.props.stateInfo.petAdmission })
+
+	}
+
+	/**/componentDidMount0(){ // working
 		console.log("Pets - Mount");
 		let data = petAPIobj.callApi()
 			.then( response => {
@@ -84,7 +100,8 @@ class Pets extends Component {
 
 	viewAll(){
 		return (
-			this.state.petAdmission.map( pet => 
+			//this.state.petAdmission.map( pet => 
+			PetReducer( this.stateData, 0).petAdmission.map( pet => 
 				<Pet key={pet.id} 
 				  petRecord = {pet}
 
