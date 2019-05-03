@@ -71,7 +71,7 @@ export default class PopDialog extends Component {
 				{
 					close => (
 						<div>
-							<button className="close" onClick={ ()=>{
+							<button className="close btn btn-warning " onClick={ ()=>{
 								this.setState({ attributeValue: this.props.value });
 								close()} } > &times; </button>
 							
@@ -98,7 +98,7 @@ export default class PopDialog extends Component {
 								//this.props.sendToParent( this.state.attributeName , this.state.attributeValue );
 								close(); 
 								} } 
-								className="btn btn-sm btn-link" >OK</button>
+								className="btn btn-sm btn-success" >OK</button>
 								
 							{/*<a onClick={close} >
 							<button onClick={ () => this.setState({ attributeValue:this.props.attr }) } 

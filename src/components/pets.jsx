@@ -63,10 +63,10 @@ class Pets extends Component {
 		//data
 		//let varClass="btn btn-sm btn-";
 		return (
-			<div>
+			<div className="container">
 				{ /*<Clock />
 				{ /* passes petAdmission data to the pet object */ }
-				<table border="1">
+				<table border="1" className="table table-bordered table-striped table-hover dataTable no-footer">
 					<thead><tr>
 						<th>ID</th>
 						<th>Name</th>

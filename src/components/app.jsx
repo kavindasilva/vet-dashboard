@@ -41,7 +41,7 @@ class App extends Component {
 			.then(
 				response => {
 					petStore.dispatch({
-						type: 'GET_FROM_API',
+						type: 'FETCH_FROM_API',
 						payload: {
 							apiData: response.data
 						}
