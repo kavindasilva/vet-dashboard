@@ -115,7 +115,7 @@ class Pet extends Component {
 					</PopDialog>
 				</td>
 
-				{/**/} 
+				 
 				<td> 
 					<PopDialog 
 						value={ this.state.speci } 
@@ -161,50 +161,9 @@ class Pet extends Component {
 						data={ {val:this.state.admittedDate} }
 						property="admittedDate">
 					</PopDialog>
-				</td> { /* */}
+				</td> 
 			</tr>
 		);
-	}
-
-	// before redux
-	updateValue0=( property, value )=>{
-		console.log("property=", property, "\nvalue=", value);
-		this.setState( { property : value } )
-	}
-	
-	// with redux
-	updateValue = (property, value) => {
-		console.log("property=", property, "\nvalue=", value);
-		this.props.dispatch({ type: "INCREMENT" });
-	};
-
-
-	handleChange=(event)=> {
-		//this.props.
-		this.setState({
-			gender: event.target.value
-
-		});
-	}
-
-	changeAdmitDate=(admitDate)=>{
-		//{ admitDate=admitDate.format('YYYY-MM-DD');} // Wed Apr 24 2019 00:00:00 GMT+0530 (India Standard Time)
-		admitDate =  new Date( admitDate );
-		admitDate = admitDate.getFullYear()+"-"+
-			( admitDate.getMonth()<=8 ? "0"+(admitDate.getMonth()+1) : (admitDate.getMonth()+1) ) +"-"+
-			( admitDate.getDate()<=9 ? "0"+admitDate.getDate() : admitDate.getDate() );
-
-		console.log(admitDate);
-		//this.setState({ admittedDate: admitDate.target.value })
-		this.setState({ admittedDate: admitDate });
-	}
-
-	changeName = (text) => {
-		this.setState({ name: text });
-	}
-
-	changeAge = (text) => {
-		this.setState({ years: text });
 	}
 
 }

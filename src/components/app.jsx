@@ -8,9 +8,10 @@ class App extends Component {
 	state = {}
 
 	render() {
+		console.log('app.jsx-rendering');
 		return (
-            <Provider store={petStore}>
-                <Pets stateInfo={petStore.getState()}/>
+            <Provider store={ petStore } >
+                <Pets stateInfo={ petStore.getState() } />
             </Provider>
 		);
 	}

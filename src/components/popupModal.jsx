@@ -20,7 +20,7 @@ export default class PopDialog extends Component {
 	}*/
 
 	state = {
-		/** record key */         				identifier	:this.props.identifier,
+		/** record id */         				identifier	:this.props.identifier,
 		/** property value */     				attributeValue	:this.props.value,
 		/** property name */      				attributeName	:this.props.property,
 		/** element input type */ 				elementType		:this.props.elementType,
@@ -57,7 +57,7 @@ export default class PopDialog extends Component {
 						//this.captureOpen();
 						/*window.popupOpen=1;*/  } } >
 						{/* this.props.value } { this.state.popOpen ? 'Y' : 'N' */}  
-						{ this.props.value } { this.state.popOpen ? 'Y' : 'N' }  
+						{ this.state.attributeValue } { this.state.popOpen ? 'Y' : 'N' }  
 					</div>
 				} 
 				//open={ this.captureOpen() }				
@@ -111,7 +111,9 @@ export default class PopDialog extends Component {
 				case "text": case "number":
 					return (
 						<div>
-							<input type={this.state.elementType} value={this.state.attributeValue}
+							<input type={this.state.elementType} 
+								/*value={this.state.attributeValue}*/
+								value={this.state.attributeValue}
 								onChange={ (e) => (
 									this.setState({ attributeValue: e.target.value })
 									//this.props.sendToParent()
@@ -164,6 +166,7 @@ export default class PopDialog extends Component {
 								<div>
 									<label key={val.id}>
 										<input type="checkbox"
+											key={val.id}
 										 	name={val.name}
 											value={val.name}
 											checked={
@@ -230,32 +233,6 @@ export default class PopDialog extends Component {
 		this.setState({ attributeValue: admitDate });
 	}
 
-	showPop0(){
-		return(
-			<Popup trigger={ <span > { this.state.name }  </span>  } position="bottom left">
-			{
-				close => (
-						<div>
-							<button className="close" onClick={close}> &times; </button>
-							{ /*this.tempValue=this.state.name*/ }
-
-							<b>Change Name</b> <br/>
-
-							<input type="text" name="txtName" value={this.state.name} 
-								onChange={ e => this.setState({ name: e.target.value }) }  /> <br/>
-
-							<a onClick={close} >
-								<button onClick={ () => { this.setState({ name:this.state.name }); } } className="btn btn-sm btn-link" >OK</button>
-							</a>
-							{/*<a onClick={close} >
-							<button onClick={ () => this.setState({ name:this.props.name }) } className="btn btn-sm btn-link" >Cancel</button>
-						</a>*/}
-						</div>
-					)
-			}
-			</Popup>
-		);
-	}
 }
 
  

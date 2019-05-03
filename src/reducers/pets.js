@@ -21,7 +21,7 @@ const PetReducer = (state, action) => {
             return {
                 ...state,
                 admissions: state.admissions.map(record => {
-                    if (record.id == action.payload.identifier) {
+                    if (record.id === action.payload.identifier) {
                         let data = {};
                         data[action.payload.attribute] = action.payload.value;
                         return {

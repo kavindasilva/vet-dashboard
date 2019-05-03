@@ -8,26 +8,6 @@ import 'bootstrap/dist/css/bootstrap.css'; // working
 
 import { petStore } from "./stores/pets";
 
-
-// redux store
-function reducer1(state, action) {
-  console.log('reducer', state, action);
-  switch(action.type) {
-    case 'GETNAME':
-      return {
-        name: state.name + " getName"
-      };
-
-    case 'INCREMENT':
-      return {
-        name: state.name + " getName"
-      };
-
-    default:
-      return state;
-  }
-}
-
 //  const store = createStore(PetReducer, INITIAL_STATE );
 /*const store2 = createStore(PetReducer,  { petAdmission:[ 
       { "id":'0' , "name":"RoverStt" , "speci":"Dog" , 'gender':"Male" , 'years':"3.5" , 'symptoms':["Fever", "Cold"] , 'admittedDate':"2019-04-01" },
@@ -36,9 +16,9 @@ function reducer1(state, action) {
 
 
 const render = () => {
-  console.log('rendering');
+  console.log('index.js-rendering');
   ReactDOM.render(
-    <App/>,
+    <App />,
     document.getElementById('root')
   );
 }

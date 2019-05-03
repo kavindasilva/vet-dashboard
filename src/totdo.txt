@@ -17,3 +17,12 @@ this.state --> reducerName
 make modal dialog
 [checkbox] text, check/uncheck on text click
 Redux Example: https://github.com/reduxjs/redux
+
+--may 03
+https://stackoverflow.com/questions/31048953/what-do-these-three-dots-in-react-do
+https://stackoverflow.com/questions/15381198/remove-credentials-from-git
+https://stackoverflow.com/questions/36212860/subscribe-to-single-property-change-in-store-in-redux/36214059#36214059
+https://stackoverflow.com/questions/38332912/how-do-i-access-store-state-in-react-redux
+https://stackoverflow.com/questions/35300419/redux-do-i-have-to-import-store-in-all-my-containers-if-i-want-to-have-access-t
+https://stackoverflow.com/questions/39422521/how-can-i-change-the-user-on-git-bash
+
