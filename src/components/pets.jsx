@@ -120,7 +120,7 @@ class Pets extends Component {
 //export default Pets;
 
 const mapStateToProps = state => {
-	console.log('pets', 'map', state);
+	console.log('pets.jsx-mapStateToProps', state);
 	return {
 		admissions: state.admissions
 	};

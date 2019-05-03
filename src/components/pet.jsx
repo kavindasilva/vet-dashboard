@@ -168,5 +168,6 @@ const mapStateToProps = (state, myProps) => {
 
 
 //export default Pet;
+//export default connect()(Pet);
 //export default connect(mapStateToProps, mapDispatchToProps)(Pet);
 export default connect(mapStateToProps)(Pet);

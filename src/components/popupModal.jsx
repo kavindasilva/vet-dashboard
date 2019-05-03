@@ -20,7 +20,7 @@ export default class PopDialog extends Component {
 	}*/
 
 	state = {
-		/** record id */         				identifier	:this.props.identifier,
+		/** record id */         				identifier		:this.props.identifier,
 		/** property value */     				attributeValue	:this.props.value,
 		/** property name */      				attributeName	:this.props.property,
 		/** element input type */ 				elementType		:this.props.elementType,
@@ -45,11 +45,11 @@ export default class PopDialog extends Component {
 		//console.log("pop opened", this);
 	}
 
-	componentDidUpdate0(prevProps){
+	/*componentDidUpdate0(prevProps){
 		//if(prevProps.value !== this.props.value){ alert(prevProps.value) }	
 		console.log("componentDidUpdate prev: ", prevProps);
 		if(this.state.attributeValue !== this.props.value){ console.log(prevProps.value) }	
-	}
+	}*/
 
 	showPop( attribute1 ){
 		return(
@@ -212,9 +212,10 @@ export default class PopDialog extends Component {
 					return (
 						<ul>
 							<DatePicker 
-					     		selected={ new Date(this.state.attributeValue)} 
+					     		selected={ new Date(this.state.attributeValue) } 
 					     		onChange={this.changeAdmitDate} 
-					     		dateFormat="YYYY-MM-dd" 
+								dateFormat="YYYY-MM-dd" 
+								onClick={ console.log("DP") } 
 					     	/>
 					     	<br/>
 						</ul>
