@@ -45,6 +45,12 @@ export default class PopDialog extends Component {
 		//console.log("pop opened", this);
 	}
 
+	componentDidUpdate0(prevProps){
+		//if(prevProps.value !== this.props.value){ alert(prevProps.value) }	
+		console.log("componentDidUpdate prev: ", prevProps);
+		if(this.state.attributeValue !== this.props.value){ console.log(prevProps.value) }	
+	}
+
 	showPop( attribute1 ){
 		return(
 		  	<Popup 
@@ -56,8 +62,8 @@ export default class PopDialog extends Component {
 						onClick={ ()=>{ console.log( "Popoup clicked: ",this ); 
 						//this.captureOpen();
 						/*window.popupOpen=1;*/  } } >
-						{/* this.props.value } { this.state.popOpen ? 'Y' : 'N' */}  
-						{ this.state.attributeValue } { this.state.popOpen ? 'Y' : 'N' }  
+						{ this.props.value } { this.state.popOpen ? 'Y' : 'N' }  
+						{/* this.state.attributeValue } { this.state.popOpen ? 'Y' : 'N' */}  
 					</div>
 				} 
 				//open={ this.captureOpen() }				
@@ -80,7 +86,7 @@ export default class PopDialog extends Component {
 
 							{ /* End of Column specific input attributes */ }
 							<button onClick={ () => { 
-								this.setState({ attributeValue:this.state.attributeValue });
+								//this.setState({ attributeValue:this.state.attributeValue });
 								petStore.dispatch({
 									type: 'UPDATE_PET_DETAIL',
 									payload: {
@@ -88,7 +94,7 @@ export default class PopDialog extends Component {
 										attribute: this.state.attributeName,
 										value: this.state.attributeValue
 									}
-								})
+								})//.then( ()=> alert(this.props.value) )
 								//this.props.sendToParent( this.state.attributeName , this.state.attributeValue );
 								close(); 
 								} } 
@@ -234,6 +240,8 @@ export default class PopDialog extends Component {
 	}
 
 }
+
+//const uns=petStore.subscribe()
 
  
 /*export default () => (

@@ -22,7 +22,7 @@ const petAPIobj = new petAPI();
 
 class Pets extends Component {
 
-	state = { ...this.props.stateInfo };
+	state = {};
 	
 	styles1 = {
 		fontSize:18,
@@ -32,6 +32,8 @@ class Pets extends Component {
 	constructor(props){
 		super(props);
 	}
+
+	
 
 	componentDidMount(){
 		//PetReducer( this.stateData, viewPet );
@@ -85,17 +87,13 @@ class Pets extends Component {
 
 	viewAll(){
 		return (
-			//this.state.petAdmission.map( pet => 
-			// PetReducer( this.stateData, 0).admissions.map( pet => 
-			this.state.admissions.map( pet =>
-				<Pet key={pet.id} 
-				  petRecord = {pet}
-				> 
-				</Pet>
-			 )
+			this.props.admissions.map( pet =>
+				<Pet 
+					key={pet.id} 
+					identifier={pet.id}
+				/>
+			)
 		);
-
-		//this.state.petAdmission.map( pet => <Pet key={pet.id}  /> ) 
 	}
 
 
@@ -119,4 +117,13 @@ class Pets extends Component {
 	
 }
 
-export default Pets;
+//export default Pets;
+
+const mapStateToProps = state => {
+	console.log('pets', 'map', state);
+	return {
+		admissions: state.admissions
+	};
+}
+
+export default connect(mapStateToProps)(Pets);

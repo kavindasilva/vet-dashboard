@@ -24,22 +24,9 @@ import PetReducer from '../reducers/pets';
 //const dd=window.
 
 class Pet extends Component {
-	//state ={ name: "pet_defaultName" }
-	state = {
-		title: "Dynamic title",
-		...this.props.petRecord
-	}
+	state = {}
 
-	//state = petStore.getState().admissions.filter(pet => pet.id == this.props.key);
 	
-
-	constructor(props){
-		console.log(props);
-		super(props);
-	}
-
-	stateData = {  }
-
 	tempValue=null;
 	species = [
 		{ value: "Bird", label: "Bird" },
@@ -65,6 +52,7 @@ class Pet extends Component {
 		) ;
 
 	}
+	
 
 	/** Sample method to check child to parent data passing working */
 	retrieveFromPopup = (property, value) => {
@@ -103,62 +91,62 @@ class Pet extends Component {
 	viewPet(){
 		return (
 			<tr> 
-				<td> { this.state.id } </td>
+				<td> { this.props.id } </td>
 
 				<td>
 					<PopDialog
 						//sendToParent={this.retrieveFromPopup}
 						elementType="text"
-						identifier={ this.state.id }
+						identifier={ this.props.id }
 						property="name"
-						value={ this.state.name }>
+						value={ this.props.name }>
 					</PopDialog>
 				</td>
 
 				 
 				<td> 
 					<PopDialog 
-						value={ this.state.speci } 
+						value={ this.props.speci } 
 						elementType="select"
-						identifier={ this.state.id }
-						data={ {defaultVal:this.state.speci , 
-							defValDisp:this.state.speci, 
+						identifier={ this.props.id }
+						data={ {defaultVal:this.props.speci , 
+							defValDisp:this.props.speci, 
 							valueSet:this.species }}
 						property="speci" >
 					</PopDialog>
 				</td>
 				<td>
 					<PopDialog 
-						value={ this.state.gender }  
+						value={ this.props.gender }  
 						elementType="radio"
-						identifier={ this.state.id }
-						data={ { valueSet:["Male", "Female"], defaultVal:this.state.gender } }
+						identifier={ this.props.id }
+						data={ { valueSet:["Male", "Female"], defaultVal:this.props.gender } }
 						property="gender">
 					</PopDialog>
 				</td>
 				<td> 
 					<PopDialog 
-						value={ this.state.years }  
-						identifier={ this.state.id }
+						value={ this.props.years }  
+						identifier={ this.props.id }
 						elementType="number"
 						property="years">
 					</PopDialog>
 				</td>
 				<td> 
 					<PopDialog 
-						value={ this.state.symptoms } 
-						identifier={ this.state.id }
+						value={ this.props.symptoms } 
+						identifier={ this.props.id }
 						elementType="checkBox"
-						data={ { defaultVal:this.state.symptoms, valueSet:this.symptomsInfo }  }
+						data={ { defaultVal:this.props.symptoms, valueSet:this.symptomsInfo }  }
 						property="symptoms">
 					</PopDialog>
 				</td>
 				<td> 
 					<PopDialog 
-						value={ this.state.admittedDate } 
-						identifier={ this.state.id } 
+						value={ this.props.admittedDate } 
+						identifier={ this.props.id } 
 						elementType="date"
-						data={ {val:this.state.admittedDate} }
+						data={ {val:this.props.admittedDate} }
 						property="admittedDate">
 					</PopDialog>
 				</td> 
@@ -168,18 +156,17 @@ class Pet extends Component {
 
 }
 
-const mapDispatchToProps = {
-	//increment
-	//updateValue
-	//decrement
-};
+//const uns=petStore.subscribe(th)
 
-function mapStateToProps(state) {
-//mapStateToProps(state) {
+const mapStateToProps = (state, myProps) => {
+	let record = state.admissions.filter(record => myProps.identifier == record.id)[0];
+	console.log('pet', 'record', record, 'state', state, 'myProps', myProps);
 	return {
-		count: state.count
+		...record
 	};
 }
 
+
 //export default Pet;
-export default connect(mapStateToProps, mapDispatchToProps)(Pet);
+//export default connect(mapStateToProps, mapDispatchToProps)(Pet);
+export default connect(mapStateToProps)(Pet);
