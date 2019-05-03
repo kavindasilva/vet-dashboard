@@ -5,13 +5,11 @@ import Pets from "../components/pets";
 import { Provider } from 'react-redux';
 
 class App extends Component {
-	state = {}
-
 	render() {
-		console.log('app.jsx-rendering');
+		//console.log('app.jsx-rendering. petStore: ', petStore.getState() );
 		return (
             <Provider store={ petStore } >
-                <Pets stateInfo={ petStore.getState() } />
+                <Pets/>
             </Provider>
 		);
 	}

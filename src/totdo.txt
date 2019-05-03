@@ -25,4 +25,5 @@ https://stackoverflow.com/questions/36212860/subscribe-to-single-property-change
 https://stackoverflow.com/questions/38332912/how-do-i-access-store-state-in-react-redux
 https://stackoverflow.com/questions/35300419/redux-do-i-have-to-import-store-in-all-my-containers-if-i-want-to-have-access-t
 https://stackoverflow.com/questions/39422521/how-can-i-change-the-user-on-git-bash
+https://stackoverflow.com/questions/43276291/is-store-dispatch-in-redux-synchronous-or-asynchronous?noredirect=1&lq=1
 

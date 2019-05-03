@@ -18,7 +18,8 @@ const PetReducer = (state, action) => {
 
     switch (action.type) {
         case 'UPDATE_PET_DETAIL':
-            return {
+            let newState={}
+            newState= {
                 ...state,
                 admissions: state.admissions.map(record => {
                     if (record.id === action.payload.identifier) {
@@ -33,46 +34,12 @@ const PetReducer = (state, action) => {
                         return record;
                 })
             }
-
-/*   
-        case 'VIEWALL':
-            console.log("reducer_VIEW") 
-            return state;
-            
-        case 'UPDATEPET':
-            console.log("reducer_UPDATEPET") 
-            //let arrIndex = state.petAdmission.findIndex( item => item.id == action.id );
-            //let state2= [...state];
-            //console.log("state2: ",state2);
+            console.log("petReducer_UPDATE_PET_DETAIL: ", newState);
+            return newState;
         
-            return  [...state.petAdmission], {  "id":'4' , "name":"TommyStt" , 'speci':"Dog" , 'gender':"Female" , 'years':'2' , 'symptoms':["Cold"] , 'admittedDate':"2019-04-03" } ;
-
-        case 'VIEWNEW':
-            console.log("reducer_VIEWNEW") 
-            return { 
-                petAdmission:[ 
-                    { "id":'3' , "name":"PeterStt" , 'speci':"Bird" , 'gender':"Male" , 'years':'1' , 'symptoms':["Sleeping"] , 'admittedDate':"2019-04-03" },
-                    { "id":'4' , "name":"TommyStt" , 'speci':"Dog" , 'gender':"Female" , 'years':'2' , 'symptoms':["Cold"] , 'admittedDate':"2019-04-03" }
-            
-                ]
-             };
-
-
-        case 'ADD_TODO':
-            console.log("reducer_ADDTODO")
-            return [
-            ...state,
-            {
-                id: action.id,
-                text: action.text,
-                completed: false
-            }
-            ]
-
-*/
         default:
             return state
-        }
+    }
   }
   
   export default PetReducer
