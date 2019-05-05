@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ReactDOM from 'react-dom';
+//import ReactDOM from 'react-dom';
 import Popup from "reactjs-popup";
 //import Modal from 'react-modal';
 
@@ -70,7 +70,7 @@ export default class PopDialog extends Component {
 				position="bottom left" modal>
 				{
 					close => (
-						<div>
+						<div className="container">
 							<button className="close btn btn-warning " onClick={ ()=>{
 								this.setState({ attributeValue: this.props.value });
 								close()} } > &times; </button>
@@ -85,26 +85,32 @@ export default class PopDialog extends Component {
 
 
 							{ /* End of Column specific input attributes */ }
-							<button onClick={ () => { 
-								//this.setState({ attributeValue:this.state.attributeValue });
-								petStore.dispatch({
-									type: 'UPDATE_PET_DETAIL',
-									payload: {
-										identifier: this.state.identifier,
-										attribute: this.state.attributeName,
-										value: this.state.attributeValue
-									}
-								})//.then( ()=> alert(this.props.value) )
-								//this.props.sendToParent( this.state.attributeName , this.state.attributeValue );
-								close(); 
-								} } 
-								className="btn btn-sm btn-success" >OK</button>
-								
-							{/*<a onClick={close} >
-							<button onClick={ () => this.setState({ attributeValue:this.props.attr }) } 
-								className="btn btn-sm btn-warning" >Cancel</button>
-								</a> 
-								*/}
+							<div className="row">
+								<div className="col=md-10 col-sm-10">
+								</div>
+								<div className="col-md-2 col-sm-2">
+									<button onClick={ () => { 
+										//this.setState({ attributeValue:this.state.attributeValue });
+										petStore.dispatch({
+											type: 'UPDATE_PET_DETAIL',
+											payload: {
+												identifier: this.state.identifier,
+												attribute: this.state.attributeName,
+												value: this.state.attributeValue
+											}
+										})//.then( ()=> alert(this.props.value) )
+										//this.props.sendToParent( this.state.attributeName , this.state.attributeValue );
+										close(); 
+										} } 
+										className="btn btn-sm btn-success" >OK</button>
+										
+									{/*<a onClick={close} >
+									<button onClick={ () => this.setState({ attributeValue:this.props.attr }) } 
+										className="btn btn-sm btn-warning" >Cancel</button>
+										</a> 
+										*/}
+								</div>
+							</div>
 						</div>
 					)
 				}
@@ -127,7 +133,7 @@ export default class PopDialog extends Component {
 									) } />
 						</div>
 					);
-					break;
+					//break;
 
 				case "select":
 					return (
@@ -136,7 +142,7 @@ export default class PopDialog extends Component {
 				     		onChange={ e => this.setState({ attributeValue: e.label }) }
 				     		 />
 					);
-					break;
+					//break;
 
 				case "radio":
 					return (
@@ -148,10 +154,10 @@ export default class PopDialog extends Component {
 									<input type="radio" value={val}
 										checked={ (this.state.attributeValue===val)? true : false }
 										name={this.state.attributeName}
-										onChange={ (e)=>(
-											this.setState({ attributeValue: e.target.value}),
+										onChange={ (e)=>{
+											this.setState({ attributeValue: e.target.value});
 											console.log(e)
-											)
+											}
 										}
 									/> {val}
 								</li>
@@ -160,7 +166,7 @@ export default class PopDialog extends Component {
 						}
 						</ul>
 					);
-					break;
+					//break;
 
 				case "checkBox":
 					return (
@@ -169,8 +175,8 @@ export default class PopDialog extends Component {
 							//symptomsInfo =[{ id:0, name:"Bleeding", value:"Bleeding" }]
 							this.props.data.valueSet.map( (val, index) => (
 								//console.log("def=",this.state.attributeValue,"val=",val),
-								<div>
-									<label key={val.id}>
+								<div tmpkey={index} >
+									<label tmpkey={val.id}>
 										<input type="checkbox"
 											key={val.id}
 										 	name={val.name}
@@ -187,15 +193,22 @@ export default class PopDialog extends Component {
 									            else{ 
 									                var index = this.state.attributeValue.indexOf(e.target.value);
 									                if (index > -1) {
+									                	//prevState.list.filter( itm=> itm != index);
+									                	let newArr = [...this.state.attributeValue]; //
+									                    newArr.splice(index, 1);
+									                    this.setState({
+									                        attributeValue: newArr
+									                    })
+									                } 
+									                /*if (index > -1) {
 									                    this.state.attributeValue.splice(index, 1);
 									                    this.setState({
 									                        attributeValue: this.state.attributeValue
 									                    })
-									                } 
+									                } */
 									            }
 
-												}
-											}
+												}}
 										 />
 										{val.value}
 									</label>
@@ -206,7 +219,7 @@ export default class PopDialog extends Component {
 						}
 						</div>
 					);
-					break;
+					//break;
 
 				case "date":
 					return (
@@ -220,7 +233,7 @@ export default class PopDialog extends Component {
 					     	<br/>
 						</ul>
 					);
-					break;
+					//break;
 				
 				default:
 					console.log("invalid case");

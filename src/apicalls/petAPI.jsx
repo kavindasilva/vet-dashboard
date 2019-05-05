@@ -1,13 +1,13 @@
 
-import React, { Component } from 'react';
+import React from 'react';
 import axios from 'axios';
 
-//const API = 'http://127.0.0.1/ucsc5/vet-dashboard/phpApi/getData.php?q=';
-const API = 'http://127.0.0.1/phpApi/getData.php?q=';
+const APIGetUrl = 'http://127.0.0.1/ucsc5/vet-dashboard/phpApi/getData.php?q=';
+//const API = 'http://127.0.0.1/phpApi/getData.php?q=';
 const DEFAULT_QUERY = 'redux';
 
 
-class petAPI extends Component{
+class petAPI extends React.Component{
   /*state ={}
 
   constructor(){
@@ -16,7 +16,7 @@ class petAPI extends Component{
 
   callApi(){
     //var retStr;
-    return axios.get(API + DEFAULT_QUERY)
+    return axios.get(APIGetUrl + DEFAULT_QUERY)
       .then(result => {
         //console.log(result);
         //retStr=result;

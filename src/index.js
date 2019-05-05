@@ -6,7 +6,7 @@ import App from "./components/app";
 
 import 'bootstrap/dist/css/bootstrap.css'; // working
 
-import { petStore } from "./stores/pets";
+//import { petStore } from "./stores/pets";
 
 
 const render = () => {

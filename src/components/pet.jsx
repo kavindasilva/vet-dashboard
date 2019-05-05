@@ -16,9 +16,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import PopDialog from "./popupModal";
 
 import { connect } from 'react-redux';
-import { viewPet, updatePet, viewNewPet } from '../actions/index'
-import { petStore } from "../stores/pets";
-import PetReducer from '../reducers/pets';
+//import { viewPet, updatePet, viewNewPet } from '../actions/index'
+//import { petStore } from "../stores/pets";
+//import PetReducer from '../reducers/pets';
 
 
 //const dd=window.
@@ -159,8 +159,9 @@ class Pet extends Component {
 //const uns=petStore.subscribe(th)
 
 const mapStateToProps = (state, myProps) => {
-	let record = state.admissions.filter(record => myProps.identifier == record.id)[0];
-	console.log('pet', 'record', record, 'state', state, 'myProps', myProps);
+	let record = state.admissions.filter(record => myProps.identifier === record.id)[0];
+	//let record = state.admissions.filter(record => myProps.identifier == record.id);
+	//console.log('pet.jsx_mapStateToProps: record', record, 'state', state, 'myProps', myProps);
 	return {
 		...record
 	};

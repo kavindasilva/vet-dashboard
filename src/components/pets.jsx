@@ -10,8 +10,8 @@ import Pet from '../components/pet';
 
  // import PetReducer from '../reducers/pets'
 import { connect } from "react-redux";
-import { Provider } from 'react-redux'
-import { viewPet, updatePet, viewNewPet } from '../actions/index'
+//import { Provider } from 'react-redux'
+//import { viewPet, updatePet, viewNewPet } from '../actions/index'
 
 
 import petAPI from "../apicalls/petAPI";
@@ -29,9 +29,9 @@ class Pets extends Component {
 		fontWeight: "bold"
 	};
 
-	constructor(props){
+	/*constructor(props){
 		super(props);
-	}
+	}*/
 
 	
 
@@ -44,7 +44,8 @@ class Pets extends Component {
 
 	/**/componentDidMount0(){ // working
 		console.log("Pets - Mount");
-		let data = petAPIobj.callApi()
+		//let data = petAPIobj.callApi()
+		petAPIobj.callApi()
 			.then( response => {
 				console.log(response);
 				if(response.data){

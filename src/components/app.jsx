@@ -28,7 +28,8 @@ class App extends Component {
 
 	componentDidMount(){ // working
 		console.log("App - Mount");
-		let data = petAPIobj.callApi()
+		//let data = petAPIobj.callApi()
+		petAPIobj.callApi()
 			.then( response => {
 				console.log(response);
 				if(response.data){
