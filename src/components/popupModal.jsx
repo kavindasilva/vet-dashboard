@@ -7,6 +7,12 @@ import Select from 'react-select';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import InfiniteCalendar from 'react-infinite-calendar';
+import 'react-infinite-calendar/styles.css';
+
+//import { DatePicker } from '@y0c/react-datepicker';
+//import '@y0c/react-datepicker/assets/styles/calendar.scss';
+
 import { petStore } from "../stores/pets";
 
 //import Checkbox from "./checkBoxComp";
@@ -52,6 +58,19 @@ export default class PopDialog extends Component {
 	}*/
 
 	showPop( attribute1 ){
+		if( this.state.elementType==="date1" ){
+			return(
+				<DatePicker 
+					     		selected={ new Date(this.state.attributeValue) } 
+					     		onChange={this.changeAdmitDate} 
+									dateFormat="YYYY-MM-dd" 
+									onClick={ console.log("DP") 
+
+									} 
+					     	/>
+			)
+		}
+		else{
 		return(
 		  	<Popup 
 				onOpen={ ()=> this.setState({ popOpen: true }) }
@@ -59,10 +78,19 @@ export default class PopDialog extends Component {
 				//defaultOpen={false}
 		  		trigger={
 					<div style={this.styleTD} 
-						onClick={ ()=>{ console.log( "Popoup clicked: ",this ); 
-						//this.captureOpen();
-						/*window.popupOpen=1;*/  } } >
-						{ this.props.value } { this.state.popOpen ? 'Y' : 'N' }  
+						onClick={ ()=>{ 
+							console.log( "Popoup clicked: ",this ); 
+						} } >
+						{ (this.state.elementType!="date1") ? this.props.value : <DatePicker 
+					     		selected={ new Date(this.state.attributeValue) } 
+					     		onChange={this.changeAdmitDate} 
+									dateFormat="YYYY-MM-dd" 
+									onClick={ console.log("DP") 
+
+									} 
+					     	/>
+						} 
+						{ this.state.popOpen ? 'Y' : '' }  
 						{/* this.state.attributeValue } { this.state.popOpen ? 'Y' : 'N' */}  
 					</div>
 				} 
@@ -116,6 +144,7 @@ export default class PopDialog extends Component {
 				}
 			</Popup>
 		);
+			}
 	}
 
 	makeInputElements= (  ) =>{
@@ -222,13 +251,31 @@ export default class PopDialog extends Component {
 					//break;
 
 				case "date":
+					return(
+						<ul>
+							<InfiniteCalendar
+								width={280}
+								height={200}
+								selected={ new Date(this.state.attributeValue) }
+								displayOptions={{
+									showTodayHelper: false
+									
+								}}
+								onSelect={this.changeAdmitDate}
+							/>
+						</ul>
+					)
+
+				case "date0": // previously working one
 					return (
 						<ul>
 							<DatePicker 
 					     		selected={ new Date(this.state.attributeValue) } 
 					     		onChange={this.changeAdmitDate} 
-								dateFormat="YYYY-MM-dd" 
-								onClick={ console.log("DP") } 
+									dateFormat="YYYY-MM-dd" 
+									onClick={ console.log("DP") 
+
+									} 
 					     	/>
 					     	<br/>
 						</ul>
