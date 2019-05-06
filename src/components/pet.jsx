@@ -20,6 +20,9 @@ import { connect } from 'react-redux';
 //import { petStore } from "../stores/pets";
 //import PetReducer from '../reducers/pets';
 
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+
 
 //const dd=window.
 
@@ -90,10 +93,10 @@ class Pet extends Component {
 
 	viewPet(){
 		return (
-			<tr> 
-				<td> { this.props.id } </td>
+			<TableRow> 
+				<TableCell> { this.props.id } </TableCell>
 
-				<td>
+				<TableCell>
 					<PopDialog
 						//sendToParent={this.retrieveFromPopup}
 						elementType="text"
@@ -101,10 +104,10 @@ class Pet extends Component {
 						property="name"
 						value={ this.props.name }>
 					</PopDialog>
-				</td>
+				</TableCell>
 
 				 
-				<td> 
+				<TableCell> 
 					<PopDialog 
 						value={ this.props.speci } 
 						elementType="select"
@@ -114,8 +117,8 @@ class Pet extends Component {
 							valueSet:this.species }}
 						property="speci" >
 					</PopDialog>
-				</td>
-				<td>
+				</TableCell>
+				<TableCell>
 					<PopDialog 
 						value={ this.props.gender }  
 						elementType="radio"
@@ -123,16 +126,16 @@ class Pet extends Component {
 						data={ { valueSet:["Male", "Female"], defaultVal:this.props.gender } }
 						property="gender">
 					</PopDialog>
-				</td>
-				<td> 
+				</TableCell>
+				<TableCell> 
 					<PopDialog 
 						value={ this.props.years }  
 						identifier={ this.props.id }
 						elementType="number"
 						property="years">
 					</PopDialog>
-				</td>
-				<td> 
+				</TableCell>
+				<TableCell> 
 					<PopDialog 
 						value={ this.props.symptoms } 
 						identifier={ this.props.id }
@@ -140,8 +143,8 @@ class Pet extends Component {
 						data={ { defaultVal:this.props.symptoms, valueSet:this.symptomsInfo }  }
 						property="symptoms">
 					</PopDialog>
-				</td>
-				<td> 
+				</TableCell>
+				<TableCell> 
 					<PopDialog 
 						value={ this.props.admittedDate } 
 						identifier={ this.props.id } 
@@ -149,8 +152,8 @@ class Pet extends Component {
 						data={ {val:this.props.admittedDate} }
 						property="admittedDate">
 					</PopDialog>
-				</td> 
-			</tr>
+				</TableCell> 
+			</TableRow>
 		);
 	}
 

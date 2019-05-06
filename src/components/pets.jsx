@@ -13,6 +13,14 @@ import { connect } from "react-redux";
 //import { Provider } from 'react-redux'
 //import { viewPet, updatePet, viewNewPet } from '../actions/index'
 
+import { withStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
 
 import petAPI from "../apicalls/petAPI";
 const petAPIobj = new petAPI();
@@ -28,6 +36,14 @@ class Pets extends Component {
 		fontSize:18,
 		fontWeight: "bold"
 	};
+
+	styleMatUI ={
+		table:{
+			width: '100%',
+			//marginTop: theme.spacing.unit * 3,
+			overflowX: 'auto',
+		}
+	}
 
 	/*constructor(props){
 		super(props);
@@ -60,7 +76,34 @@ class Pets extends Component {
 
 	}/**/
 
-	render() {
+	render(){ //with materialUI
+		return(
+			<div className="container">
+				<Paper style={ this.styleMatUI.table }>
+					<Table >
+						<TableHead>
+							<TableRow>
+								<TableCell>ID</TableCell>
+								<TableCell>Name</TableCell>
+								<TableCell>Speci</TableCell>
+
+								<TableCell>Gender</TableCell>
+								<TableCell>Age</TableCell>
+								<TableCell>Symptoms</TableCell>
+								<TableCell>Admitted Date</TableCell>
+								
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							{ this.viewAll() }
+						</TableBody>
+					</Table>
+				</Paper>
+			</div>
+		)
+	}
+
+	render0() { // with bootstrap
 		//data
 		//let varClass="btn btn-sm btn-";
 		return (
@@ -86,7 +129,7 @@ class Pets extends Component {
 
 	}
 
-	viewAll(){
+	viewAll(){ //with booststrap & materialUI
 		return (
 			this.props.admissions.map( pet =>
 				<Pet 
@@ -97,23 +140,6 @@ class Pets extends Component {
 		);
 	}
 
-
-	callApi0(){
-		// Github fetch library : https://github.com/github/fetch
-		// Call the API page
-		fetch('http://127.0.0.1/ucsc5/vet-dashboard/phpApi/getData.php')
-			.then((result) => {
-				// Get the result
-				// If we want text, call result.text()
-				return result.json();
-			})
-			.then((jsonResult) => {
-				// Do something with the result
-				//console.log(jsonResult);
-				this.setState({ petAdmission: jsonResult });
-				return jsonResult;
-			})
-	}
 
 	
 }

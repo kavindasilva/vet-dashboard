@@ -17,6 +17,8 @@ import { DatePicker } from '@y0c/react-datepicker';
 //import { CalendarSelectedController } from '@y0c/react-datepicker';
 import '@y0c/react-datepicker/assets/styles/calendar.scss';
 
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 import { petStore } from "../stores/pets";
 
@@ -112,6 +114,9 @@ export default class PopDialog extends Component {
 								this.setState({ attributeValue: this.props.value });
 								close()} } > &times; </button>
 							
+							{ /* <AppBar color="primary" position="static">
+								<h1>My header</h1>
+							</AppBar> */ }
 							<b>Change { this.state.attributeName }</b> <br/>
 							{ /* Starting of Column specific input attributes */ }
 							
@@ -126,7 +131,7 @@ export default class PopDialog extends Component {
 								<div className="col=md-10 col-sm-10">
 								</div>
 								<div className="col-md-2 col-sm-2">
-									<button onClick={ () => { 
+									<Button onClick={ () => { 
 										//this.setState({ attributeValue:this.state.attributeValue });
 										petStore.dispatch({
 											type: 'UPDATE_PET_DETAIL',
@@ -139,7 +144,8 @@ export default class PopDialog extends Component {
 										//this.props.sendToParent( this.state.attributeName , this.state.attributeValue );
 										close(); 
 										} } 
-										className="btn btn-sm btn-success" >OK</button>
+										variant="contained" color="primary"
+										className="btn btn-sm btn-success" >OK</Button>
 										
 									{/*<a onClick={close} >
 									<button onClick={ () => this.setState({ attributeValue:this.props.attr }) } 
