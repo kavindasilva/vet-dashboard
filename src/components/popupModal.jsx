@@ -4,14 +4,19 @@ import Popup from "reactjs-popup";
 //import Modal from 'react-modal';
 
 import Select from 'react-select';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+//import DatePicker from "react-datepicker";
+//import "react-datepicker/dist/react-datepicker.css";
+
+import DayPicker from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
 
 import InfiniteCalendar from 'react-infinite-calendar';
 import 'react-infinite-calendar/styles.css';
 
-//import { DatePicker } from '@y0c/react-datepicker';
-//import '@y0c/react-datepicker/assets/styles/calendar.scss';
+import { DatePicker } from '@y0c/react-datepicker';
+//import { CalendarSelectedController } from '@y0c/react-datepicker';
+import '@y0c/react-datepicker/assets/styles/calendar.scss';
+
 
 import { petStore } from "../stores/pets";
 
@@ -31,6 +36,7 @@ export default class PopDialog extends Component {
 		/** property name */      				attributeName	:this.props.property,
 		/** element input type */ 				elementType		:this.props.elementType,
 		/** Detect popup modal open state */	popOpen			:false,
+		/** temporary day to keep clendar selected date */ tempDayCal: this.props.value
 	}
 
 	styleTD={
@@ -58,6 +64,7 @@ export default class PopDialog extends Component {
 	}*/
 
 	showPop( attribute1 ){
+		// to test direct input element in <td>
 		if( this.state.elementType==="date1" ){
 			return(
 				<DatePicker 
@@ -81,7 +88,9 @@ export default class PopDialog extends Component {
 						onClick={ ()=>{ 
 							console.log( "Popoup clicked: ",this ); 
 						} } >
-						{ (this.state.elementType!="date1") ? this.props.value : <DatePicker 
+						{
+							// to test direct input element in <td>
+							(this.state.elementType!=="date1") ? this.props.value : <DatePicker 
 					     		selected={ new Date(this.state.attributeValue) } 
 					     		onChange={this.changeAdmitDate} 
 									dateFormat="YYYY-MM-dd" 
@@ -253,14 +262,29 @@ export default class PopDialog extends Component {
 				case "date":
 					return(
 						<ul>
+							<DayPicker showToday={false}
+								onDayClick={ clickDay => { this.setState({ tempDayCal: clickDay }); this.changeAdmitDate(clickDay) } }
+								selectedDays={ new Date(this.state.attributeValue) }
+								
+							/>
+
+						</ul>
+					)
+				
+				case "date1":
+					return(
+						<ul>
 							<InfiniteCalendar
 								width={280}
 								height={200}
 								selected={ new Date(this.state.attributeValue) }
 								displayOptions={{
-									showTodayHelper: false
-									
+									showTodayHelper: false,
+									showHeader: true
 								}}
+								locale={{
+									weekStartsOn: 1
+									}}
 								onSelect={this.changeAdmitDate}
 							/>
 						</ul>
