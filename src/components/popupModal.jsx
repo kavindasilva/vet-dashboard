@@ -45,8 +45,8 @@ export default class PopDialog extends Component {
   };
 
   render() {
-    return (
-      <div>
+    //return (
+      {/*<div>
         <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
           Open form dialog
         </Button>
@@ -72,8 +72,8 @@ export default class PopDialog extends Component {
             </Button>
           </DialogActions>
         </Dialog>
-      </div>
-    );
+      </div>*/}
+    //);
 	}
 	
 //}
@@ -129,78 +129,92 @@ export default class PopDialog extends Component {
 	}*/
 
 	showPop( attribute1 ){
-		// to test direct input element in <td>
-		if( this.state.elementType==="date1" ){
-			return(
-				<DatePicker 
-					selected={ new Date(this.state.attributeValue) } 
-					onChange={this.changeAdmitDate} 
-					dateFormat="YYYY-MM-dd" 
-					onClick={ console.log("DP") 
 
-					} 
-				/>
-			)
-		}
-		else{
 		return(
-		  	<Popup 
+			<div>
+				{/*<Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
+					Open form dialog
+				</Button>*/}
+
+				<div style={this.styleTD} 
+					onClick={ ()=>{ 
+						this.handleClickOpen;
+						console.log( "Popoup clicked: ",this ); 
+					} } >
+
+					{ this.state.popOpen ? 'Y' : '' }  
+					{/* this.state.attributeValue } { this.state.popOpen ? 'Y' : 'N' */}  
+				</div>
+
+
+				<Dialog
+					open={this.state.open}
+					onClose={this.handleClose}
+					PaperComponent={PaperComponent}
+					aria-labelledby="draggable-dialog-title"
+				>
+					<DialogTitle id="draggable-dialog-title">
+						<b>Change { this.state.attributeName }</b> <br/>
+					</DialogTitle>
+
+					<DialogContent>
+						<DialogContentText>
+							{ this.makeInputElements() }
+						</DialogContentText>
+					</DialogContent>
+
+					<DialogActions>
+						<Button onClick={ ()=>{
+							this.setState({ attributeValue: this.props.value });
+							close()} }
+							style={ this.styleMatUI.closeButton }	
+						>
+								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" 
+									viewBox="0 0 18 18">
+									<path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
+									</svg>								
+						</Button>
+						
+						<Button onClick={ () => { 
+							//this.setState({ attributeValue:this.state.attributeValue });
+							petStore.dispatch({
+								type: 'UPDATE_PET_DETAIL',
+								payload: {
+									identifier: this.state.identifier,
+									attribute: this.state.attributeName,
+									value: this.state.attributeValue
+								}
+							})
+							this.handleclose; 
+							} } 
+							variant="contained" color="primary"
+							className="btn btn-sm btn-success" 
+							style={this.styleMatUI.closeButton} >OK
+						</Button>
+					</DialogActions>
+				</Dialog>
+			
+
+		  	{/*<Popup 
 				onOpen={ ()=> this.setState({ popOpen: true }) }
 				onClose={ ()=>this.setState({ popOpen:false }) }
-				//defaultOpen={false}
-		  		trigger={
-					<div style={this.styleTD} 
-						onClick={ ()=>{ 
-							console.log( "Popoup clicked: ",this ); 
-						} } >
-						{
-							// to test direct input element in <td>
-							(this.state.elementType!=="date1") ? this.props.value : <DatePicker 
-					     		selected={ new Date(this.state.attributeValue) } 
-					     		onChange={this.changeAdmitDate} 
-									dateFormat="YYYY-MM-dd" 
-									onClick={ console.log("DP") 
 
-									} 
-					     	/>
-						} 
-						{ this.state.popOpen ? 'Y' : '' }  
-						{/* this.state.attributeValue } { this.state.popOpen ? 'Y' : 'N' */}  
-					</div>
-				} 
 				//open={ this.captureOpen() }				
 				position="bottom left" modal>
 				{
 					close => (
 						<div className="container">
-							{/*<button className="close btn btn-warning " onClick={ ()=>{
-								this.setState({ attributeValue: this.props.value });
-							close()} } > &times; </button>*/}
 
-							<Button onClick={ ()=>{
-								this.setState({ attributeValue: this.props.value });
-								close()} }
-								style={ this.styleMatUI.closeButton }	
-							>
-									<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" 
-										viewBox="0 0 18 18">
-										<path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
-										</svg>								
-							</Button>
-
-							{ /* <AppBar color="primary" position="static">
-								<h1>My header</h1>
-							</AppBar> */ }
 							<b>Change { this.state.attributeName }</b> <br/>
 							{ /* Starting of Column specific input attributes */ }
 							
 
 							{/* <input type="text" name="txtName" value={this.state.attributeName} 
-									onChange={ e => this.setState({ attributeName: e.target.value }) }  /> <br/> */}
+									onChange={ e => this.setState({ attributeName: e.target.value }) }  /> <br/> /}
 							{ this.makeInputElements() }
 
 
-							{ /* End of Column specific input attributes */ }
+							{ /* End of Column specific input attributes / }
 							<div className="row">
 								<div className="col=md-10 col-sm-10">
 								</div>
@@ -226,15 +240,16 @@ export default class PopDialog extends Component {
 									<button onClick={ () => this.setState({ attributeValue:this.props.attr }) } 
 										className="btn btn-sm btn-warning" >Cancel</button>
 										</a> 
-										*/}
+										/}
 								</div>
 							</div>
 						</div>
 					)
 				}
-			</Popup>
+			</Popup>*/}
+			</div>
 		);
-		}
+		
 	}
 
 	makeInputElements= (  ) =>{
