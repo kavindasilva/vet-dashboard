@@ -46,6 +46,15 @@ export default class PopDialog extends Component {
 		color: "#111111"
 	}
 
+	styleMatUI={
+		closeButton: {
+			cursor:'pointer', 
+			float:'right', 
+			marginTop: '5px', 
+			width: '20px'
+		}
+	}
+
 	render(){
 		return (
 			<React.Fragment>
@@ -70,13 +79,13 @@ export default class PopDialog extends Component {
 		if( this.state.elementType==="date1" ){
 			return(
 				<DatePicker 
-					     		selected={ new Date(this.state.attributeValue) } 
-					     		onChange={this.changeAdmitDate} 
-									dateFormat="YYYY-MM-dd" 
-									onClick={ console.log("DP") 
+					selected={ new Date(this.state.attributeValue) } 
+					onChange={this.changeAdmitDate} 
+					dateFormat="YYYY-MM-dd" 
+					onClick={ console.log("DP") 
 
-									} 
-					     	/>
+					} 
+				/>
 			)
 		}
 		else{
@@ -110,10 +119,21 @@ export default class PopDialog extends Component {
 				{
 					close => (
 						<div className="container">
-							<button className="close btn btn-warning " onClick={ ()=>{
+							{/*<button className="close btn btn-warning " onClick={ ()=>{
 								this.setState({ attributeValue: this.props.value });
-								close()} } > &times; </button>
-							
+							close()} } > &times; </button>*/}
+
+							<Button onClick={ ()=>{
+								this.setState({ attributeValue: this.props.value });
+								close()} }
+								style={ this.styleMatUI.closeButton }	
+							>
+									<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" 
+										viewBox="0 0 18 18">
+										<path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
+										</svg>								
+							</Button>
+
 							{ /* <AppBar color="primary" position="static">
 								<h1>My header</h1>
 							</AppBar> */ }
@@ -145,7 +165,8 @@ export default class PopDialog extends Component {
 										close(); 
 										} } 
 										variant="contained" color="primary"
-										className="btn btn-sm btn-success" >OK</Button>
+										className="btn btn-sm btn-success" 
+										style={this.styleMatUI.closeButton} >OK</Button>
 										
 									{/*<a onClick={close} >
 									<button onClick={ () => this.setState({ attributeValue:this.props.attr }) } 
@@ -159,7 +180,7 @@ export default class PopDialog extends Component {
 				}
 			</Popup>
 		);
-			}
+		}
 	}
 
 	makeInputElements= (  ) =>{

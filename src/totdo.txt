@@ -31,3 +31,9 @@ https://stackoverflow.com/questions/43276291/is-store-dispatch-in-redux-synchron
 connect API with store
 make datepicker nice
 make ui beautiful
+
+--may 06
+https://stackoverflow.com/questions/42363198/how-to-add-close-icon-in-material-ui-dialog-header-top-right-corner
+migrate all things to material UI
+test cases
+

@@ -91,7 +91,7 @@ class Pet extends Component {
 		console.log("retrieve data called");
 	}
 
-	viewPet(){
+	viewPet(){ // with mmterialUI : tr -> TableRow; td -> TableCell
 		return (
 			<TableRow> 
 				<TableCell> { this.props.id } </TableCell>
