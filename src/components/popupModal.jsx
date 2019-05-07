@@ -47,7 +47,7 @@ class PopDialog extends Component {
 		/** property name */      				attributeName	:this.props.property,
 		/** element input type */ 				elementType		:this.props.elementType,
 		/** Detect popup modal open state */	open			:false,
-		/** temporary day to keep clendar selected date */ tempDayCal: this.props.value
+		/** temporary day to keep calendar selected date */ tempDayCal: this.props.value
 	}
 
 	styleTD={
@@ -60,7 +60,12 @@ class PopDialog extends Component {
 			cursor:'pointer', 
 			float:'right', 
 			marginTop: '5px', 
-			width: '20px'
+			width: '20px',
+			align: 'right'
+		},
+
+		titleBarThin:{
+			padding: "0 24 0 24"
 		}
 	}
 
@@ -81,16 +86,6 @@ class PopDialog extends Component {
 		)
 	}
 	
-//}
-
-	render0(){ // before material UI
-		return (
-			<React.Fragment>
-				{ this.showPop(0) }
-			</React.Fragment>
-		)
-	}
-
 	captureOpen=()=>{
 		this.setState({ open: true });
 		//console.log("pop opened", this);
@@ -124,7 +119,22 @@ class PopDialog extends Component {
 					//PaperComponent={PaperComponent}
 					aria-labelledby="draggable-dialog-title"
 				>
-					<DialogTitle id="draggable-dialog-title">
+					<DialogActions>
+						<Button onClick={ ()=>{
+								this.setState({ attributeValue: this.props.value });
+								this.handleClose() 
+							} }
+							style={ this.styleMatUI.closeButton }	
+						>
+								{ /* Close button svg icon from material UI documentation */ }
+								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" 
+									viewBox="0 0 18 18">
+									<path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
+									</svg>								
+						</Button>
+					</DialogActions>
+
+					<DialogTitle id="draggable-dialog-title" style={ { padding: "0px 24px 0px 24px" } }>
 						<b>Change { this.state.attributeName }</b> <br/>
 					</DialogTitle>
 
@@ -153,18 +163,7 @@ class PopDialog extends Component {
 							style={this.styleMatUI.closeButton} >OK
 						</Button>
 
-						<Button onClick={ ()=>{
-								this.setState({ attributeValue: this.props.value });
-								this.handleClose() 
-							} }
-							style={ this.styleMatUI.closeButton }	
-						>
-								{ /* Close button svg icon from material UI documentation */ }
-								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" 
-									viewBox="0 0 18 18">
-									<path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
-									</svg>								
-						</Button>
+						
 					</DialogActions>
 				</Dialog>
 			
@@ -194,15 +193,19 @@ class PopDialog extends Component {
 
 					case "select":
 						return (
-							<Select value={ this.state.attributeValue } 
-								onChange={ e => this.setState({ attributeValue: e.target.value }) }
-							>
-								{
-									this.props.data.valueSet.map( item =>
-											<MenuItem key={ item.value } value={ item.value } >{ item.label }</MenuItem>
-										)
-								}
-							</Select>
+							<React.Fragment>
+								<br />
+								<Select value={ this.state.attributeValue } 
+									onChange={ e => this.setState({ attributeValue: e.target.value }) }
+									fullWidth={true}
+								>
+									{
+										this.props.data.valueSet.map( item =>
+												<MenuItem key={ item.value } value={ item.value } >{ item.label }</MenuItem>
+											)
+									}
+								</Select>
+							</React.Fragment>
 						);
 					case "select0": //before material UI
 						return (
@@ -271,6 +274,7 @@ class PopDialog extends Component {
 												color="primary"
 											/>
 										}
+										style={ { width: "100%" } }
 										label={ val.value }
 									>
 									</FormControlLabel>
