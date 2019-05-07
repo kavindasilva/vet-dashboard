@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import Popup from "reactjs-popup";
 //import Modal from 'react-modal';
 
-import Select from 'react-select';
+//import Select from 'react-select'; //before material UI
 //import DatePicker from "react-datepicker";
 //import "react-datepicker/dist/react-datepicker.css";
 
@@ -26,12 +26,15 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
+import Select from '@material-ui/core/Select';
 
 import { petStore } from "../stores/pets";
+import { MenuItem } from "@material-ui/core";
 
 //import Checkbox from "./checkBoxComp";
 
-export default class PopDialog extends Component {
+//export default class PopDialog extends Component {
+class PopDialog extends Component {
 	state = {
 		/** record id */         				identifier		:this.props.identifier,
 		/** property value */     				attributeValue	:this.props.value,
@@ -70,35 +73,6 @@ export default class PopDialog extends Component {
 				{ this.showPop(0) }
 			</React.Fragment>
 		)
-    //return (
-      {/*<div>
-        <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-          Open form dialog
-        </Button>
-        <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          PaperComponent={PaperComponent}
-          aria-labelledby="draggable-dialog-title"
-        >
-          <DialogTitle id="draggable-dialog-title">Subscribe</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              To subscribe to this website, please enter your email address here. We will send
-              updates occasionally.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={this.handleClose} color="primary">
-              Subscribe
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>*/}
-    //);
 	}
 	
 //}
@@ -131,7 +105,8 @@ export default class PopDialog extends Component {
 						console.log( "Popoup clicked: ",this ); 
 					} } >
 
-					{ this.props.value }  
+					{ this.props.value  /* this.props when using redux */}  
+					{ /*this.state.attributeValue /* just for testing */ }  
 					{ this.state.open ? 'Y' : '' }  
 					{/* this.state.attributeValue } { this.state.open ? 'Y' : 'N' */}  
 				</div>
@@ -140,7 +115,7 @@ export default class PopDialog extends Component {
 				<Dialog
 					open={this.state.open}
 					onClose={this.handleClose}
-					PaperComponent={PaperComponent}
+					//PaperComponent={PaperComponent}
 					aria-labelledby="draggable-dialog-title"
 				>
 					<DialogTitle id="draggable-dialog-title">
@@ -148,9 +123,9 @@ export default class PopDialog extends Component {
 					</DialogTitle>
 
 					<DialogContent>
-						<DialogContentText>
+						
 							{ this.makeInputElements() }
-						</DialogContentText>
+						
 					</DialogContent>
 
 					<DialogActions>
@@ -196,23 +171,39 @@ export default class PopDialog extends Component {
 			switch (this.state.elementType) {
 				case "text": case "number":
 					return (
-						<div>
+
 							<input type={this.state.elementType} 
 								/*value={this.state.attributeValue}*/
 								/*value={this.state.attributeValue}*/
 								value={this.state.attributeValue}
-								onChange={ (e) => {
-									this.setState({ attributeValue: e.target.value })
+								onChange={ e => (
+									e.preventDefault(),
+									//this.setState({ attributeValue: 10 }),
+									this.setState({ attributeValue: e.target.value }),
 									//this.props.sendToParent()
-									//console.log("onChange data", e)
-								 } } />
-						</div>
+									console.log("onChange data", e)
+								 ) } />
+
 					);
 					//break;
 
-				case "select":
+					case "select":
 					return (
-						<Select options={ this.props.data.valueSet }
+						<Select value={ this.state.attributeValue } 
+							onChange={ e => this.setState({ attributeValue: e.target.value }) }
+						>
+							{
+								this.props.data.valueSet.map( item =>
+										<MenuItem key={ item.value } value={ item.value } >{ item.label }</MenuItem>
+									)
+							}
+						</Select>
+					);
+					case "select0": //before material UI
+					return (
+
+						<Select 
+								options={ this.props.data.valueSet }
 				     		defaultValue={{ value: this.props.data.defaultValue , label: this.props.data.defValDisp }}
 				     		onChange={ e => this.setState({ attributeValue: e.label }) }
 				     		 />
@@ -371,24 +362,15 @@ function PaperComponent(props) {
   );
 }
 
-//const uns=petStore.subscribe()
+function PaperComponent0(props) {
+  return (
+    <Draggable>
+      <Paper {...props} />
+    </Draggable>
+  );
+}
 
- 
-/*export default () => (
-  <Popup trigger={<button> Trigger</button>} position="right center">
-    <div>Popup content here !!</div>
-  </Popup>
-);*/
 
-/*const Modal =  () => (
-  <Popup
-    trigger={<button className="button"> Open Modal </button>}
-    modal
-    closeOnDocumentClick
-  >
-    <span> Modal content </span>
-  </Popup>
-)*/
+export default PopDialog;
+//export default withStyles()(PopDialog);
 
-//render(<Modal />)
-//render(<PopDialog />)

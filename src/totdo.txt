@@ -37,3 +37,6 @@ https://stackoverflow.com/questions/42363198/how-to-add-close-icon-in-material-u
 migrate all things to material UI
 test cases
 
+--may 07
+https://stackoverflow.com/questions/4114095/how-to-revert-a-git-repository-to-a-previous-commit
+https://stackoverflow.com/questions/35129105/how-to-use-select-in-reactjs-and-creating-its-options-with-an-array
