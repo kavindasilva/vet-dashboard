@@ -7,9 +7,11 @@ import Popup from "reactjs-popup";
 //import DatePicker from "react-datepicker";
 //import "react-datepicker/dist/react-datepicker.css";
 
+// https://react-day-picker.js.org/
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
+//http://clauderic.github.io/react-infinite-calendar , npm i react-infinite-calendar
 import InfiniteCalendar from 'react-infinite-calendar';
 import 'react-infinite-calendar/styles.css';
 
@@ -27,9 +29,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
 import Select from '@material-ui/core/Select';
+import Radio from '@material-ui/core/Radio';
+import Checkbox from '@material-ui/core/Checkbox';
+//import { DatePicker, KeyboardDatePicker } from "@material-ui/pickers";
 
 import { petStore } from "../stores/pets";
-import { MenuItem } from "@material-ui/core";
+import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/core";
 
 //import Checkbox from "./checkBoxComp";
 
@@ -188,53 +193,95 @@ class PopDialog extends Component {
 					//break;
 
 					case "select":
-					return (
-						<Select value={ this.state.attributeValue } 
-							onChange={ e => this.setState({ attributeValue: e.target.value }) }
-						>
-							{
-								this.props.data.valueSet.map( item =>
-										<MenuItem key={ item.value } value={ item.value } >{ item.label }</MenuItem>
-									)
-							}
-						</Select>
-					);
+						return (
+							<Select value={ this.state.attributeValue } 
+								onChange={ e => this.setState({ attributeValue: e.target.value }) }
+							>
+								{
+									this.props.data.valueSet.map( item =>
+											<MenuItem key={ item.value } value={ item.value } >{ item.label }</MenuItem>
+										)
+								}
+							</Select>
+						);
 					case "select0": //before material UI
-					return (
+						return (
+							<Select 
+									options={ this.props.data.valueSet }
+									defaultValue={{ value: this.props.data.defaultValue , label: this.props.data.defValDisp }}
+									onChange={ e => this.setState({ attributeValue: e.label }) }
+									/>
+						);
 
-						<Select 
-								options={ this.props.data.valueSet }
-				     		defaultValue={{ value: this.props.data.defaultValue , label: this.props.data.defValDisp }}
-				     		onChange={ e => this.setState({ attributeValue: e.label }) }
-				     		 />
-					);
-					//break;
-
-				case "radio":
-					return (
-						<ul>
-						{
-							this.props.data.valueSet.map( val => (
-								//console.log("def=",this.state.attributeValue,"val=",val),
-								<li key={val}>
-									<input type="radio" value={val}
-										checked={ (this.state.attributeValue===val)? true : false }
-										name={this.state.attributeName}
-										onChange={ (e)=>{
-											this.setState({ attributeValue: e.target.value});
-											console.log(e)
-											}
-										}
-									/> {val}
-								</li>
-								)
-							)
-						}
-						</ul>
-					);
-					//break;
+					case "radio":
+						return (
+							<RadioGroup
+								name="genderSelect"
+								value={ this.state.attributeValue }
+								onChange={ (e)=>{
+									this.setState({ attributeValue: e.target.value});
+									console.log(e)
+									}
+								}
+							>	
+								{ this.props.data.valueSet.map( val => (
+									<FormControlLabel
+										value={ val }
+										control={<Radio color="primary" />}
+										label={ val }
+										labelPlacement="end"
+										/>
+									)
+								)}
+								
+							</RadioGroup>
+						);
 
 				case "checkBox":
+					return(
+						<FormGroup>
+							{this.props.data.valueSet.map( (val, index) => (
+								<div>
+									<FormControlLabel
+										control={ 
+											<Checkbox
+												checked={
+													this.state.attributeValue.includes( val.name)/**/
+												}
+												onChange={ (e)=>{
+													if(e.target.checked){
+															this.setState({
+																	attributeValue: [...this.state.attributeValue, e.target.value]
+															})
+													}
+													else{ 
+															var index = this.state.attributeValue.indexOf(e.target.value);
+															if (index > -1) {
+																//prevState.list.filter( itm=> itm != index);
+																let newArr = [...this.state.attributeValue]; //
+																	newArr.splice(index, 1);
+																	this.setState({
+																			attributeValue: newArr
+																	})
+															} 
+													}
+												}}
+
+												value={val.name}
+												color="primary"
+											/>
+										}
+										label={ val.value }
+									>
+									</FormControlLabel>
+
+								</div>
+							)
+							)}
+						</FormGroup>
+					);
+
+				case "checkBox0":
 					return (
 						<div>
 						{
@@ -287,7 +334,21 @@ class PopDialog extends Component {
 					);
 					//break;
 
-				case "date":
+				/*case  "date": // npm install @material-ui/pickers
+					return(
+						<KeyboardDatePicker
+							autoOk
+							variant="inline"
+							inputVariant="outlined"
+							label="With keyboard"
+							format="MM/dd/yyyy"
+							//value={selectedDate}
+							InputAdornmentProps={{ position: "start" }}
+							//onChange={date => handleDateChange(date)}
+						/>
+					)*/
+
+				case "date": // normal day picker
 					return(
 						<ul>
 							<DayPicker showToday={false}
@@ -299,7 +360,7 @@ class PopDialog extends Component {
 						</ul>
 					)
 				
-				case "date1":
+				case "date2": //infinite calendar
 					return(
 						<ul>
 							<InfiniteCalendar
@@ -369,6 +430,44 @@ function PaperComponent0(props) {
     </Draggable>
   );
 }
+
+
+const currentYear = new Date().getFullYear();
+const fromMonth = new Date(currentYear, 0);
+const toMonth = new Date(currentYear + 10, 11);
+function YearMonthForm({ date, localeUtils, onChange }) {
+  const months = localeUtils.getMonths();
+
+  const years = [];
+  for (let i = fromMonth.getFullYear(); i <= toMonth.getFullYear(); i += 1) {
+    years.push(i);
+  }
+
+  const handleChange = function handleChange(e) {
+    const { year, month } = e.target.form;
+    onChange(new Date(year.value, month.value));
+  };
+
+  return (
+    <form className="DayPicker-Caption">
+      <select name="month" onChange={handleChange} value={date.getMonth()}>
+        {months.map((month, i) => (
+          <option key={month} value={i}>
+            {month}
+          </option>
+        ))}
+      </select>
+      <select name="year" onChange={handleChange} value={date.getFullYear()}>
+        {years.map(year => (
+          <option key={year} value={year}>
+            {year}
+          </option>
+        ))}
+      </select>
+    </form>
+  );
+}
+
 
 
 export default PopDialog;
