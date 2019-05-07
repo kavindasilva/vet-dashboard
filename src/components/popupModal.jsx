@@ -32,9 +32,28 @@ import { petStore } from "../stores/pets";
 //import Checkbox from "./checkBoxComp";
 
 export default class PopDialog extends Component {
-  state = {
-    open: false,
-  };
+	state = {
+		/** record id */         				identifier		:this.props.identifier,
+		/** property value */     				attributeValue	:this.props.value,
+		/** property name */      				attributeName	:this.props.property,
+		/** element input type */ 				elementType		:this.props.elementType,
+		/** Detect popup modal open state */	open			:false,
+		/** temporary day to keep clendar selected date */ tempDayCal: this.props.value
+	}
+
+	styleTD={
+		width: "100%" ,
+		color: "#111111"
+	}
+
+	styleMatUI={
+		closeButton: {
+			cursor:'pointer', 
+			float:'right', 
+			marginTop: '5px', 
+			width: '20px'
+		}
+	}
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -42,9 +61,15 @@ export default class PopDialog extends Component {
 
   handleClose = () => {
     this.setState({ open: false });
-  };
+	};
+	
 
   render() {
+		return (
+			<React.Fragment>
+				{ this.showPop(0) }
+			</React.Fragment>
+		)
     //return (
       {/*<div>
         <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
@@ -78,38 +103,7 @@ export default class PopDialog extends Component {
 	
 //}
 
-//export default class PopDialog extends Component {
-  
-  	/*constructor() {
-  		super();
-  		console.log(this);
-    	//this.showPop0();
-	}*/
-
-	state = {
-		/** record id */         				identifier		:this.props.identifier,
-		/** property value */     				attributeValue	:this.props.value,
-		/** property name */      				attributeName	:this.props.property,
-		/** element input type */ 				elementType		:this.props.elementType,
-		/** Detect popup modal open state */	popOpen			:false,
-		/** temporary day to keep clendar selected date */ tempDayCal: this.props.value
-	}
-
-	styleTD={
-		width: "100%" ,
-		color: "#111111"
-	}
-
-	styleMatUI={
-		closeButton: {
-			cursor:'pointer', 
-			float:'right', 
-			marginTop: '5px', 
-			width: '20px'
-		}
-	}
-
-	render0(){
+	render0(){ // before material UI
 		return (
 			<React.Fragment>
 				{ this.showPop(0) }
@@ -118,7 +112,7 @@ export default class PopDialog extends Component {
 	}
 
 	captureOpen=()=>{
-		this.setState({ popOpen: true });
+		this.setState({ open: true });
 		//console.log("pop opened", this);
 	}
 
@@ -129,21 +123,17 @@ export default class PopDialog extends Component {
 	}*/
 
 	showPop( attribute1 ){
-
 		return(
 			<div>
-				{/*<Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-					Open form dialog
-				</Button>*/}
-
 				<div style={this.styleTD} 
 					onClick={ ()=>{ 
-						this.handleClickOpen;
+						this.handleClickOpen();
 						console.log( "Popoup clicked: ",this ); 
 					} } >
 
-					{ this.state.popOpen ? 'Y' : '' }  
-					{/* this.state.attributeValue } { this.state.popOpen ? 'Y' : 'N' */}  
+					{ this.props.value }  
+					{ this.state.open ? 'Y' : '' }  
+					{/* this.state.attributeValue } { this.state.open ? 'Y' : 'N' */}  
 				</div>
 
 
@@ -164,17 +154,7 @@ export default class PopDialog extends Component {
 					</DialogContent>
 
 					<DialogActions>
-						<Button onClick={ ()=>{
-							this.setState({ attributeValue: this.props.value });
-							close()} }
-							style={ this.styleMatUI.closeButton }	
-						>
-								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" 
-									viewBox="0 0 18 18">
-									<path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
-									</svg>								
-						</Button>
-						
+											
 						<Button onClick={ () => { 
 							//this.setState({ attributeValue:this.state.attributeValue });
 							petStore.dispatch({
@@ -184,69 +164,29 @@ export default class PopDialog extends Component {
 									attribute: this.state.attributeName,
 									value: this.state.attributeValue
 								}
-							})
-							this.handleclose; 
+							});
+							this.handleClose(); 
 							} } 
 							variant="contained" color="primary"
 							className="btn btn-sm btn-success" 
 							style={this.styleMatUI.closeButton} >OK
 						</Button>
+
+						<Button onClick={ ()=>{
+								this.setState({ attributeValue: this.props.value });
+								this.handleClose() 
+							} }
+							style={ this.styleMatUI.closeButton }	
+						>
+								{ /* Close button svg icon from material UI documentation */ }
+								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" 
+									viewBox="0 0 18 18">
+									<path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
+									</svg>								
+						</Button>
 					</DialogActions>
 				</Dialog>
 			
-
-		  	{/*<Popup 
-				onOpen={ ()=> this.setState({ popOpen: true }) }
-				onClose={ ()=>this.setState({ popOpen:false }) }
-
-				//open={ this.captureOpen() }				
-				position="bottom left" modal>
-				{
-					close => (
-						<div className="container">
-
-							<b>Change { this.state.attributeName }</b> <br/>
-							{ /* Starting of Column specific input attributes */ }
-							
-
-							{/* <input type="text" name="txtName" value={this.state.attributeName} 
-									onChange={ e => this.setState({ attributeName: e.target.value }) }  /> <br/> /}
-							{ this.makeInputElements() }
-
-
-							{ /* End of Column specific input attributes / }
-							<div className="row">
-								<div className="col=md-10 col-sm-10">
-								</div>
-								<div className="col-md-2 col-sm-2">
-									<Button onClick={ () => { 
-										//this.setState({ attributeValue:this.state.attributeValue });
-										petStore.dispatch({
-											type: 'UPDATE_PET_DETAIL',
-											payload: {
-												identifier: this.state.identifier,
-												attribute: this.state.attributeName,
-												value: this.state.attributeValue
-											}
-										})//.then( ()=> alert(this.props.value) )
-										//this.props.sendToParent( this.state.attributeName , this.state.attributeValue );
-										close(); 
-										} } 
-										variant="contained" color="primary"
-										className="btn btn-sm btn-success" 
-										style={this.styleMatUI.closeButton} >OK</Button>
-										
-									{/*<a onClick={close} >
-									<button onClick={ () => this.setState({ attributeValue:this.props.attr }) } 
-										className="btn btn-sm btn-warning" >Cancel</button>
-										</a> 
-										/}
-								</div>
-							</div>
-						</div>
-					)
-				}
-			</Popup>*/}
 			</div>
 		);
 		
@@ -259,12 +199,13 @@ export default class PopDialog extends Component {
 						<div>
 							<input type={this.state.elementType} 
 								/*value={this.state.attributeValue}*/
+								/*value={this.state.attributeValue}*/
 								value={this.state.attributeValue}
-								onChange={ (e) => (
+								onChange={ (e) => {
 									this.setState({ attributeValue: e.target.value })
 									//this.props.sendToParent()
-									//console.log("onChange data")
-									) } />
+									//console.log("onChange data", e)
+								 } } />
 						</div>
 					);
 					//break;
