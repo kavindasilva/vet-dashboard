@@ -31,6 +31,7 @@ import Draggable from 'react-draggable';
 import Select from '@material-ui/core/Select';
 import Radio from '@material-ui/core/Radio';
 import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@material-ui/core/TextField';
 //import { DatePicker, KeyboardDatePicker } from "@material-ui/pickers";
 
 import { petStore } from "../stores/pets";
@@ -175,22 +176,21 @@ class PopDialog extends Component {
 	makeInputElements= (  ) =>{
 			switch (this.state.elementType) {
 				case "text": case "number":
-					return (
+					return(
+						<TextField
+							label={ this.state.attributeName }
+							value={this.state.attributeValue}
+							onChange={ e => (
+								e.preventDefault(),
+								//this.setState({ attributeValue: 10 }),
+								this.setState({ attributeValue: e.target.value }),
+								//this.props.sendToParent()
+								console.log("onChange data", e)
+								) }
 
-							<input type={this.state.elementType} 
-								/*value={this.state.attributeValue}*/
-								/*value={this.state.attributeValue}*/
-								value={this.state.attributeValue}
-								onChange={ e => (
-									e.preventDefault(),
-									//this.setState({ attributeValue: 10 }),
-									this.setState({ attributeValue: e.target.value }),
-									//this.props.sendToParent()
-									console.log("onChange data", e)
-								 ) } />
-
+							type={ this.state.elementType }
+						/>
 					);
-					//break;
 
 					case "select":
 						return (
@@ -280,59 +280,6 @@ class PopDialog extends Component {
 							)}
 						</FormGroup>
 					);
-
-				case "checkBox0":
-					return (
-						<div>
-						{
-							//symptomsInfo =[{ id:0, name:"Bleeding", value:"Bleeding" }]
-							this.props.data.valueSet.map( (val, index) => (
-								//console.log("def=",this.state.attributeValue,"val=",val),
-								<div tmpkey={index} >
-									<label tmpkey={val.id}>
-										<input type="checkbox"
-											key={val.id}
-										 	name={val.name}
-											value={val.name}
-											checked={
-												this.state.attributeValue.includes( val.name)/**/
-											}
-											onChange={ (e)=>{
-												if(e.target.checked){
-									                this.setState({
-									                    attributeValue: [...this.state.attributeValue, e.target.value]
-									                })
-									            }
-									            else{ 
-									                var index = this.state.attributeValue.indexOf(e.target.value);
-									                if (index > -1) {
-									                	//prevState.list.filter( itm=> itm != index);
-									                	let newArr = [...this.state.attributeValue]; //
-									                    newArr.splice(index, 1);
-									                    this.setState({
-									                        attributeValue: newArr
-									                    })
-									                } 
-									                /*if (index > -1) {
-									                    this.state.attributeValue.splice(index, 1);
-									                    this.setState({
-									                        attributeValue: this.state.attributeValue
-									                    })
-									                } */
-									            }
-
-												}}
-										 />
-										{val.value}
-									</label>
-								</div>
-
-								)
-							)
-						}
-						</div>
-					);
-					//break;
 
 				/*case  "date": // npm install @material-ui/pickers
 					return(
