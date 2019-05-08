@@ -15,7 +15,17 @@ import 'react-day-picker/lib/style.css';
 import InfiniteCalendar from 'react-infinite-calendar';
 import 'react-infinite-calendar/styles.css';
 
-import { DatePicker } from '@y0c/react-datepicker';
+//
+//import { DatePicker, KeyboardDatePicker } from "@material-ui/pickers";
+//import Calendar from 'material-ui-pickers/DatePicker/components/Calendar'
+import DateFnsUtils from "@date-io/date-fns";
+import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
+//import DateFnsUtils from "@date-io/date-fns";
+
+//import DateFnsUtils from '@date-io/date-fns';
+//import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
+
+//import { DatePicker } from '@y0c/react-datepicker';
 //import { CalendarSelectedController } from '@y0c/react-datepicker';
 import '@y0c/react-datepicker/assets/styles/calendar.scss';
 
@@ -32,7 +42,6 @@ import Select from '@material-ui/core/Select';
 import Radio from '@material-ui/core/Radio';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
-//import { DatePicker, KeyboardDatePicker } from "@material-ui/pickers";
 
 import { petStore } from "../stores/pets";
 import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/core";
@@ -47,6 +56,7 @@ class PopDialog extends Component {
 		/** property name */      				attributeName	:this.props.property,
 		/** element input type */ 				elementType		:this.props.elementType,
 		/** Detect popup modal open state */	open			:false,
+		datePickerOpen: true,
 		/** temporary day to keep calendar selected date */ tempDayCal: this.props.value
 	}
 
@@ -102,6 +112,7 @@ class PopDialog extends Component {
 			<div>
 				<div style={this.styleTD} 
 					onClick={ ()=>{ 
+						this.setState({ datePickerOpen: true}) ;
 						this.handleClickOpen();
 						console.log( "Popoup clicked: ",this ); 
 					} } >
@@ -285,21 +296,40 @@ class PopDialog extends Component {
 						</FormGroup>
 					);
 
-				/*case  "date": // npm install @material-ui/pickers
+				/*/case  "date": // npm install @material-ui/pickers
 					return(
-						<KeyboardDatePicker
-							autoOk
-							variant="inline"
-							inputVariant="outlined"
-							label="With keyboard"
-							format="MM/dd/yyyy"
-							//value={selectedDate}
-							InputAdornmentProps={{ position: "start" }}
-							//onChange={date => handleDateChange(date)}
-						/>
+						<React.Fragment>
+							<Calendar
+                        date={new Date()}
+                        disablePast={true}
+                        //disableFuture={maybe}
+                        onChange={(date) => console.log(date)}
+                        //leftArrowIcon={<KeyboardArrowLeft/>}
+                        //rightArrowIcon={<KeyboardArrowRight/>}
+                      />
+							</React.Fragment>
 					)*/
 
-				case "date": // normal day picker
+				case "date":
+					return(
+						<MuiPickersUtilsProvider utils={DateFnsUtils} onClick={() =>  this.setState({ datePickerOpen: true}) }>
+							<DatePicker
+								autoFocus = { true }
+								onlyCalendar
+								variant="inline"
+								label="Only calendar"
+								helperText="No year selection"
+								value={ this.state.attributeValue }
+								onChange={ this.changeAdmitDate }
+								open={ this.state.datePickerOpen }
+								onOpen={() => this.setState({ datePickerOpen: true}) }
+        				onClose={() =>  this.setState({ datePickerOpen: false}) }
+        				onClick={() =>  this.setState({ datePickerOpen: true}) }
+							/>
+							</MuiPickersUtilsProvider>
+					)
+
+				case "date3": // normal day picker
 					return(
 						<ul>
 							<DayPicker showToday={false}
