@@ -40,6 +40,7 @@ class petAPI extends React.Component{
       }));/**/
   }
 
+  /** The API calling function before integrating 'axios' library */
   callApi1(){
     // Github fetch library : https://github.com/github/fetch
     // Call the API page

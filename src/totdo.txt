@@ -41,3 +41,7 @@ test cases
 https://stackoverflow.com/questions/4114095/how-to-revert-a-git-repository-to-a-previous-commit
 https://stackoverflow.com/questions/35129105/how-to-use-select-in-reactjs-and-creating-its-options-with-an-array
 https://stackoverflow.com/questions/56010268/uncaught-typeerror-object-is-not-a-function-when-importing-material-ui-pi
+
+--may 08
+https://stackoverflow.com/questions/40117640/react-native-how-to-combine-external-and-inline-styles
+graphQL

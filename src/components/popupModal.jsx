@@ -19,6 +19,7 @@ import 'react-infinite-calendar/styles.css';
 //import { DatePicker, KeyboardDatePicker } from "@material-ui/pickers";
 //import Calendar from 'material-ui-pickers/DatePicker/components/Calendar'
 import DateFnsUtils from "@date-io/date-fns";
+import {format} from "date-fns";
 import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
 //import DateFnsUtils from "@date-io/date-fns";
 
@@ -42,6 +43,9 @@ import Select from '@material-ui/core/Select';
 import Radio from '@material-ui/core/Radio';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
+import AppBar from '@material-ui/core/AppBar'
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 import { petStore } from "../stores/pets";
 import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/core";
@@ -51,12 +55,11 @@ import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/
 //export default class PopDialog extends Component {
 class PopDialog extends Component {
 	state = {
-		/** record id */         				identifier		:this.props.identifier,
+		/** record id. need in dispatching */	identifier		:this.props.identifier,
 		/** property value */     				attributeValue	:this.props.value,
 		/** property name */      				attributeName	:this.props.property,
 		/** element input type */ 				elementType		:this.props.elementType,
-		/** Detect popup modal open state */	open			:false,
-		datePickerOpen: true,
+		/** Detect popup modal open state */	isOpen			:false,
 		/** temporary day to keep calendar selected date */ tempDayCal: this.props.value
 	}
 
@@ -76,15 +79,19 @@ class PopDialog extends Component {
 
 		titleBarThin:{
 			padding: "0 24 0 24"
+		},
+
+		titleBarPrimary:{
+			color:"white", "backgroundColor":"#3c4fb0"
 		}
 	}
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
+  openPopUp = () => {
+    this.setState({ isOpen: true });
   };
 
-  handleClose = () => {
-    this.setState({ open: false });
+  closePopUp = () => {
+    this.setState({ isOpen: false });
 	};
 	
 
@@ -95,11 +102,6 @@ class PopDialog extends Component {
 			</React.Fragment>
 		)
 	}
-	
-	captureOpen=()=>{
-		this.setState({ open: true });
-		//console.log("pop opened", this);
-	}
 
 	/*componentDidUpdate0(prevProps){
 		//if(prevProps.value !== this.props.value){ alert(prevProps.value) }	
@@ -107,70 +109,65 @@ class PopDialog extends Component {
 		if(this.state.attributeValue !== this.props.value){ console.log(prevProps.value) }	
 	}*/
 
-	showPop( attribute1 ){
+	showPop( optionalAttribute1 ){
 		return(
 			<div>
 				<div style={this.styleTD} 
 					onClick={ ()=>{ 
-						this.setState({ datePickerOpen: true}) ;
-						this.handleClickOpen();
+						this.openPopUp();
 						console.log( "Popoup clicked: ",this ); 
 					} } >
 
-					{ this.props.value  /* this.props when using redux */}  
-					{ /*this.state.attributeValue /* just for testing */ }  
-					{ this.state.open ? 'Y' : '' }  
-					{/* this.state.attributeValue } { this.state.open ? 'Y' : 'N' */}  
+					{ this.props.value } 
 				</div>
 
 
 				<Dialog
-					open={this.state.open}
-					onClose={this.handleClose}
+					open={this.state.isOpen}
+					onClose={this.closePopUp}
 					//PaperComponent={PaperComponent}
 					aria-labelledby="draggable-dialog-title"
 				>
-					<DialogActions>
-						<Button onClick={ ()=>{
-								this.setState({ attributeValue: this.props.value });
-								this.handleClose() 
-							} }
-							style={ this.styleMatUI.closeButton }	
-						>
-								{ /* Close button svg icon from material UI documentation */ }
-								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" 
-									viewBox="0 0 18 18">
-									<path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
-									</svg>								
-						</Button>
-					</DialogActions>
+					{/* <AppBar position="relative" ></AppBar> */}
+					<DialogTitle id="draggable-dialog-title" 
+					style={
+						{ ...this.styleMatUI.titleBarPrimary,  padding: "18px 24px 16px 24px" }
+					}
+					>
 
-					<DialogTitle id="draggable-dialog-title" style={ { padding: "0px 24px 0px 24px" } }>
-						<b>Change { this.state.attributeName }</b> <br/>
+						Change { this.state.attributeName }
+
 					</DialogTitle>
 
 					<DialogContent>
-						
+
 							{ this.makeInputElements() }
 						
 					</DialogContent>
 
 					<DialogActions>
+						<Button onClick={ ()=>{
+								this.setState({ attributeValue: this.props.value });
+								this.closePopUp() 
+							} }
+							style={ this.styleMatUI.closeButton }	
+							variant="text"
+							color="primary"
+						>
+								{ /* Close button svg icon from material UI documentation * }
+								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" 
+									viewBox="0 0 18 18">
+									<path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
+								</svg> */}
+								Cancel
+						</Button>
 											
 						<Button onClick={ () => { 
-							//this.setState({ attributeValue:this.state.attributeValue });
-							petStore.dispatch({
-								type: 'UPDATE_PET_DETAIL',
-								payload: {
-									identifier: this.state.identifier,
-									attribute: this.state.attributeName,
-									value: this.state.attributeValue
-								}
-							});
-							this.handleClose(); 
+								//this.setState({ attributeValue:this.state.attributeValue });
+								this.dispatchUpdate()
+								this.closePopUp(); 
 							} } 
-							variant="contained" color="primary"
-							className="btn btn-sm btn-success" 
+							variant="text" color="primary"
 							style={this.styleMatUI.closeButton} >OK
 						</Button>
 
@@ -183,7 +180,18 @@ class PopDialog extends Component {
 		
 	}
 
-	makeInputElements= (  ) =>{
+	dispatchUpdate = () => {
+		petStore.dispatch({
+			type: 'UPDATE_PET_DETAIL',
+			payload: {
+				identifier: this.state.identifier,
+				attribute: this.state.attributeName,
+				value: this.state.attributeValue
+			}
+		});
+	}
+
+	makeInputElements= () =>{
 			switch (this.state.elementType) {
 				case "text": case "number":
 					return(
@@ -192,7 +200,6 @@ class PopDialog extends Component {
 							value={this.state.attributeValue}
 							onChange={ e => (
 								e.preventDefault(),
-								//this.setState({ attributeValue: 10 }),
 								this.setState({ attributeValue: e.target.value }),
 								//this.props.sendToParent()
 								console.log("onChange data", e)
@@ -240,6 +247,7 @@ class PopDialog extends Component {
 							>	
 								{ this.props.data.valueSet.map( val => (
 									<FormControlLabel
+										key={val}
 										value={ val }
 										control={<Radio color="primary" />}
 										label={ val }
@@ -255,10 +263,11 @@ class PopDialog extends Component {
 					return(
 						<FormGroup>
 							{this.props.data.valueSet.map( (val, index) => (
-								<div>
+								<div key={index} >
 									<FormControlLabel
 										control={ 
 											<Checkbox
+												key={index}
 												checked={
 													this.state.attributeValue.includes( val.name)/**/
 												}
@@ -312,69 +321,24 @@ class PopDialog extends Component {
 
 				case "date":
 					return(
-						<MuiPickersUtilsProvider utils={DateFnsUtils} onClick={() =>  this.setState({ datePickerOpen: true}) }>
+						<MuiPickersUtilsProvider utils={DateFnsUtils} onClick={() =>  this.setState({ isOpen: true}) }>
 							<DatePicker
-								autoFocus = { true }
-								onlyCalendar
-								variant="inline"
-								label="Only calendar"
-								helperText="No year selection"
+								autoFocus = { false }
+								//onlyCalendar
+								//variant="inline"
+								format="yyyy/MM/dd"
+								label="Pet admitted date"
+								//helperText="No year selection"
 								value={ this.state.attributeValue }
-								onChange={ this.changeAdmitDate }
-								open={ this.state.datePickerOpen }
-								onOpen={() => this.setState({ datePickerOpen: true}) }
-        				onClose={() =>  this.setState({ datePickerOpen: false}) }
-        				onClick={() =>  this.setState({ datePickerOpen: true}) }
+								onChange={ this.changeDatepickerValue }
+								onAccept={ this.acceptDatepickerValue }
+								open={ this.state.isOpen }
+								onOpen={ this.openDatepicker }
+        				onClose={ this.closeDatepicker }
+        				onClick={ this.openDatepicker }
 							/>
 							</MuiPickersUtilsProvider>
-					)
-
-				case "date3": // normal day picker
-					return(
-						<ul>
-							<DayPicker showToday={false}
-								onDayClick={ clickDay => { this.setState({ tempDayCal: clickDay }); this.changeAdmitDate(clickDay) } }
-								selectedDays={ new Date(this.state.attributeValue) }
-								
-							/>
-
-						</ul>
-					)
-				
-				case "date2": //infinite calendar
-					return(
-						<ul>
-							<InfiniteCalendar
-								width={280}
-								height={200}
-								selected={ new Date(this.state.attributeValue) }
-								displayOptions={{
-									showTodayHelper: false,
-									showHeader: true
-								}}
-								locale={{
-									weekStartsOn: 1
-									}}
-								onSelect={this.changeAdmitDate}
-							/>
-						</ul>
-					)
-
-				case "date0": // previously working one
-					return (
-						<ul>
-							<DatePicker 
-					     		selected={ new Date(this.state.attributeValue) } 
-					     		onChange={this.changeAdmitDate} 
-									dateFormat="YYYY-MM-dd" 
-									onClick={ console.log("DP") 
-
-									} 
-					     	/>
-					     	<br/>
-						</ul>
 					);
-					//break;
 				
 				default:
 					console.log("invalid case");
@@ -382,16 +346,18 @@ class PopDialog extends Component {
 			}
 	}
 
-	changeAdmitDate=(admitDate)=>{
-		//{ admitDate=admitDate.format('YYYY-MM-DD');} // Wed Apr 24 2019 00:00:00 GMT+0530 (India Standard Time)
-		admitDate =  new Date( admitDate );
-		admitDate = admitDate.getFullYear()+"-"+
-			( admitDate.getMonth()<=8 ? "0"+(admitDate.getMonth()+1) : (admitDate.getMonth()+1) ) +"-"+
-			( admitDate.getDate()<=9 ? "0"+admitDate.getDate() : admitDate.getDate() );
+	openDatepicker = () => {
+		this.setState({ isOpen: true})
+	}
+	closeDatepicker = () => {
+		this.setState({ isOpen: false})
+	}
+	changeDatepickerValue = (selectedDate) => {
+		this.setState({ attributeValue: format(new Date(selectedDate), 'yyyy-MM-dd') });
+	}
 
-		console.log(admitDate);
-		//this.setState({ admittedDate: admitDate.target.value })
-		this.setState({ attributeValue: admitDate });
+	acceptDatepickerValue = () => {
+		this.dispatchUpdate();
 	}
 
 }
