@@ -162,9 +162,7 @@ class Pet extends Component {
 //const uns=petStore.subscribe(th)
 
 const mapStateToProps = (state, myProps) => {
-	let record = state.admissions.filter(record => myProps.identifier === record.id)[0];
-	//let record = state.admissions.filter(record => myProps.identifier == record.id);
-	//console.log('pet.jsx_mapStateToProps: record', record, 'state', state, 'myProps', myProps);
+	let record = state.admissions.find(record => myProps.identifier === record.id);
 	return {
 		...record
 	};

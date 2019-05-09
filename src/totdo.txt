@@ -45,3 +45,9 @@ https://stackoverflow.com/questions/56010268/uncaught-typeerror-object-is-not-a-
 --may 08
 https://stackoverflow.com/questions/40117640/react-native-how-to-combine-external-and-inline-styles
 graphQL
+
+
+--may 09
+graphQL search bar query
+search bar and a field selector in app
+https://stackoverflow.com/questions/4007752/php-check-if-variable-exist-but-also-if-has-a-value-equal-to-something

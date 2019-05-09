@@ -43,9 +43,7 @@ import Select from '@material-ui/core/Select';
 import Radio from '@material-ui/core/Radio';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
-import AppBar from '@material-ui/core/AppBar'
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+
 
 import { petStore } from "../stores/pets";
 import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/core";
@@ -85,6 +83,7 @@ class PopDialog extends Component {
 			color:"white", "backgroundColor":"#3c4fb0"
 		}
 	}
+	
 
   openPopUp = () => {
     this.setState({ isOpen: true });
@@ -98,7 +97,7 @@ class PopDialog extends Component {
   render() {
 		return (
 			<React.Fragment>
-				{ this.showPop(0) }
+				{	this.showPop(0) }
 			</React.Fragment>
 		)
 	}
@@ -418,5 +417,6 @@ function YearMonthForm({ date, localeUtils, onChange }) {
 
 
 export default PopDialog;
+//export default withStyles(styles)(PopDialog);
 //export default withStyles()(PopDialog);
 
