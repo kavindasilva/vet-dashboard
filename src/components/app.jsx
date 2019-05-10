@@ -3,6 +3,10 @@ import React, { Component } from 'react';
 import Pets from "../components/pets";
 import { Provider } from 'react-redux';
 
+import Radio from '@material-ui/core/Radio';
+import { MenuItem, RadioGroup, FormControlLabel, FormGroup, Button } from "@material-ui/core";
+
+
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -20,8 +24,18 @@ import { petStore } from "../stores/pets";
 //import { createStore } from "redux";
 //import PetReducer from "../reducers/pets";
 
+import ApolloClient from 'apollo-boost'
+import { ApolloProvider } from 'react-apollo'
+
+
 import petAPI from "../apicalls/petAPI";
 const petAPIobj = new petAPI();
+
+const client1 = new ApolloClient({
+  uri: 'http://127.0.0.1/phpapi/inline-index4.php',
+})
+
+//import { pokemo } from "../apicalls/petAPI";
 
 
 //const petStore = createStore(PetReducer, {admissions:[ { id:'0' , name:"RoverStt" , speci:"Dog" , gender:"Male" , years:"3.5" , symptoms:["Fever", "Cold"] , admittedDate:"2019-04-01" } ]} );
@@ -88,26 +102,32 @@ const styles = theme => ({
   });
 
 class App extends Component {
+	state={
+		fields: [ "id", "name", "gender", "speci", "admitDate" ],
+		selectedField: "id"
+	}
 	render() {
 		//console.log('app.jsx-rendering. petStore: ', petStore.getState() );
 		return (
-            //<Provider store={ petStore } >
-            <Provider store={ petStore } >
-				{ this.showMenuBar() }
-                <Pets/>
-            </Provider>
+			/*<ApolloProvider client={client}>
+			
+			</ApolloProvider>*/ 
+			<Provider store={ petStore } >
+					{ this.showMenuBar() }          
+					<Pets/>
+			</Provider>
 		);
 	}
 
 	componentDidMount(){ 
 		console.log("App - Mount");
 		//let data = petAPIobj.callApi()
-		let data = petAPIobj.callGraphQL(0,0)
+		let data = petAPIobj.callGraphQL( "speci", "Dog")
 			.then( response => {
 				console.log(response);
 				if(response.data.data){
-					console.log("A");
-					this.setState({ petAdmission: response.data.data })
+					console.log("app.jsx - componenetDidMount");
+					this.setState({ petAdmission: response.data.admissions })
 					
 				}
 				return response;
@@ -117,7 +137,7 @@ class App extends Component {
 					petStore.dispatch({
 						type: 'FETCH_FROM_API',
 						payload: {
-							apiData: response.data.data.admissions
+							apiData: response.data.admissions
 						}
 					})
 				}
@@ -174,17 +194,48 @@ class App extends Component {
 						<div  />
 						<div >
 							<div >
-								<SearchIcon />
+								
 							</div>
 							<InputBase
 								placeholder="Search…"
 								
 							/>
+							<Button >
+								<SearchIcon />Search
+							</Button>
+							<div>	
+								{ this.state.fields.map( (val, index) => (
+									<React.Fragment>
+										<Radio
+											name="searchType"
+											key={index}
+											value={ val }
+											//={ val }
+											control={<Radio color="primary" />}
+											area-label={ val }
+											checked={ (this.state.selectedField===val)? true: false }
+											labelPlacement="end"
+											onChange={ e =>
+												this.setState({ selectedField: e.target.value})
+											}
+											/> 
+											{val}
+											
+										</React.Fragment>
+									)
+								)}
+							</div>
+
+
 						</div>
 					</Toolbar>
 				</AppBar>
 			</div>
 		)
+	}
+
+	handleSearchType = () =>{
+
 	}
 }
 

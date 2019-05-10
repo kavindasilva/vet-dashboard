@@ -51,3 +51,8 @@ graphQL
 graphQL search bar query
 search bar and a field selector in app
 https://stackoverflow.com/questions/4007752/php-check-if-variable-exist-but-also-if-has-a-value-equal-to-something
+
+--may 10
+https://stackoverflow.com/questions/9858448/converting-object-to-json-and-json-to-object-in-php-library-like-gson-for-java
+https://stackoverflow.com/questions/27678052/usage-of-the-backtick-character-in-javascript
+

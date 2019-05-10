@@ -1,7 +1,12 @@
 
 import React from 'react';
 import axios from 'axios';
-import { GraphQL, GraphQLProvider } from 'graphql-react'
+import { useGraphQL ,GraphQL, GraphQLProvider } from 'graphql-react'
+
+import ApolloClient from 'apollo-boost'
+import { ApolloProvider } from 'react-apollo'
+import { Query } from 'react-apollo'
+import gql from 'graphql-tag'
 
 
 //const APIGetUrl = 'http://127.0.0.1/ucsc5/vet-dashboard/phpApi/getData.php?q=';
@@ -20,13 +25,39 @@ const headerInfo = {
 
 const GET_PET = `
   {
-    admissions(id: 1 ) {
-      name
-      id
+    admissions( speci: "Dog" ) {
+      id, 
+			name,
+			speci,
+			gender,
+			years,
+			admittedDate
     }
   }
 `;
 
+const PokemonImage = ({ name }) => {
+  const { loading, cacheValue = {} } = useGraphQL({
+    fetchOptionsOverride(options) {
+      options.url = 'https://graphql-pokemon.now.sh'
+    },
+    operation: {
+      query: `{ pokemon(name: "${name}") { image } }`
+    }
+  })
+ 
+  return cacheValue.data ? (
+    <img src={cacheValue.data.pokemon.image} alt={name} />
+  ) : loading ? (
+    'Loading…'
+  ) : (
+    'Error!'
+  )
+}
+
+const client = new ApolloClient({
+  uri: 'http://127.0.0.1/phpapi/inline-index4.php',
+})
 
 class petAPI extends React.Component{
   /*state ={}
@@ -34,8 +65,30 @@ class petAPI extends React.Component{
   constructor(){
     super();
   }*/
+  callGraphQL ( property, value ){
+    //useGraphQL( fetchOp )
+    //PokemonImage("x");
+    //return this.callGraphQL2(0,0);
 
-  callGraphQL( property, value ){
+    return client.query({
+      query: gql `{
+        admissions( ${property}: "${value}" ) {
+          id, 
+          name,
+          speci,
+          gender,
+          years,
+          admittedDate
+        }
+      }`
+    })
+    .then(response => {
+      console.log(response.data);
+      return response;
+    });
+  }
+
+  callGraphQL2( property, value ){
     //axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
     console.log("petAPI.jsx - callGraphQL");
     return axios.create({
@@ -43,7 +96,8 @@ class petAPI extends React.Component{
       //baseURL: 'http://127.0.0.1/phpapi/inline-index3.php'
     })
     //.post( graphQLURL, { headers: headerInfo, query: GET_PET })
-    .get( '', {  query: GET_PET })
+    .post( graphQLURL, { query: GET_PET })
+    //.get( '', {  query: GET_PET })
     .then(result => {
       console.log("petAPI.jsx - callGraphQL\n",result);
       return result;
