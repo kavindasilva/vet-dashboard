@@ -136,6 +136,7 @@ class Pet extends Component {
 					</PopDialog>
 				</TableCell>
 				<TableCell> 
+					{ this.props.symptoms ?
 					<PopDialog 
 						value={ this.props.symptoms } 
 						identifier={ this.props.id }
@@ -143,6 +144,7 @@ class Pet extends Component {
 						data={ { defaultVal:this.props.symptoms, valueSet:this.symptomsInfo }  }
 						property="symptoms">
 					</PopDialog>
+					: "NA" }
 				</TableCell>
 				<TableCell> 
 					<PopDialog 

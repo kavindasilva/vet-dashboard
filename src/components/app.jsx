@@ -99,7 +99,33 @@ class App extends Component {
 		);
 	}
 
-	componentDidMount(){ // working
+	componentDidMount(){ 
+		console.log("App - Mount");
+		//let data = petAPIobj.callApi()
+		let data = petAPIobj.callGraphQL(0,0)
+			.then( response => {
+				console.log(response);
+				if(response.data.data){
+					console.log("A");
+					this.setState({ petAdmission: response.data.data })
+					
+				}
+				return response;
+			})
+			.then(
+				response => {
+					petStore.dispatch({
+						type: 'FETCH_FROM_API',
+						payload: {
+							apiData: response.data.data.admissions
+						}
+					})
+				}
+			)
+	}
+
+	/** Before GraphQL */
+	componentDidMount0(){ // working
 		console.log("App - Mount");
 		//let data = petAPIobj.callApi()
 		petAPIobj.callApi()
