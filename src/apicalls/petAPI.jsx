@@ -70,8 +70,9 @@ class petAPI extends React.Component{
     //PokemonImage("x");
     //return this.callGraphQL2(0,0);
 
-    return client.query({
-      query: gql `{
+    /* */var graphqlQuery="{admissions { id, name, speci, gender, years, admittedDate } }";
+    if( property !== 0 ){
+      graphqlQuery = `{
         admissions( ${property}: "${value}" ) {
           id, 
           name,
@@ -81,6 +82,31 @@ class petAPI extends React.Component{
           admittedDate
         }
       }`
+    }
+
+    //if(property===0){
+      return client.query({
+        query: gql `${graphqlQuery}`
+        //query: gql `{admissions { id, name, speci, gender, years, admittedDate } }` 
+      })
+      .then(response => {
+        console.log(response.data);
+        return response;
+      });
+    //}
+
+    return client.query({
+      //query: gql `${graphqlQuery}`
+      query: gql `{
+        admissions( ${property}: "${value}" ) {
+          id, 
+          name,
+          speci,
+          gender,
+          years,
+          admittedDate
+        }
+      }` 
     })
     .then(response => {
       console.log(response.data);

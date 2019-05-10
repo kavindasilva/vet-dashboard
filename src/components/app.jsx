@@ -120,9 +120,14 @@ class App extends Component {
 	}
 
 	componentDidMount(){ 
+		this.loadData(0,0);
+		//this.loadData("speci","Cat");
+	}
+
+	loadData(property, value){ 
 		console.log("App - Mount");
 		//let data = petAPIobj.callApi()
-		let data = petAPIobj.callGraphQL( "speci", "Dog")
+		let data = petAPIobj.callGraphQL( property, value )
 			.then( response => {
 				console.log(response);
 				if(response.data.data){
@@ -200,7 +205,7 @@ class App extends Component {
 								placeholder="Search…"
 								
 							/>
-							<Button >
+							<Button onClick={ this.handleSearch }>
 								<SearchIcon />Search
 							</Button>
 							<div>	
@@ -234,7 +239,7 @@ class App extends Component {
 		)
 	}
 
-	handleSearchType = () =>{
+	handleSearch = () =>{
 
 	}
 }
