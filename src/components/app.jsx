@@ -104,7 +104,10 @@ const styles = theme => ({
 class App extends Component {
 	state={
 		fields: [ "id", "name", "gender", "speci", "admitDate" ],
-		selectedField: "id"
+		fields2: [ {"id":{val:"ID"} }, {"name":{val:"Name"}}, {"gender":{val:"Gender"}},
+			 "speci", "admitDate" ],
+		selectedField: "id",
+		fieldValue: ""
 	}
 	render() {
 		//console.log('app.jsx-rendering. petStore: ', petStore.getState() );
@@ -203,7 +206,10 @@ class App extends Component {
 							</div>
 							<InputBase
 								placeholder="Search…"
-								
+								onChange={ (text) => {
+									console.log("Search bar val: ", text);
+									this.setState({ fieldValue: text })
+								} }
 							/>
 							<Button onClick={ this.handleSearch }>
 								<SearchIcon />Search
@@ -240,7 +246,8 @@ class App extends Component {
 	}
 
 	handleSearch = () =>{
-
+		//
+		petAPIobj.callGraphQL( this.state.selectedField, this.state.fieldValue )
 	}
 }
 
