@@ -18,6 +18,7 @@ import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import Toolbar from '@material-ui/core/Toolbar';
 import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
 
 import { petStore } from "../stores/pets";
@@ -104,7 +105,10 @@ const styles = theme => ({
 class App extends Component {
 	state={
 		fields: [ "id", "name", "gender", "speci", "admitDate" ],
-		selectedField: "id"
+		fields2: [ {"id":{val:"ID"} }, {"name":{val:"Name"}}, {"gender":{val:"Gender"}},
+			 "speci", "admitDate" ],
+		selectedField: "id",
+		fieldValue: ""
 	}
 	render() {
 		//console.log('app.jsx-rendering. petStore: ', petStore.getState() );
@@ -129,22 +133,44 @@ class App extends Component {
 		//let data = petAPIobj.callApi()
 		let data = petAPIobj.callGraphQL( property, value )
 			.then( response => {
-				console.log(response);
-				if(response.data.data){
+				console.log("app.jsx - response1: ",response);
+				if( response.data && response.data){
 					console.log("app.jsx - componenetDidMount");
 					this.setState({ petAdmission: response.data.admissions })
-					
+					return response;
 				}
-				return response;
+				/*else{ // to determine CORS & CORB
+					this.setState({ petAdmission: [ { id:'000' , name:"null", speci:"Dog" , gender:"Male" , years:"60" , symptoms:["Fever", "Cold"] , admittedDate:"2019-04-01" }] });
+				
+					return [{
+						data:{ admissions: [ { id:'000' , name:"CORS/CORB", speci:"Dog" , gender:"Male" , years:"0" , symptoms:["Cold"] , admittedDate:"2010-04-01" }] }
+					}];
+				}*/
 			})
 			.then(
 				response => {
+
+					// CORS & CORB
+					console.log("app.jsx - response2: ", response);
+					if(  !response.data ){
+						petStore.dispatch({
+							type: 'FETCH_FROM_API',
+							payload: {
+								apiData: response[0].data.admissions
+							}
+						})
+					}
+
+
+
+					else{
 					petStore.dispatch({
 						type: 'FETCH_FROM_API',
 						payload: {
 							apiData: response.data.admissions
 						}
 					})
+					}
 				}
 			)
 	}
@@ -201,9 +227,14 @@ class App extends Component {
 							<div >
 								
 							</div>
-							<InputBase
+							<TextField
 								placeholder="Search…"
-								
+								value={ this.state.fieldValue }
+								onChange={ (e) => {
+									e.preventDefault();
+									console.log("Search bar val: ", e);
+									this.setState({ fieldValue: e.target.value })
+								} }
 							/>
 							<Button onClick={ this.handleSearch }>
 								<SearchIcon />Search
@@ -240,7 +271,8 @@ class App extends Component {
 	}
 
 	handleSearch = () =>{
-
+		//
+		petAPIobj.callGraphQL( this.state.selectedField, this.state.fieldValue )
 	}
 }
 

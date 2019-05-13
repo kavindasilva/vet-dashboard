@@ -56,7 +56,9 @@ const PokemonImage = ({ name }) => {
 }
 
 const client = new ApolloClient({
+  //uri: 'http://127.0.0.1/phpapi/inline-index4.php',
   uri: 'http://127.0.0.1/phpapi/inline-index4.php',
+  //uri: 'http://127.0.0.1/phpapi/inline-index4-2.php',
 })
 
 class petAPI extends React.Component{
@@ -84,13 +86,15 @@ class petAPI extends React.Component{
       }`
     }
 
+    console.log("petAPI - gql query: ", graphqlQuery);
+
     //if(property===0){
       return client.query({
         query: gql `${graphqlQuery}`
         //query: gql `{admissions { id, name, speci, gender, years, admittedDate } }` 
       })
       .then(response => {
-        console.log(response.data);
+        console.log("petAPI response: ",response.data);
         return response;
       });
     //}

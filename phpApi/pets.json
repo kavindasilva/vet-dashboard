@@ -31,5 +31,4 @@
 	{ "id":6, "name":"TommyPHP2" , "speci":"Dog" , "gender":"Female" , "years":6, "symptoms":["Cold"] , "admittedDate":"2019-04-03" },
 	{ "id":7, "name":"TommyPHP3" , "speci":"Dog" , "gender":"Female" , "years":5, "symptoms":["Cold"] , "admittedDate":"2019-04-03" }
 
-
 ]
