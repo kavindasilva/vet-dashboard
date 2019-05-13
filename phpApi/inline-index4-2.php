@@ -79,7 +79,7 @@ $processor = new Processor(new Schema([
                         //if( $record['id']== $args['id'] )
                         //    array_push($selected_data, $record);
 						
-						if( isset($args['speci']) && $record['speci']== $args['speci'] )
+						//if( isset($args['speci']) && $record['speci']== $args['speci'] )
                             array_push($selected_data, $record);
                     }
                     return $selected_data; // this is rendered in ui
@@ -106,6 +106,7 @@ $processor = new Processor(new Schema([
 //$payload=json_encode($queryInfo['query']);
 $payload=$queryInfo["query"];
 //$payload="{ admissions( speci:\"Dog\" ) {id, name,speci,	gender,	years,admittedDate } }";
+//$payload="{ admissions {id, name,speci,	gender,	years,admittedDate } }";
 
 
 $processor->processPayload($payload);
@@ -116,6 +117,6 @@ header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS, X-Requested-With');
 header('Access-Control-Max-Age: 1000');
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization');
-header("Content-Type: application/json");
+//header("Content-Type: application/json");
 
 echo json_encode($processor->getResponseData(), JSON_PRETTY_PRINT) . "\n";

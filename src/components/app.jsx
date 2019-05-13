@@ -139,13 +139,13 @@ class App extends Component {
 					this.setState({ petAdmission: response.data.admissions })
 					return response;
 				}
-				/*else{ // to determine CORS & CORB
+				else{ // to determine CORS & CORB
 					this.setState({ petAdmission: [ { id:'000' , name:"null", speci:"Dog" , gender:"Male" , years:"60" , symptoms:["Fever", "Cold"] , admittedDate:"2019-04-01" }] });
 				
 					return [{
 						data:{ admissions: [ { id:'000' , name:"CORS/CORB", speci:"Dog" , gender:"Male" , years:"0" , symptoms:["Cold"] , admittedDate:"2010-04-01" }] }
 					}];
-				}*/
+				}
 			})
 			.then(
 				response => {
@@ -272,7 +272,8 @@ class App extends Component {
 
 	handleSearch = () =>{
 		//
-		petAPIobj.callGraphQL( this.state.selectedField, this.state.fieldValue )
+		//petAPIobj.callGraphQL( this.state.selectedField, this.state.fieldValue )
+		this.loadData( this.state.selectedField, this.state.fieldValue )
 	}
 }
 
