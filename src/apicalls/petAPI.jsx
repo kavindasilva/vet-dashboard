@@ -72,7 +72,7 @@ class petAPI extends React.Component{
     //PokemonImage("x");
     //return this.callGraphQL2(0,0);
 
-    /* */var graphqlQuery="{admissions { id, name, speci, gender, years, admittedDate } }";
+    /* */var graphqlQuery="{admissions { id, name, speci, gender, symptoms, years, admittedDate } }";
     if( property !== 0 ){
       graphqlQuery = `{
         admissions( ${property}: "${value}" ) {
@@ -80,6 +80,7 @@ class petAPI extends React.Component{
           name,
           speci,
           gender,
+          symptoms
           years,
           admittedDate
         }

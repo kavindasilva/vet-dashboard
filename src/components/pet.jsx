@@ -24,6 +24,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
 
+//global JS variable for popup open detection
 //const dd=window.
 
 class Pet extends Component {

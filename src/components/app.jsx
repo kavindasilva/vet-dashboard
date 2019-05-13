@@ -106,12 +106,12 @@ class App extends Component {
 	state={
 		fields: [ "id", "name", "gender", "speci", "admitDate" ],
 		fields2: {	
-			"id": {	"id": "id", "parameter": "id" },
-			"name": {	"id": "name", "parameter": "name" },
-			"gender": {	"id": "gender", "parameter": "speci" },
-			"speci": {	"id": "speci", "parameter": "gender" },
-			"admitDate": {	"id": "admitDate", "parameter": "years" },
-			"years": {	"id": "years", "parameter": "symptoms" },
+			"id": {	"id": "id", "displayVal":"ID", "parameter": "id" },
+			"name": {	"id": "name", "displayVal":"Name", "parameter": "name" },
+			"gender": {	"id": "gender", "displayVal":"Gender", "parameter": "gender" },
+			"speci": {	"id": "speci", "displayVal":"Speci", "parameter": "speci" },
+			"admitDate": {	"id": "admitDate", "displayVal":"Admitted Date", "parameter": "admitDate" },
+			"years": {	"id": "years", "displayVal":"Years", "parameter": "years" },
 			//"": {	"id": "", "parameter": "admittedDate" },
 			//"": {	"id": "", "parameter": "deleted" },
 		},
@@ -272,7 +272,7 @@ class App extends Component {
 												this.setState({ selectedField: e.target.value})
 											}
 											/> 
-											{val}
+											{ this.state.fields2[val].displayVal }
 											
 										</React.Fragment>
 									)
@@ -288,7 +288,7 @@ class App extends Component {
 	}
 
 	handleSearch = () =>{
-		//
+		//call the API
 		//petAPIobj.callGraphQL( this.state.selectedField, this.state.fieldValue )
 		//this.loadData( this.state.selectedField, this.state.fieldValue ) //working
 		//this.loadData( this.state.fields2.name.id, this.state.fieldValue ) //working

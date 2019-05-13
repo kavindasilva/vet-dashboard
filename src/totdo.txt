@@ -57,3 +57,8 @@ https://stackoverflow.com/questions/9858448/converting-object-to-json-and-json-t
 https://stackoverflow.com/questions/27678052/usage-of-the-backtick-character-in-javascript
 change php api to handle properties
 
+--may 13
+integrate with apache
+todo: retrieve symptoms from graphQL
+https://stackoverflow.com/questions/42461279/how-to-deploy-a-react-app-on-apache-web-server
+use 'watch' to watch changes in dev and make build again 
