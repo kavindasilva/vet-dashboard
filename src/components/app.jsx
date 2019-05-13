@@ -105,9 +105,17 @@ const styles = theme => ({
 class App extends Component {
 	state={
 		fields: [ "id", "name", "gender", "speci", "admitDate" ],
-		fields2: [ {"id":{val:"ID"} }, {"name":{val:"Name"}}, {"gender":{val:"Gender"}},
-			 "speci", "admitDate" ],
-		selectedField: "id",
+		fields2: {	
+			"id": {	"id": "id", "parameter": "id" },
+			"name": {	"id": "name", "parameter": "name" },
+			"gender": {	"id": "gender", "parameter": "speci" },
+			"speci": {	"id": "speci", "parameter": "gender" },
+			"admitDate": {	"id": "admitDate", "parameter": "years" },
+			"years": {	"id": "years", "parameter": "symptoms" },
+			//"": {	"id": "", "parameter": "admittedDate" },
+			//"": {	"id": "", "parameter": "deleted" },
+		},
+		selectedField: "name",
 		fieldValue: ""
 	}
 	render() {
@@ -124,8 +132,16 @@ class App extends Component {
 	}
 
 	componentDidMount(){ 
-		this.loadData(0,0);
+		this.loadInitialData();
+		//this.loadData(0,0);
 		//this.loadData("speci","Cat");
+	}
+
+	loadInitialData = () => {
+		this.loadData(0,0); // working
+		//this.loadData( this.state.fields2.name.id, this.state.fieldValue )
+		//this.loadData( this.state.fields2[this.state.selectedField].id, this.state.fieldValue )
+
 	}
 
 	loadData(property, value){ 
@@ -134,7 +150,7 @@ class App extends Component {
 		let data = petAPIobj.callGraphQL( property, value )
 			.then( response => {
 				console.log("app.jsx - response1: ",response);
-				if( response.data && response.data){
+				if( response.data ){
 					console.log("app.jsx - componenetDidMount");
 					this.setState({ petAdmission: response.data.admissions })
 					return response;
@@ -150,7 +166,7 @@ class App extends Component {
 			.then(
 				response => {
 
-					// CORS & CORB
+					// CORS & CORB detectiog if daa is empty
 					console.log("app.jsx - response2: ", response);
 					if(  !response.data ){
 						petStore.dispatch({
@@ -239,9 +255,10 @@ class App extends Component {
 							<Button onClick={ this.handleSearch }>
 								<SearchIcon />Search
 							</Button>
+							<Button onClick={ this.loadInitialData } >Reload</Button>
 							<div>	
 								{ this.state.fields.map( (val, index) => (
-									<React.Fragment>
+									<React.Fragment key={ index }>
 										<Radio
 											name="searchType"
 											key={index}
@@ -273,7 +290,9 @@ class App extends Component {
 	handleSearch = () =>{
 		//
 		//petAPIobj.callGraphQL( this.state.selectedField, this.state.fieldValue )
-		this.loadData( this.state.selectedField, this.state.fieldValue )
+		//this.loadData( this.state.selectedField, this.state.fieldValue ) //working
+		//this.loadData( this.state.fields2.name.id, this.state.fieldValue ) //working
+		this.loadData( this.state.fields2[this.state.selectedField].id, this.state.fieldValue )
 	}
 }
 
