@@ -1,4 +1,5 @@
 {
+  "homepage": "http://127.0.0.1/vet-dashboard/build",
   "name": "vet-dashboard",
   "version": "0.1.0",
   "private": true,

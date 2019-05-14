@@ -62,3 +62,8 @@ integrate with apache
 todo: retrieve symptoms from graphQL
 https://stackoverflow.com/questions/42461279/how-to-deploy-a-react-app-on-apache-web-server
 use 'watch' to watch changes in dev and make build again 
+
+--may 14
+https://stackoverflow.com/questions/41195952/updating-nodejs-on-ubuntu-16-04
+https://stackoverflow.com/questions/29820791/git-ignore-node-modules-folder-everywhere
+

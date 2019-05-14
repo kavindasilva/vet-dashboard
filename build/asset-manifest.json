@@ -1,15 +1,15 @@
 {
-  "main.css": "/static/css/main.54514761.chunk.css",
-  "main.js": "/static/js/main.79ff0aca.chunk.js",
-  "main.js.map": "/static/js/main.79ff0aca.chunk.js.map",
-  "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
-  "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
-  "static/css/2.0dd5e4a3.chunk.css": "/static/css/2.0dd5e4a3.chunk.css",
-  "static/js/2.e64ff49f.chunk.js": "/static/js/2.e64ff49f.chunk.js",
-  "static/js/2.e64ff49f.chunk.js.map": "/static/js/2.e64ff49f.chunk.js.map",
-  "index.html": "/index.html",
-  "precache-manifest.b72faa43beef25ab234d2a2a3073dbf5.js": "/precache-manifest.b72faa43beef25ab234d2a2a3073dbf5.js",
-  "service-worker.js": "/service-worker.js",
-  "static/css/2.0dd5e4a3.chunk.css.map": "/static/css/2.0dd5e4a3.chunk.css.map",
-  "static/css/main.54514761.chunk.css.map": "/static/css/main.54514761.chunk.css.map"
+  "main.css": "/vet-dashboard/build/static/css/main.4fb66e18.chunk.css",
+  "main.js": "/vet-dashboard/build/static/js/main.84f40755.chunk.js",
+  "main.js.map": "/vet-dashboard/build/static/js/main.84f40755.chunk.js.map",
+  "runtime~main.js": "/vet-dashboard/build/static/js/runtime~main.13dc333e.js",
+  "runtime~main.js.map": "/vet-dashboard/build/static/js/runtime~main.13dc333e.js.map",
+  "static/css/2.42c6842a.chunk.css": "/vet-dashboard/build/static/css/2.42c6842a.chunk.css",
+  "static/js/2.deef62d8.chunk.js": "/vet-dashboard/build/static/js/2.deef62d8.chunk.js",
+  "static/js/2.deef62d8.chunk.js.map": "/vet-dashboard/build/static/js/2.deef62d8.chunk.js.map",
+  "index.html": "/vet-dashboard/build/index.html",
+  "precache-manifest.6443a8c057c6754530793b17f2f314e2.js": "/vet-dashboard/build/precache-manifest.6443a8c057c6754530793b17f2f314e2.js",
+  "service-worker.js": "/vet-dashboard/build/service-worker.js",
+  "static/css/2.42c6842a.chunk.css.map": "/vet-dashboard/build/static/css/2.42c6842a.chunk.css.map",
+  "static/css/main.4fb66e18.chunk.css.map": "/vet-dashboard/build/static/css/main.4fb66e18.chunk.css.map"
 }
