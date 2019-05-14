@@ -13,8 +13,8 @@ import gql from 'graphql-tag'
 const APIGetUrl = 'http://127.0.0.1/phpApi/getData.php?q=';
 const DEFAULT_QUERY = 'redux';
 
-//const graphQLURL = 'http://127.0.0.1/phpapi/inline-index3.php';
-const graphQLURL = 'http://127.0.0.1/phpapi/inline-index4.php';
+//const graphQLURL = 'http://127.0.0.1/phpApi/inline-index3.php';
+const graphQLURL = 'http://127.0.0.1/phpApi/inline-index4.php';
 
 const headerInfo = {
   'Content-Type': 'application/json',
@@ -56,9 +56,9 @@ const PokemonImage = ({ name }) => {
 }
 
 const client = new ApolloClient({
-  //uri: 'http://127.0.0.1/phpapi/inline-index4.php',
-  uri: 'http://127.0.0.1/phpapi/inline-index4.php',
-  //uri: 'http://127.0.0.1/phpapi/inline-index4-2.php',
+  //uri: 'http://127.0.0.1/phpApi/inline-index4-5.php',
+  uri: 'http://127.0.0.1/phpApi/inline-index4.php',
+  //uri: 'http://127.0.0.1/phpApi/inline-index4-2.php',
 })
 
 class petAPI extends React.Component{
@@ -124,7 +124,7 @@ class petAPI extends React.Component{
     console.log("petAPI.jsx - callGraphQL");
     return axios.create({
       baseURL: graphQLURL
-      //baseURL: 'http://127.0.0.1/phpapi/inline-index3.php'
+      //baseURL: 'http://127.0.0.1/phpApi/inline-index3.php'
     })
     //.post( graphQLURL, { headers: headerInfo, query: GET_PET })
     .post( graphQLURL, { query: GET_PET })
@@ -141,7 +141,7 @@ class petAPI extends React.Component{
     console.log("petAPI.jsx - callGraphQL");
     return axios.create({
       baseURL: graphQLURL
-      //baseURL: 'http://127.0.0.1/phpapi/inline-index3.php'
+      //baseURL: 'http://127.0.0.1/phpApi/inline-index3.php'
     })
     .get( '', { query: GET_PET })
     .then(result => {

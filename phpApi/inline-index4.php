@@ -1,5 +1,9 @@
 <?php
 
+/**
+	Stable version 0513-0527
+*/
+
 namespace InlineSchema;
 
 use Youshido\GraphQL\Execution\Processor;
@@ -46,9 +50,7 @@ $processor = new Processor(new Schema([
                             "speci" => new StringType(), 
                             "gender" => new StringType(), 
                             "years" => new FloatType(), 
-                            //"symptoms" => new ObjectType( 
-							//	'name' =
-							//), 
+                            "symptoms" => new ListType(new StringType()),
                             "admittedDate" => new StringType(),
                             "deleted" => new BooleanType(),
                         ],
@@ -99,20 +101,11 @@ $processor = new Processor(new Schema([
 /** This part is retrieved from the client as a JSON input */
 // creating payload and running it through processor
 //$payload = "{ admissions{id, name, speci} }";
- $payload = "
-	{
-		admissions( id:$petID, name:\"$petName\", speci:\"Dog\" )
-		{
-			id, 
-			name,
-			speci,
-			gender,
-			years,
-			admittedDate
-		}
-	}";
+
 //$payload=json_encode($queryInfo['query']);
-$payload=$queryInfo["query"]; //echo $payload;
+$payload=$queryInfo["query"]; //echo $payload; // From REACT , working
+//$payload="{ admissions {id, name,speci, symptoms,gender,years,admittedDate } }";
+//$payload="{ admissions {id, name,speci, gender,	years,admittedDate } }";
 
 //$payload="{ admissions( gender:\"Male\" ) {id, name,speci,    gender, years,admittedDate } }";
 //$payload="{ admissions( speci:\"Dog\" ) {id, name,speci,    gender, years,admittedDate } }";
