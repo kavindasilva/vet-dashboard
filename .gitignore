@@ -5,7 +5,7 @@ ehthumbs_vista.db
 
 # node modules
 # reference: https://stackoverflow.com/questions/29820791/git-ignore-node-modules-folder-everywhere
-build/
+build/*
 node_modules/
 
 

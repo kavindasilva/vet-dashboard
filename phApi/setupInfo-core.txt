@@ -1,0 +1,6 @@
+
+Step 1/4 : FROM mysql:5.7.23
+Step 2/4 : ENV MYSQL_ROOT_PASSWORD=root
+Step 3/4 : RUN usermod -d /var/lib/mysql/ mysql &&     echo "innodb_file_per_table" >> /etc/mysql/mysql.conf.d/mysqld.cnf &&     echo "slow_query_log = 1" >> /etc/mysql/mysql.conf.d/mysqld.cnf &&     echo "slow_query_log_file = /var/log/mysql/slow.log" >> /etc/mysql/mysql.conf.d/mysqld.cnf &&     echo "long_query_time = 5" >> /etc/mysql/mysql.conf.d/mysqld.cnf &&     echo "log_queries_not_using_indexes = 1" >> /etc/mysql/mysql.conf.d/mysqld.cnf
+Step 4/4 : VOLUME  ["/etc"]
+

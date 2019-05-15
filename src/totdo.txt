@@ -70,4 +70,10 @@ https://stackoverflow.com/questions/53878566/how-to-make-a-case-insensitive-grap
 
 --may 15
 start working on php phalcon rest api
+https://stackoverflow.com/questions/8890286/what-is-the-different-between-php5-and-php5-dev
+https://stackoverflow.com/questions/40415325/install-php5-dev-ubuntu-16-04
+sudo apt --fix-broken install
+sudo apt-get install -y php5.6-dev
+work only in feature/rest-api branch . don't change branches!
+
 
