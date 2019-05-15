@@ -5,8 +5,9 @@ ehthumbs_vista.db
 
 # node modules
 # reference: https://stackoverflow.com/questions/29820791/git-ignore-node-modules-folder-everywhere
-node_modules/
 build/
+node_modules/
+
 
 # Folder config file
 Desktop.ini

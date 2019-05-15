@@ -105,7 +105,9 @@ $processor = new Processor(new Schema([
 //$payload=json_encode($queryInfo['query']);
 $payload=$queryInfo["query"]; //echo $payload; // From REACT , working
 //$payload="{ admissions {id, name,speci, symptoms,gender,years,admittedDate } }";
-//$payload="{ admissions {id, name,speci, gender,	years,admittedDate } }";
+
+//$payload="{ admissions ( gender__eq : \"Male\" )
+//    {id, name,speci, gender, years,admittedDate } }";
 
 //$payload="{ admissions( gender:\"Male\" ) {id, name,speci,    gender, years,admittedDate } }";
 //$payload="{ admissions( speci:\"Dog\" ) {id, name,speci,    gender, years,admittedDate } }";

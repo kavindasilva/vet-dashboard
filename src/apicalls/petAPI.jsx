@@ -9,12 +9,12 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 
 
-//const APIGetUrl = 'http://127.0.0.1/ucsc5/vet-dashboard/phpApi/getData.php?q=';
-const APIGetUrl = 'http://127.0.0.1/phpApi/getData.php?q=';
+//const APIGetUrl = 'http://127.0.0.1/ucsc5/vet-dashboard/vet-dashboard/phpApi/getData.php?q=';
+const APIGetUrl = 'http://127.0.0.1/vet-dashboard/phpApi/getData.php?q=';
 const DEFAULT_QUERY = 'redux';
 
-//const graphQLURL = 'http://127.0.0.1/phpApi/inline-index3.php';
-const graphQLURL = 'http://127.0.0.1/phpApi/inline-index4.php';
+//const graphQLURL = 'http://127.0.0.1/vet-dashboard/phpApi/inline-index3.php';
+const graphQLURL = 'http://127.0.0.1/vet-dashboard/phpApi/inline-index4.php';
 
 const headerInfo = {
   'Content-Type': 'application/json',
@@ -56,9 +56,9 @@ const PokemonImage = ({ name }) => {
 }
 
 const client = new ApolloClient({
-  //uri: 'http://127.0.0.1/phpApi/inline-index4-5.php',
-  uri: 'http://127.0.0.1/phpApi/inline-index4.php',
-  //uri: 'http://127.0.0.1/phpApi/inline-index4-2.php',
+  //uri: 'http://127.0.0.1/vet-dashboard/phpApi/inline-index4-5.php',
+  uri: 'http://127.0.0.1/vet-dashboard/phpApi/inline-index4.php',
+  //uri: 'http://127.0.0.1/vet-dashboard/phpApi/inline-index4-2.php',
 })
 
 class petAPI extends React.Component{
@@ -124,7 +124,7 @@ class petAPI extends React.Component{
     console.log("petAPI.jsx - callGraphQL");
     return axios.create({
       baseURL: graphQLURL
-      //baseURL: 'http://127.0.0.1/phpApi/inline-index3.php'
+      //baseURL: 'http://127.0.0.1/vet-dashboard/phpApi/inline-index3.php'
     })
     //.post( graphQLURL, { headers: headerInfo, query: GET_PET })
     .post( graphQLURL, { query: GET_PET })
@@ -141,7 +141,7 @@ class petAPI extends React.Component{
     console.log("petAPI.jsx - callGraphQL");
     return axios.create({
       baseURL: graphQLURL
-      //baseURL: 'http://127.0.0.1/phpApi/inline-index3.php'
+      //baseURL: 'http://127.0.0.1/vet-dashboard/phpApi/inline-index3.php'
     })
     .get( '', { query: GET_PET })
     .then(result => {
@@ -182,7 +182,7 @@ class petAPI extends React.Component{
   callApi1(){
     // Github fetch library : https://github.com/github/fetch
     // Call the API page
-    fetch('http://127.0.0.1/ucsc5/vet-dashboard/phpApi/getData.php')
+    fetch('http://127.0.0.1/ucsc5/vet-dashboard/vet-dashboard/phpApi/getData.php')
       .then((result) => {
       // Get the result
       // If we want text, call result.text()

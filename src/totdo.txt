@@ -66,4 +66,8 @@ use 'watch' to watch changes in dev and make build again
 --may 14
 https://stackoverflow.com/questions/41195952/updating-nodejs-on-ubuntu-16-04
 https://stackoverflow.com/questions/29820791/git-ignore-node-modules-folder-everywhere
+https://stackoverflow.com/questions/53878566/how-to-make-a-case-insensitive-graphql-query
+
+--may 15
+start working on php phalcon rest api
 

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/vet-dashboard/build/precache-manifest.6443a8c057c6754530793b17f2f314e2.js"
+  "/vet-dashboard/build/precache-manifest.706e841156932b2588b9066ae2e65d13.js"
 );
 
 workbox.clientsClaim();
