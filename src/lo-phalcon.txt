@@ -1,0 +1,16 @@
+
+/**
+    Learning outcomes regarding containerization and phalcon
+*/
+## view running containers
+kubectl get pods
+
+## access the container instance
+kubectl exec -it ontrack-6cbcf6fdb8-6csjj -- /bin/bash
+
+
+#in kubernetes
+mysql -hdb -uroot -p
+
+
+
