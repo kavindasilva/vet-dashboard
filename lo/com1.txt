@@ -1,0 +1,412 @@
+sudo passwd root
+clear
+reboot
+cd ~/Downloads/
+tar -xvf node-v10.15.3-linux-x64.tar.xz /usr/local/lib/nodejs
+tar -xvf  /usr/local/lib/nodejs
+rm -rf /usr/local/lib/nodejs
+tar 
+tar --help
+clear
+tar -xf node-v10.15.3-linux-x64.tar.xz  /usr/local/lib/nodejs
+tar -xf node-v10.15.3-linux-x64.tar.xz  
+ls
+cd node-v10.15.3-linux-x64/
+ls
+cp * /usr/local/lib/nodejs
+mkdir /usr/local/lib/nodejs
+sudo mkdir /usr/local/lib/nodejs
+cp * /usr/local/lib/nodejs
+sudo cp * /usr/local/lib/nodejs
+sudo cp -r  * /usr/local/lib/nodejs
+clear
+sudo apt update
+sudo apt install nodejs npm
+nodejs --version
+sudo apt install npm
+npm --version
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+sudo apt install curl
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+node -v
+npm -v
+clear
+sudo apt remove nodejs npm
+node
+sudo npm
+npm install
+sudo service apache2
+cd /etc/init.d/
+ls
+cd Do
+sudo apt-get install git
+sudo apt-get install npm
+npm
+cd ~/kavinda/vet-dashboard-withSupport/
+ls
+clear
+npm install
+npm -v
+node
+node -v
+sudo npm cache clean -f
+sudo apt-get install nodejs
+clear
+sudo npm install -g n
+sudo n stable
+node -v
+npm -v
+clear
+sudo npm install -g n
+n
+sudo n latest
+npm
+clear
+npm install
+chmod 771 xampp-linux-x64-7.3.5-0-installer.run 
+./xampp-linux-x64-7.3.5-0-installer.run 
+sudo ./xampp-linux-x64-7.3.5-0-installer.run 
+cd /opt/lampp/htdocs/
+ls -l
+cd ..
+chown vetstoria htdocs/
+sudo chown vetstoria htdocs/
+clear
+sudo chown -R vetstoria htdocs/
+man chown
+ls -l htdocs/
+sudo npm
+clear
+sudo apt remove nodejs npm
+sudo apt-get remove nodejs npm
+sudo apt-get uninstall nodejs npm
+sudo apt-get remove npm
+clear
+npm
+clear
+sudo apt update
+node
+node -v
+sudo apt install nodejs npm
+clear
+sudo n stable
+node -v
+npm -v
+sudo apt-get install -y nodejs
+npm -v
+clear
+cd ~/kavinda/vet-dashboard-withSupport/
+npm install
+npm start
+git config --global user.name "kavindasilva"
+git config --global user.email "kss.kavinda@gmail.com"
+git config
+clear
+git config.username
+git config user.name
+git config user.email
+git pull
+git pull https://github.com/kavindasilva/vet-dashboard.git withsupport
+git pull https://github.com/kavindasilva/vet-dashboard.git 
+ls
+cd ..
+clear
+ls
+git pull https://github.com/kavindasilva/vet-dashboard.git 
+git clone
+git clone https://github.com/kavindasilva/vet-dashboard.git 
+cd vet-dashboard
+clear
+git switch
+git checkout withSupport
+git branch
+git pull
+npm install
+ln --help
+ln -s ~/Desktop/ htdocs/
+ln -s htdocs/  ~/Desktop/ 
+ln -s /opt/lampp/htdocs/  ~/Desktop/ 
+sudo apt
+clear
+sudo apt-get install geany
+cd ~/kavinda/vet-dashboard
+ls
+git branch
+npm install
+clear
+npm start
+npm build
+npm run-script build
+clear
+npm run-script build
+npm run build
+vi ../ryn1.sh
+x-special/nautilus-clipboard
+copy
+file:///home/vetstoria/kavinda/rsyn1.sh
+ls
+watch 
+watch -b
+watch -b ls
+watch -bc ls
+watch  ls
+watch -c ls
+ls
+clear
+watch -c rsync -avzh /home/vetstoria/kavinda/vet-dashboard/phpApi/ /opt/lampp/htdocs/aa
+cd kavinda/
+ls
+man watch
+watch bash ryn1.sh 
+ls
+clear
+bash rsyn2.sh 
+cd -
+clear
+bash rsyn2.sh 
+clear
+bash rsyn2.sh 
+clear
+bash rsyn2.sh 
+rsync
+clear
+rsync --help
+md5sum
+clear
+rsync avzh /home/vetstoria/kavinda/vet-dashboard/phpApi/ /opt/lampp/htdocs/aa
+rsync -avzh /home/vetstoria/kavinda/vet-dashboard/phpApi/ /opt/lampp/htdocs/aa
+ln --help
+clear
+rsync -avzh /home/vetstoria/kavinda/vet-dashboard/phpApi/ /opt/lampp/htdocs/aa
+~/kavinda/vet-dashboard/npm run-script build
+sudo
+sudo service
+sudo service apache2
+cd /opt/lampp/
+ls
+./xampp 
+./xampp panel
+sudo ./xampp panel
+sudo ./xampp start
+npm start
+npm run-script build
+ls
+cd ..
+ls
+cd -
+cd scripts/
+ls
+clear
+bash watch1.sh 
+watch bash watch1.sh 
+clear
+watch -n 20 bash watch1.sh 
+clear
+watch -n 20 bash watch1.sh 
+clear
+watch -n 30 bash watch1.sh 
+git config user.name
+xampp
+./xampp
+ls xampp 
+ls -al xampp 
+su
+cd ~
+/opt/lampp/xampp panel
+/opt/lampp/xampp strt
+/opt/lampp/xampp start
+cd -
+chown -Rf vetstoria *
+clear
+chown 
+chown --help
+clear
+sudo chown -R vetstoria /opt/lampp/*
+cd ~
+/opt/lampp/xampp start
+sudo /opt/lampp/xampp start
+git rm --cached build/*
+git rm --cached  /opt/lampp/htdocs/vet-dashboard/build/*
+git rm --cached  /opt/lampp/htdocs/vet-dashboard/build/
+git rm --cached -r  /opt/lampp/htdocs/vet-dashboard/build/*
+git clone git://github.com/phalcon/cphalcon.git
+git checkout tags/phalcon-v2.0.12
+git checkout tags/phalcon-v2.0.14
+git checkout tags/phalcon-v2.0.12
+git checkout tags/phalcon-v2.0.13
+ls
+cd cphalcon/
+git checkout tags/phalcon-v2.0.14
+git checkout tags/phalcon-v2.0.11
+git checkout tags/phalcon-v2.0.12
+ls
+cd build/
+sudo ./install
+git checkout tags/phalcon-v2.0.12
+sudo ./install
+sudo ./xampp stop
+cd cphalcon/build/
+cd ..
+git checkout tags/phalcon-v2.0.12
+cd build/
+sudo ./install
+git checkout tags/phalcon-v2.0.13
+sudo ./install
+sudo apt-get install gcc-multilib
+sudo service apache2 status
+clear
+curl -s "https://packagecloud.io/install/repositories/phalcon/stable/script.deb.sh" | sudo bash
+clear
+sudo apt-get install php5-dev libpcre3-dev gcc make php5-mysql
+gcc
+g++
+clear
+sudo apt-get install php5-dev
+sudo apt-get install php5
+sudo apt-get install -y php5.6-dev
+sudo dpkg -P php5-dev
+clear
+dpkg -i http://mirrors.kernel.org/ubuntu/pool/main/p/php-defaults/php-dev_7.2+69ubuntu1_all.deb
+sudo dpkg -i http://mirrors.kernel.org/ubuntu/pool/main/p/php-defaults/php-dev_7.2+69ubuntu1_all.de
+man wget
+wget http://mirrors.kernel.org/ubuntu/pool/main/p/php-defaults/php-dev_7.2+69ubuntu1_all.deb
+sudo dpkg -i php-dev_7.2+69ubuntu1_all.deb 
+sudo apt-get install libtool
+sudo apt --fix-broken install
+sudo apt-get install libtool
+sudo dpkg -i php-dev_7.2+69ubuntu1_all.deb 
+sudo apt-get install php5-dev
+sudo apt-get install php5
+sudo apt-get install libpcre3-dev
+make
+sudo apt-get install make
+sudo apt-get install php5-mysql
+ls -l
+sudo chown -R vetstoria  html/*
+ls -l
+sudo chown -R vetstoria  /var/www/html/*
+ls -l
+sudo chown -R vetstoria  /var/www/html/
+ls -l
+clear
+cd html
+vi test.php
+git checkout tags/phalcon-v2.0.12
+sudo ./install
+sudo apt-get install php5-dev libpcre3-dev gcc make php5-mysql
+sudo service php5-fpm restart
+cd 64bits/
+export CFLAGS="-O2 --fvisibility=hidden"
+./configure --enable-phalcon
+sudo ./configure --enable-phalcon
+make && sudo make install
+sudo ./install 64bits
+cd ..
+sudo ./install 64bits
+sudo apt-get install -y php5.6-dev
+sudo apt-get install -y php5.6-mysql
+sudo ./install --with-php-config=/usr/bin/php-config5.6
+vi setupInfo.txt
+exit
+cd /opt/lampp/htdocs/vet-dashboard/
+npm start
+ls /opt/lampp/htdocs/vet-dashboard/scripts/
+watch -n 30 /opt/lampp/htdocs/vet-dashboard/scripts/watch1.sh
+watch -n 30 bash /opt/lampp/htdocs/vet-dashboard/scripts/watch1.sh
+sudo apt --fix-broken install
+clear
+sudo dpkg -i mysql-workbench-community_8.0.16-1ubuntu18.04_amd64.deb
+curl -s "https://packagecloud.io/install/repositories/phalcon/stable/script.deb.sh" | sudo bash
+sudo apt-get install php5-phalcon
+sudo apt-get install php5-phalcon mysql apache
+clear
+sudo add-apt-repository ppa:ondrej/php
+sudo apt-get update
+sudo apt-get install -y php5.6
+php -v
+apache
+apache2
+sudo service apache2 start
+php --version
+sudo update-alternatives --config php
+php v
+php -v
+php v
+php -v
+xampp start
+./xampp start
+sudo./xampp start
+sudo ./xampp start
+sudo ./xampp stop
+kubectl 
+clear
+kubectl exec -it ontrack-6cbcf6fdb8-6csjj -- /bin/bash
+kubectl get po
+kubectl exec -it ontrack-6cbcf6fdb8-6csjj -- /bin/bash
+sudo service mysql status
+sudo service mysqld status
+ls /etc/init.d/
+whereid mysql
+whereis mysql
+sudo service  /opt/lampp/bin/mysql
+sudo service  /opt/lampp/bin/mysql.server
+whereis mysqld
+ls /var/run/mysqld
+ifconfig
+sudo apt install net-tools
+ifconfig 
+midori --help
+midori -p
+midori -&p
+ls /usr/share/applications/mid*
+ls /usr/share/applications/
+ls ~/.local/share/applications/
+cd /usr/share/applications/
+ls *mid*
+ll *mid*
+ll *.fdeskp
+ll *.desktop
+ll *mi*.desktop
+ll mi*.desktop
+cd ~/.local/share/applications/
+ll
+cd -
+sudo apt install opera-stable
+pwd
+docker pods
+kubectl exec -it ontrack-6cbcf6fdb8-6csjj -- /bin/bash
+ll /var/log/apache2/error.log
+tail -10 /var/log/apache2/error.log
+tail -n 10 /var/log/apache2/error.log
+cd ~/kavinda/
+ls
+watch -n 5 bash tsync1.sh 
+clear
+sudo watch -n 5 sudo bash tsync1.sh 
+sudo watch -n 30 sudo bash tsync1.sh 
+kubectl get pods
+kubectl exec -it ontrack-6cbcf6fdb8-6csjj --
+kubectl exec -it ontrack-6cbcf6fdb8-6csjj -- /bin/
+kubectl exec -it ontrack-6cbcf6fdb8-6csjj -- /bin/bash
+vi charana1.html
+kubectl exec -it ontrack-6cbcf6fdb8-6csjj -- /bin/bash
+cd projects/tracker-dashboard/
+sudo apt-get install composer
+composer
+composer require webonyx/graphql-php
+ll
+clear
+composer require webonyx/graphql-php
+clear
+iptables -P FORWARD ACCEPT
+sudo iptables -P FORWARD ACCEPT
+iptable --help
+iptables --help
+ps -l
+gnome-control-center
+sudo apt install gnome-control-center
+gnome-control-center
+ifconfig
+clear
+composer
+npm start

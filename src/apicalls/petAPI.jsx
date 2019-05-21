@@ -57,7 +57,8 @@ const PokemonImage = ({ name }) => {
 
 const client = new ApolloClient({
   //uri: 'http://127.0.0.1/vet-dashboard/phpApi/inline-index4-5.php',
-  uri: 'http://127.0.0.1/vet-dashboard/phpApi/inline-index4.php',
+  //uri: 'http://127.0.0.1/vet-dashboard/phpApi/inline-index4.php', // working
+  uri: 'http://ontrack.dev.io/graph/apiJsonRequest/',
   //uri: 'http://127.0.0.1/vet-dashboard/phpApi/inline-index4-2.php',
 })
 

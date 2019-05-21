@@ -110,7 +110,7 @@ class PopDialog extends Component {
 
 	showPop( optionalAttribute1 ){
 		return(
-			<div>
+			<div style={ { minWidth: "20px" } }>
 				<div style={this.styleTD} 
 					onClick={ ()=>{ 
 						this.openPopUp();

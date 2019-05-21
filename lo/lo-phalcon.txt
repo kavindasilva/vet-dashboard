@@ -2,15 +2,22 @@
 /**
     Learning outcomes regarding containerization and phalcon
 */
+
 ## view running containers
 kubectl get pods
+
 
 ## access the container instance
 kubectl exec -it ontrack-6cbcf6fdb8-6csjj -- /bin/bash
 
 
+# docker allow networking ( in host machine )
+sudo iptables -P FORWARD ACCEPT
+
 #in kubernetes
 mysql -hdb -uroot -p
 
+# db access with foreign keys
+https://docs.phalconphp.com/3.4/fr-fr/db-models-relationships
 
 

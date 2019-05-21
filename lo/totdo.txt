@@ -80,4 +80,14 @@ work only in feature/rest-api branch . don't change branches!
 https://stackoverflow.com/questions/5438060/showing-all-errors-and-warnings?rq=1
 https://stackoverflow.com/questions/32374597/php-display-errors
 
+--may 17
+create rest api get urls
+integrate graphql backend with rest
 
+--may 20
+https://stackoverflow.com/questions/50069605/how-to-find-settings-in-ubuntu-18-04
+
+--may 21
+connect the frontend and rest api
+https://stackoverflow.com/questions/46235798/relative-path-in-index-html-after-build
+"homepage": "http://127.0.0.1/vet-dashboard/build",
