@@ -91,3 +91,9 @@ https://stackoverflow.com/questions/50069605/how-to-find-settings-in-ubuntu-18-0
 connect the frontend and rest api
 https://stackoverflow.com/questions/46235798/relative-path-in-index-html-after-build
 "homepage": "http://127.0.0.1/vet-dashboard/build",
+
+--may 22
+study modules
+generate a module for ui
+
+

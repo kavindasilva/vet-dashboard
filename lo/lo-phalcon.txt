@@ -20,4 +20,8 @@ mysql -hdb -uroot -p
 # db access with foreign keys
 https://docs.phalconphp.com/3.4/fr-fr/db-models-relationships
 
+#multimodule apps needs to be configured with module.php
+https://olddocs.phalconphp.com/en/2.0.0/reference/applications#single-module
+https://olddocs.phalconphp.com/en/2.0.0/reference/routing#routing-to-modules
+
 

@@ -63,6 +63,7 @@ class PopDialog extends Component {
 
 	styleTD={
 		width: "100%" ,
+		minHeight: "18px",
 		color: "#111111"
 	}
 
@@ -110,7 +111,7 @@ class PopDialog extends Component {
 
 	showPop( optionalAttribute1 ){
 		return(
-			<div style={ { minWidth: "20px" } }>
+			<div style={ { minWidth: "20px", minHeight: "18px" } }>
 				<div style={this.styleTD} 
 					onClick={ ()=>{ 
 						this.openPopUp();
