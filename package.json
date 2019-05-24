@@ -1,5 +1,5 @@
 {
-    "homepage": ".",
+    "homepage": "./ui",
     "name": "vet-dashboard",
     "version": "0.1.0",
     "private": true,
@@ -35,7 +35,7 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "postbuild": "cp -rf build/* ../public/ui && mv ../public/ui/index.html ../public/ui/index.php ",
+        "postbuild": "cp -rf build/* ../../../public/ui && mv ../../../public/ui/index.html ../../../public/ui/index.php ",
         "test": "jest",
         "test0": "react-scripts test",
         "eject": "react-scripts eject"

@@ -1,6 +1,6 @@
 <?php
 
-namespace Multiple\Frontend;
+namespace Vetstoria\OnTrack\Frontend;
 
 use Phalcon\Loader;
 use Phalcon\Mvc\View;
@@ -19,12 +19,14 @@ class Module implements ModuleDefinitionInterface
      */
     public function registerAutoloaders(DiInterface $di = null)
     {
+
+        
         $loader = new Loader();
 
         $loader->registerNamespaces(
             [
-                'Multiple\Frontend\Controllers' => '../app/front-end/controllers/',
-                'Multiple\Frontend\Models' => '../app/front-end/models/',
+                'Vetstoria\OnTrack\Frontend\Controllers' => __DIR__."/../Frontend/Controllers/",
+                'Vetstoria\OnTrack\Frontend\Models' => __DIR__."/../app/Frontend/Models/",
             ]
         );
 
@@ -49,7 +51,7 @@ class Module implements ModuleDefinitionInterface
             // $eventManager->attach('dispatch', new \My\Awesome\Acl('front-end'));
 
             $dispatcher->setEventsManager($eventManager);
-            $dispatcher->setDefaultNamespace('Multiple\Frontend\Controllers\\');
+            $dispatcher->setDefaultNamespace('Vetstoria\OnTrack\Frontend\Controllers\\');
             return $dispatcher;
         });
 

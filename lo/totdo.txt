@@ -96,4 +96,12 @@ https://stackoverflow.com/questions/46235798/relative-path-in-index-html-after-b
 study modules
 generate a module for ui
 
+--may 23
+modules generation completed
+study js config import
+https://stackoverflow.com/questions/53396307/how-do-i-use-external-script-that-i-add-to-react-js
+https://stackoverflow.com/questions/42915486/how-to-import-libraries-from-cdn-in-reactjs
+integrate the models and controllers to the new branch "initial-work"
+
+
 
