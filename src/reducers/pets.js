@@ -15,12 +15,12 @@ const store = createStore(reducer);*/
 
 const PetReducer = (state, action) => {
     console.log("PetReducer: state: ", state, "\naction: ", action)
-    let newState={};
+    let newState = {};
 
     switch (action.type) {
         case 'UPDATE_PET_DETAIL':
             //let newState={}
-            newState= {
+            newState = {
                 ...state,
                 admissions: state.admissions.map(record => {
                     if (record.id === action.payload.identifier) {
@@ -30,8 +30,7 @@ const PetReducer = (state, action) => {
                             ...record,
                             ...data
                         }
-                    }
-                    else
+                    } else
                         return record;
                 })
             }
@@ -39,7 +38,7 @@ const PetReducer = (state, action) => {
             return newState;
 
         case 'FETCH_FROM_API':
-            newState= {
+            newState = {
                 ...state,
                 admissions: action.payload.apiData.map(
                     record => { return record }
@@ -48,11 +47,10 @@ const PetReducer = (state, action) => {
             console.log("petReducer_FETCH_FROM_API: ", newState);
             //console.log("petReducer_GET_FROM_API: ", action.payload.apiData );
             return newState;
-        
+
         default:
             return state
     }
-  }
-  
-  export default PetReducer
-  
+}
+
+export default PetReducer

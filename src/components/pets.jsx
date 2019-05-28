@@ -83,14 +83,15 @@ class Pets extends Component {
 					<Table >
 						<TableHead>
 							<TableRow>
-								<TableCell>ID</TableCell>
-								<TableCell>Name</TableCell>
-								<TableCell>Speci</TableCell>
+								<TableCell>Sub_Value</TableCell>
+								<TableCell>Sub_Time</TableCell>
+								<TableCell>Sub_Sid</TableCell>
+								<TableCell>Sub_Source</TableCell>
 
-								<TableCell>Gender</TableCell>
-								<TableCell>Age</TableCell>
-								<TableCell>Symptoms</TableCell>
-								<TableCell>Admitted Date</TableCell>
+								<TableCell>Obj_Value</TableCell>
+								<TableCell>Obj_Time</TableCell>
+								<TableCell>Obj_Sid</TableCell>
+								<TableCell>Obj_Source</TableCell>
 								
 							</TableRow>
 						</TableHead>

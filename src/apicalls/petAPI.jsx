@@ -74,7 +74,8 @@ class petAPI extends React.Component{
     //PokemonImage("x");
     //return this.callGraphQL2(0,0);
 
-    /* */var graphqlQuery="{admissions { id, name, speci, gender, symptoms, years, admittedDate } }";
+    //var graphqlQuery="{ tickets { portalId, objectId } }";
+    /* */var graphqlQuery="{ tickets { portalId, objectId, properties{ subject{value, timestamp, source, sourceId}, content{value, timestamp, source, sourceId} } } }";
     if( property !== 0 ){
       graphqlQuery = `{
         admissions( ${property}: "${value}" ) {

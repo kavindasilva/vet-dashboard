@@ -39,7 +39,7 @@ const client1 = new ApolloClient({
 //import { pokemo } from "../apicalls/petAPI";
 
 
-//const petStore = createStore(PetReducer, {admissions:[ { id:'0' , name:"RoverStt" , speci:"Dog" , gender:"Male" , years:"3.5" , symptoms:["Fever", "Cold"] , admittedDate:"2019-04-01" } ]} );
+//const petStore = createStore(PetReducer, {tickets:[ { id:'0' , name:"RoverStt" , speci:"Dog" , gender:"Male" , years:"3.5" , symptoms:["Fever", "Cold"] , admittedDate:"2019-04-01" } ]} );
 //const petStore = createStore(PetReducer ,
 
 const styles = theme => ({
@@ -152,14 +152,14 @@ class App extends Component {
 				console.log("app.jsx - response1: ",response);
 				if( response.data ){
 					console.log("app.jsx - componenetDidMount");
-					this.setState({ petAdmission: response.data.admissions })
+					this.setState({ petAdmission: response.data.tickets })
 					return response;
 				}
 				else{ // to determine CORS & CORB
 					this.setState({ petAdmission: [ { id:'000' , name:"null", speci:"Dog" , gender:"Male" , years:"60" , symptoms:["Fever", "Cold"] , admittedDate:"2019-04-01" }] });
 				
 					return [{
-						data:{ admissions: [ { id:'000' , name:"CORS/CORB", speci:"Dog" , gender:"Male" , years:"0" , symptoms:["Cold"] , admittedDate:"2010-04-01" }] }
+						data:{ tickets: [ { id:'000' , name:"CORS/CORB", speci:"Dog" , gender:"Male" , years:"0" , symptoms:["Cold"] , admittedDate:"2010-04-01" }] }
 					}];
 				}
 			})
@@ -172,18 +172,15 @@ class App extends Component {
 						petStore.dispatch({
 							type: 'FETCH_FROM_API',
 							payload: {
-								apiData: response[0].data.admissions
+								apiData: response[0].data.tickets
 							}
 						})
 					}
-
-
-
 					else{
 					petStore.dispatch({
 						type: 'FETCH_FROM_API',
 						payload: {
-							apiData: response.data.admissions
+							apiData: response.data.tickets
 						}
 					})
 					}
