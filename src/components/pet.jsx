@@ -28,7 +28,11 @@ import TableRow from '@material-ui/core/TableRow';
 //const dd=window.
 
 class Pet extends Component {
-	state = {}
+	state = { ...this.props }
+
+	componentDidMount(){
+		console.log("pet - cons: ", this.props);
+	}
 
 	
 	tempValue=null;
@@ -95,7 +99,23 @@ class Pet extends Component {
 	viewPet(){ // with mmterialUI : tr -> TableRow; td -> TableCell
 		return (
 			<TableRow> 
-				<TableCell> { this.props.id } </TableCell>
+				<TableCell> { this.props.objectId } </TableCell>
+				<TableCell> { this.props.portalId } </TableCell>
+
+				<TableCell> 
+					{ 
+						//this.state.portalId
+						//this.state["properties"].content.value
+						//this.props.portalId
+						//this.props.properties.content.value
+						//this.props.properties
+						//this.props.properties.find(value => "0" === )
+						//this.props["properties"].filter()
+						//this.props["properties"]["content"]["value"]
+						console.log("pet props",this.props)
+					} 
+				</TableCell>
+				<TableCell> {  } </TableCell>
 
 				<TableCell>
 					<PopDialog
@@ -166,8 +186,21 @@ class Pet extends Component {
 
 const mapStateToProps = (state, myProps) => {
 	let record = state.admissions.find(record => myProps.identifier === record.id);
+	let rec_properties_sub={ ...{...record.properties}.subject };
+	let rec_properties_con={ ...{...record.properties}.content };
 	return {
-		...record
+		...record,
+
+		sub_value: rec_properties_sub.value,
+		sub_source: rec_properties_sub.source,
+		sub_sourceId: rec_properties_sub.sourceId,
+		sub_timestamp: rec_properties_sub.timestamp,
+
+		con_value: rec_properties_sub.value,
+		con_source: rec_properties_sub.source,
+		con_sourceId: rec_properties_sub.sourceId,
+		con_timestamp: rec_properties_sub.timestamp,/**/
+		...record.properties
 	};
 }
 

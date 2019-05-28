@@ -83,6 +83,9 @@ class Pets extends Component {
 					<Table >
 						<TableHead>
 							<TableRow>
+								<TableCell>Obj_id</TableCell>
+								<TableCell>Portal_id</TableCell>
+
 								<TableCell>Sub_Value</TableCell>
 								<TableCell>Sub_Time</TableCell>
 								<TableCell>Sub_Sid</TableCell>
