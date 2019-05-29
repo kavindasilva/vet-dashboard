@@ -92,10 +92,10 @@ class Pets extends Component {
 								<TableCell>Sub_Sid</TableCell>
 								<TableCell>Sub_Source</TableCell>
 
-								<TableCell>Obj_Value</TableCell>
-								<TableCell>Obj_Time</TableCell>
-								<TableCell>Obj_Sid</TableCell>
-								<TableCell>Obj_Source</TableCell>
+								<TableCell>Con_Value</TableCell>
+								<TableCell>Con_Time</TableCell>
+								<TableCell>Con_Sid</TableCell>
+								<TableCell>Con_Source</TableCell>
 								
 							</TableRow>
 						</TableHead>
@@ -138,8 +138,8 @@ class Pets extends Component {
 		//console.log("pets.jsx - viewAll: ", this.props.admissions[0].record);
 		//let tmpjson1=JSON.stringify(this.props.admissions[0]); 
 		//console.log("pets-- ", JSON.parse(tmpjson1).objectId );
-		console.log("pets.jsx - viewAll: ", this.props.admissions[1]  );
-		this.getObjId(this.props.admissions[0]);
+		//console.log("pets.jsx - viewAll: ", this.props.admissions[1]  );
+		//this.getObjId(this.props.admissions[0]);
 
 		return (
 			this.props.admissions.map( (pet, index) => (
@@ -165,11 +165,12 @@ class Pets extends Component {
 		);
 	}
 
+	/** Returns object id of nested object, in places where nested objects not supported */
 	getObjId = (obj) =>{
-		console.log("pets - getobj obj: ", obj);
+		//console.log("pets - getobj obj: ", obj);
 		//let tmpjson1=JSON.stringify(obj);
 		//tmpjson1=JSON.parse(tmpjson1)
-		console.log("pets-- ", obj.objectId );
+		//console.log("pets-- ", obj.objectId );
 		return obj.objectId;
 	}
 

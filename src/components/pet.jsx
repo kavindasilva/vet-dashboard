@@ -31,7 +31,7 @@ class Pet extends Component {
 	//state = { ...this.props }
 	state={}
 
-	componentDidMount(){
+	componentDidMount1(){
 		console.log("pet - cons props: ", this.props);
 		console.log("pet - cons state: ", this.state);
 	}
@@ -67,7 +67,7 @@ class Pet extends Component {
 	/** Sample method to check child to parent data passing working */
 	retrieveFromPopup = (property, value) => {
 		//console.log("Pet store: ", store.getState() ); // whole store
-		//PetReducer( petStore.getState(), updatePet( { propert: property, val: value, idd: this.props.id } ) );
+		//PetReducer( petStore.getState(), updatePet( { propert: property, val: value, idd: this.props.objectid } ) );
 
 		switch(property){
 			case "name":
@@ -108,7 +108,7 @@ class Pet extends Component {
 					{ 
 						//this.state.portalId
 						//this.state["properties"].content.value
-						//this.props.sub_value
+						this.props.sub_value
 						//this.props.properties.content.value
 						//this.props.properties
 						//this.props.properties.find(value => "0" === )
@@ -117,24 +117,18 @@ class Pet extends Component {
 						//console.log("pet props",this.props)
 					} 
 				</TableCell>
-				<TableCell> {  } </TableCell>
+				<TableCell> { this.props.sub_value } </TableCell>
 
 				<TableCell>
-					<PopDialog
-						//sendToParent={this.retrieveFromPopup}
-						elementType="text"
-						identifier={ this.props.id }
-						property="name"
-						value={ this.props.name }>
-					</PopDialog>
+					{ this.props.sub_timestamp }
 				</TableCell>
 
 				 
 				<TableCell> 
 					<PopDialog 
-						value={ this.props.speci } 
-						elementType="select"
-						identifier={ this.props.id }
+						value={ this.props.sub_sourceId } 
+						elementType="text"
+						identifier={ this.props.objectid }
 						data={ {defaultVal:this.props.speci , 
 							defValDisp:this.props.speci, 
 							valueSet:this.species }}
@@ -143,27 +137,27 @@ class Pet extends Component {
 				</TableCell>
 				<TableCell>
 					<PopDialog 
-						value={ this.props.gender }  
-						elementType="radio"
-						identifier={ this.props.id }
+						value={ this.props.con_value }  
+						elementType="text"
+						identifier={ this.props.objectid }
 						data={ { valueSet:["Male", "Female"], defaultVal:this.props.gender } }
 						property="gender">
 					</PopDialog>
 				</TableCell>
 				<TableCell> 
 					<PopDialog 
-						value={ this.props.years }  
-						identifier={ this.props.id }
-						elementType="number"
+						value={ this.props.con_timestamp }  
+						identifier={ this.props.objectid }
+						elementType="text"
 						property="years">
 					</PopDialog>
 				</TableCell>
 				<TableCell> 
 					{ this.props.symptoms ?
 					<PopDialog 
-						value={ this.props.symptoms } 
-						identifier={ this.props.id }
-						elementType="checkBox"
+						value={ this.props.con_sourceId } 
+						identifier={ this.props.objectid }
+						elementType="text"
 						data={ { defaultVal:this.props.symptoms, valueSet:this.symptomsInfo }  }
 						property="symptoms">
 					</PopDialog>
@@ -171,9 +165,9 @@ class Pet extends Component {
 				</TableCell>
 				<TableCell> 
 					<PopDialog 
-						value={ this.props.admittedDate } 
-						identifier={ this.props.id } 
-						elementType="date"
+						value={ this.props.con_sourceId } 
+						identifier={ this.props.objectid } 
+						elementType="text"
 						data={ {val:this.props.admittedDate} }
 						property="admittedDate">
 					</PopDialog>
@@ -189,12 +183,12 @@ class Pet extends Component {
 const mapStateToProps = (state, myProps) => {
 	let record = state.admissions.find(record => myProps.identifier === record.objectId );
 	//let record = state.admissions.find(record => myProps.identifier === 28868823);
-	//let rec_properties_sub={ ...{...record.properties}.subject };
-	//let rec_properties_con={ ...{...record.properties}.content };
+	let rec_properties_sub={ ...{...record.properties}.subject };
+	let rec_properties_con={ ...{...record.properties}.content };
 	return {
-		...record
+		...record,
 
-		/*sub_value: rec_properties_sub.value,
+		sub_value: rec_properties_sub.value,
 		sub_source: rec_properties_sub.source,
 		sub_sourceId: rec_properties_sub.sourceId,
 		sub_timestamp: rec_properties_sub.timestamp,
