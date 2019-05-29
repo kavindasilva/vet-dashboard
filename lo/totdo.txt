@@ -103,5 +103,11 @@ https://stackoverflow.com/questions/53396307/how-do-i-use-external-script-that-i
 https://stackoverflow.com/questions/42915486/how-to-import-libraries-from-cdn-in-reactjs
 integrate the models and controllers to the new branch "initial-work"
 
+--may 29
+https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript
+get data from local db
+merge additional fields from db to hubspot visualization
+save changes in db where colmuns from db are edited
+no need to edit the data coming from hubspot
 
 

@@ -31,9 +31,9 @@ class Pet extends Component {
 	//state = { ...this.props }
 	state={}
 
-	componentDidMount1(){
+	componentDidMount(){
 		console.log("pet - cons props: ", this.props);
-		console.log("pet - cons state: ", this.state);
+		//console.log("pet - cons state: ", this.state);
 	}
 
 	
@@ -67,7 +67,7 @@ class Pet extends Component {
 	/** Sample method to check child to parent data passing working */
 	retrieveFromPopup = (property, value) => {
 		//console.log("Pet store: ", store.getState() ); // whole store
-		//PetReducer( petStore.getState(), updatePet( { propert: property, val: value, idd: this.props.objectid } ) );
+		//PetReducer( petStore.getState(), updatePet( { propert: property, val: value, idd: this.props.objectId } ) );
 
 		switch(property){
 			case "name":
@@ -105,41 +105,51 @@ class Pet extends Component {
 				<TableCell> { this.props.portalId } </TableCell>
 
 				<TableCell> 
-					{ 
-						//this.state.portalId
-						//this.state["properties"].content.value
-						this.props.sub_value
-						//this.props.properties.content.value
-						//this.props.properties
-						//this.props.properties.find(value => "0" === )
-						//this.props["properties"].filter()
-						//this.props["properties"]["content"]["value"]
-						//console.log("pet props",this.props)
-					} 
+					<PopDialog 
+						value={ this.props.sub_value }  
+						elementType="text"
+						identifier={ this.props.objectId }
+						data={ { valueSet:["Male", "Female"], defaultVal:this.props.gender } }
+						property="sub_value">
+					</PopDialog>
+					 
 				</TableCell>
-				<TableCell> { this.props.sub_value } </TableCell>
+				<TableCell> {
+					 this.props.sub_timestamp 
+					 //this.state.portalId
+					//this.state["properties"].content.value
+					//this.props.sub_value
+					//this.props.properties.content.value
+					//this.props.properties
+					//this.props.properties.find(value => "0" === )
+					//this.props["properties"].filter()
+					//this.props["properties"]["content"]["value"]
+					//console.log("pet props",this.props)
+				} </TableCell>
 
 				<TableCell>
-					{ this.props.sub_timestamp }
+					{ this.props.sub_sourceId }
 				</TableCell>
 
 				 
 				<TableCell> 
 					<PopDialog 
-						value={ this.props.sub_sourceId } 
+						value={ this.props.sub_source } 
 						elementType="text"
-						identifier={ this.props.objectid }
+						identifier={ this.props.objectId }
 						data={ {defaultVal:this.props.speci , 
 							defValDisp:this.props.speci, 
 							valueSet:this.species }}
 						property="speci" >
 					</PopDialog>
 				</TableCell>
+				
+				
 				<TableCell>
 					<PopDialog 
 						value={ this.props.con_value }  
 						elementType="text"
-						identifier={ this.props.objectid }
+						identifier={ this.props.objectId }
 						data={ { valueSet:["Male", "Female"], defaultVal:this.props.gender } }
 						property="gender">
 					</PopDialog>
@@ -147,26 +157,27 @@ class Pet extends Component {
 				<TableCell> 
 					<PopDialog 
 						value={ this.props.con_timestamp }  
-						identifier={ this.props.objectid }
+						identifier={ this.props.objectId }
 						elementType="text"
 						property="years">
 					</PopDialog>
 				</TableCell>
 				<TableCell> 
-					{ this.props.symptoms ?
+					{ //this.props.symptoms ?
 					<PopDialog 
 						value={ this.props.con_sourceId } 
-						identifier={ this.props.objectid }
+						identifier={ this.props.objectId }
 						elementType="text"
 						data={ { defaultVal:this.props.symptoms, valueSet:this.symptomsInfo }  }
 						property="symptoms">
 					</PopDialog>
-					: "NA" }
+					//: "NA" 
+					}
 				</TableCell>
 				<TableCell> 
 					<PopDialog 
-						value={ this.props.con_sourceId } 
-						identifier={ this.props.objectid } 
+						value={ this.props.con_source } 
+						identifier={ this.props.objectId } 
 						elementType="text"
 						data={ {val:this.props.admittedDate} }
 						property="admittedDate">
@@ -177,8 +188,6 @@ class Pet extends Component {
 	}
 
 }
-
-//const uns=petStore.subscribe(th)
 
 const mapStateToProps = (state, myProps) => {
 	let record = state.admissions.find(record => myProps.identifier === record.objectId );
