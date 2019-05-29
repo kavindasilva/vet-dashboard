@@ -48,6 +48,17 @@ const PetReducer = (state, action) => {
             //console.log("petReducer_GET_FROM_API: ", action.payload.apiData );
             return newState;
 
+        case 'FETCH_TICKETS_FROM_API':
+            newState = {
+                ...state,
+                tickets: action.payload.ticketData.map(
+                    record => { return record }
+                )
+            };
+            console.log("petReducer_FETCH_TICKETS_FROM_API: ", newState);
+            //console.log("petReducer_GET_FROM_API: ", action.payload.apiData );
+            return newState;
+
         default:
             return state
     }

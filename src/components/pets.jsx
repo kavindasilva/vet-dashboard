@@ -143,6 +143,7 @@ class Pets extends Component {
 
 		return (
 			this.props.admissions.map( (pet, index) => (
+			//this.props.tickets.map( (pet, index) => (
 				
 				//{ JSON.stringify(this.props.admissions[0]) }
 				//console.log("pets-- ", JSON.parse(tmpjson1).objectId );
@@ -181,9 +182,10 @@ class Pets extends Component {
 //export default Pets;
 
 const mapStateToProps = state => {
-	console.log('pets.jsx-mapStateToProps', state);
+	console.log('pets.jsx-mapStateToProps', state); // seems ok
 	return {
-		admissions: state.admissions
+		admissions: state.admissions,
+		tickets: state.tickets
 	};
 }
 

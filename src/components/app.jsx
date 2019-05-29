@@ -30,7 +30,10 @@ import { ApolloProvider } from 'react-apollo'
 
 
 import petAPI from "../apicalls/petAPI";
+import ticketAPI from "../apicalls/ticketAPI";
+
 const petAPIobj = new petAPI();
+const ticketAPIobj = new ticketAPI();
 
 const client1 = new ApolloClient({
   uri: 'http://127.0.0.1/phpapi/inline-index4.php',
@@ -145,7 +148,7 @@ class App extends Component {
 	}
 
 	loadData(property, value){ 
-		console.log("App - Mount");
+		console.log("App - loadData");
 		//let data = petAPIobj.callApi()
 		let data = petAPIobj.callGraphQL( property, value )
 			.then( response => {
@@ -186,6 +189,34 @@ class App extends Component {
 					}
 				}
 			)
+
+		this.loadTickets(0);
+	}
+
+	loadTickets = ( ticketid ) => {
+		console.log("App - loadTickets");
+		let data = ticketAPIobj.callApiDb( )
+			.then( response => {
+				console.log("app.jsx - Tresponse1: ",response);
+
+				console.log("app.jsx - componenetDidMount");
+				this.setState({ petAdmission: response.data })
+				return response;
+
+			})
+			.then(
+				response => {
+					console.log("app.jsx - Tresponse2: ", response);
+
+					petStore.dispatch({
+						type: 'FETCH_TICKETS_FROM_API',
+						payload: {
+							ticketData: response.data
+						}
+					})
+
+				}
+			) /* */
 	}
 
 	/** Before GraphQL */

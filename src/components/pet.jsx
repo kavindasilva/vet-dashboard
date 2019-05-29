@@ -22,6 +22,7 @@ import { connect } from 'react-redux';
 
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import { stat } from 'fs';
 
 
 //global JS variable for popup open detection
@@ -33,7 +34,7 @@ class Pet extends Component {
 
 	componentDidMount(){
 		console.log("pet - cons props: ", this.props);
-		//console.log("pet - cons state: ", this.state);
+		console.log("pet - cons state: ", this.state);
 	}
 
 	
@@ -104,6 +105,8 @@ class Pet extends Component {
 				<TableCell> { this.props.objectId } </TableCell>
 				<TableCell> { this.props.portalId } </TableCell>
 
+				<TableCell> { this.props.portalId } </TableCell>
+
 				<TableCell> 
 					<PopDialog 
 						value={ this.props.sub_value }  
@@ -130,8 +133,6 @@ class Pet extends Component {
 				<TableCell>
 					{ this.props.sub_sourceId }
 				</TableCell>
-
-				 
 				<TableCell> 
 					<PopDialog 
 						value={ this.props.sub_source } 
@@ -190,12 +191,16 @@ class Pet extends Component {
 }
 
 const mapStateToProps = (state, myProps) => {
+	let tickRecord = state.tickets.find(record => myProps.identifier == record.objectId );
+	//console.log("pet - mapStateToProps tickR:", state);
+
 	let record = state.admissions.find(record => myProps.identifier === record.objectId );
 	//let record = state.admissions.find(record => myProps.identifier === 28868823);
 	let rec_properties_sub={ ...{...record.properties}.subject };
 	let rec_properties_con={ ...{...record.properties}.content };
 	return {
 		...record,
+		...tickRecord,
 
 		sub_value: rec_properties_sub.value,
 		sub_source: rec_properties_sub.source,
