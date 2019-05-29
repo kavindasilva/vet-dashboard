@@ -52,6 +52,7 @@ class Pets extends Component {
 	
 
 	componentDidMount(){
+		console.log("Pets didMount - props", this.props);
 		//PetReducer( this.stateData, viewPet );
 		//console.log(store);
 		//this.setState({ petAdmission: this.props.stateInfo.petAdmission })
@@ -134,14 +135,42 @@ class Pets extends Component {
 	}
 
 	viewAll(){ //with booststrap & materialUI
+		//console.log("pets.jsx - viewAll: ", this.props.admissions[0].record);
+		//let tmpjson1=JSON.stringify(this.props.admissions[0]); 
+		//console.log("pets-- ", JSON.parse(tmpjson1).objectId );
+		console.log("pets.jsx - viewAll: ", this.props.admissions[1]  );
+		this.getObjId(this.props.admissions[0]);
+
 		return (
-			this.props.admissions.map( pet =>
+			this.props.admissions.map( (pet, index) => (
+				
+				//{ JSON.stringify(this.props.admissions[0]) }
+				//console.log("pets-- ", JSON.parse(tmpjson1).objectId );
 				<Pet 
-					key={pet.id} 
-					identifier={pet.id}
+					//key={pet.id} 
+					key={
+						//pet.record
+						this.getObjId(pet)
+					} 
+					//identifier={pet.id}
+					identifier={ 
+						this.getObjId(pet)
+						//JSON.parse( JSON.stringify(pet) ).objectId
+						//console.log( "pets identifier: ", pet ) //ok
+					}
+					//props={pet}
 				/>
 			)
+			)
 		);
+	}
+
+	getObjId = (obj) =>{
+		console.log("pets - getobj obj: ", obj);
+		//let tmpjson1=JSON.stringify(obj);
+		//tmpjson1=JSON.parse(tmpjson1)
+		console.log("pets-- ", obj.objectId );
+		return obj.objectId;
 	}
 
 

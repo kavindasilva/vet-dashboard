@@ -28,10 +28,12 @@ import TableRow from '@material-ui/core/TableRow';
 //const dd=window.
 
 class Pet extends Component {
-	state = { ...this.props }
+	//state = { ...this.props }
+	state={}
 
 	componentDidMount(){
-		console.log("pet - cons: ", this.props);
+		console.log("pet - cons props: ", this.props);
+		console.log("pet - cons state: ", this.state);
 	}
 
 	
@@ -106,13 +108,13 @@ class Pet extends Component {
 					{ 
 						//this.state.portalId
 						//this.state["properties"].content.value
-						//this.props.portalId
+						//this.props.sub_value
 						//this.props.properties.content.value
 						//this.props.properties
 						//this.props.properties.find(value => "0" === )
 						//this.props["properties"].filter()
 						//this.props["properties"]["content"]["value"]
-						console.log("pet props",this.props)
+						//console.log("pet props",this.props)
 					} 
 				</TableCell>
 				<TableCell> {  } </TableCell>
@@ -185,22 +187,23 @@ class Pet extends Component {
 //const uns=petStore.subscribe(th)
 
 const mapStateToProps = (state, myProps) => {
-	let record = state.admissions.find(record => myProps.identifier === record.id);
-	let rec_properties_sub={ ...{...record.properties}.subject };
-	let rec_properties_con={ ...{...record.properties}.content };
+	let record = state.admissions.find(record => myProps.identifier === record.objectId );
+	//let record = state.admissions.find(record => myProps.identifier === 28868823);
+	//let rec_properties_sub={ ...{...record.properties}.subject };
+	//let rec_properties_con={ ...{...record.properties}.content };
 	return {
-		...record,
+		...record
 
-		sub_value: rec_properties_sub.value,
+		/*sub_value: rec_properties_sub.value,
 		sub_source: rec_properties_sub.source,
 		sub_sourceId: rec_properties_sub.sourceId,
 		sub_timestamp: rec_properties_sub.timestamp,
 
-		con_value: rec_properties_sub.value,
-		con_source: rec_properties_sub.source,
-		con_sourceId: rec_properties_sub.sourceId,
-		con_timestamp: rec_properties_sub.timestamp,/**/
-		...record.properties
+		con_value: rec_properties_con.value,
+		con_source: rec_properties_con.source,
+		con_sourceId: rec_properties_con.sourceId,
+		con_timestamp: rec_properties_con.timestamp,/**/
+		//...record.properties
 	};
 }
 
