@@ -109,5 +109,8 @@ get data from local db
 merge additional fields from db to hubspot visualization
 save changes in db where colmuns from db are edited
 no need to edit the data coming from hubspot
+make ticket query desc in phalcon
 
+--may 30
+https://stackoverflow.com/questions/2469222/how-to-convert-object-into-string-in-php
 

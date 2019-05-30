@@ -58,7 +58,8 @@ class PopDialog extends Component {
 		/** property name */      				attributeName	:this.props.property,
 		/** element input type */ 				elementType		:this.props.elementType,
 		/** Detect popup modal open state */	isOpen			:false,
-		/** temporary day to keep calendar selected date */ tempDayCal: this.props.value
+		/** temporary day to keep calendar selected date */ tempDayCal: this.props.value,
+		/** data location Hubspot / DB */		dataLocation: 'db', //hubspot data not edited!
 	}
 
 	styleTD={
@@ -180,6 +181,7 @@ class PopDialog extends Component {
 		
 	}
 
+	// update the store
 	dispatchUpdate = () => {
 		petStore.dispatch({
 			type: 'UPDATE_PET_DETAIL',
@@ -200,9 +202,9 @@ class PopDialog extends Component {
 							value={this.state.attributeValue}
 							onChange={ e => (
 								e.preventDefault(),
-								this.setState({ attributeValue: e.target.value }),
+								this.setState({ attributeValue: e.target.value })
 								//this.props.sendToParent()
-								console.log("onChange data", e)
+								//console.log("onChange data", e)
 								) }
 
 							type={ this.state.elementType }
@@ -346,6 +348,33 @@ class PopDialog extends Component {
 			}
 	}
 
+	// save data to DB
+	/*saveToDB = ( ticketid ) => {
+		console.log("popup - saveToDB");
+		let data = ticketAPIobj.callApiDb( )
+			.then( response => {
+				console.log("popup - Tresponse1: ",response);
+
+				console.log("popup - componenetDidMount");
+				this.setState({ petAdmission: response.data })
+				return response;
+
+			})
+			.then(
+				response => {
+					console.log("popup - Tresponse2: ", response);
+
+					petStore.dispatch({
+						type: 'FETCH_TICKETS_FROM_API',
+						payload: {
+							ticketData: response.data
+						}
+					})
+
+				}
+			) /* * /
+	}*/
+
 	openDatepicker = () => {
 		this.setState({ isOpen: true})
 	}
@@ -377,44 +406,6 @@ function PaperComponent0(props) {
     </Draggable>
   );
 }
-
-
-const currentYear = new Date().getFullYear();
-const fromMonth = new Date(currentYear, 0);
-const toMonth = new Date(currentYear + 10, 11);
-function YearMonthForm({ date, localeUtils, onChange }) {
-  const months = localeUtils.getMonths();
-
-  const years = [];
-  for (let i = fromMonth.getFullYear(); i <= toMonth.getFullYear(); i += 1) {
-    years.push(i);
-  }
-
-  const handleChange = function handleChange(e) {
-    const { year, month } = e.target.form;
-    onChange(new Date(year.value, month.value));
-  };
-
-  return (
-    <form className="DayPicker-Caption">
-      <select name="month" onChange={handleChange} value={date.getMonth()}>
-        {months.map((month, i) => (
-          <option key={month} value={i}>
-            {month}
-          </option>
-        ))}
-      </select>
-      <select name="year" onChange={handleChange} value={date.getFullYear()}>
-        {years.map(year => (
-          <option key={year} value={year}>
-            {year}
-          </option>
-        ))}
-      </select>
-    </form>
-  );
-}
-
 
 
 export default PopDialog;

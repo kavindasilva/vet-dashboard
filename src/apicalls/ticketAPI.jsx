@@ -3,9 +3,13 @@ import React from 'react';
 import axios from 'axios';
 //import ApolloClient from 'apollo-boost'
 
+
+
+const DEFAULT_QUERY = 'redux';
+
 const APIlistUrl = 'http://ontrack.dev.io/rest/ApiDb/list';
 const APIselectUrl = 'http://ontrack.dev.io/rest/ApiDb/select/';
-const DEFAULT_QUERY = 'redux';
+const APIsaveUrl = "http://ontrack.dev.io/rest/ApiDb/insertdata";
 
 
 
@@ -30,16 +34,16 @@ class ticketAPI extends React.Component{
         console.log("ticketAPI error", error);
         return error;
       });
+  }
 
-    /**axios.get(API + DEFAULT_QUERY)
-      .then(result => this.setState({
-        hits: result.data.hits,
-        isLoading: false
-      }))
-      .catch(error => this.setState({
-        error,
-        isLoading: false
-      }));/**/
+  /** save / update data to API */
+  saveApiDb( data ){
+    var postUri;
+    axios.post( APIsaveUrl, { data })
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
   }
 
   /** Before GraphQL */

@@ -105,7 +105,14 @@ class Pet extends Component {
 				<TableCell> { this.props.objectId } </TableCell>
 				<TableCell> { this.props.portalId } </TableCell>
 
-				<TableCell> { this.props.portalId } </TableCell>
+				<TableCell>
+					<PopDialog 
+						value={ this.props.review_date }  
+						elementType="text"
+						identifier={ this.props.objectId }
+						property="review_date">
+					</PopDialog>
+				</TableCell>
 
 				<TableCell> 
 					<PopDialog 
@@ -191,8 +198,10 @@ class Pet extends Component {
 }
 
 const mapStateToProps = (state, myProps) => {
-	let tickRecord = state.tickets.find(record => myProps.identifier == record.objectId );
-	//console.log("pet - mapStateToProps tickR:", state);
+	// finds the 1st matching record
+	let tickRecord = state.tickets.find(record => myProps.identifier == record.ticket_id );
+	//console.log("pet - mapStateToProps tickState:", state);
+	console.log("pet - mapStateToProps tickRec:", tickRecord );
 
 	let record = state.admissions.find(record => myProps.identifier === record.objectId );
 	//let record = state.admissions.find(record => myProps.identifier === 28868823);
