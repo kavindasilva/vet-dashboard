@@ -2,6 +2,9 @@
 //import todos from './todos'
 //import visibilityFilter from './visibilityFilter'
 
+import ticketAPI from "../apicalls/ticketAPI";
+import { petStore } from "../stores/pets";
+
 /*export default combineReducers({
   todos,
   visibilityFilter
@@ -12,6 +15,8 @@
     return state;
 }
 const store = createStore(reducer);*/
+
+const ticketAPIobj = new ticketAPI();
 
 const PetReducer = (state, action) => {
     console.log("PetReducer: state: ", state, "\naction: ", action)
@@ -26,6 +31,9 @@ const PetReducer = (state, action) => {
                     if (parseInt(record.ticket_id) == action.payload.identifier) {
                         let data = {};
                         data[action.payload.attribute] = action.payload.value;
+
+                        console.log("pet reducer UPDATE:", {...record, ...data });
+                        saveToDB({...record, ...data });
                         return {
                             ...record,
                             ...data
@@ -35,6 +43,9 @@ const PetReducer = (state, action) => {
                 })
             }
             console.log("petReducer_UPDATE_PET_DETAIL: ", newState);
+
+            //saveToDB();
+
             return newState;
 
         case 'FETCH_FROM_API': // from hubspot through api
@@ -62,6 +73,36 @@ const PetReducer = (state, action) => {
         default:
             return state
     }
+
+}
+
+const saveToDB = (allData) => {
+    console.log("popup - saveToDB", allData);
+    ticketAPIobj.saveApiDb(allData);
+    //console.log("popup - saveToDB", allData.ticket_id);
+    /*let data = ticketAPIobj.callApiDb()
+        .then(response => {
+            console.log("popup - Tresponse1: ", response);
+
+            console.log("popup - componenetDidMount");
+            this.setState({ petAdmission: response.data })
+            return response;
+
+        })
+        .then(
+            response => {
+                console.log("popup - Tresponse2: ", response);
+
+                // 
+                /*petStore.dispatch({
+                    type: 'FETCH_TICKETS_FROM_API',
+                    payload: {
+                        ticketData: response.data
+                    }
+                }) /* * /
+
+            }
+        ) /* */
 }
 
 export default PetReducer

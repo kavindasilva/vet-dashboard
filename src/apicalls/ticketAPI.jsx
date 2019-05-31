@@ -38,8 +38,43 @@ class ticketAPI extends React.Component{
 
   /** save / update data to API */
   saveApiDb( data ){
+    console.log("ticketAPI - saveToDB", data);
+    //var postUri;
+    //let data1 = { product_id_list: ['pid1234', 'pid1235'] };
+    
+    axios.post( APIsaveUrl, data )
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+  }
+
+  saveApiDb2( data ){ // because axios not working
+    console.log("ticketAPI - saveToDB", data);
+
+    fetch( APIsaveUrl , {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        firstParam: 'yourValue',
+        secondParam: 'yourOtherValue',
+      })
+    })
+    .then(res => {
+      console.log(res);
+      console.log(res.data);
+    })
+  }
+
+  saveApiDb0( data ){ // don't know why not working
+    console.log("ticketAPI - saveToDB", data);
+
     var postUri;
-    axios.post( APIsaveUrl, { data })
+    data = { id:1};
+    axios.post( APIsaveUrl,  data )
       .then(res => {
         console.log(res);
         console.log(res.data);

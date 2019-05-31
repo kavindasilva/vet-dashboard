@@ -108,7 +108,7 @@ class Pet extends Component {
 				<TableCell>
 					<PopDialog 
 						value={ this.props.review_date }  
-						elementType="text"
+						elementType="date"
 						identifier={ this.props.objectId }
 						property="review_date">
 					</PopDialog>
