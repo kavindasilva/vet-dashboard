@@ -88,6 +88,7 @@ class Pets extends Component {
 								<TableCell>Portal_id</TableCell>
 
 								<TableCell>Last Revision</TableCell>
+								<TableCell>Revision Field1</TableCell>
 
 								<TableCell>Sub_Value</TableCell>
 								<TableCell>Sub_Time</TableCell>

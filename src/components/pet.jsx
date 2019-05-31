@@ -113,6 +113,16 @@ class Pet extends Component {
 						property="review_date">
 					</PopDialog>
 				</TableCell>
+				
+				<TableCell>
+					<PopDialog 
+						value={ this.props.additional1 }  
+						elementType="text"
+						identifier={ this.props.objectId }
+						property="additional1">
+					</PopDialog>
+				</TableCell>
+				
 
 				<TableCell> 
 					<PopDialog 
@@ -205,13 +215,13 @@ const mapStateToProps = (state, myProps) => {
 
 	let record = state.admissions.find(record => myProps.identifier === record.objectId );
 	//let record = state.admissions.find(record => myProps.identifier === 28868823);
-	let rec_properties_sub={ ...{...record.properties}.subject };
-	let rec_properties_con={ ...{...record.properties}.content };
+	//let rec_properties_sub={ ...{...record.properties}.subject };
+	//let rec_properties_con={ ...{...record.properties}.content };
 	return {
 		...record,
 		...tickRecord,
 
-		sub_value: rec_properties_sub.value,
+		/*sub_value: rec_properties_sub.value,
 		sub_source: rec_properties_sub.source,
 		sub_sourceId: rec_properties_sub.sourceId,
 		sub_timestamp: rec_properties_sub.timestamp,

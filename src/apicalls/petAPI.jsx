@@ -15,10 +15,10 @@ const DEFAULT_QUERY = 'redux';
 
 
 const client = new ApolloClient({
-  //uri: 'http://127.0.0.1/vet-dashboard/phpApi/inline-index4-5.php',
   //uri: 'http://127.0.0.1/vet-dashboard/phpApi/inline-index4.php', // working
   //uri: 'http://ontrack.dev.io/graph/apiJsonRequest/',
-  uri: 'http://ontrack.dev.io/rest/graph/apiJsonRequest/',
+  uri: 'http://ontrack.dev.io/rest/apiv/list/hubspot',
+  //uri: 'http://ontrack.dev.io/rest/graph/apiJsonRequest/',
   //uri: 'http://127.0.0.1/vet-dashboard/phpApi/inline-index4-2.php',
 })
 
@@ -34,17 +34,22 @@ class petAPI extends React.Component{
     //return this.callGraphQL2(0,0);
 
     //var graphqlQuery="{ tickets { portalId, objectId } }";
-    /* */var graphqlQuery="{ tickets { portalId, objectId, properties{ subject{value, timestamp, source, sourceId}, content{value, timestamp, source, sourceId} } } }";
+    //var graphqlQuery="{ tickets { portalId, objectId, properties{ subject{value, timestamp, source, sourceId}, content{value, timestamp, source, sourceId} } } }";
+    //var graphqlQuery="{ tickets { portalId, objectId, con_sourceId, con_timestamp } }";
+    var graphqlQuery="{ tickets { portalId, objectId, sub_value, sub_source, sub_sourceId, sub_timestamp, con_value, con_source, con_sourceId, con_timestamp } }";
     if( property !== 0 ){
       graphqlQuery = `{
-        admissions( ${property}: "${value}" ) {
-          id, 
-          name,
-          speci,
-          gender,
-          symptoms
-          years,
-          admittedDate
+        tickets( ${property}: "${value}" ) {
+          portalId, 
+          objectId, 
+          sub_value, 
+          sub_source, 
+          sub_sourceId, 
+          sub_timestamp, 
+          con_value, 
+          con_source, 
+          con_sourceId, 
+          con_timestamp
         }
       }`
     }
