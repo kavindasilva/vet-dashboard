@@ -110,7 +110,7 @@ class Records extends Component {
 
 	}/**/
 
-	render(){ //with datatables, non editable
+	render2(){ //with datatables, non editable
 		return(
 			<div className="container">
 				<Paper style={ this.styleMatUI.table }>
@@ -154,13 +154,13 @@ class Records extends Component {
 		)
 	}
 
-	render1(){ //with materialUI
+	render(){ //with materialUI
 		return(
 			<div className="container">
 				<Paper style={ this.styleMatUI.table }>
 					<Table >
 						<TableHead>
-							<TableRow>
+							<TableRow style={ { position: "fixed" } }>
 								<TableCell>ID</TableCell>
 								<TableCell>Name</TableCell>
 								<TableCell>Hash</TableCell>

@@ -121,3 +121,9 @@ make graphql  result in a flat hierarchy
 /user-773555195/sets/active-color-night-with-1
 
 
+--jun 04
+make sticky header
+add a menu bar to switch between ticket API and phoenix view
+
+
+
