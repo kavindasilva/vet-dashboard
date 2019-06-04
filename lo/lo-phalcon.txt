@@ -6,9 +6,26 @@
 ## view running containers
 kubectl get pods
 
+## view all containers
+kubectl get all
+
+## delete ?
+kubectl delete pod db-69dc856bd4-fdtnf
+kubectl delete deployments db
+
+## create??
+kubectl create -f k8s/kibana/deployment.yml
+
+## information
+kubectl describe pod db-69dc856bd4-chwjq
+
+#view docker images
+sudo docker images
+
 
 ## access the container instance
 kubectl exec -it ontrack-6cbcf6fdb8-6csjj -- /bin/bash
+kubectl exec -it ontrack-6cbcf6fdb8-6zclr -- /bin/bash
 
 
 # docker allow networking ( in host machine )
