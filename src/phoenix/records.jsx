@@ -7,6 +7,7 @@
 import React, { Component } from 'react';
 import Record from '../phoenix/record';
 
+import MaterialTable from 'material-table';
 
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -22,6 +23,33 @@ const phoenixAPIobj = new phoenixAPI();
 
 
 class Records extends Component {
+
+	table1Columns = [
+		//{ title: '<to display>', field: 'to get frmo json' },
+		
+		{ title:'ID', field:'id' },
+		{ title:'Name', field:'name' },
+		{ title:'Hash', field:'hash' },
+		{ title:'PMS', field:'pms' },
+		{ title:'Server', field:'server' },
+		{ title:'API Status', field:'api_status' },
+
+		{ title:'Country', field:'country' },
+		{ title:'City', field:'city' },
+		{ title:'TimeZone', field:'timezone' },
+
+		{ title:'BookingStatus', field:'bookingStatus' },
+		{ title:'ApiTestLink', field:'apiTestLink' },
+		{ title:'ApiStatusChecked', field:'apiStatusChecked' },
+		{ title:'Appointments24', field:'appointments24' },
+
+		{ title:'ApiTestLink', field:'apiTestLink' },
+		{ title:'ApiFailures24', field:'apiFailures24' },
+		{ title:'ApiFailureCode', field:'apiFailureCode' },
+		{ title:'ApiFailureSince', field:'apiFailureSince' },
+
+	];
+
 
 	state = {
 		phoenixRecords: [ 
@@ -82,7 +110,51 @@ class Records extends Component {
 
 	}/**/
 
-	render(){ //with materialUI
+	render(){ //with datatables, non editable
+		return(
+			<div className="container">
+				<Paper style={ this.styleMatUI.table }>
+					<MaterialTable
+						title="Editable Example"
+						columns={ this.table1Columns }
+						data={ this.state.phoenixRecords }
+						
+						editable={{
+						onRowAdd: newData =>
+							new Promise(resolve => {
+							setTimeout(() => {
+								resolve();
+								const data = [...this.state.phoenixRecords];
+								data.push(newData);
+								//setState({ ...state, data });
+							}, 600);
+							}),
+						onRowUpdate: (newData, oldData) =>
+							new Promise(resolve => {
+							setTimeout(() => {
+								resolve();
+								const data = [...this.state.phoenixRecords];
+								data[data.indexOf(oldData)] = newData;
+								//setState({ ...state, data });
+							}, 600);
+							}),
+						onRowDelete: oldData =>
+							new Promise(resolve => {
+							setTimeout(() => {
+								resolve();
+								const data = [...this.state.phoenixRecords];
+								data.splice(data.indexOf(oldData), 1);
+								//setState({ ...state, data });
+							}, 600);
+							}),
+						}}
+    				/>	
+				</Paper>
+			</div>
+		)
+	}
+
+	render1(){ //with materialUI
 		return(
 			<div className="container">
 				<Paper style={ this.styleMatUI.table }>
