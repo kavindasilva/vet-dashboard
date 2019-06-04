@@ -92,19 +92,23 @@ class Records extends Component {
 								<TableCell>ID</TableCell>
 								<TableCell>Name</TableCell>
 								<TableCell>Hash</TableCell>
-								<TableCell>API failures</TableCell>
-								<TableCell>Appoinments</TableCell>
-								<TableCell>Status</TableCell>
+								<TableCell>PMS</TableCell>
+								<TableCell>Server</TableCell>
+								<TableCell>API Status</TableCell>
 
-								<TableCell>Sub_Value</TableCell>
-								<TableCell>Sub_Time</TableCell>
-								<TableCell>Sub_Sid</TableCell>
-								<TableCell>Sub_Source</TableCell>
-
-								<TableCell>Con_Value</TableCell>
-								<TableCell>Con_Time</TableCell>
-								<TableCell>Con_Sid</TableCell>
-								<TableCell>Con_Source</TableCell>
+								<TableCell>Country</TableCell>
+								<TableCell>City</TableCell>
+								<TableCell>TimeZone</TableCell>
+								
+								<TableCell>BookingStatus</TableCell>
+								<TableCell>ApiTestLink</TableCell>
+								<TableCell>ApiStatusChecked</TableCell>
+								<TableCell>Appointments24</TableCell>
+								
+								<TableCell>ApiTestLink</TableCell>
+								<TableCell>ApiFailures24</TableCell>
+								<TableCell>ApiFailureCode</TableCell>
+								<TableCell>ApiFailureSince</TableCell>
 								
 							</TableRow>
 						</TableHead>

@@ -87,42 +87,27 @@ class Record extends Component {
 	viewPet(){ // with mmterialUI : tr -> TableRow; td -> TableCell
 		return (
 			<TableRow> 
-				<TableCell> { this.props.portalId } </TableCell>				
+				<TableCell> { this.props.recordData.id } </TableCell>				
 				<TableCell> { this.props.recordData.name } </TableCell>
 				<TableCell> { this.props.recordData.hash } </TableCell>
-				<TableCell> { this.props.recordData.api_failures_24 } </TableCell>
-				<TableCell> { this.props.recordData.appointments_24 } </TableCell>
+				<TableCell> { this.props.recordData.pms } </TableCell>
+				<TableCell> { this.props.recordData.server } </TableCell>
 				<TableCell> { this.props.recordData.api_status } </TableCell>
 
-				<TableCell>
-					<PopDialog 
-						value={ this.props.review_date }  
-						elementType="date"
-						identifier={ this.props.objectId }
-						property="review_date">
-					</PopDialog>
-				</TableCell>
-				
-				<TableCell>
-					<PopDialog 
-						value={ this.props.additional1 }  
-						elementType="text"
-						identifier={ this.props.objectId }
-						property="additional1">
-					</PopDialog>
-				</TableCell>
-				
+				<TableCell> { this.props.recordData.country } </TableCell>
+				<TableCell> { this.props.recordData.city } </TableCell>
+				<TableCell> { this.props.recordData.timezone } </TableCell>
 
-				<TableCell> 
-					<PopDialog 
-						value={ this.props.sub_value }  
-						elementType="text"
-						identifier={ this.props.objectId }
-						data={ { valueSet:["Male", "Female"], defaultVal:this.props.gender } }
-						property="sub_value">
-					</PopDialog>
-					 
-				</TableCell>
+				<TableCell> { this.props.recordData.bookingStatus } </TableCell>
+				<TableCell> { this.props.recordData.apiTestLink } </TableCell>
+				<TableCell> { this.props.recordData.apiStatusChecked } </TableCell>
+				<TableCell> { this.props.recordData.appointments24 } </TableCell>
+
+				<TableCell> { this.props.recordData.apiTestLink } </TableCell>
+				<TableCell> { this.props.recordData.apiFailures24 } </TableCell>
+				<TableCell> { this.props.recordData.apiFailureCode } </TableCell>
+				<TableCell> { this.props.recordData.apiFailureSince } </TableCell>
+
 				<TableCell> {
 					 this.props.sub_timestamp 
 					 //this.state.portalId
@@ -139,57 +124,7 @@ class Record extends Component {
 				<TableCell>
 					{ this.props.sub_sourceId }
 				</TableCell>
-				<TableCell> 
-					<PopDialog 
-						value={ this.props.sub_source } 
-						elementType="text"
-						identifier={ this.props.objectId }
-						data={ {defaultVal:this.props.speci , 
-							defValDisp:this.props.speci, 
-							valueSet:this.species }}
-						property="speci" >
-					</PopDialog>
-				</TableCell>
-				
-				
-				<TableCell>
-					<PopDialog 
-						value={ this.props.con_value }  
-						elementType="text"
-						identifier={ this.props.objectId }
-						data={ { valueSet:["Male", "Female"], defaultVal:this.props.gender } }
-						property="gender">
-					</PopDialog>
-				</TableCell>
-				<TableCell> 
-					<PopDialog 
-						value={ this.props.con_timestamp }  
-						identifier={ this.props.objectId }
-						elementType="text"
-						property="years">
-					</PopDialog>
-				</TableCell>
-				<TableCell> 
-					{ //this.props.symptoms ?
-					<PopDialog 
-						value={ this.props.con_sourceId } 
-						identifier={ this.props.objectId }
-						elementType="text"
-						data={ { defaultVal:this.props.symptoms, valueSet:this.symptomsInfo }  }
-						property="symptoms">
-					</PopDialog>
-					//: "NA" 
-					}
-				</TableCell>
-				<TableCell> 
-					<PopDialog 
-						value={ this.props.con_source } 
-						identifier={ this.props.objectId } 
-						elementType="text"
-						data={ {val:this.props.admittedDate} }
-						property="admittedDate">
-					</PopDialog>
-				</TableCell> 
+			
 			</TableRow>
 		);
 	}
