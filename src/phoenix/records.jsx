@@ -8,7 +8,10 @@ import React, { Component } from 'react';
 import Record from '../phoenix/record';
 
 import MaterialTable from 'material-table';
+import MUIDataTable from "mui-datatables";
 
+
+//import { withStyles } from "material-ui/styles";
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -20,6 +23,19 @@ import Paper from '@material-ui/core/Paper';
 
 import phoenixAPI from "../apicalls/phoenix";
 const phoenixAPIobj = new phoenixAPI();
+
+const styles = theme => ({
+	root: {
+	  width: "100%",
+	  marginTop: theme.spacing.unit * 3,
+	  overflowX: "auto"
+	},
+	head: {
+	  backgroundColor: "#eee",
+	  position: "sticky",
+	  top: 0
+	}
+  });
 
 
 class Records extends Component {
@@ -50,6 +66,11 @@ class Records extends Component {
 
 	];
 
+	muiDtDummyData=[ 
+		["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"],["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], 
+	]
+
+	propStyle = this.props.classes;
 
 	state = {
 		phoenixRecords: [ 
@@ -71,7 +92,7 @@ class Records extends Component {
 		table:{
 			width: '100%',
 			//marginTop: theme.spacing.unit * 3,
-			overflowX: 'auto',
+			//overflowX: 'auto',
 		}
 	}
 
@@ -110,11 +131,27 @@ class Records extends Component {
 
 	}/**/
 
-	render2(){ //with datatables, non editable
+	render3(){ //with mui-datatables // header not sticky
+		return(
+			<div className="container">
+				<Paper style={ this.styleMatUI.table }>
+					<MUIDataTable
+						title={"Employee List"}
+						data={ this.state.phoenixRecords }
+						columns={ ["1", "2", "3"] }
+						//options={  }
+					/>
+				</Paper>
+			</div>
+		);
+	}
+
+	render2(){ //with datatables, non editable // header not sticky
 		return(
 			<div className="container">
 				<Paper style={ this.styleMatUI.table }>
 					<MaterialTable
+						fixedHeader={ true }
 						title="Editable Example"
 						columns={ this.table1Columns }
 						data={ this.state.phoenixRecords }
@@ -160,27 +197,28 @@ class Records extends Component {
 				<Paper style={ this.styleMatUI.table }>
 					<Table >
 						<TableHead>
-							<TableRow style={ { position: "fixed" } }>
-								<TableCell>ID</TableCell>
-								<TableCell>Name</TableCell>
-								<TableCell>Hash</TableCell>
-								<TableCell>PMS</TableCell>
-								<TableCell>Server</TableCell>
-								<TableCell>API Status</TableCell>
+							{/*<TableRow style={ { position: "fixed" } }>*/}
+							<TableRow>
+								<TableCell className={this.propStyle.head}>ID</TableCell>
+								<TableCell className={this.propStyle.head}>Name</TableCell>
+								<TableCell className={this.propStyle.head}>Hash</TableCell>
+								<TableCell className={this.propStyle.head}>PMS</TableCell>
+								<TableCell className={this.propStyle.head}>Server</TableCell>
+								<TableCell className={this.propStyle.head}>API Status</TableCell>
 
-								<TableCell>Country</TableCell>
-								<TableCell>City</TableCell>
-								<TableCell>TimeZone</TableCell>
+								<TableCell className={this.propStyle.head}>Country</TableCell>
+								<TableCell className={this.propStyle.head}>City</TableCell>
+								<TableCell className={this.propStyle.head}>TimeZone</TableCell>
 								
-								<TableCell>BookingStatus</TableCell>
-								<TableCell>ApiTestLink</TableCell>
-								<TableCell>ApiStatusChecked</TableCell>
-								<TableCell>Appointments24</TableCell>
+								<TableCell className={this.propStyle.head}>BookingStatus</TableCell>
+								<TableCell className={this.propStyle.head}>ApiTestLink</TableCell>
+								<TableCell className={this.propStyle.head}>ApiStatusChecked</TableCell>
+								<TableCell className={this.propStyle.head}>Appointments24</TableCell>
 								
-								<TableCell>ApiTestLink</TableCell>
-								<TableCell>ApiFailures24</TableCell>
-								<TableCell>ApiFailureCode</TableCell>
-								<TableCell>ApiFailureSince</TableCell>
+								<TableCell className={this.propStyle.head}>ApiTestLink</TableCell>
+								<TableCell className={this.propStyle.head}>ApiFailures24</TableCell>
+								<TableCell className={this.propStyle.head}>ApiFailureCode</TableCell>
+								<TableCell className={this.propStyle.head}>ApiFailureSince</TableCell>
 								
 							</TableRow>
 						</TableHead>
@@ -272,4 +310,5 @@ const mapStateToProps = state => {
 	};
 }
 
-export default Records;
+//export default Records;
+export default withStyles(styles)(Records);

@@ -17,8 +17,8 @@ import Menu from "./common/menu";
 const render = () => {
   console.log('index.js-rendering');
   ReactDOM.render(
-    <Menu />,
-    //<Records  />,
+    //<Menu />,
+    <Records  />,
     
     document.getElementById('root')
   );
