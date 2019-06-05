@@ -66,6 +66,32 @@ class Records extends Component {
 
 	];
 
+	table2Columns = [
+		//{ title: '<to display>', field: 'to get frmo json' },
+		
+		{ label:'ID', name:'id' },
+		{ label:'Name', name:'name' },
+		{ label:'Hash', name:'hash' },
+		{ label:'PMS', name:'pms' },
+		{ label:'Server', name:'server' },
+		{ label:'API Status', name:'api_status' },
+
+		{ label:'Country', name:'country' },
+		{ label:'City', name:'city' },
+		{ label:'TimeZone', name:'timezone' },
+
+		{ label:'BookingStatus', name:'bookingStatus' },
+		{ label:'ApiTestLink', name:'apiTestLink' },
+		{ label:'ApiStatusChecked', name:'apiStatusChecked' },
+		{ label:'Appointments24', name:'appointments24' },
+
+		{ label:'ApiTestLink', name:'apiTestLink' },
+		{ label:'ApiFailures24', name:'apiFailures24' },
+		{ label:'ApiFailureCode', name:'apiFailureCode' },
+		{ label:'ApiFailureSince', name:'apiFailureSince' },
+
+	];
+
 	muiDtDummyData=[ 
 		["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"],["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], ["t","T","t"], 
 	]
@@ -90,7 +116,7 @@ class Records extends Component {
 
 	styleMatUI ={
 		table:{
-			width: '100%',
+			//width: '100%',
 			//marginTop: theme.spacing.unit * 3,
 			//overflowX: 'auto',
 		}
@@ -131,15 +157,23 @@ class Records extends Component {
 
 	}/**/
 
-	render3(){ //with mui-datatables // header not sticky
+	render(){ //with mui-datatables // header sticky //more funtions
 		return(
 			<div className="container">
 				<Paper style={ this.styleMatUI.table }>
 					<MUIDataTable
-						title={"Employee List"}
+						//size={'small'}
+						title={"Phoenix Tickets"}
 						data={ this.state.phoenixRecords }
-						columns={ ["1", "2", "3"] }
-						//options={  }
+						columns={ this.table2Columns }
+						options={ 
+							{
+								responsive:"scroll",
+								fixedHeader: true,
+								elevation:0,
+								selectableRows:'none',
+							}
+						}
 					/>
 				</Paper>
 			</div>
@@ -191,11 +225,11 @@ class Records extends Component {
 		)
 	}
 
-	render(){ //with materialUI
+	render1(){ //with materialUI //sticky
 		return(
 			<div className="container">
 				<Paper style={ this.styleMatUI.table }>
-					<Table >
+					<Table size={'small'}>
 						<TableHead>
 							{/*<TableRow style={ { position: "fixed" } }>*/}
 							<TableRow>
