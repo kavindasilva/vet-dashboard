@@ -125,5 +125,9 @@ make graphql  result in a flat hierarchy
 make sticky header
 add a menu bar to switch between ticket API and phoenix view
 
+--jun 05
+study user logins, implement ui
+implement the backend taken from oabp
+
 
 

@@ -7,6 +7,7 @@ import App from "./components/app";
 import Records from "./phoenix/records";
 import Menu from "./common/menu";
 
+import Login from "./common/login"
 //import 'bootstrap/dist/css/bootstrap.css'; // working
 //import Button from "@material-ui/core/Button";
 
@@ -17,7 +18,9 @@ import Menu from "./common/menu";
 const render = () => {
   console.log('index.js-rendering');
   ReactDOM.render(
-    <Menu />,
+    //<Menu />,
+
+    <Login />,
     //<Records  />,
     
     document.getElementById('root')
