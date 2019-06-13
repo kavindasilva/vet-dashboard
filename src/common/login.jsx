@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { connect } from "react-redux";
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -222,5 +223,16 @@ class Login extends React.Component{
 }
 
 //export default Login;
-export default withStyles(useStyles)(Login);
+//export default withStyles(useStyles)(Login);
+
+const mapStateToProps = state => {
+	console.log('login.jsx-mapStateToProps', state);
+	return {
+		admissions: state.admissions,
+		tickets: state.tickets,
+		metaData: state.metaData
+	};
+}
+
+export default connect(mapStateToProps)(withStyles(useStyles)(Login));
 

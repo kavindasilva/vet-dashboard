@@ -11,6 +11,8 @@ import MaterialTable from 'material-table';
 import MUIDataTable from "mui-datatables";
 
 
+import { connect } from 'react-redux';
+
 //import { withStyles } from "material-ui/styles";
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -336,13 +338,15 @@ class Records extends Component {
 
 //export default Records;
 
+
 const mapStateToProps = state => {
-	console.log('pets.jsx-mapStateToProps', state); // seems ok
+	console.log('records.jsx-mapStateToProps', state); // seems ok
 	return {
-		recordsData: state.recordsData,
-		tickets: state.tickets
+		recordsData: state.recordsData
+		//tickets: state.tickets
 	};
 }
 
 //export default Records;
-export default withStyles(styles)(Records);
+//export default withStyles(styles)(Records);
+export default connect(mapStateToProps)(withStyles(styles)(Records));

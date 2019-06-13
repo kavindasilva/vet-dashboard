@@ -18,8 +18,8 @@ import Login from "./common/login"
 const render = () => {
   console.log('index.js-rendering');
   ReactDOM.render(
-    <Menu />,
-
+    //<Menu />,
+    <App />,
     //<Login />,
     //<Records  />,
     

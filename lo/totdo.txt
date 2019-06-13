@@ -129,5 +129,9 @@ add a menu bar to switch between ticket API and phoenix view
 study user logins, implement ui
 implement the backend taken from oabp
 
+--jun 13
+make login logout in react
+https://stackoverflow.com/questions/41319547/syntax-highlighting-for-react-code-in-sublime
+
 
 

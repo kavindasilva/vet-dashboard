@@ -21,6 +21,8 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
 
+import Login from "../common/login";
+
 import { petStore } from "../stores/pets";
 //import { createStore } from "redux";
 //import PetReducer from "../reducers/pets";
@@ -124,12 +126,8 @@ class App extends Component {
 	render() {
 		//console.log('app.jsx-rendering. petStore: ', petStore.getState() );
 		return (
-			/*<ApolloProvider client={client}>
-			
-			</ApolloProvider>*/ 
 			<Provider store={ petStore } >
-					{ this.showMenuBar() }          
-					<Pets/>
+				<Login />
 			</Provider>
 		);
 	}

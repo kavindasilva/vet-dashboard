@@ -5,16 +5,7 @@
 import ticketAPI from "../apicalls/ticketAPI";
 import { petStore } from "../stores/pets";
 
-/*export default combineReducers({
-  todos,
-  visibilityFilter
-})*/
 
-/*function reducer(state, action) {
-    console.log('reducer', state, action);
-    return state;
-}
-const store = createStore(reducer);*/
 
 const ticketAPIobj = new ticketAPI();
 
