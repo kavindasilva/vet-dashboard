@@ -6,8 +6,17 @@ import axios from 'axios';
 
 const APIlistUrl = 'http://ontrack.dev.io/rest/apiv/list/DB';
 const APIselectUrl = 'http://ontrack.dev.io/rest/apiv/select/';
-const APIauthenticateUrl = "http://ontrack.dev.io/rest/apiv/list/DB";
+//const APIauthenticateUrl = "http://ontrack.dev.io/api/user/login/";
+//const APIauthenticateUrl = "http://ontrack.dev.io/login/user/login";
+const APIauthenticateUrl = "http://ontrack.dev.io/login/user/login";
+const altAPIauthenticateUrl = "http://ontrack.dev.io/rest/apiv/signin";
 
+
+const AxiosInstance = axios.create({
+  baseURL: 'http://ontrack.dev.io/api/user/login',
+  timeout: 1000,
+  headers: {'Content-Type': 'application/json'}
+});
 
 class loginAPI extends React.Component{
   
@@ -31,36 +40,121 @@ class loginAPI extends React.Component{
       });
   }
 
+  auth32(d){
+    fetch( APIauthenticateUrl , {
+      method: 'POST',
+      headers: {
+        //'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        //'Content-Type': 'multipart/form-data',
+      },
+      body: JSON.parse({
+        //firstParam: 'yourValue',
+        //secondParam: 'yourOtherValue',
+        account_email: "ks@vetstoria.com",
+        account_password: "123",
+        is_otp_required: true,
+        otp: "qaauto"
+      })
+    })
+    .then(res => {
+      console.log("loginAPI - auth3 response:", res);
+      console.log(res.data);
+    })
+  }
+
+  auth3( username, password, otp ){
+    let data = {
+      "account_email": "ks@vetstoria.com",
+      "account_password": "123",
+      "is_otp_required": true,
+      "otp": "qaauto"
+    } ;/* */
+
+    /* */data = {
+      "account_email": username,
+      "account_password": password,
+      "is_otp_required": true,
+      "otp": otp
+    } ;
+
+    //data = JSON.parse(" { \"account_email\": \"ks@vetstoria.com\", \"account_password\": \"123\", \"is_otp_required\": true, \"otp\": \"qaauto\" } ");
+    //data = JSON.parse(" { account_email: \"ks@vetstoria.com\", account_password: \"123\", is_otp_required: true, otp: \"qaauto\" } ");
+    console.log("loginAPI - auth3", data);
+
+    //axios.post( APIauthenticateUrl, "{ 'account_email':'ks@vetstoria.com' }" ) // POST 400
+    return axios.post( 
+      //APIauthenticateUrl,
+      altAPIauthenticateUrl, 
+
+       data ,
+
+
+      { headers: { 
+        'Content-Type': 'application/json' ,
+      } }
+      // { headers: { 'Content-Type': 'application/json' } }
+    )
+      .then(res => {
+        console.log("loginAPI - axios reponse:", res);
+
+        //console.log(res);
+        console.log(res.data);
+        return res;
+      })
+
+    //sample response
+    //{"type":3,"account_id":"1","user_id":2}
+
+    
+  }
+
   /** send authentication data to API. currently not initialized API */
-  authenticateAPI( data ){
+  authenticateAPI( data0 ){
+    let data = {
+      "account_email": "ks@vetstoria.com",
+      "account_password": "123",
+      "is_otp_required": true,
+      "otp": "qaauto"
+    };
+
+    data = JSON.parse(" { \"account_email\": \"ks@vetstoria.com\", \"account_password\": \"123\", \"is_otp_required\": true, \"otp\": \"qaauto\" } ");
+    //data = JSON.parse(" { account_email: \"ks@vetstoria.com\", account_password: \"123\", is_otp_required: true, otp: \"qaauto\" } ");
     console.log("loginAPI - authenticateAPI", data);
     //var postUri;
     //let data1 = { product_id_list: ['pid1234', 'pid1235'] };
     
-    return axios.post( APIauthenticateUrl, data )
-      .then(res => {
-        console.log(res);
+     axios.post( APIauthenticateUrl, data, { method:'post' } )
+      .then((res) => {
+        console.log("loginAPI - axios reponse:", res);
         console.log(res.data);
         return res.data[0];
       })
+
+    // sample response
+    // {"type":3,"account_id":"1","user_id":2}
   }
 
-  saveApiDb2( data ){ // because axios not working
-    console.log("loginAPI - saveToDB", data);
+  auth2( data ){ // because axios not working
+    console.log("loginAPI - auth2", data);
 
-    fetch( APIauthenticateUrl , {
+    fetch( '/api/user/login' , {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        firstParam: 'yourValue',
-        secondParam: 'yourOtherValue',
+        //firstParam: 'yourValue',
+        //secondParam: 'yourOtherValue',
+        account_email: "ks@vetstoria.com",
+        account_password: "123",
+        is_otp_required: true,
+        otp: "qaauto"
       })
     })
     .then(res => {
-      console.log(res);
+      console.log("loginAPI - auth2 response:", res);
       console.log(res.data);
     })
   }

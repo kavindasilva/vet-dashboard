@@ -22,6 +22,9 @@ kubectl describe pod db-69dc856bd4-chwjq
 #view docker images
 sudo docker images
 
+#when containers not responding
+microk8s.stop && microk8s.start
+
 
 ## access the container instance
 kubectl exec -it ontrack-6cbcf6fdb8-6csjj -- /bin/bash

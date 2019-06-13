@@ -1,6 +1,6 @@
 <?php
 
-namespace Vetstoria\OnTrack\Frontend\Controllers;
+namespace Vetstoria\OnTrack\Admin\Controllers;
 
 use Phalcon\Mvc\Controller;
 
@@ -8,6 +8,8 @@ class IndexController extends Controller
 {
     public function indexAction()
     {
+        //var_dump(__CLASS__,__FUNCTION__); exit;
+
         //echo "Frontend index 1";
         //header("Location: ../../../ui"); // working in public folder
 
@@ -20,5 +22,9 @@ class IndexController extends Controller
             include $filename;
         }*/
 
+    }
+
+    public function loginAction(){
+        var_dump(__FUNCTION__); exit;
     }
 }

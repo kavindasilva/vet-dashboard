@@ -1,6 +1,6 @@
 <?php
 
-namespace Vetstoria\OnTrack\Frontend;
+namespace Vetstoria\OnTrack\Admin;
 
 use Phalcon\Loader;
 use Phalcon\Mvc\View;
@@ -25,8 +25,8 @@ class Module implements ModuleDefinitionInterface
 
         $loader->registerNamespaces(
             [
-                'Vetstoria\OnTrack\Frontend\Controllers' => __DIR__."/../Frontend/Controllers/",
-                'Vetstoria\OnTrack\Frontend\Models' => __DIR__."/../app/Frontend/Models/",
+                'Vetstoria\OnTrack\Admin\Controllers' => __DIR__."/../Admin/Controllers/",
+                'Vetstoria\OnTrack\Admin\Models' => __DIR__."/../app/Admin/Models/",
             ]
         );
 
@@ -51,7 +51,7 @@ class Module implements ModuleDefinitionInterface
             // $eventManager->attach('dispatch', new \My\Awesome\Acl('front-end'));
 
             $dispatcher->setEventsManager($eventManager);
-            $dispatcher->setDefaultNamespace('Vetstoria\OnTrack\Frontend\Controllers\\');
+            $dispatcher->setDefaultNamespace('Vetstoria\OnTrack\Admin\Controllers\\');
             return $dispatcher;
         });
 

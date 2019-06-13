@@ -64,6 +64,7 @@ class Login extends React.Component{
 	state = {
 		username: '',
 		password: '',
+		otp: '',
 	}
 
 	componentDidMount(){
@@ -87,8 +88,10 @@ class Login extends React.Component{
 		console.log("Login - credentials:", this.state.username, this.state.password );
 		
 		// call to API post
-		let authMsg = loginAPIobj.authenticateAPI(null)
-		loginAPIobj.authenticateAPI(null)
+		//let authMsg = loginAPIobj.authenticateAPI(null)
+		//loginAPIobj.authenticateAPI(null)
+		//loginAPIobj.auth2(null)
+		loginAPIobj.auth3(this.state.username, this.state.password, this.state.otp)
 			.then( res => {
 				console.log("Login - authMsg:", res);
 				this.validateCredentials(res);
@@ -144,6 +147,19 @@ class Login extends React.Component{
 							type="password"
 							id="password"
 							onChange = { (e)=>{ this.setState({password: e.target.value}) } }
+							//autoComplete="current-password"
+						/>
+
+						<TextField
+							variant="outlined"
+							margin="normal"
+							required
+							fullWidth
+							name="otp"
+							label="otp"
+							type="otp"
+							id="otp"
+							onChange = { (e)=>{ this.setState({otp: e.target.value}) } }
 							//autoComplete="current-password"
 						/>
 						
