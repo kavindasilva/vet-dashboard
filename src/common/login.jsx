@@ -18,6 +18,7 @@ import Container from '@material-ui/core/Container';
 import { withStyles } from '@material-ui/core/styles';
 //import { styles } from '@material-ui/pickers/DatePicker/components/Calendar';
 
+import Menu from "../common/menu";
 import loginAPI from "../apicalls/loginAPI";
 
 const loginAPIobj = new loginAPI();
@@ -65,6 +66,8 @@ class Login extends React.Component{
 		username: '',
 		password: '',
 		otp: '',
+
+		isLoggedIn: false,
 	}
 
 	componentDidMount(){
@@ -99,101 +102,121 @@ class Login extends React.Component{
 		//console.log("Login - authMsg:", authMsg);
 	}
 
-	/** validate credentials and authorize */
+	/** validate credentials and authorize 
+	 *  if credentials wrong : data: "Bad Request"
+	 * if credentials validated: data: {type: 3, account_id: "1", user_id: 2}
+	*/
 	//validateCredentials( userInput, serverData)
 	validateCredentials( serverData){
-		if( parseInt(serverData.ticket_id)===28868800 )
-		//if( parseInt(serverData.ticket_id)===28868823 )
+		if( serverData.data.type !=="" && serverData.data.type!==null && serverData.data!=="Bad Request" ){
+		//if( parseInt(serverData.ticket_id)===28868823 ){
 			console.log("credentials validated");
-		else
-			console.log("credentials not validated" );
+			this.setState({isLoggedIn: true});
+		}
+		else if( serverData.data =="Bad Request" ){
+			console.log("credentials not validated");
+		}
+		else{
+			console.log("credential validation error" );
+		}
 	}
 
 	viewForm(){
-		return (
-			<Container component="main" maxWidth="xs">
-				<CssBaseline />
-				<div className={this.classes.paper}>
-					<Avatar className={this.classes.avatar}>
-						<LockOutlinedIcon />
-					</Avatar>
-					<Typography component="h1" variant="h5">
-						Sign in
-					</Typography>
+		if(this.state.isLoggedIn===true){
+			return this.viewMenu();
+		}
+		else{
+			return (
+				<Container component="main" maxWidth="xs">
+					<CssBaseline />
+					<div className={this.classes.paper}>
+						<Avatar className={this.classes.avatar}>
+							<LockOutlinedIcon />
+						</Avatar>
+						<Typography component="h1" variant="h5">
+							Sign in
+						</Typography>
 
-					<form className={this.classes.form} 
-						//noValidate={ true } 
-						onSubmit={ this.getFormData }
-					>
-						<TextField
-							variant="outlined"
-							margin="normal"
-							required
-							fullWidth
-							id="email"
-							label="Email Address"
-							name="email"
-							autoComplete="email"
-							onChange = { (e)=>{ this.setState({username: e.target.value}) } }
-							autoFocus
-						/>
-						<TextField
-							variant="outlined"
-							margin="normal"
-							required
-							fullWidth
-							name="password"
-							label="Password"
-							type="password"
-							id="password"
-							onChange = { (e)=>{ this.setState({password: e.target.value}) } }
-							//autoComplete="current-password"
-						/>
-
-						<TextField
-							variant="outlined"
-							margin="normal"
-							required
-							fullWidth
-							name="otp"
-							label="otp"
-							type="otp"
-							id="otp"
-							onChange = { (e)=>{ this.setState({otp: e.target.value}) } }
-							//autoComplete="current-password"
-						/>
-						
-						<Button
-							type="button"
-							fullWidth
-							variant="contained"
-							color="primary"
-							className={this.classes.submit}
-							//onClick={ this.getFormData }
-							onClick={ this.sendCredentials }
+						<form className={this.classes.form} 
+							//noValidate={ true } 
+							onSubmit={ this.getFormData }
 						>
-							Sign In
-						</Button>
+							<TextField
+								variant="outlined"
+								margin="normal"
+								required
+								fullWidth
+								id="email"
+								label="Email Address"
+								name="email"
+								autoComplete="email"
+								onChange = { (e)=>{ this.setState({username: e.target.value}) } }
+								autoFocus
+							/>
+							<TextField
+								variant="outlined"
+								margin="normal"
+								required
+								fullWidth
+								name="password"
+								label="Password"
+								type="password"
+								id="password"
+								onChange = { (e)=>{ this.setState({password: e.target.value}) } }
+								//autoComplete="current-password"
+							/>
 
-						<Grid container>
-							<Grid item xs>
-								<Link href="#" variant="body2">
-									Forgot password?
-								</Link>
+							<TextField
+								variant="outlined"
+								margin="normal"
+								required
+								fullWidth
+								name="otp"
+								label="otp"
+								type="otp"
+								id="otp"
+								onChange = { (e)=>{ this.setState({otp: e.target.value}) } }
+								//autoComplete="current-password"
+							/>
+							
+							<Button
+								type="button"
+								fullWidth
+								variant="contained"
+								color="primary"
+								className={this.classes.submit}
+								//onClick={ this.getFormData }
+								onClick={ this.sendCredentials }
+							>
+								Sign In
+							</Button>
+
+							<Grid container>
+								<Grid item xs>
+									<Link href="#" variant="body2">
+										Forgot password?
+									</Link>
+								</Grid>
+								<Grid item>
+									<Link href="#" variant="body2">
+										{"Don't have an account? Sign Up"}
+									</Link>
+								</Grid>
 							</Grid>
-							<Grid item>
-								<Link href="#" variant="body2">
-									{"Don't have an account? Sign Up"}
-								</Link>
-							</Grid>
-						</Grid>
-					</form>
-				</div>
-				<Box mt={5}>
-					
-				</Box>
-			</Container>
-		);
+						</form>
+					</div>
+					<Box mt={5}>
+						
+					</Box>
+				</Container>
+			);
+		}
+	}
+
+	viewMenu(){
+		return(
+			<Menu />
+		)
 	}
 
 }

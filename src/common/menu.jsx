@@ -29,6 +29,10 @@ class Menu extends Component {
 	viewMenuBar(){
 		return(
 			<div>
+				<div>
+					<Button style={{cursor:'pointer',float:'right',align:'right'}}>LogOut</Button> <hr />
+				</div>
+
 				Temporary menu bar: 
 				<Button onClick={ ()=>{ this.switchComponents('app') } } >Ticket</Button>
 				<Button onClick={ ()=>{ this.switchComponents('records') } } >Phoenix</Button>

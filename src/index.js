@@ -18,9 +18,9 @@ import Login from "./common/login"
 const render = () => {
   console.log('index.js-rendering');
   ReactDOM.render(
-    //<Menu />,
+    <Menu />,
 
-    <Login />,
+    //<Login />,
     //<Records  />,
     
     document.getElementById('root')
