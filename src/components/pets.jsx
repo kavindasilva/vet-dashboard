@@ -8,7 +8,7 @@ import React, { Component } from 'react';
 import Pet from '../components/pet';
 // import { petStore } from "../stores/pets";
 
- // import PetReducer from '../reducers/pets'
+import PetReducer from '../reducers/pets'
 import { connect } from "react-redux";
 //import { Provider } from 'react-redux'
 //import { viewPet, updatePet, viewNewPet } from '../actions/index'
@@ -71,9 +71,6 @@ class Pets extends Component {
 				}
 				return response;
 			})
-	
-		//console.log(data);
-		//let data = this.callApi0(); console.log("data", data);
 
 	}/**/
 
@@ -110,41 +107,11 @@ class Pets extends Component {
 			</div>
 		)
 	}
-
-	render0() { // with bootstrap
-		//data
-		//let varClass="btn btn-sm btn-";
-		return (
-			<div className="container">
-				{ /*<Clock />
-				{ /* passes petAdmission data to the pet object */ }
-				<table border="1" className="table table-bordered table-striped table-hover dataTable no-footer">
-					<thead><tr>
-						<th>ID</th>
-						<th>Name</th>
-						<th>Speci</th>
-						<th>Gender</th>
-						<th>Age</th>
-						<th>Symptoms</th>
-						<th>Admitted Date</th>
-					</tr></thead>
-					<tbody>
-						{ this.viewAll() }
-					</tbody>
-				</table>
-			</div>
-		) ;
-
-	}
+	
 
 	viewAll(){ //with booststrap & materialUI
-		//console.log("pets.jsx - viewAll: ", this.props.admissions[0].record);
-		//let tmpjson1=JSON.stringify(this.props.admissions[0]); 
-		//console.log("pets-- ", JSON.parse(tmpjson1).objectId );
-		//console.log("pets.jsx - viewAll: ", this.props.admissions[1]  );
-		//this.getObjId(this.props.admissions[0]);
-
 		return (
+			//this.props.PetReducer.admissions.map( (pet, index) => (
 			this.props.admissions.map( (pet, index) => (
 			//this.props.tickets.map( (pet, index) => (
 				
@@ -172,9 +139,6 @@ class Pets extends Component {
 	/** Returns object id of nested object, in places where nested objects not supported */
 	getObjId = (obj) =>{
 		//console.log("pets - getobj obj: ", obj);
-		//let tmpjson1=JSON.stringify(obj);
-		//tmpjson1=JSON.parse(tmpjson1)
-		//console.log("pets-- ", obj.objectId );
 		return obj.objectId;
 	}
 
@@ -187,8 +151,8 @@ class Pets extends Component {
 const mapStateToProps = state => {
 	console.log('pets.jsx-mapStateToProps', state); // seems ok
 	return {
-		admissions: state.admissions,
-		tickets: state.tickets
+		admissions: state.PetReducer.admissions,
+		//tickets: state.tickets
 	};
 }
 

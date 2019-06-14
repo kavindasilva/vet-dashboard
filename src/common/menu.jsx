@@ -1,11 +1,15 @@
 
+
 import React, { Component } from 'react';
+
 
 import { connect } from "react-redux";
 import { petStore } from "../stores/pets"
 
+
 import App from "../components/app";
 import Records from "../phoenix/records";
+import Pets from "../components/pets";
 
 import Button from '@material-ui/core/Button';
 
@@ -60,7 +64,8 @@ class Menu extends Component {
 	componentToShow(){
 		let componentToShow = this.state.componentToShow;
 		if( componentToShow=="app" )
-			return <App />
+			//return <App />
+			return <Pets />
 		else if( componentToShow=="records" )
 			return <Records />
 		else

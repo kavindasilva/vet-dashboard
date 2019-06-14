@@ -209,11 +209,11 @@ class Pet extends Component {
 
 const mapStateToProps = (state, myProps) => {
 	// finds the 1st matching record
-	let tickRecord = state.tickets.find(record => myProps.identifier == record.ticket_id );
+	let tickRecord = state.PetReducer.tickets.find(record => myProps.identifier == record.ticket_id );
 	//console.log("pet - mapStateToProps tickState:", state);
 	console.log("pet - mapStateToProps tickRec:", tickRecord );
 
-	let record = state.admissions.find(record => myProps.identifier === record.objectId );
+	let record = state.PetReducer.admissions.find(record => myProps.identifier === record.objectId );
 	//let record = state.admissions.find(record => myProps.identifier === 28868823);
 	//let rec_properties_sub={ ...{...record.properties}.subject };
 	//let rec_properties_con={ ...{...record.properties}.content };

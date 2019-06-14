@@ -267,32 +267,6 @@ class Records extends Component {
 		)
 	}
 
-	render0() { // with bootstrap
-		//data
-		//let varClass="btn btn-sm btn-";
-		return (
-			<div className="container">
-				{ /*<Clock />
-				{ /* passes phoenixRecords data to the pet object */ }
-				<table border="1" className="table table-bordered table-striped table-hover dataTable no-footer">
-					<thead><tr>
-						<th>ID</th>
-						<th>Name</th>
-						<th>Speci</th>
-						<th>Gender</th>
-						<th>Age</th>
-						<th>Symptoms</th>
-						<th>Admitted Date</th>
-					</tr></thead>
-					<tbody>
-						{ this.viewAll() }
-					</tbody>
-				</table>
-			</div>
-		) ;
-
-	}
-
 	viewAll(){ //with booststrap & materialUI
 
 		return (
@@ -325,15 +299,10 @@ class Records extends Component {
 
 	/** Returns object id of nested object, in places where nested objects not supported */
 	getObjId = (obj) =>{
-		//console.log("pets - getobj obj: ", obj);
-		//let tmpjson1=JSON.stringify(obj);
-		//tmpjson1=JSON.parse(tmpjson1)
-		//console.log("pets-- ", obj.objectId );
+		//console.log("Records-- ", obj.objectId );
 		return obj.objectId;
 	}
 
-
-	
 }
 
 //export default Records;

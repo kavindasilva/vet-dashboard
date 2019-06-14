@@ -44,7 +44,7 @@ const PetReducer = (state, action) => {
         case 'FETCH_FROM_API': // from hubspot through api
             newState = {
                 ...state,
-                admissions: action.payload.apiData.map(
+                admissions: action.payload.hubspotData.map(
                     record => { return record }
                 )
             };
