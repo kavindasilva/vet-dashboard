@@ -136,9 +136,6 @@ class Records extends Component {
 				}
 				return response;
 			})
-		//PetReducer( this.stateData, viewPet );
-		//console.log(store);
-		//this.setState({ phoenixRecords: this.props.stateInfo.phoenixRecords })
 
 	}
 
@@ -308,9 +305,6 @@ class Records extends Component {
 	}
 
 }
-
-//export default Records;
-
 
 const mapStateToProps = state => {
 	console.log('records.jsx-mapStateToProps', state); // seems ok

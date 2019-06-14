@@ -128,15 +128,10 @@ class App extends Component {
 
 	componentDidMount(){ 
 		this.loadInitialData();
-		//this.loadData(0,0);
-		//this.loadData("speci","Cat");
 	}
 
 	loadInitialData = () => {
 		this.loadData(0,0); // working
-		//this.loadData( this.state.fields2.name.id, this.state.fieldValue )
-		//this.loadData( this.state.fields2[this.state.selectedField].id, this.state.fieldValue )
-
 	}
 
 	loadData(property, value){ 
@@ -160,7 +155,6 @@ class App extends Component {
 							hubspotData: response.data.tickets
 						}
 					})
-					//}
 				}
 			)
 
@@ -201,7 +195,6 @@ class App extends Component {
 			.then( response => {
 				console.log(response);
 				if(response.data){
-					//console.log("A");
 					this.setState({ petAdmission: response.data })
 					
 				}
@@ -217,16 +210,6 @@ class App extends Component {
 					})
 				}
 			)
-
-		/*petStore.dispatch({
-			type: 'GET_FROM_API',
-			payload: {
-				hubspotData: data
-			}
-		})*/
-
-		//console.log(data);
-		//let data = this.callApi0(); console.log("data", data);
 	}
 
 	showMenuBar(){
@@ -290,9 +273,6 @@ class App extends Component {
 	}
 
 	handleSearch = () =>{
-		//call the API
-		//petAPIobj.callGraphQL( this.state.selectedField, this.state.fieldValue )
-		//this.loadData( this.state.selectedField, this.state.fieldValue ) //working
 		//this.loadData( this.state.fields2.name.id, this.state.fieldValue ) //working
 		this.loadData( this.state.fields2[this.state.selectedField].id, this.state.fieldValue )
 	}

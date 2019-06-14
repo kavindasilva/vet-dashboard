@@ -24,12 +24,6 @@ import TextField from '@material-ui/core/TextField';
 import Login from "../common/login";
 
 import { petStore } from "../stores/pets";
-//import { createStore } from "redux";
-//import PetReducer from "../reducers/pets";
-
-import ApolloClient from 'apollo-boost'
-import { ApolloProvider } from 'react-apollo'
-
 
 import petAPI from "../apicalls/petAPI";
 import ticketAPI from "../apicalls/ticketAPI";
@@ -37,9 +31,6 @@ import ticketAPI from "../apicalls/ticketAPI";
 const petAPIobj = new petAPI();
 const ticketAPIobj = new ticketAPI();
 
-const client1 = new ApolloClient({
-  uri: 'http://127.0.0.1/phpapi/inline-index4.php',
-})
 
 const styles = theme => ({
 	root: {
@@ -103,18 +94,6 @@ const styles = theme => ({
 
 class App extends Component {
 	state={
-		fields: [ "id", "name", "gender", "speci", "admitDate" ],
-		fields2: {	
-			"id": {	"id": "id", "displayVal":"ID", "parameter": "id" },
-			"name": {	"id": "name", "displayVal":"Name", "parameter": "name" },
-			"gender": {	"id": "gender", "displayVal":"Gender", "parameter": "gender" },
-			"speci": {	"id": "speci", "displayVal":"Speci", "parameter": "speci" },
-			"admitDate": {	"id": "admitDate", "displayVal":"Admitted Date", "parameter": "admitDate" },
-			"years": {	"id": "years", "displayVal":"Years", "parameter": "years" },
-			//"": {	"id": "", "parameter": "admittedDate" },
-			//"": {	"id": "", "parameter": "deleted" },
-		},
-		selectedField: "name",
 		fieldValue: ""
 	}
 	render() {
@@ -128,15 +107,10 @@ class App extends Component {
 
 	componentDidMount(){ 
 		//this.loadInitialData();
-		//this.loadData(0,0);
-		//this.loadData("speci","Cat");
 	}
 
 	loadInitialData = () => {
 		this.loadData(0,0); // working
-		//this.loadData( this.state.fields2.name.id, this.state.fieldValue )
-		//this.loadData( this.state.fields2[this.state.selectedField].id, this.state.fieldValue )
-
 	}
 
 	loadData(property, value){ 
@@ -291,8 +265,6 @@ class App extends Component {
 
 	handleSearch = () =>{
 		//call the API
-		//petAPIobj.callGraphQL( this.state.selectedField, this.state.fieldValue )
-		//this.loadData( this.state.selectedField, this.state.fieldValue ) //working
 		//this.loadData( this.state.fields2.name.id, this.state.fieldValue ) //working
 		this.loadData( this.state.fields2[this.state.selectedField].id, this.state.fieldValue )
 	}

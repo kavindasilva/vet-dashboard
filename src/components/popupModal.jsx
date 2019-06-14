@@ -1,33 +1,16 @@
 import React, { Component } from "react";
-//import ReactDOM from 'react-dom';
-import Popup from "reactjs-popup";
-//import Modal from 'react-modal';
-
-//import Select from 'react-select'; //before material UI
-//import DatePicker from "react-datepicker";
-//import "react-datepicker/dist/react-datepicker.css";
 
 // https://react-day-picker.js.org/
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
-//http://clauderic.github.io/react-infinite-calendar , npm i react-infinite-calendar
 import InfiniteCalendar from 'react-infinite-calendar';
 import 'react-infinite-calendar/styles.css';
 
-//
-//import { DatePicker, KeyboardDatePicker } from "@material-ui/pickers";
-//import Calendar from 'material-ui-pickers/DatePicker/components/Calendar'
 import DateFnsUtils from "@date-io/date-fns";
 import {format} from "date-fns";
 import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
-//import DateFnsUtils from "@date-io/date-fns";
 
-//import DateFnsUtils from '@date-io/date-fns';
-//import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
-
-//import { DatePicker } from '@y0c/react-datepicker';
-//import { CalendarSelectedController } from '@y0c/react-datepicker';
 import '@y0c/react-datepicker/assets/styles/calendar.scss';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -104,12 +87,6 @@ class PopDialog extends Component {
 		)
 	}
 
-	/*componentDidUpdate0(prevProps){
-		//if(prevProps.value !== this.props.value){ alert(prevProps.value) }	
-		console.log("componentDidUpdate prev: ", prevProps);
-		if(this.state.attributeValue !== this.props.value){ console.log(prevProps.value) }	
-	}*/
-
 	showPop( optionalAttribute1 ){
 		return(
 			<div style={ { minWidth: "20px", minHeight: "18px" } }>
@@ -126,7 +103,6 @@ class PopDialog extends Component {
 				<Dialog
 					open={this.state.isOpen}
 					onClose={this.closePopUp}
-					//PaperComponent={PaperComponent}
 					aria-labelledby="draggable-dialog-title"
 				>
 					{/* <AppBar position="relative" ></AppBar> */}
@@ -203,8 +179,6 @@ class PopDialog extends Component {
 							onChange={ e => (
 								e.preventDefault(),
 								this.setState({ attributeValue: e.target.value })
-								//this.props.sendToParent()
-								//console.log("onChange data", e)
 								) }
 
 							type={ this.state.elementType }
@@ -226,14 +200,6 @@ class PopDialog extends Component {
 									}
 								</Select>
 							</React.Fragment>
-						);
-					case "select0": //before material UI
-						return (
-							<Select 
-									options={ this.props.data.valueSet }
-									defaultValue={{ value: this.props.data.defaultValue , label: this.props.data.defValDisp }}
-									onChange={ e => this.setState({ attributeValue: e.label }) }
-									/>
 						);
 
 					case "radio":
@@ -307,20 +273,6 @@ class PopDialog extends Component {
 						</FormGroup>
 					);
 
-				/*/case  "date": // npm install @material-ui/pickers
-					return(
-						<React.Fragment>
-							<Calendar
-                        date={new Date()}
-                        disablePast={true}
-                        //disableFuture={maybe}
-                        onChange={(date) => console.log(date)}
-                        //leftArrowIcon={<KeyboardArrowLeft/>}
-                        //rightArrowIcon={<KeyboardArrowRight/>}
-                      />
-							</React.Fragment>
-					)*/
-
 				case "date":
 					return(
 						<MuiPickersUtilsProvider utils={DateFnsUtils} onClick={() =>  this.setState({ isOpen: true}) }>
@@ -347,33 +299,6 @@ class PopDialog extends Component {
 					break;
 			}
 	}
-
-	// save data to DB
-	/*saveToDB = ( ticketid ) => {
-		console.log("popup - saveToDB");
-		let data = ticketAPIobj.callApiDb( )
-			.then( response => {
-				console.log("popup - Tresponse1: ",response);
-
-				console.log("popup - componenetDidMount");
-				this.setState({ petAdmission: response.data })
-				return response;
-
-			})
-			.then(
-				response => {
-					console.log("popup - Tresponse2: ", response);
-
-					petStore.dispatch({
-						type: 'FETCH_TICKETS_FROM_API',
-						payload: {
-							ticketData: response.data
-						}
-					})
-
-				}
-			) /* * /
-	}*/
 
 	openDatepicker = () => {
 		this.setState({ isOpen: true})

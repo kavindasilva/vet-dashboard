@@ -1,7 +1,6 @@
 
 import React from 'react';
 import axios from 'axios';
-//import ApolloClient from 'apollo-boost'
 
 
 const APIlistUrl = 'http://ontrack.dev.io/rest/apiv/list/DB';
@@ -11,12 +10,6 @@ const APIselectUrl = 'http://ontrack.dev.io/rest/apiv/select/';
 const APIauthenticateUrl = "http://ontrack.dev.io/login/user/login";
 const altAPIauthenticateUrl = "http://ontrack.dev.io/rest/apiv/signin";
 
-
-const AxiosInstance = axios.create({
-  baseURL: 'http://ontrack.dev.io/api/user/login',
-  timeout: 1000,
-  headers: {'Content-Type': 'application/json'}
-});
 
 class loginAPI extends React.Component{
   
@@ -40,29 +33,6 @@ class loginAPI extends React.Component{
       });
   }
 
-  auth32(d){
-    fetch( APIauthenticateUrl , {
-      method: 'POST',
-      headers: {
-        //'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        //'Content-Type': 'multipart/form-data',
-      },
-      body: JSON.parse({
-        //firstParam: 'yourValue',
-        //secondParam: 'yourOtherValue',
-        account_email: "ks@vetstoria.com",
-        account_password: "123",
-        is_otp_required: true,
-        otp: "qaauto"
-      })
-    })
-    .then(res => {
-      console.log("loginAPI - auth3 response:", res);
-      console.log(res.data);
-    })
-  }
-
   auth3( username, password, otp ){
     let data = {
       "account_email": "ks@vetstoria.com",
@@ -78,8 +48,6 @@ class loginAPI extends React.Component{
       "otp": otp
     } ;
 
-    //data = JSON.parse(" { \"account_email\": \"ks@vetstoria.com\", \"account_password\": \"123\", \"is_otp_required\": true, \"otp\": \"qaauto\" } ");
-    //data = JSON.parse(" { account_email: \"ks@vetstoria.com\", account_password: \"123\", is_otp_required: true, otp: \"qaauto\" } ");
     console.log("loginAPI - auth3", data);
 
     //axios.post( APIauthenticateUrl, "{ 'account_email':'ks@vetstoria.com' }" ) // POST 400

@@ -15,11 +15,7 @@ const DEFAULT_QUERY = 'redux';
 
 
 const client = new ApolloClient({
-  //uri: 'http://127.0.0.1/vet-dashboard/phpApi/inline-index4.php', // working
-  //uri: 'http://ontrack.dev.io/graph/apiJsonRequest/',
   uri: 'http://ontrack.dev.io/rest/apiv/list/hubspot',
-  //uri: 'http://ontrack.dev.io/rest/graph/apiJsonRequest/',
-  //uri: 'http://127.0.0.1/vet-dashboard/phpApi/inline-index4-2.php',
 })
 
 class petAPI extends React.Component{
@@ -97,19 +93,13 @@ class petAPI extends React.Component{
 
   /** The API calling function before integrating 'axios' library */
   callApi1(){
-    // Github fetch library : https://github.com/github/fetch
-    // Call the API page
     fetch('http://127.0.0.1/ucsc5/vet-dashboard/vet-dashboard/phpApi/getData.php')
       .then((result) => {
-      // Get the result
-      // If we want text, call result.text()
-      return result.json();
+        return result.json();
       })
       .then((jsonResult) => {
-      // Do something with the result
-      //console.log(jsonResult);
-      this.setState({ petAdmission: jsonResult });
-      return jsonResult;
+        this.setState({ petAdmission: jsonResult });
+        return jsonResult;
       })
   }
 }

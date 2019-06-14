@@ -10,8 +10,6 @@ import Pet from '../components/pet';
 
 import PetReducer from '../reducers/pets'
 import { connect } from "react-redux";
-//import { Provider } from 'react-redux'
-//import { viewPet, updatePet, viewNewPet } from '../actions/index'
 
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -45,34 +43,9 @@ class Pets extends Component {
 		}
 	}
 
-	/*constructor(props){
-		super(props);
-	}*/
-
-	
-
 	componentDidMount(){
 		console.log("Pets didMount - props", this.props);
-		//PetReducer( this.stateData, viewPet );
-		//console.log(store);
-		//this.setState({ petAdmission: this.props.stateInfo.petAdmission })
-
 	}
-
-	/**/componentDidMount0(){ // working
-		console.log("Pets - Mount");
-		//let data = petAPIobj.callApi()
-		petAPIobj.callApi()
-			.then( response => {
-				console.log(response);
-				if(response.data){
-					//console.log("A");
-					this.setState({ petAdmission: response.data })
-				}
-				return response;
-			})
-
-	}/**/
 
 	render(){ //with materialUI
 		return(
@@ -114,22 +87,14 @@ class Pets extends Component {
 			//this.props.PetReducer.admissions.map( (pet, index) => (
 			this.props.admissions.map( (pet, index) => (
 			//this.props.tickets.map( (pet, index) => (
-				
-				//{ JSON.stringify(this.props.admissions[0]) }
-				//console.log("pets-- ", JSON.parse(tmpjson1).objectId );
 				<Pet 
 					//key={pet.id} 
 					key={
-						//pet.record
 						this.getObjId(pet)
 					} 
-					//identifier={pet.id}
 					identifier={ 
 						this.getObjId(pet)
-						//JSON.parse( JSON.stringify(pet) ).objectId
-						//console.log( "pets identifier: ", pet ) //ok
 					}
-					//props={pet}
 				/>
 			)
 			)
@@ -141,8 +106,6 @@ class Pets extends Component {
 		//console.log("pets - getobj obj: ", obj);
 		return obj.objectId;
 	}
-
-
 	
 }
 

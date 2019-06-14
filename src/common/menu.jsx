@@ -30,7 +30,8 @@ class Menu extends Component {
 				{ 
 					this.viewMenuBar() 
 				}
-				{ this.componentToShow() 
+				{ 
+					this.componentToShow() 
 				}
 			</React.Fragment>
 		);
@@ -56,8 +57,6 @@ class Menu extends Component {
 
 	componentDidMount(){ 
 		//this.loadInitialData();
-		//this.loadData(0,0);
-		//this.loadData("speci","Cat");
 	}
 
 	/** determine which compoenent to be rendered */
@@ -71,23 +70,12 @@ class Menu extends Component {
 		else
 			return "no app";
 
-		/* * /if( this.state.showApp )
-			return <App />
-		else if( this.state.showPh )
-			return <Records />
-		else
-			return "no app"; /* */
-
-		//let componentToShow = this.state.componentToShow;
-
 	}
 
 	/** make clicked componenents state value true */
 	switchComponents(clickedComponent){
 		console.log("menu - switchComps: ", clickedComponent);
 		this.setState( { componentToShow: clickedComponent } );
-
-		//this.componentToShow();
 	}
 
 	/** logout user */

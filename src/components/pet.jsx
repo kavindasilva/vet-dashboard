@@ -16,17 +16,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import PopDialog from "./popupModal";
 
 import { connect } from 'react-redux';
-//import { viewPet, updatePet, viewNewPet } from '../actions/index'
-//import { petStore } from "../stores/pets";
-//import PetReducer from '../reducers/pets';
 
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import { stat } from 'fs';
 
-
-//global JS variable for popup open detection
-//const dd=window.
 
 class Pet extends Component {
 	//state = { ...this.props }
@@ -64,41 +58,6 @@ class Pet extends Component {
 
 	}
 	
-
-	/** Sample method to check child to parent data passing working */
-	retrieveFromPopup = (property, value) => {
-		//console.log("Pet store: ", store.getState() ); // whole store
-		//PetReducer( petStore.getState(), updatePet( { propert: property, val: value, idd: this.props.objectId } ) );
-
-		switch(property){
-			case "name":
-				this.setState({ name : value }); console.log("Name=", this.state.name);
-				break;
-			case "speci": 
-				this.setState({ speci : value }); console.log("Speci=", this.state.speci);
-				break;
-
-			case "gender" :
-				this.setState({ gender : value }); console.log("Gender=", this.state.gender);
-				break;
-			case "years" :
-				this.setState({ years : value }); console.log("years=", this.state.years);
-				break;
-
-			case "symptoms" :
-				this.setState({ symptoms : value }); console.log("symptoms=", this.state.symptoms);
-				break;
-			case "admittedDate" :
-				this.setState({ admittedDate : value }); console.log("admitDate=", this.state.admittedDate);
-				break;
-
-			default:
-				console.log("pet.jsx -> default case");
-		}
-
-		console.log("retrieve data called");
-	}
-
 	viewPet(){ // with mmterialUI : tr -> TableRow; td -> TableCell
 		return (
 			<TableRow> 
@@ -137,14 +96,6 @@ class Pet extends Component {
 				<TableCell> {
 					 this.props.sub_timestamp 
 					 //this.state.portalId
-					//this.state["properties"].content.value
-					//this.props.sub_value
-					//this.props.properties.content.value
-					//this.props.properties
-					//this.props.properties.find(value => "0" === )
-					//this.props["properties"].filter()
-					//this.props["properties"]["content"]["value"]
-					//console.log("pet props",this.props)
 				} </TableCell>
 
 				<TableCell>
@@ -214,23 +165,9 @@ const mapStateToProps = (state, myProps) => {
 	console.log("pet - mapStateToProps tickRec:", tickRecord );
 
 	let record = state.PetReducer.admissions.find(record => myProps.identifier === record.objectId );
-	//let record = state.admissions.find(record => myProps.identifier === 28868823);
-	//let rec_properties_sub={ ...{...record.properties}.subject };
-	//let rec_properties_con={ ...{...record.properties}.content };
 	return {
 		...record,
 		...tickRecord,
-
-		/*sub_value: rec_properties_sub.value,
-		sub_source: rec_properties_sub.source,
-		sub_sourceId: rec_properties_sub.sourceId,
-		sub_timestamp: rec_properties_sub.timestamp,
-
-		con_value: rec_properties_con.value,
-		con_source: rec_properties_con.source,
-		con_sourceId: rec_properties_con.sourceId,
-		con_timestamp: rec_properties_con.timestamp,/**/
-		//...record.properties
 	};
 }
 
