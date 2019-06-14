@@ -1,6 +1,8 @@
 
 import React from 'react';
 import { connect } from "react-redux";
+import rootReducer from "../reducers/index";
+import { petStore } from "../stores/pets";
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -63,13 +65,16 @@ class Login extends React.Component{
 	 * action_id
 	 * user_id
 	 */
-	state = {
+	/*state = {
 		username: '',
 		password: '',
 		otp: '',
 
 		isLoggedIn: false,
-	}
+	}*/
+	//state={};
+	state = { ...this.props.metaData, otp:"qaauto" }
+	//state = { Meta }
 
 	componentDidMount(){
 		//console.log("Login - mount. classes:", this.classes);
@@ -111,8 +116,11 @@ class Login extends React.Component{
 	validateCredentials( serverData){
 		if( serverData.data.type !=="" && serverData.data.type!==null && serverData.data!=="Bad Request" ){
 		//if( parseInt(serverData.ticket_id)===28868823 ){
-			console.log("credentials validated");
-			this.setState({isLoggedIn: true});
+			console.log("credentials validated. serverData:", serverData);
+			this.setState({serverData: serverData.data});
+
+			this.dispatchUpdate();
+			//this.setState({isLoggedIn: true});
 		}
 		else if( serverData.data =="Bad Request" ){
 			console.log("credentials not validated");
@@ -176,8 +184,9 @@ class Login extends React.Component{
 								label="otp"
 								type="otp"
 								id="otp"
+								value={ this.state.otp }
 								onChange = { (e)=>{ this.setState({otp: e.target.value}) } }
-								//autoComplete="current-password"
+								//autoComplete=""
 							/>
 							
 							<Button
@@ -220,6 +229,17 @@ class Login extends React.Component{
 		)
 	}
 
+	dispatchUpdate = () => {
+		petStore.dispatch({
+			type: 'UPDATE_META_DETAIL',
+			payload: {
+				//isLoggedIn: false,
+				//userID: 250
+				loggedData: {...this.state.serverData, isLoggedIn: true }
+			}
+		});
+	}
+
 }
 
 //export default Login;
@@ -228,11 +248,14 @@ class Login extends React.Component{
 const mapStateToProps = state => {
 	console.log('login.jsx-mapStateToProps', state);
 	return {
-		admissions: state.admissions,
-		tickets: state.tickets,
-		metaData: state.metaData
+		//admissions: state.admissions,
+		//tickets: state.tickets,
+
+		//metaData: state.metaData,
+		metaData: state.MetaReducer.metaData,
 	};
 }
 
+//export default connect(mapStateToProps)(withStyles(useStyles)(Login));
 export default connect(mapStateToProps)(withStyles(useStyles)(Login));
 

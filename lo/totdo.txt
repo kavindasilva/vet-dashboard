@@ -133,5 +133,7 @@ implement the backend taken from oabp
 make login logout in react
 https://stackoverflow.com/questions/41319547/syntax-highlighting-for-react-code-in-sublime
 
+--jun 14
+https://stackoverflow.com/questions/40735406/checking-for-undefined-in-react
 
 

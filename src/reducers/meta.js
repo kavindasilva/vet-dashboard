@@ -27,22 +27,18 @@ const MetaReducer = (state, action) => {
             //let newState={}
             newState = {
                 ...state,
-                tickets: state.tickets.map(record => {
-                    if (parseInt(record.ticket_id) == action.payload.identifier) {
-                        let data = {};
-                        data[action.payload.attribute] = action.payload.value;
-
-                        console.log("pet reducer UPDATE:", {...record, ...data });
-                        saveToDB({...record, ...data });
-                        return {
-                            ...record,
-                            ...data
-                        }
-                    } else
-                        return record;
-                })
+                metaData: {
+                    isLoggedIn: action.payload.loggedData.isLoggedIn,
+                    userID: action.payload.loggedData.user_id,
+                    userType: action.payload.loggedData.userType,
+                    username: action.payload.loggedData.username,
+                }
+                
+                //metaData: state.metaData.map(record => {
+                    
+                //})
             }
-            console.log("MetaReducer_UPDATE_PET_DETAIL: ", newState);
+            console.log("MetaReducer_UPDATE_META_DETAIL: ", newState);
 
             //saveToDB();
 
