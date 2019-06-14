@@ -13,16 +13,26 @@ const initialState = {
     //     admittedDate: "2019-04-01"
     // }],
 
+    /** 
+     * This is for retrieve and store HUBSPOT and hubspot related DB (version) data 
+     * PetReducer:[ admissions:[], tickets[] ]
+     * */
     PetReducer: {
         tickets: [
             {id: 10000}
         ]
     },
 
+    PhoenixReducer:{
+        //structure
+        phoenixRecords:{}
+    },
+
     // phoenix: [{
     //     id:20000
     // }],
 
+    /** This is for storing meta-data related to user and sessions */
     MetaReducer : {
         metaData:{
             isLoggedIn: false,

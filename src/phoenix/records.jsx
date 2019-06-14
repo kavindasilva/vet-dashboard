@@ -11,6 +11,7 @@ import MaterialTable from 'material-table';
 import MUIDataTable from "mui-datatables";
 
 
+import { petStore } from "../stores/pets";
 import { connect } from 'react-redux';
 
 //import { withStyles } from "material-ui/styles";
@@ -130,8 +131,8 @@ class Records extends Component {
 			.then( response => {
 				console.log(response);
 				if(response.data){
-					//console.log("A");
 					this.setState({ phoenixRecords: response.data })
+					this.dispatchUpdate();
 				}
 				return response;
 			})
@@ -148,8 +149,8 @@ class Records extends Component {
 			.then( response => {
 				console.log(response);
 				if(response.data){
-					//console.log("A");
 					this.setState({ phoenixRecords: response.data })
+					this.dispatchUpdate();
 				}
 				return response;
 			})
@@ -270,23 +271,15 @@ class Records extends Component {
 	viewAll(){ //with booststrap & materialUI
 
 		return (
-			this.state.phoenixRecords.map( (pet, index) => (
-			//this.props.tickets.map( (pet, index) => (
-				
-				//{ JSON.stringify(this.props.recordsData[0]) }
-				//console.log("pets-- ", JSON.parse(tmpjson1).objectId );
+			this.props.phoenixRecords.map( (pet, index) => (
+				//console.log("records-- ", JSON.parse(tmpjson1).objectId );
 				<Record 
 					//key={pet.id} 
 					key={
 						pet.hash
-						//this.getObjId(pet)
 					} 
-					//identifier={pet.id}
 					identifier={ 
 						pet.hash
-						//this.getObjId(pet)
-						//JSON.parse( JSON.stringify(pet) ).objectId
-						//console.log( "pets identifier: ", pet ) //ok
 					}
 
 					recordData = { pet }
@@ -303,6 +296,17 @@ class Records extends Component {
 		return obj.objectId;
 	}
 
+	dispatchUpdate = () => {
+		petStore.dispatch({
+			type: 'UPDATE_PHOENIX_DATA',
+			payload: {
+				//isLoggedIn: false,
+				//userID: 250
+				phoenixRecords: {...this.state.phoenixRecords }
+			}
+		});
+	}
+
 }
 
 //export default Records;
@@ -311,7 +315,7 @@ class Records extends Component {
 const mapStateToProps = state => {
 	console.log('records.jsx-mapStateToProps', state); // seems ok
 	return {
-		recordsData: state.recordsData
+		recordsData: state.PetReducer.phoenixRecords
 		//tickets: state.tickets
 	};
 }
