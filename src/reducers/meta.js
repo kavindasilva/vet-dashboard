@@ -3,23 +3,27 @@
 //import visibilityFilter from './visibilityFilter'
 
 import ticketAPI from "../apicalls/ticketAPI";
-import { petStore } from "../stores/pets";
-import { stat } from "fs";
+//import { petStore } from "../stores/pets";
+
 import { isUndefined } from "util";
 
-
-const ticketAPIobj = new ticketAPI();
-
-const PetReducer = (state, action) => {
-    console.log("PetReducer: state: ", state, "\naction: ", action)
-    let newState = {};
+const MetaReducer = (state, action) => {
+    console.log("MetaReducer: state: ", state, "\naction: ", action)
+    let newState = {
+        metaData:{
+            isLoggedIn: false,
+            userID: 0,
+            username: '',
+            userType: 0
+        }
+    };
 
     //if(state===null || state==="")
     if(state===undefined || isUndefined(state))
         state=null;
 
     switch (action.type) {
-        case 'UPDATE_PET_DETAIL':
+        case 'UPDATE_META_DETAIL':
             //let newState={}
             newState = {
                 ...state,
@@ -38,43 +42,44 @@ const PetReducer = (state, action) => {
                         return record;
                 })
             }
-            console.log("petReducer_UPDATE_PET_DETAIL: ", newState);
+            console.log("MetaReducer_UPDATE_PET_DETAIL: ", newState);
 
             //saveToDB();
 
             return newState;
 
-        case 'FETCH_FROM_API': // from hubspot through api
+        case 'FETCH_META_FROM_API': // from hubspot through api
             newState = {
                 ...state,
                 admissions: action.payload.apiData.map(
                     record => { return record }
                 )
             };
-            console.log("petReducer_FETCH_FROM_API: ", newState);
-            //console.log("petReducer_GET_FROM_API: ", action.payload.apiData );
+            console.log("MetaReducer_FETCH_FROM_API: ", newState);
+            //console.log("MetaReducer_GET_FROM_API: ", action.payload.apiData );
             return newState;
 
-        case 'FETCH_TICKETS_FROM_API': // from db through api
+        case 'FETCH_META_TICKETS_FROM_API': // from db through api
             newState = {
                 ...state,
                 tickets: action.payload.ticketData.map(
                     record => { return record }
                 )
             };
-            console.log("petReducer_FETCH_TICKETS_FROM_API: ", newState);
-            //console.log("petReducer_GET_FROM_API: ", action.payload.apiData );
+            console.log("MetaReducer_FETCH_TICKETS_FROM_API: ", newState);
+            //console.log("MetaReducer_GET_FROM_API: ", action.payload.apiData );
             return newState;
 
         default:
-            return state
+            //return state
+            return newState;
     }
 
 }
 
 const saveToDB = (allData) => {
     console.log("popup - saveToDB", allData);
-    ticketAPIobj.saveApiDb(allData);
+    //ticketAPIobj.saveApiDb(allData);
     //console.log("popup - saveToDB", allData.ticket_id);
     /*let data = ticketAPIobj.callApiDb()
         .then(response => {
@@ -101,4 +106,4 @@ const saveToDB = (allData) => {
         ) /* */
 }
 
-export default PetReducer
+export default MetaReducer

@@ -1,5 +1,6 @@
 import { createStore } from "redux";
-import PetReducer from "../reducers/pets";
+//import PetReducer from "../reducers/pets";
+import rootReducer from "../reducers/index";
 
 const initialState = {
     admissions: [{
@@ -27,4 +28,5 @@ const initialState = {
         userType: 0
     }
 };
-export const petStore = createStore(PetReducer, initialState);
+//export const petStore = createStore(PetReducer, initialState);
+export const petStore = createStore(rootReducer, initialState);
