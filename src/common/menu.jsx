@@ -15,15 +15,18 @@ class Menu extends Component {
 		showApp: false,
 		showPh: false,
 
-		showComponent: 'def',
+		componentToShow: 'def',
+		menuBarVisible: false,
 	}
 
 	render() {
 		//console.log('Menu.jsx-rendering' );
 		return (
 			<React.Fragment>
-				{ this.viewMenuBar() }
-				{ this.showComponent() 
+				{ 
+					this.viewMenuBar() 
+				}
+				{ this.componentToShow() 
 				}
 			</React.Fragment>
 		);
@@ -54,8 +57,8 @@ class Menu extends Component {
 	}
 
 	/** determine which compoenent to be rendered */
-	showComponent(){
-		let componentToShow = this.state.showComponent;
+	componentToShow(){
+		let componentToShow = this.state.componentToShow;
 		if( componentToShow=="app" )
 			return <App />
 		else if( componentToShow=="records" )
@@ -70,16 +73,16 @@ class Menu extends Component {
 		else
 			return "no app"; /* */
 
-		//let componentToShow = this.state.showComponent;
+		//let componentToShow = this.state.componentToShow;
 
 	}
 
 	/** make clicked componenents state value true */
 	switchComponents(clickedComponent){
 		console.log("menu - switchComps: ", clickedComponent);
-		this.setState( { showComponent: clickedComponent } );
+		this.setState( { componentToShow: clickedComponent } );
 
-		//this.showComponent();
+		//this.componentToShow();
 	}
 
 	/** logout user */

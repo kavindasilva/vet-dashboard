@@ -41,12 +41,6 @@ const client1 = new ApolloClient({
   uri: 'http://127.0.0.1/phpapi/inline-index4.php',
 })
 
-//import { pokemo } from "../apicalls/petAPI";
-
-
-//const petStore = createStore(PetReducer, {tickets:[ { id:'0' , name:"RoverStt" , speci:"Dog" , gender:"Male" , years:"3.5" , symptoms:["Fever", "Cold"] , admittedDate:"2019-04-01" } ]} );
-//const petStore = createStore(PetReducer ,
-
 const styles = theme => ({
 	root: {
 	  width: '100%',
@@ -147,7 +141,6 @@ class App extends Component {
 
 	loadData(property, value){ 
 		console.log("App - loadData");
-		//let data = petAPIobj.callApi()
 		let data = petAPIobj.callGraphQL( property, value )
 			.then( response => {
 				console.log("app.jsx - response1: ",response);

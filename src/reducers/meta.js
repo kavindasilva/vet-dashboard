@@ -34,9 +34,6 @@ const MetaReducer = (state, action) => {
                     username: action.payload.loggedData.username,
                 }
                 
-                //metaData: state.metaData.map(record => {
-                    
-                //})
             }
             console.log("MetaReducer_UPDATE_META_DETAIL: ", newState);
 
@@ -53,7 +50,7 @@ const MetaReducer = (state, action) => {
 
 const saveToDB = (allData) => {
     console.log("popup - saveToDB", allData);
-    //ticketAPIobj.saveApiDb(allData);
+    //ticketAPIobj.saveToDB(allData);
     //console.log("popup - saveToDB", allData.ticket_id);
     /*let data = ticketAPIobj.callApiDb()
         .then(response => {

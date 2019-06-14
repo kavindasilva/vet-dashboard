@@ -60,19 +60,6 @@ class Login extends React.Component{
 
 	classes=this.props.classes;
 
-	/**
-	 * JSON output
-	 * action_id
-	 * user_id
-	 */
-	/*state = {
-		username: '',
-		password: '',
-		otp: '',
-
-		isLoggedIn: false,
-	}*/
-	//state={};
 	state = { ...this.props.metaData, otp:"qaauto" }
 	//state = { Meta }
 
@@ -97,9 +84,6 @@ class Login extends React.Component{
 		console.log("Login - credentials:", this.state.username, this.state.password );
 		
 		// call to API post
-		//let authMsg = loginAPIobj.authenticateAPI(null)
-		//loginAPIobj.authenticateAPI(null)
-		//loginAPIobj.auth2(null)
 		loginAPIobj.auth3(this.state.username, this.state.password, this.state.otp)
 			.then( res => {
 				console.log("Login - authMsg:", res);
@@ -108,8 +92,9 @@ class Login extends React.Component{
 		//console.log("Login - authMsg:", authMsg);
 	}
 
-	/** validate credentials and authorize 
-	 *  if credentials wrong : data: "Bad Request"
+	/** 
+	 * Validate credentials and authorize 
+	 * if credentials wrong : data: "Bad Request"
 	 * if credentials validated: data: {type: 3, account_id: "1", user_id: 2}
 	*/
 	//validateCredentials( userInput, serverData)
@@ -230,6 +215,24 @@ class Login extends React.Component{
 		)
 	}
 
+	viewMenuBar(){
+		return(
+			<div>
+				<div>
+					<Button style={{cursor:'pointer',float:'right',align:'right'}}
+						onClick={ () => { this.logOutUser() } }
+					>
+						LogOut
+					</Button> <hr />
+				</div>
+
+				Temporary menu bar: 
+				<Button onClick={ ()=>{ this.switchComponents('app') } } >Ticket</Button>
+				<Button onClick={ ()=>{ this.switchComponents('records') } } >Phoenix</Button>
+			</div>
+		);
+	}
+
 	dispatchLogin = () => {
 		petStore.dispatch({
 			type: 'UPDATE_META_DETAIL',
@@ -243,15 +246,9 @@ class Login extends React.Component{
 
 }
 
-//export default Login;
-//export default withStyles(useStyles)(Login);
-
 const mapStateToProps = state => {
 	console.log('login.jsx-mapStateToProps', state);
 	return {
-		//admissions: state.admissions,
-		//tickets: state.tickets,
-
 		//metaData: state.metaData,
 		metaData: state.MetaReducer.metaData,
 	};

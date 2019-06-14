@@ -20,7 +20,6 @@ const PetReducer = (state, action) => {
 
     switch (action.type) {
         case 'UPDATE_PET_DETAIL':
-            //let newState={}
             newState = {
                 ...state,
                 tickets: state.tickets.map(record => {
@@ -39,10 +38,8 @@ const PetReducer = (state, action) => {
                 })
             }
             console.log("petReducer_UPDATE_PET_DETAIL: ", newState);
-
-            //saveToDB();
-
             return newState;
+
 
         case 'FETCH_FROM_API': // from hubspot through api
             newState = {
@@ -52,8 +49,8 @@ const PetReducer = (state, action) => {
                 )
             };
             console.log("petReducer_FETCH_FROM_API: ", newState);
-            //console.log("petReducer_GET_FROM_API: ", action.payload.apiData );
             return newState;
+
 
         case 'FETCH_TICKETS_FROM_API': // from db through api
             newState = {
@@ -63,9 +60,9 @@ const PetReducer = (state, action) => {
                 )
             };
             console.log("petReducer_FETCH_TICKETS_FROM_API: ", newState);
-            //console.log("petReducer_GET_FROM_API: ", action.payload.apiData );
             return newState;
 
+            
         default:
             console.log("petReducer_default: ", state);
             return state;
@@ -75,7 +72,7 @@ const PetReducer = (state, action) => {
 
 const saveToDB = (allData) => {
     console.log("popup - saveToDB", allData);
-    ticketAPIobj.saveApiDb(allData);
+    ticketAPIobj.saveToDB(allData);
     //console.log("popup - saveToDB", allData.ticket_id);
     /*let data = ticketAPIobj.callApiDb()
         .then(response => {

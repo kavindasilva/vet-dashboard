@@ -23,15 +23,8 @@ const client = new ApolloClient({
 })
 
 class petAPI extends React.Component{
-  /*state ={}
 
-  constructor(){
-    super();
-  }*/
   callGraphQL ( property, value ){
-    //useGraphQL( fetchOp )
-    //PokemonImage("x");
-    //return this.callGraphQL2(0,0);
 
     //var graphqlQuery="{ tickets { portalId, objectId } }";
     //var graphqlQuery="{ tickets { portalId, objectId, properties{ subject{value, timestamp, source, sourceId}, content{value, timestamp, source, sourceId} } } }";
@@ -100,17 +93,6 @@ class petAPI extends React.Component{
         return error;
       });
 
-     //return retStr;
-
-    /**axios.get(API + DEFAULT_QUERY)
-      .then(result => this.setState({
-        hits: result.data.hits,
-        isLoading: false
-      }))
-      .catch(error => this.setState({
-        error,
-        isLoading: false
-      }));/**/
   }
 
   /** The API calling function before integrating 'axios' library */

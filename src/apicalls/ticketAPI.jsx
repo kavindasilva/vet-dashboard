@@ -22,11 +22,9 @@ class ticketAPI extends React.Component{
       getUri=APIselectUrl + ticketID
 
     console.log("ticketAPI call uri:", getUri);
-    //var retStr;
     return axios.get( getUri )
       .then(result => {
         console.log("ticketAPI.jsx - callAPIdb",result);
-        //retStr=result;
         return result;
       })
       .catch(error => {
@@ -35,8 +33,9 @@ class ticketAPI extends React.Component{
       });
   }
 
+
   /** save / update data to API */
-  saveApiDb( data ){
+  saveToDB( data ){
     console.log("ticketAPI - saveToDB", data);
     //var postUri;
     //let data1 = { product_id_list: ['pid1234', 'pid1235'] };
@@ -48,6 +47,7 @@ class ticketAPI extends React.Component{
       })
   }
 
+  /** Not used. This was used because axios was not working */
   saveApiDb2( data ){ // because axios not working
     console.log("ticketAPI - saveToDB", data);
 
@@ -68,6 +68,7 @@ class ticketAPI extends React.Component{
     })
   }
 
+  /** Not used. Reason unknown why this method is not working */
   saveApiDb0( data ){ // don't know why not working
     console.log("ticketAPI - saveToDB", data);
 
@@ -80,7 +81,7 @@ class ticketAPI extends React.Component{
       })
   }
 
-  /** Before GraphQL */
+  /**Not used. Before GraphQL */
   callApi(){
     //var retStr;
     return axios.get(APIlistUrl + DEFAULT_QUERY)
@@ -94,17 +95,6 @@ class ticketAPI extends React.Component{
         return error;
       });
 
-     //return retStr;
-
-    /**axios.get(API + DEFAULT_QUERY)
-      .then(result => this.setState({
-        hits: result.data.hits,
-        isLoading: false
-      }))
-      .catch(error => this.setState({
-        error,
-        isLoading: false
-      }));/**/
   }
 
   /** The API calling function before integrating 'axios' library */
