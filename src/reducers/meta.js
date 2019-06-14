@@ -44,31 +44,9 @@ const MetaReducer = (state, action) => {
 
             return newState;
 
-        case 'FETCH_META_FROM_API': // from hubspot through api
-            newState = {
-                ...state,
-                admissions: action.payload.apiData.map(
-                    record => { return record }
-                )
-            };
-            console.log("MetaReducer_FETCH_FROM_API: ", newState);
-            //console.log("MetaReducer_GET_FROM_API: ", action.payload.apiData );
-            return newState;
-
-        case 'FETCH_META_TICKETS_FROM_API': // from db through api
-            newState = {
-                ...state,
-                tickets: action.payload.ticketData.map(
-                    record => { return record }
-                )
-            };
-            console.log("MetaReducer_FETCH_TICKETS_FROM_API: ", newState);
-            //console.log("MetaReducer_GET_FROM_API: ", action.payload.apiData );
-            return newState;
-
         default:
-            //return state
-            return newState;
+            console.log("MetaReducer_default: ", newState);
+            return state;
     }
 
 }

@@ -119,7 +119,7 @@ class Login extends React.Component{
 			console.log("credentials validated. serverData:", serverData);
 			this.setState({serverData: serverData.data});
 
-			this.dispatchUpdate();
+			this.dispatchLogin();
 			//this.setState({isLoggedIn: true});
 		}
 		else if( serverData.data =="Bad Request" ){
@@ -131,7 +131,8 @@ class Login extends React.Component{
 	}
 
 	viewForm(){
-		if(this.state.isLoggedIn===true){
+		console.log('login.jsx - viewForm', this.props);
+		if(this.props.metaData.isLoggedIn===true){
 			return this.viewMenu();
 		}
 		else{
@@ -229,7 +230,7 @@ class Login extends React.Component{
 		)
 	}
 
-	dispatchUpdate = () => {
+	dispatchLogin = () => {
 		petStore.dispatch({
 			type: 'UPDATE_META_DETAIL',
 			payload: {

@@ -169,22 +169,22 @@ class App extends Component {
 
 					// CORS & CORB detectiog if daa is empty
 					console.log("app.jsx - response2: ", response);
-					if(  !response.data ){
-						petStore.dispatch({
-							type: 'FETCH_FROM_API',
-							payload: {
-								apiData: response[0].data.tickets
-							}
-						})
-					}
-					else{
+					// if(  !response.data ){
+					// 	petStore.dispatch({
+					// 		type: 'FETCH_FROM_API',
+					// 		payload: {
+					// 			apiData: response[0].data.tickets
+					// 		}
+					// 	})
+					// }
+					// else{
 					petStore.dispatch({
 						type: 'FETCH_FROM_API',
 						payload: {
 							apiData: response.data.tickets
 						}
 					})
-					}
+					//}
 				}
 			)
 

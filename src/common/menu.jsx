@@ -1,6 +1,9 @@
 
 import React, { Component } from 'react';
 
+import { connect } from "react-redux";
+import { petStore } from "../stores/pets"
+
 import App from "../components/app";
 import Records from "../phoenix/records";
 
@@ -12,7 +15,7 @@ class Menu extends Component {
 		showApp: false,
 		showPh: false,
 
-		showComp: 'def',
+		showComponent: 'def',
 	}
 
 	render() {
@@ -30,7 +33,11 @@ class Menu extends Component {
 		return(
 			<div>
 				<div>
-					<Button style={{cursor:'pointer',float:'right',align:'right'}}>LogOut</Button> <hr />
+					<Button style={{cursor:'pointer',float:'right',align:'right'}}
+						onClick={ () => { this.logOutUser() } }
+					>
+						LogOut
+					</Button> <hr />
 				</div>
 
 				Temporary menu bar: 
@@ -48,7 +55,7 @@ class Menu extends Component {
 
 	/** determine which compoenent to be rendered */
 	showComponent(){
-		let componentToShow = this.state.showComp;
+		let componentToShow = this.state.showComponent;
 		if( componentToShow=="app" )
 			return <App />
 		else if( componentToShow=="records" )
@@ -63,19 +70,42 @@ class Menu extends Component {
 		else
 			return "no app"; /* */
 
-		//let componentToShow = this.state.showComp;
+		//let componentToShow = this.state.showComponent;
 
 	}
 
 	/** make clicked componenents state value true */
 	switchComponents(clickedComponent){
 		console.log("menu - switchComps: ", clickedComponent);
-		this.setState( { showComp: clickedComponent } );
+		this.setState( { showComponent: clickedComponent } );
 
 		//this.showComponent();
 	}
 
+	/** logout user */
+	logOutUser = () => {
+		this.dispatchLogout()
+	}
+
+	dispatchLogout = () => {
+		petStore.dispatch({
+			type: 'UPDATE_META_DETAIL',
+			payload: {
+				//isLoggedIn: false,
+				//userID: 250
+				loggedData: {...this.state.serverData, isLoggedIn: false }
+			}
+		});
+	}
+
 }
 
-//export default App;
-export default Menu;
+const mapStateToProps = state => {
+	console.log('menu.jsx-mapStateToProps', state);
+	return {
+		metaData: state.MetaReducer.metaData,
+	};
+}
+
+//export default Menu;
+export default connect(mapStateToProps)(Menu);

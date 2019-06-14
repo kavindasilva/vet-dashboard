@@ -7,10 +7,6 @@ import axios from 'axios';
 
 const DEFAULT_QUERY = 'redux';
 
-// const APIlistUrl = 'http://ontrack.dev.io/rest/ApiDb/list';
-// const APIselectUrl = 'http://ontrack.dev.io/rest/ApiDb/select/';
-// const APIsaveUrl = "http://ontrack.dev.io/rest/ApiDb/insertdata";
-
 const APIlistUrl = 'http://ontrack.dev.io/rest/apiv/list/DB';
 const APIselectUrl = 'http://ontrack.dev.io/rest/apiv/select/';
 const APIsaveUrl = "http://ontrack.dev.io/rest/apiv/insertdata";

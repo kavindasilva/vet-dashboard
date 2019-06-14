@@ -67,7 +67,8 @@ const PetReducer = (state, action) => {
             return newState;
 
         default:
-            return state
+            console.log("petReducer_default: ", state);
+            return state;
     }
 
 }
