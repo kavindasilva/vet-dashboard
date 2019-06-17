@@ -24,6 +24,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Menu from "../common/menu";
 import loginAPI from "../apicalls/loginAPI";
 
+import Trackers from "../dashboard/trackers";
+import MiniDrawer from "../common/drawer";
+
 const loginAPIobj = new loginAPI();
 
 
@@ -72,6 +75,8 @@ class Login extends React.Component{
 		return(
 			<React.Fragment>
 				{ this.viewMenu() }
+
+				<MiniDrawer />
 			</React.Fragment>
 		)
 	}
