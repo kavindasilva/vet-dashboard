@@ -3,16 +3,6 @@ import { createStore } from "redux";
 import rootReducer from "../reducers/index";
 
 const initialState = {
-    // admissions: [{
-    //     id: '22250',
-    //     name: "RoverStt",
-    //     speci: "Dog",
-    //     gender: "Male",
-    //     years: "60",
-    //     symptoms: ["Fever", "Cold"],
-    //     admittedDate: "2019-04-01"
-    // }],
-
     /** 
      * This is for retrieve and store HUBSPOT and hubspot related DB (version) data 
      * PetReducer:[ admissions:[], tickets[] ]

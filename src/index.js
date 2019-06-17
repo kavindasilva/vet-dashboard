@@ -12,7 +12,7 @@ import Login from "./common/login"
 //import Button from "@material-ui/core/Button";
 
 
-//import { petStore } from "./stores/pets";
+//import { petStore } from "./stores/rootStore";
 
 
 const render = () => {
