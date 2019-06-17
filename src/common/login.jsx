@@ -68,9 +68,10 @@ class Login extends React.Component{
 	}
 
 	render(){
+		//this.viewForm() 
 		return(
 			<React.Fragment>
-				{ this.viewForm() }
+				{ this.viewMenu() }
 			</React.Fragment>
 		)
 	}
@@ -115,6 +116,10 @@ class Login extends React.Component{
 		}
 	}
 
+	/** 
+	 * Display login if user not logged in.
+	 * Display Menu bar if user logged in.
+	 */
 	viewForm(){
 		console.log('login.jsx - viewForm', this.props);
 		if(this.props.metaData.isLoggedIn===true){
@@ -209,12 +214,14 @@ class Login extends React.Component{
 		}
 	}
 
+	/** Call Menu bar rendering component */
 	viewMenu(){
 		return(
 			<Menu />
 		)
 	}
 
+	/** This function is not used */
 	viewMenuBar(){
 		return(
 			<div>

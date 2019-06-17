@@ -1,4 +1,8 @@
 
+/**
+ * This file is not used. Needed later,
+ * to replace the data retrieving after login completed.
+ */
 import React, { Component } from 'react';
 import Pets from "../components/pets";
 import { Provider } from 'react-redux';
