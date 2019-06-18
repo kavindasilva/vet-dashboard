@@ -1,6 +1,9 @@
 import { createStore } from "redux";
 //import PetReducer from "../reducers/pets";
 import rootReducer from "../reducers/index";
+import trackerInstances from "../config-data/trackerInstance";
+import trackersConfig from "../config-data/trackersConfig";
+
 
 const initialState = {
     /** 
@@ -18,12 +21,12 @@ const initialState = {
         phoenixRecords:{}
     },
 
-    TrackerConfigReducer:{
-        id: null
+    TrackConfigReducer:{
+        data: trackerInstances
     },
 
-    TrackerInstanceReducer:{
-        id: null
+    TrackInstaReducer:{
+        id: 888
     },
 
     // phoenix: [{
