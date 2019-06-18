@@ -18,6 +18,14 @@ const initialState = {
         phoenixRecords:{}
     },
 
+    TrackerConfigReducer:{
+        id: null
+    },
+
+    TrackerInstanceReducer:{
+        id: null
+    },
+
     // phoenix: [{
     //     id:20000
     // }],

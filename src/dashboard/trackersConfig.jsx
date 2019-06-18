@@ -63,7 +63,7 @@ function TabContainer(props) {
     );
 }
 
-class Trackers extends React.Component{
+class TrackersConfig extends React.Component{
     classes=this.props.classes;
     //tabValue=3;
 
@@ -76,8 +76,8 @@ class Trackers extends React.Component{
 	//state = { Meta }
 
 	componentDidMount(){
-		console.log("Trackers - mount. json:", this.state.trackers); //ok
-		console.log("Trackers - mount. props.metaData:", this.props.metaData); 
+		console.log("TrackersConfig - mount. json:", this.state.trackers); //ok
+		console.log("TrackersConfig - mount. props.metaData:", this.props.metaData); 
 	}
 
 	render(){
@@ -126,6 +126,18 @@ class Trackers extends React.Component{
                         <React.Fragment>
                             <h3> { tracker.name } </h3>
                             <p>X {tracker.id} </p>
+                            <table>
+                                <thead>
+                                    <TrackerTableHeader trackerId={tracker.id}>
+                                    </TrackerTableHeader>
+                                </thead>
+                                <tbody>
+                                    <TrackerTableBody trackerId={tracker.id}>
+                                        <TrackerTableRow trackerId={tracker.id} trackerRecordId={null}>
+                                        </TrackerTableRow>
+                                    </TrackerTableBody>
+                                </tbody>
+                            </table>
                             {
                                 this.showColumns(tracker)
                             }
@@ -143,40 +155,54 @@ class Trackers extends React.Component{
      * */
     showColumns( trackerInfo ){
         let usersVisibleColumns=[];
-        trackerInfo.columns.map( column => (
-            console.log("col:", column),
-            usersVisibleColumns=[],
-            //console.log("test")
+        return( 
+            trackerInfo.columns.map( column => (
+                console.log("col:", column),
+                usersVisibleColumns=[],
+                //console.log("test")
 
-            usersVisibleColumns=(column.permissions.find( (userPermission, i, arr) => 
-                userPermission.id==this.props.metaData.userID,
-                
-            )),
-            //usersVisibleColumns.push(column),
+                usersVisibleColumns=(column.permissions.find( (userPermission, i, arr) => 
+                    userPermission.id==this.props.metaData.userID,
+                    
+                )),
+                //usersVisibleColumns.push(column),
 
-            this.printColumn(column, usersVisibleColumns, trackerInfo.id),
-            console.log("showCols currentCols", usersVisibleColumns)
+                console.log("showCols currentCols", usersVisibleColumns),
+                this.printColumn(column, usersVisibleColumns, trackerInfo.id)
 
-            /*usersVisibleColumns.push(column.permissions.find( userPermission => 
-                userPermission.id==this.props.metaData.userID 
-            ) )*/ // working partially
-        ) ); /**/
-        //let t1 = trackerInfo.columns.filter( userPermission => userPermission.id==this.props.metaData.userID );
-        //console.log("showCols userCols:", usersVisibleColumns);
+            ) ) 
+        );
+
     }
 
     /**
      * Print the columns where user is authorized
      */
-    printColumn = (columnData, userPermission, trackerId) => {
+    printColumn = (columnData, userPermission, trackerToGet) => {
         //console.log("trackers printCol: colData",columnData, "\npermission:", userPermission);
-        console.log("trackers id:", trackerId);
+        //console.log("trackers id:", trackerToGet);
+
+        /** column: colId, id(user),  read, write, type  */
         let column = this.objectMerge(columnData,userPermission);
         console.log("trackers printCol: merged", column);
 
-        trackerInstances.map( tracker => (
-            tracker.id
-        ));
+        return(
+            trackerInstances.map( tracker =>{
+                //console.log("trackersConfig tracker:", tracker)
+                if( tracker.id == trackerToGet )
+                    return(
+                        tracker.data.column
+                    )
+            } )
+        )
+
+        //return this.printCheckBox()  
+    }
+
+    printCheckBox(){
+        return(
+            <Button>sample</Button>
+        );
     }
 
     /**
@@ -198,7 +224,7 @@ const mapStateToProps = state => {
 	};
 }
 
-//export default Trackers;
-export default connect(mapStateToProps)(Trackers);
-//export default connect(mapStateToProps)(withStyles(useStyles)(Trackers));
+//export default TrackersConfig;
+export default connect(mapStateToProps)(TrackersConfig);
+//export default connect(mapStateToProps)(withStyles(useStyles)(TrackersConfig));
 

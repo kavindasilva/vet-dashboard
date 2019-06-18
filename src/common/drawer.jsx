@@ -19,6 +19,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
 import Trackers from "../dashboard/trackers";
+import TrackersConfig from "../dashboard/trackersConfig";
 
 const drawerWidth = 240;
 
@@ -117,7 +118,8 @@ export default function MiniDrawer() {
         
         }*/
         if(stateData.selectedMenuItem=='allTrackers')
-                return( <Trackers /> );
+                return( <TrackersConfig /> );
+                //return( <Trackers /> );
         else
             return( defaultView() );
     }
