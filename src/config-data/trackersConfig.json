@@ -1,15 +1,15 @@
 [
     {
-        "id" : 1, //auto-generated, trackerId
+        "id" : 1, 
         "name": "Independent",
         "columns": [
             {
-                "id": 1, //auto-generates
+                "id": 1, 
                 "name": "Clinic Name",
-                "type": 1, //text
+                "type": 1, 
                 "permissions": [
                     {
-                        "id" : 5, //user-id
+                        "id" : 5, 
                         "read" : true,
                         "write": true
                     }
@@ -17,17 +17,17 @@
                 "rules": []
             },
             {
-                "id": 4, //auto-generates
+                "id": 4, 
                 "name": "RF Sent Date",
-                "type": 4, //date
+                "type": 4
             },
             {
-                "id": 5, //auto-generates
+                "id": 5, 
                 "name": "RF Completed Date",
-                "type": 4, //date
+                "type": 4, 
                 "permissions": [
                     {
-                        "id" : 5, //user-id
+                        "id" : 5, 
                         "read" : true,
                         "write": true
                     }
@@ -44,22 +44,22 @@
                         "conditions": "moment().isAfter(moment(valueOfColumn(4).add('5 days')"
                     }
                 ]
-            },
+            }
         ]
 
     },
 
     {
-        "id" : 2, //auto-generated, trackerId
+        "id" : 2, 
         "name": "IVC1",
         "columns": [
             {
-                "id": 1, //auto-generates
+                "id": 1, 
                 "name": "Clinic Name",
-                "type": 1, //text
+                "type": 1, 
                 "permissions": [
                     {
-                        "id" : 5, //user-id
+                        "id" : 5, 
                         "read" : true,
                         "write": true
                     }
@@ -67,17 +67,17 @@
                 "rules": []
             },
             {
-                "id": 4, //auto-generates
+                "id": 4, 
                 "name": "RF Sent Date",
-                "type": 4, //date
+                "type": 4
             },
             {
-                "id": 5, //auto-generates
+                "id": 5,
                 "name": "RF Completed Date",
-                "type": 4, //date
+                "type": 4, 
                 "permissions": [
                     {
-                        "id" : 5, //user-id
+                        "id" : 5, 
                         "read" : true,
                         "write": true
                     }
@@ -94,7 +94,7 @@
                         "conditions": "moment().isAfter(moment(valueOfColumn(4).add('5 days')"
                     }
                 ]
-            },
+            }
         ]
 
     }

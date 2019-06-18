@@ -26,9 +26,8 @@ import { withStyles } from '@material-ui/core/styles';
 //import { styles } from '@material-ui/pickers/DatePicker/components/Calendar';
 
 import Menu from "../common/menu";
-import loginAPI from "../apicalls/loginAPI";
 
-const loginAPIobj = new loginAPI();
+import trackersConfig from "../config-data/trackersConfig";
 
 
 
@@ -67,11 +66,16 @@ class Trackers extends React.Component{
     classes=this.props.classes;
     //tabValue=3;
 
-	state = { ...this.props.metaData, otp:"qaauto", tabValue:2 }
+	state = { 
+        ...this.props.metaData, 
+
+        tabValue:2,
+        trackers: trackersConfig,
+    }
 	//state = { Meta }
 
 	componentDidMount(){
-		//console.log("Trackers - mount. classes:", this.classes);
+		console.log("Trackers - mount. json:", this.state.trackers); //ok
 	}
 
 	render(){
@@ -103,23 +107,26 @@ class Trackers extends React.Component{
                         variant="scrollable"
                         scrollButtons="auto"
                     >
-                        <Tab label="Independent" /*onClick={ () => this.handleChange(null,1)}*/ />
-                        <Tab label="IVC1" />
-                        <Tab label="IVC2" />
-                        <Tab label="Tracker Four" />
-                        <Tab label="Tracker Five" />
-                        <Tab label="Tracker Six" />
-                        <Tab label="Tracker Seven" />
+                        <Tab label="staticTab" /*onClick={ () => this.handleChange(null,1)}*/ />
+                        
+                        {
+                            this.state.trackers.map( tracker => (
+                                <Tab label={ tracker.name } />
+                            ))
+                        }
                     </Tabs>
                 </AppBar>
 
-                { this.state.tabValue === 0 && <TabContainer>Independent</TabContainer> }
-                { this.state.tabValue === 1 && <TabContainer> IVC V1<Menu /> </TabContainer> }
-                { this.state.tabValue === 2 && <TabContainer> IVC V2 </TabContainer> }
-                { this.state.tabValue === 3 && <TabContainer>Tracker Four</TabContainer> }
-                { this.state.tabValue === 4 && <TabContainer>Tracker Five</TabContainer> }
-                { this.state.tabValue === 5 && <TabContainer>Tracker Six</TabContainer> }
-                { this.state.tabValue === 6 && <TabContainer>Tracker Seven</TabContainer> }
+                {
+                    this.state.trackers.map( tracker => (
+                        this.state.tabValue === tracker.id && 
+                        <React.Fragment>
+                            <h3> { tracker.name } </h3>
+                            <p>X {tracker.id} </p>
+                        </React.Fragment>
+                    ))
+                }
+
 			</div>
 		);
 	}
@@ -128,7 +135,7 @@ class Trackers extends React.Component{
 }
 
 const mapStateToProps = state => {
-	console.log('login.jsx-mapStateToProps', state);
+	console.log('trackers.jsx-mapStateToProps', state);
 	return {
 		//metaData: state.metaData,
 		metaData: state.MetaReducer.metaData,
