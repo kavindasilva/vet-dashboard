@@ -28,6 +28,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Menu from "../common/menu";
 
 import trackersConfig from "../config-data/trackersConfig";
+import trackerInstances from "../config-data/trackerInstance";
 
 
 
@@ -137,15 +138,50 @@ class Trackers extends React.Component{
     }
     
     /** 
-     * Show the columns based on user permissions 
+     * Show the columns based on user permissions after calling printColumn()
      * This function is called by viewTabs()
      * */
     showColumns( trackerInfo ){
-        /*trackerInfo.map( column => (
+        let usersVisibleColumns=[];
+        trackerInfo.columns.map( column => (
+            console.log("col:", column),
+            usersVisibleColumns=[],
+            //console.log("test")
 
-        ) ) /**/
+            usersVisibleColumns=(column.permissions.find( (userPermission, i, arr) => 
+                userPermission.id==this.props.metaData.userID,
+                
+            )),
+            //usersVisibleColumns.push(column),
+
+            this.printColumn(column, usersVisibleColumns),
+            console.log("showCols currentCols", usersVisibleColumns)
+
+            /*usersVisibleColumns.push(column.permissions.find( userPermission => 
+                userPermission.id==this.props.metaData.userID 
+            ) )*/ // working partially
+        ) ); /**/
+        //let t1 = trackerInfo.columns.filter( userPermission => userPermission.id==this.props.metaData.userID );
+        //console.log("showCols userCols:", usersVisibleColumns);
     }
 
+    /**
+     * Print the columns where user is authorized
+     */
+    printColumn = (columnData, userPermission) => {
+        //console.log("trackers printCol: colData",columnData, "\npermission:", userPermission);
+        let column = this.objectMerge(columnData,userPermission);
+        console.log("trackers printCol: merged", column);
+    }
+
+    /**
+     * Merges two arrays, and return new array
+     * source: https://plainjs.com/javascript/utilities/merge-two-javascript-objects-19/
+     */
+    objectMerge(obj, src) {
+	    Object.keys(src).forEach(function(key) { obj[key] = src[key]; });
+	    return obj;
+	}
 
 }
 

@@ -4,32 +4,45 @@
         "name": "Independent",
         "columns": [
             {
-                "id": 1, 
+                "colId": 1, 
                 "name": "Clinic Name",
                 "type": 1, 
                 "permissions": [
                     {
                         "id" : 5, 
-                        "read" : true,
-                        "write": true
+                        "read" : false,
+                        "write": false
                     }
                 ],
                 "rules": []
             },
             {
-                "id": 4, 
+                "colId": 4, 
                 "name": "RF Sent Date",
-                "type": 4
+                "type": 4,
+                "permissions": [
+                    {
+                        "id" : 5, 
+                        "read" : true,
+                        "write": false
+                    },
+                    {
+                        "id" : 6, 
+                        "read" : true,
+                        "write": false
+                    }
+                ],
+                "rules":[]
             },
             {
-                "id": 5, 
+                "colId": 5, 
                 "name": "RF Completed Date",
                 "type": 4, 
                 "permissions": [
                     {
                         "id" : 5, 
                         "read" : true,
-                        "write": true
+                        "write": false
                     }
                 ],
                 "rules": [
@@ -54,7 +67,7 @@
         "name": "IVC1",
         "columns": [
             {
-                "id": 1, 
+                "colId": 1, 
                 "name": "Clinic Name",
                 "type": 1, 
                 "permissions": [
@@ -62,17 +75,35 @@
                         "id" : 5, 
                         "read" : true,
                         "write": true
+                    },
+                    {
+                        "id" : 6, 
+                        "read" : true,
+                        "write": true
+                    },
+                    {
+                        "id" : 1, 
+                        "read" : true,
+                        "write": true
                     }
                 ],
                 "rules": []
             },
             {
-                "id": 4, 
+                "colId": 4, 
                 "name": "RF Sent Date",
-                "type": 4
+                "type": 4,
+                "permissions": [
+                    {
+                        "id" : 5, 
+                        "read" : true,
+                        "write": false
+                    }
+                ],
+                "rules":[]
             },
             {
-                "id": 5,
+                "colId": 5,
                 "name": "RF Completed Date",
                 "type": 4, 
                 "permissions": [

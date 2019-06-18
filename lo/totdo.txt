@@ -136,4 +136,7 @@ https://stackoverflow.com/questions/41319547/syntax-highlighting-for-react-code-
 --jun 14
 https://stackoverflow.com/questions/40735406/checking-for-undefined-in-react
 
+--jun 18
+https://stackoverflow.com/questions/31758081/loading-json-data-from-local-file-into-react-js
+
 
