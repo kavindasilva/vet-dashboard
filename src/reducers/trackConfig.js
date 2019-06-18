@@ -7,7 +7,7 @@ const TrackConfigReducer = (state, action) => {
     console.log("TrackConfigReducer: state: ", state, "\naction: ", action)
     let newState = {
         TrackerConfigReducer:{
-            isLoggedIn: false,
+            configData: false,
         }
     };
 
@@ -19,7 +19,7 @@ const TrackConfigReducer = (state, action) => {
             newState = {
                 ...state,
                 TrackerConfigReducer: {
-                    isLoggedIn: action.payload.loggedData.isLoggedIn,
+                    configData: action.payload.loggedData.isLoggedIn,
                 }
                 
             }

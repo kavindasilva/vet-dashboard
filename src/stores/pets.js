@@ -22,11 +22,11 @@ const initialState = {
     },
 
     TrackConfigReducer:{
-        data: trackerInstances
+        configData: trackerInstances
     },
 
     TrackInstaReducer:{
-        id: 888
+        instanceData: trackersConfig
     },
 
     // phoenix: [{

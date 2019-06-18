@@ -7,7 +7,7 @@ const TrackInstaReducer = (state, action) => {
     console.log("TrackInstaReducer: state: ", state, "\naction: ", action)
     let newState = {
         TrackerInstanceReducer:{
-            data: trackerInstances,
+            instanceData: trackerInstances,
         }
     };
 
@@ -19,7 +19,7 @@ const TrackInstaReducer = (state, action) => {
             newState = {
                 ...state,
                 TrackerInstanceReducer: {
-                    isLoggedIn: action.payload.loggedData.isLoggedIn,
+                    instanceData: action.payload.loggedData.isLoggedIn,
                 }
                 
             }

@@ -27,46 +27,12 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Menu from "../common/menu";
 
+import TrackerTableHeader from "../dashboard/trackerHeader";
+
 import trackersConfig from "../config-data/trackersConfig";
 import trackerInstances from "../config-data/trackerInstance";
 
-
-
-const useStyles = theme => ({
-	'@global': {
-		body: {
-			backgroundColor: theme.palette.common.white,
-		},
-	},
-	paper: {
-		marginTop: theme.spacing(8),
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center',
-	},
-    root: {
-        flexGrow: 1,
-        width: '100%',
-        backgroundColor: theme.palette.background.paper,
-    },
-	submit: {
-		margin: theme.spacing(3, 0, 2),
-	},
-});
-
-function TabContainer(props) {
-    return (
-      <Typography component="div" style={{ padding: 8 * 3 }}>
-        {props.children}
-        Test Para
-      </Typography>
-    );
-}
-
 class Trackers extends React.Component{
-    classes=this.props.classes;
-    //tabValue=3;
-
 	state = { 
         ...this.props.metaData, 
 
@@ -76,8 +42,8 @@ class Trackers extends React.Component{
 	//state = { Meta }
 
 	componentDidMount(){
-		console.log("Trackers - mount. json:", this.state.trackers); //ok
-		console.log("Trackers - mount. props.metaData:", this.props.metaData); 
+		console.log("Trackers - mount. props:", this.props); //ok
+		//console.log("Trackers - mount. props.metaData:", this.props.metaData); 
 	}
 
 	render(){
@@ -113,7 +79,7 @@ class Trackers extends React.Component{
                         <Tab label="staticTab" /*onClick={ () => this.handleChange(null,1)}*/ />
                         
                         {
-                            this.state.trackers.map( tracker => (
+                            this.props.instanceData.map( tracker => (
                                 <Tab label={ tracker.name } />
                             ))
                         }
@@ -121,11 +87,22 @@ class Trackers extends React.Component{
                 </AppBar>
 
                 {
-                    this.state.trackers.map( tracker => (
+                    this.props.instanceData.map( tracker => (
                         this.state.tabValue === tracker.id && 
                         <React.Fragment>
                             <h3> { tracker.name } </h3>
                             <p>X {tracker.id} </p>
+
+                            <table>
+                                <thead>
+                                    <TrackerTableHeader trackerId={tracker.id}>
+                                    </TrackerTableHeader>
+                                </thead>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+
                             {
                                 this.showColumns(tracker)
                             }
@@ -142,27 +119,7 @@ class Trackers extends React.Component{
      * This function is called by viewTabs()
      * */
     showColumns( trackerInfo ){
-        let usersVisibleColumns=[];
-        trackerInfo.columns.map( column => (
-            console.log("col:", column),
-            usersVisibleColumns=[],
-            //console.log("test")
 
-            usersVisibleColumns=(column.permissions.find( (userPermission, i, arr) => 
-                userPermission.id==this.props.metaData.userID,
-                
-            )),
-            //usersVisibleColumns.push(column),
-
-            this.printColumn(column, usersVisibleColumns, trackerInfo.id),
-            console.log("showCols currentCols", usersVisibleColumns)
-
-            /*usersVisibleColumns.push(column.permissions.find( userPermission => 
-                userPermission.id==this.props.metaData.userID 
-            ) )*/ // working partially
-        ) ); /**/
-        //let t1 = trackerInfo.columns.filter( userPermission => userPermission.id==this.props.metaData.userID );
-        //console.log("showCols userCols:", usersVisibleColumns);
     }
 
     /**
@@ -193,8 +150,7 @@ class Trackers extends React.Component{
 const mapStateToProps = state => {
 	console.log('trackers.jsx-mapStateToProps', state);
 	return {
-		//metaData: state.metaData,
-		metaData: state.MetaReducer.metaData,
+		instanceData: state.TrackInstaReducer.instanceData,
 	};
 }
 

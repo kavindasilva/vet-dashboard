@@ -138,5 +138,7 @@ https://stackoverflow.com/questions/40735406/checking-for-undefined-in-react
 
 --jun 18
 https://stackoverflow.com/questions/31758081/loading-json-data-from-local-file-into-react-js
+https://stackoverflow.com/questions/29149169/how-to-loop-and-render-elements-in-react-js-without-an-array-of-objects-to-map
+
 
 

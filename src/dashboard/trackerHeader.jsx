@@ -7,6 +7,7 @@ import { petStore } from "../stores/pets";
 
 import Container from '@material-ui/core/Container';
 
+import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -16,7 +17,6 @@ import Typography from '@material-ui/core/Typography';
 // import trackerInstances from "../config-data/trackerInstance";
 
 class TrackerHeader extends React.Component{
-    // props: trackerId
 	state = { 
         ...this.props.metaData, 
 
@@ -25,8 +25,8 @@ class TrackerHeader extends React.Component{
     }
 
 	componentDidMount(){
-		console.log("TrackerHeader - mount. json:", this.state.TrackerHeader); //ok
-		console.log("TrackerHeader - mount. props.metaData:", this.props.metaData); 
+		console.log("TrackerHeader - mount. props:", this.props); //ok
+		//console.log("TrackerHeader - mount. props.metaData:", this.props.metaData); 
 	}
 
 	render(){
@@ -35,10 +35,32 @@ class TrackerHeader extends React.Component{
 		)
     }
 
-    showTableHeaders(){
-        <React.Fragment>
-            <th></th>
-        </React.Fragment>
+	showTableHeaders(){
+		let returnArr=[];
+		//return(
+			this.props.instanceData.map( array => {
+				console.log("trackerHeader array:", array)
+				
+				if(array.id == this.props.trackerId){
+					console.log("matched", array.id)
+					array.columns.map( column => {
+						returnArr.push( <th>{column.name}</th> )
+					} )
+				}
+				
+			} )
+		//);
+
+		return returnArr;
+	}
+	
+    showTableHeaders1(){
+		return(
+
+			<React.Fragment>
+				<th></th>
+			</React.Fragment>
+		);
     }
     
 
@@ -47,7 +69,7 @@ class TrackerHeader extends React.Component{
 const mapStateToProps = state => {
 	console.log('TrackerHeader.jsx-mapStateToProps', state);
 	return {
-		metaData: state.MetaReducer.metaData,
+		instanceData: state.TrackInstaReducer.instanceData,
 	};
 }
 
