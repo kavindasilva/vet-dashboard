@@ -1,0 +1,101 @@
+[
+    {
+        "id" : 1, //auto-generated, trackerId
+        "name": "Independent",
+        "columns": [
+            {
+                "id": 1, //auto-generates
+                "name": "Clinic Name",
+                "type": 1, //text
+                "permissions": [
+                    {
+                        "id" : 5, //user-id
+                        "read" : true,
+                        "write": true
+                    }
+                ],
+                "rules": []
+            },
+            {
+                "id": 4, //auto-generates
+                "name": "RF Sent Date",
+                "type": 4, //date
+            },
+            {
+                "id": 5, //auto-generates
+                "name": "RF Completed Date",
+                "type": 4, //date
+                "permissions": [
+                    {
+                        "id" : 5, //user-id
+                        "read" : true,
+                        "write": true
+                    }
+                ],
+                "rules": [
+                    {
+                        "precedence": 1,
+                        "bgcolor" : "amber",
+                        "conditions": "moment().isAfter(moment(valueOfColumn(4)).add('3 days')"
+                    },
+                    {
+                        "precedence": 2,
+                        "bgcolor" : "red",
+                        "conditions": "moment().isAfter(moment(valueOfColumn(4).add('5 days')"
+                    }
+                ]
+            },
+        ]
+
+    },
+
+    {
+        "id" : 2, //auto-generated, trackerId
+        "name": "IVC1",
+        "columns": [
+            {
+                "id": 1, //auto-generates
+                "name": "Clinic Name",
+                "type": 1, //text
+                "permissions": [
+                    {
+                        "id" : 5, //user-id
+                        "read" : true,
+                        "write": true
+                    }
+                ],
+                "rules": []
+            },
+            {
+                "id": 4, //auto-generates
+                "name": "RF Sent Date",
+                "type": 4, //date
+            },
+            {
+                "id": 5, //auto-generates
+                "name": "RF Completed Date",
+                "type": 4, //date
+                "permissions": [
+                    {
+                        "id" : 5, //user-id
+                        "read" : true,
+                        "write": true
+                    }
+                ],
+                "rules": [
+                    {
+                        "precedence": 1,
+                        "bgcolor" : "amber",
+                        "conditions": "moment().isAfter(moment(valueOfColumn(4)).add('3 days')"
+                    },
+                    {
+                        "precedence": 2,
+                        "bgcolor" : "red",
+                        "conditions": "moment().isAfter(moment(valueOfColumn(4).add('5 days')"
+                    }
+                ]
+            },
+        ]
+
+    }
+]

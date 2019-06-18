@@ -1,0 +1,20 @@
+[
+    {
+        "id" : 1, //auto-generated
+        "trackerId" : 1,
+        "data": [
+            {
+                "columnId": 1,
+                "value" : "My Vet Clinic"
+            },
+            {
+                "columnId": 4,
+                "value" : "2019-05-01"
+            },
+            {
+                "columnId": 5,
+                "value" : "2019-05-07"
+            }
+        ]
+    }
+]
