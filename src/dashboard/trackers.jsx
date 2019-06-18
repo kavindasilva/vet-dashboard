@@ -76,6 +76,7 @@ class Trackers extends React.Component{
 
 	componentDidMount(){
 		console.log("Trackers - mount. json:", this.state.trackers); //ok
+		console.log("Trackers - mount. props.metaData:", this.props.metaData); 
 	}
 
 	render(){
@@ -94,6 +95,7 @@ class Trackers extends React.Component{
 
 	/** 
      * View Tabs layout of trackers
+     * Display columns : all
      */
 	viewTabs(){
 		return(
@@ -123,13 +125,26 @@ class Trackers extends React.Component{
                         <React.Fragment>
                             <h3> { tracker.name } </h3>
                             <p>X {tracker.id} </p>
+                            {
+                                this.showColumns(tracker)
+                            }
                         </React.Fragment>
                     ))
                 }
 
 			</div>
 		);
-	}
+    }
+    
+    /** 
+     * Show the columns based on user permissions 
+     * This function is called by viewTabs()
+     * */
+    showColumns( trackerInfo ){
+        /*trackerInfo.map( column => (
+
+        ) ) /**/
+    }
 
 
 }
@@ -142,7 +157,7 @@ const mapStateToProps = state => {
 	};
 }
 
-export default Trackers;
-//export default connect(mapStateToProps)(withStyles(useStyles)(Trackers));
+//export default Trackers;
+export default connect(mapStateToProps)(Trackers);
 //export default connect(mapStateToProps)(withStyles(useStyles)(Trackers));
 

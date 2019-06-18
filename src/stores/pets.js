@@ -23,12 +23,20 @@ const initialState = {
     // }],
 
     /** This is for storing meta-data related to user and sessions */
-    MetaReducer : {
+    /*MetaReducer : {
         metaData:{
             isLoggedIn: false,
             userID: 0,
             username: '',
             userType: 0
+        }
+    }*/
+    MetaReducer : { /** hard coded for tracker debugging */
+        metaData:{
+            isLoggedIn: true,
+            userID: 5,
+            username: 'hardCoded user5',
+            userType: 3 //admin
         }
     }
 };
