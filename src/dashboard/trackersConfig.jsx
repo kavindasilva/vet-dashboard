@@ -162,7 +162,7 @@ class TrackersConfig extends React.Component{
                 //console.log("test")
 
                 usersVisibleColumns=(column.permissions.find( (userPermission, i, arr) => 
-                    userPermission.id==this.props.metaData.userID,
+                    userPermission.id==this.props.metaData.userId,
                     
                 )),
                 //usersVisibleColumns.push(column),

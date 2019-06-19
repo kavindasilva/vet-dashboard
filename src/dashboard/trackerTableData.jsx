@@ -39,40 +39,43 @@ class TrackerTableData extends React.Component{
 	showTableData(){
 		let returnArr=[]; 
 
-		this.props.configData.columns.map( trackerInfo => { //each column of trackerConfig
-			let columnID=trackerInfo.id;
-
+		this.props.configData.columns.forEach( trackerInfo => { //each column of trackerConfig
+			
 			/** store user permissions of CURRENT COLUMN of trackerConfig user  */
 			let userPermission = trackerInfo.permissions.find( user => (
-				user.userId = this.props.metaData.userID
+				user.userId === this.props.metaData.userId
 			));
 
 			console.log("TrackerTableData permission", userPermission) 
 			// result: userId, read, write
 
 			//validate columnConfig is not empty
+			if (userPermission) {
+				/** get tracker's current column's instance data */
+				let columnInfo = this.props.instanceData.data.find( column => (
+					column.columnId === trackerInfo.id
+				) )
 
-			/** get tracker's current column's instance data */
-			let columnInfo = this.props.instanceData.data.find( column => (
-				column.columnId === columnID
-			) )
-			console.log("TrackerTableData colInfo", columnInfo) 
-			// result: columnId, value
+				console.log("TrackerTableData colInfo", columnInfo) 
+				// result: columnId, value
 
-			if ( userPermission.read && userPermission.write ) {
-				returnArr.push( 
-					<td> 
-						{ columnInfo.value }
-					</td> 
-				)
+				if ( userPermission.read && userPermission.write ) {
+					returnArr.push( 
+						<td> 
+							{ columnInfo.value }
+						</td> 
+					)
+				}
+				else if( userPermission.read && !userPermission.write){
+					returnArr.push(
+						<td>
+							{ columnInfo.value } ro
+						</td>
+					)
+				}
 			}
-			else if( userPermission.read && !userPermission.write){
-				returnArr.push(
-					<td>
-						{ columnInfo.value } ro
-					</td>
-				)
-			}
+
+			
 			
 		} )
 
@@ -88,7 +91,7 @@ class TrackerTableData extends React.Component{
 				));
 
 				/*let userVisibleData=(columnData.permissions.find( (userPermission) => 
-					userPermission.userId==this.props.metaData.userID,	
+					userPermission.userId==this.props.metaData.userId,	
 				))*/
 				console.log("TrackerTableData colData", columnData)
 

@@ -12,7 +12,7 @@ const MetaReducer = (state, action) => {
     let newState = {
         metaData:{
             isLoggedIn: false,
-            userID: 0,
+            userId: 0,
             username: '',
             userType: 0
         }
@@ -29,7 +29,7 @@ const MetaReducer = (state, action) => {
                 ...state,
                 metaData: {
                     isLoggedIn: action.payload.loggedData.isLoggedIn,
-                    userID: action.payload.loggedData.user_id,
+                    userId: action.payload.loggedData.user_id,
                     userType: action.payload.loggedData.userType,
                     username: action.payload.loggedData.username,
                 }

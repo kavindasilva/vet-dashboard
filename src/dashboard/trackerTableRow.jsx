@@ -40,36 +40,21 @@ class TrackerTableRow extends React.Component{
 	TrackerTableRow
 	showTableRows(){
 		let returnArr=[];
-		//return(
-			this.props.instancesData.map( record => {
-
-				//console.log("trackerBodyRow rowArray:", rowArray); 
-				// result: trackerId, id, data[columns]
-				// let trackerIndex = this.props.trackerConfigData.find( tracker => (
-				// 	tracker.id === record.trackerId
-				// ) )
-				// //trackerIndex = trackerIndex;
-				// console.log("trackerBodyRow trackerIndex:", trackerIndex, record.trackerId)
-
-				/*let usersVisibleColumns=(this.props.trackerConfigData.columns.permissions.find( (userPermission) => 
-					userPermission.id==this.props.metaData.userID,	
-				));
-				console.log("trackerBodyRow userVisible", usersVisibleColumns); /* */
+		this.props.instancesData.map( record => {
+	
+			if( 1 ){
+				returnArr.push(
+					<tr>
+						<TrackerTableData 
+							key={record.id} 
+							recordId={ record.id }
+							trackerId = { record.trackerId }
+						/>
+					</tr>
+				)
+			}
 			
-				if( 1 ){
-					returnArr.push(
-						<tr>
-							<TrackerTableData 
-								key={record.id} 
-								recordId={ record.id }
-								trackerId = { record.trackerId }
-							/>
-						</tr>
-					)
-				}
-				
-			} )
-		//);
+		} )
 
 		return returnArr;
 	}

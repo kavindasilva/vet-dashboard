@@ -43,22 +43,26 @@ class TrackerHeader extends React.Component{
 
 		console.log("matched trackerID:", this.props.trackerConfigData.id)
 
-		this.props.trackerConfigData.columns.map( column => { 
+		this.props.trackerConfigData.columns.forEach( column => { 
 
 			let usersVisibleColumns=(column.permissions.find( (userPermission) => 
-				userPermission.userId==this.props.metaData.userID,	
+				userPermission.userId===this.props.metaData.userId,	
 			))
 			console.log("trackerHeader userVisible", usersVisibleColumns)
 
-			if( usersVisibleColumns.read === true ){
+			// if usersVisibleColumns empty
+			if( usersVisibleColumns!==undefined && usersVisibleColumns.read ){
+
 				returnArr.push( 
 					<th 
-						key={ this.props.trackerConfigData.colId }
+						key={ this.props.trackerConfigData.id }
 					>
 						{ column.name }
 					</th> 
 				)
+
 			}
+			
 		} )
 				
 

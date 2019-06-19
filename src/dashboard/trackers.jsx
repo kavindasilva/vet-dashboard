@@ -134,7 +134,7 @@ class Trackers extends React.Component{
             usersVisibleColumns=[],
 
             usersVisibleColumns=(column.permissions.find( (userPermission, i, arr) => 
-                userPermission.id===this.props.metaData.userID,
+                userPermission.id===this.props.metaData.userId,
                 
             )),
 
@@ -169,7 +169,7 @@ class Trackers extends React.Component{
 			type: 'SET_USER_PERMISSIONS',
 			payload: {
 				//isLoggedIn: false,
-				//userID: 250
+				//userId: 250
 				permissions: {...this.state.serverData, isLoggedIn: true }
 			}
 		});

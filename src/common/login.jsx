@@ -74,9 +74,12 @@ class Login extends React.Component{
 		//this.viewForm() 
 		return(
 			<React.Fragment>
-				{ this.viewMenu() }
+				{ 
+					//this.viewMenu()
+					this.viewForm()	
+				}
 
-				<MiniDrawer />
+				
 			</React.Fragment>
 		)
 	}
@@ -106,7 +109,6 @@ class Login extends React.Component{
 	//validateCredentials( userInput, serverData)
 	validateCredentials( serverData){
 		if( serverData.data.type !=="" && serverData.data.type!==null && serverData.data!=="Bad Request" ){
-		//if( parseInt(serverData.ticket_id)===28868823 ){
 			console.log("credentials validated. serverData:", serverData);
 			this.setState({serverData: serverData.data});
 
@@ -227,7 +229,7 @@ class Login extends React.Component{
 	}
 
 	/** This function is not used */
-	viewMenuBar(){
+	viewMenuBar0(){
 		return(
 			<div>
 				<div>
@@ -245,12 +247,13 @@ class Login extends React.Component{
 		);
 	}
 
+	/** update the reducx store after successful login */
 	dispatchLogin = () => {
 		rootStore.dispatch({
 			type: 'UPDATE_META_DETAIL',
 			payload: {
 				//isLoggedIn: false,
-				//userID: 250
+				//userId: 250
 				loggedData: {...this.state.serverData, isLoggedIn: true }
 			}
 		});

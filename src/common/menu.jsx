@@ -13,6 +13,9 @@ import Pets from "../components/pets";
 
 import Button from '@material-ui/core/Button';
 
+import MiniDrawer from "../common/drawer";
+
+
 
 class Menu extends Component {
 	state={
@@ -39,19 +42,22 @@ class Menu extends Component {
 
 	viewMenuBar(){
 		return(
-			<div>
+			<React.Fragment>
 				<div>
-					<Button style={{cursor:'pointer',float:'right',align:'right'}}
-						onClick={ () => { this.logOutUser() } }
-					>
-						LogOut
-					</Button> <hr />
-				</div>
+					<div>
+						<Button style={{cursor:'pointer',float:'right',align:'right'}}
+							onClick={ () => { this.logOutUser() } }
+						>
+							LogOut
+						</Button> <hr />
+					</div>
 
-				Temporary menu bar: 
-				<Button onClick={ ()=>{ this.switchComponents('app') } } >Ticket</Button>
-				<Button onClick={ ()=>{ this.switchComponents('records') } } >Phoenix</Button>
-			</div>
+					Temporary menu bar: 
+					<Button onClick={ ()=>{ this.switchComponents('app') } } >Ticket</Button>
+					<Button onClick={ ()=>{ this.switchComponents('records') } } >Phoenix</Button>
+				</div>
+				<MiniDrawer />
+			</React.Fragment>
 		);
 	}
 
@@ -88,7 +94,7 @@ class Menu extends Component {
 			type: 'UPDATE_META_DETAIL',
 			payload: {
 				//isLoggedIn: false,
-				//userID: 250
+				//userId: 250
 				loggedData: {...this.state.serverData, isLoggedIn: false }
 			}
 		});

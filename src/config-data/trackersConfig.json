@@ -9,7 +9,7 @@
                 "type": 1, 
                 "permissions": [
                     {
-                        "userId" : 5, 
+                        "userId" : 5,
                         "read" : false,
                         "write": false
                     }

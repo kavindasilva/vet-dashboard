@@ -298,7 +298,7 @@ class Records extends Component {
 			type: 'UPDATE_PHOENIX_DATA',
 			payload: {
 				//isLoggedIn: false,
-				//userID: 250
+				//userId: 250
 				phoenixRecords: {...this.state.phoenixRecords }
 			}
 		});
