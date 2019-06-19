@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
-import { petStore } from "../stores/pets";
+import { rootStore } from "../stores/pets";
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -39,7 +39,7 @@ class Trackers extends React.Component{
 	state = { 
         ...this.props.metaData, 
 
-        tabValue:2,
+        tabValue:1,
         trackers: trackersConfig,
     }
 	//state = { Meta }
@@ -53,7 +53,7 @@ class Trackers extends React.Component{
 		//this.viewForm() 
 		return(
 			<React.Fragment>
-				{ this.viewTabs() }
+                { this.viewTabs() }
 			</React.Fragment>
 		)
     }
@@ -91,6 +91,8 @@ class Trackers extends React.Component{
 
                 {
                     this.props.instanceData.map( tracker => (
+                        this.getUserPermittedColumns(tracker),
+
                         this.state.tabValue === tracker.id && 
                         <React.Fragment>
                             <h3>Tracker Name: { tracker.name } </h3>
@@ -109,9 +111,6 @@ class Trackers extends React.Component{
                                     </tbody>
                             </table>
 
-                            {
-                                this.showColumns(tracker)
-                            }
                         </React.Fragment>
                     ))
                 }
@@ -121,25 +120,36 @@ class Trackers extends React.Component{
     }
     
     /** 
-     * Show the columns based on user permissions after calling printColumn()
-     * This function is called by viewTabs()
+     * Gets current user authorized column details
      * */
-    showColumns( trackerInfo ){
+    getUserPermittedColumns( trackerInfo ){
+        let userTrackerPermissions=[];
+        let usersVisibleColumns=[];
 
-    }
+        trackerInfo.columns.map( column => (
+            console.log("col:", column),
+            usersVisibleColumns=[],
 
-    /**
-     * Print the columns where user is authorized
-     */
-    printColumn = (columnData, userPermission, trackerId) => {
-        //console.log("trackers printCol: colData",columnData, "\npermission:", userPermission);
-        console.log("trackers id:", trackerId);
-        let column = this.objectMerge(columnData,userPermission);
-        console.log("trackers printCol: merged", column);
+            usersVisibleColumns=(column.permissions.find( (userPermission, i, arr) => 
+                userPermission.id===this.props.metaData.userID,
+                
+            )),
 
-        trackerInstances.map( tracker => (
-            tracker.id
-        ));
+            //usersVisibleColumns.push( column. )
+            usersVisibleColumns.trackerid= trackerInfo.id,
+            usersVisibleColumns.columnId= column.colId,
+            usersVisibleColumns.columnName= column.name,
+            usersVisibleColumns.columnType= column.type,
+
+            console.log("showCols userVisibleCols", usersVisibleColumns),
+            //this.printColumn(column, usersVisibleColumns, trackerInfo.id)
+
+            userTrackerPermissions.push( usersVisibleColumns )
+
+        ) );
+        console.log("showCols userPermissions", userTrackerPermissions)
+        //this.dispatchPermissions()
+
     }
 
     /**
@@ -149,6 +159,17 @@ class Trackers extends React.Component{
     objectMerge(obj, src) {
 	    Object.keys(src).forEach(function(key) { obj[key] = src[key]; });
 	    return obj;
+    }
+    
+    dispatchPermissions = () => {
+		rootStore.dispatch({
+			type: 'SET_USER_PERMISSIONS',
+			payload: {
+				//isLoggedIn: false,
+				//userID: 250
+				permissions: {...this.state.serverData, isLoggedIn: true }
+			}
+		});
 	}
 
 }

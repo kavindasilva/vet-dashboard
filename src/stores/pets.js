@@ -29,10 +29,6 @@ const initialState = {
         instanceData: trackersConfig
     },
 
-    // phoenix: [{
-    //     id:20000
-    // }],
-
     /** This is for storing meta-data related to user and sessions */
     /*MetaReducer : {
         metaData:{
@@ -51,5 +47,5 @@ const initialState = {
         }
     }
 };
-//export const petStore = createStore(PetReducer, initialState);
-export const petStore = createStore(rootReducer, initialState);
+//export const rootStore = createStore(PetReducer, initialState);
+export const rootStore = createStore(rootReducer, initialState);

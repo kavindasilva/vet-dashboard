@@ -15,20 +15,19 @@ const TrackInstaReducer = (state, action) => {
         state=null;
 
     switch (action.type) {
-        case 'UPDATE_META_DETAIL00':
+        case 'SET_USER_PERMISSIONS':
             newState = {
                 ...state,
                 TrackerInstanceReducer: {
-                    instanceData: action.payload.loggedData.isLoggedIn,
+                    userPermissions: action.payload.permissions,
                 }
                 
             }
-            console.log("MetaReducer_UPDATE_META_DETAIL: ", newState);
-
+            console.log("TrackInstaReducer SET_USER_PERMISSIONS: ", newState);
             return newState;
 
         default:
-            console.log("MetaReducer_default: ", newState);
+            console.log("TrackInstaReducer default: ", newState);
             return state;
     }
 

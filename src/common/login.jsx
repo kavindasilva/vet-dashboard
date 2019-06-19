@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
-import { petStore } from "../stores/pets";
+import { rootStore } from "../stores/pets";
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -246,7 +246,7 @@ class Login extends React.Component{
 	}
 
 	dispatchLogin = () => {
-		petStore.dispatch({
+		rootStore.dispatch({
 			type: 'UPDATE_META_DETAIL',
 			payload: {
 				//isLoggedIn: false,

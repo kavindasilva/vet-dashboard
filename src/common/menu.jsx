@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 
 
 import { connect } from "react-redux";
-import { petStore } from "../stores/pets"
+import { rootStore } from "../stores/pets"
 
 
 import App from "../components/app";
@@ -84,7 +84,7 @@ class Menu extends Component {
 	}
 
 	dispatchLogout = () => {
-		petStore.dispatch({
+		rootStore.dispatch({
 			type: 'UPDATE_META_DETAIL',
 			payload: {
 				//isLoggedIn: false,

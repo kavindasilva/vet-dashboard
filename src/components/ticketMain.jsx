@@ -23,7 +23,7 @@ import TextField from '@material-ui/core/TextField';
 
 import Login from "../common/login";
 
-import { petStore } from "../stores/pets";
+import { rootStore } from "../stores/pets";
 //import { createStore } from "redux";
 //import PetReducer from "../reducers/pets";
 
@@ -158,7 +158,7 @@ class ticketMain extends Component {
 				response => {
 					console.log("ticketMain.jsx - response2: ", response);
 
-					petStore.dispatch({
+					rootStore.dispatch({
 						type: 'FETCH_FROM_API',
 						payload: {
 							hubspotData: response.data.tickets
@@ -186,7 +186,7 @@ class ticketMain extends Component {
 				response => {
 					console.log("ticketMain.jsx - Tresponse2: ", response);
 
-					petStore.dispatch({
+					rootStore.dispatch({
 						type: 'FETCH_TICKETS_FROM_API',
 						payload: {
 							ticketData: response.data

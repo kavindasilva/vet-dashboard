@@ -28,7 +28,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 
 
-import { petStore } from "../stores/pets";
+import { rootStore } from "../stores/pets";
 import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/core";
 
 //import Checkbox from "./checkBoxComp";
@@ -159,7 +159,7 @@ class PopDialog extends Component {
 
 	// update the store
 	dispatchUpdate = () => {
-		petStore.dispatch({
+		rootStore.dispatch({
 			type: 'UPDATE_PET_DETAIL',
 			payload: {
 				identifier: this.state.identifier,

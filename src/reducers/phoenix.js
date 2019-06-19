@@ -3,7 +3,7 @@
 //import visibilityFilter from './visibilityFilter'
 
 import ticketAPI from "../apicalls/ticketAPI";
-import { petStore } from "../stores/pets";
+import { rootStore } from "../stores/pets";
 import { stat } from "fs";
 import { isUndefined } from "util";
 

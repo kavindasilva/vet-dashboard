@@ -27,7 +27,7 @@ import TextField from '@material-ui/core/TextField';
 
 import Login from "../common/login";
 
-import { petStore } from "../stores/pets";
+import { rootStore } from "../stores/pets";
 
 import petAPI from "../apicalls/petAPI";
 import ticketAPI from "../apicalls/ticketAPI";
@@ -101,9 +101,9 @@ class App extends Component {
 		fieldValue: ""
 	}
 	render() {
-		//console.log('app.jsx-rendering. petStore: ', petStore.getState() );
+		//console.log('app.jsx-rendering. rootStore: ', rootStore.getState() );
 		return (
-			<Provider store={ petStore } >
+			<Provider store={ rootStore } >
 				<Login />
 			</Provider>
 		);
@@ -132,7 +132,7 @@ class App extends Component {
 				response => {
 					console.log("app.jsx - response2: ", response);
 
-					petStore.dispatch({
+					rootStore.dispatch({
 						type: 'FETCH_FROM_API',
 						payload: {
 							hubspotData: response.data.tickets
@@ -160,7 +160,7 @@ class App extends Component {
 				response => {
 					console.log("app.jsx - Tresponse2: ", response);
 
-					petStore.dispatch({
+					rootStore.dispatch({
 						type: 'FETCH_TICKETS_FROM_API',
 						payload: {
 							ticketData: response.data
@@ -187,7 +187,7 @@ class App extends Component {
 			})
 			.then(
 				response => {
-					petStore.dispatch({
+					rootStore.dispatch({
 						type: 'FETCH_FROM_API',
 						payload: {
 							hubspotData: response.data
@@ -196,7 +196,7 @@ class App extends Component {
 				}
 			)
 
-		/*petStore.dispatch({
+		/*rootStore.dispatch({
 			type: 'GET_FROM_API',
 			payload: {
 				hubspotData: data

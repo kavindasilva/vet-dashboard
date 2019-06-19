@@ -11,7 +11,7 @@ import MaterialTable from 'material-table';
 import MUIDataTable from "mui-datatables";
 
 
-import { petStore } from "../stores/pets";
+import { rootStore } from "../stores/pets";
 import { connect } from 'react-redux';
 
 //import { withStyles } from "material-ui/styles";
@@ -294,7 +294,7 @@ class Records extends Component {
 	}
 
 	dispatchUpdate = () => {
-		petStore.dispatch({
+		rootStore.dispatch({
 			type: 'UPDATE_PHOENIX_DATA',
 			payload: {
 				//isLoggedIn: false,

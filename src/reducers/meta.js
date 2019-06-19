@@ -3,7 +3,7 @@
 //import visibilityFilter from './visibilityFilter'
 
 import ticketAPI from "../apicalls/ticketAPI";
-//import { petStore } from "../stores/pets";
+//import { rootStore } from "../stores/pets";
 
 import { isUndefined } from "util";
 
@@ -66,7 +66,7 @@ const saveToDB = (allData) => {
                 console.log("popup - Tresponse2: ", response);
 
                 // 
-                /*petStore.dispatch({
+                /*rootStore.dispatch({
                     type: 'FETCH_TICKETS_FROM_API',
                     payload: {
                         ticketData: response.data

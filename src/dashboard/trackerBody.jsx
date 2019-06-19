@@ -3,7 +3,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
-import { petStore } from "../stores/pets";
+import { rootStore } from "../stores/pets";
 
 import Container from '@material-ui/core/Container';
 
