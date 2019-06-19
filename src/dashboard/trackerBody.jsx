@@ -16,28 +16,28 @@ import Typography from '@material-ui/core/Typography';
 // import trackersConfig from "../config-data/trackersConfig";
 // import trackerInstances from "../config-data/trackerInstance";
 
-class TrackerHeader extends React.Component{
+class TrackerBody extends React.Component{
 	state = { 
         ...this.props.metaData, 
 
         tabValue:2,
-        TrackerHeader: null,
+        TrackerBody: null,
     }
 
 	componentDidMount(){
-		console.log("TrackerHeader - mount. props:", this.props); //ok
-		//console.log("TrackerHeader - mount. props.metaData:", this.props.metaData); 
+		console.log("TrackerBody - mount. props:", this.props); //ok
+		//console.log("TrackerBody - mount. props.metaData:", this.props.metaData); 
 	}
 
 	render(){
 		return(
-			this.showTableHeaders()
+			//this.showTableBody()
+			<tbody></tbody>
 		)
     }
 
-	showTableHeaders(){
-		let returnArr=[ ];
-		//returnArr.push( <tr> );
+	showTableBody(){
+		let returnArr=[];
 		//return(
 			this.props.instanceData.map( array => {
 				console.log("trackerHeader array:", array)
@@ -45,44 +45,27 @@ class TrackerHeader extends React.Component{
 				if(array.id == this.props.trackerId){
 					console.log("matched", array.id)
 					array.columns.map( column => {
-						returnArr.push( 
-							<th 
-								key={ array.colId }
-							>
-								{ column.name }
-							</th> 
-						)
+						returnArr.push( <th>{column.name}</th> )
 					} )
 				}
 				
 			} )
 		//);
-		//returnArr.push( </tr> );
-
 
 		return returnArr;
 	}
-	
-    showTableHeaders1(){
-		return(
-
-			<React.Fragment>
-				<th></th>
-			</React.Fragment>
-		);
-    }
     
 
 }
 
 const mapStateToProps = state => {
-	console.log('TrackerHeader.jsx-mapStateToProps', state);
+	console.log('TrackerBody.jsx-mapStateToProps', state);
 	return {
 		instanceData: state.TrackInstaReducer.instanceData,
 	};
 }
 
-//export default TrackerHeader;
-export default connect(mapStateToProps)(TrackerHeader);
-//export default connect(mapStateToProps)(withStyles(useStyles)(TrackerHeader));
+//export default TrackerBody;
+export default connect(mapStateToProps)(TrackerBody);
+//export default connect(mapStateToProps)(withStyles(useStyles)(TrackerBody));
 

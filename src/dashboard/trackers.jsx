@@ -28,6 +28,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Menu from "../common/menu";
 
 import TrackerTableHeader from "../dashboard/trackerHeader";
+import TrackerTableBody from "../dashboard/trackerBody";
+import TrackerTableRow from "../dashboard/trackerBodyRow";
+import TrackerTableData from "../dashboard/trackerBodyRowData";
 
 import trackersConfig from "../config-data/trackersConfig";
 import trackerInstances from "../config-data/trackerInstance";
@@ -90,17 +93,20 @@ class Trackers extends React.Component{
                     this.props.instanceData.map( tracker => (
                         this.state.tabValue === tracker.id && 
                         <React.Fragment>
-                            <h3> { tracker.name } </h3>
-                            <p>X {tracker.id} </p>
+                            <h3>Tracker Name: { tracker.name } </h3>
+                            <p>Tracker ID: {tracker.id} </p>
 
-                            <table>
+                            <table border="1">
                                 <thead>
-                                    <TrackerTableHeader trackerId={tracker.id}>
-                                    </TrackerTableHeader>
+                                    <tr>
+                                        <TrackerTableHeader trackerId={tracker.id}>
+                                        </TrackerTableHeader>
+                                    </tr>
                                 </thead>
-                                <tbody>
-                                    
-                                </tbody>
+                                    <tbody >
+                                        <TrackerTableRow trackerId={tracker.id} trackerRecordId={null}>
+                                        </TrackerTableRow>
+                                    </tbody>
                             </table>
 
                             {
