@@ -25,7 +25,7 @@ class TrackerBodyRowData extends React.Component{
     }
 
 	componentDidMount(){
-		console.log("TrackerBodyRowData - mount. props:", this.props); //ok
+		//console.log("TrackerBodyRowData - mount. props:", this.props); //ok
 		//console.log("TrackerBodyRowData - mount. props.metaData:", this.props.metaData); 
 	}
 
@@ -38,11 +38,10 @@ class TrackerBodyRowData extends React.Component{
 
 	showTableData(){
 		let returnArr=[]; 
-		console.log("trackerBodyRowData props:", this.props);
-		//return(
+		//console.log("trackerBodyRowData props:", this.props);
 			this.props.rowData.data.map( columnData => {
 				//returnArr.push( <tr>); //make another component
-				console.log("trackerBodyRowData columnData:", columnData);
+				//console.log("trackerBodyRowData columnData:", columnData);
 			
 				//if( columnData.trackerId == this.props.trackerId ){
 					returnArr.push( 
@@ -53,10 +52,8 @@ class TrackerBodyRowData extends React.Component{
 				//}
 				
 			} )
-		//);
 
 		return returnArr;
-		//return ( <td></td> )
 	}
 
 }

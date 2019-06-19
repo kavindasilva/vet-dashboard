@@ -42,9 +42,11 @@ class TrackerHeader extends React.Component{
 			this.props.instanceData.map( array => {
 				console.log("trackerHeader array:", array)
 				
-				if(array.id == this.props.trackerId){
-					console.log("matched", array.id)
-					array.columns.map( column => {
+				if(array.id == this.props.trackerId){ // display correct tracker
+					console.log("matched trackerID:", array.id)
+
+					array.columns.map( column => { // map each table column of tracker
+
 						returnArr.push( 
 							<th 
 								key={ array.colId }

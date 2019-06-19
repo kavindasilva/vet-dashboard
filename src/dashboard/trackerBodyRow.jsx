@@ -42,10 +42,9 @@ class TrackerBodyRow extends React.Component{
 		let returnArr=[];
 		//return(
 			this.props.configData.map( rowArray => {
-				//returnArr.push( <tr>); //make another component
 
-				console.log("trackerBodyRow rowArray:", rowArray); 
-				// trackeId, id, data[columns]
+				//console.log("trackerBodyRow rowArray:", rowArray); 
+				// result: trackeId, id, data[columns]
 			
 				if( this.props.trackerId === rowArray.trackerId ){
 					returnArr.push(
