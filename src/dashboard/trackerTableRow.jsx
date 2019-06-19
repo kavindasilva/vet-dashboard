@@ -41,17 +41,17 @@ class TrackerTableRow extends React.Component{
 	showTableRows(){
 		let returnArr=[];
 		//return(
-			this.props.instanceData.map( record => {
+			this.props.instancesData.map( record => {
 
 				//console.log("trackerBodyRow rowArray:", rowArray); 
 				// result: trackerId, id, data[columns]
-				// let trackerIndex = this.props.configData.find( tracker => (
+				// let trackerIndex = this.props.trackerConfigData.find( tracker => (
 				// 	tracker.id === record.trackerId
 				// ) )
 				// //trackerIndex = trackerIndex;
 				// console.log("trackerBodyRow trackerIndex:", trackerIndex, record.trackerId)
 
-				/*let usersVisibleColumns=(this.props.configData.columns.permissions.find( (userPermission) => 
+				/*let usersVisibleColumns=(this.props.trackerConfigData.columns.permissions.find( (userPermission) => 
 					userPermission.id==this.props.metaData.userID,	
 				));
 				console.log("trackerBodyRow userVisible", usersVisibleColumns); /* */
@@ -80,9 +80,14 @@ const mapStateToProps = (state, props) => {
 	console.log('TrackerTableRow.jsx-mapStateToProps', state);
 	return {
 		metaData: state.MetaReducer.metaData,
-		configData: state.TrackConfigReducer.configData,
-		instanceData: state.TrackInstaReducer.instanceData.filter(record => (
-			record.trackerId = props.trackerId
+
+		//trackerConfigData: state.TrackConfigReducer.configData,
+		trackerConfigData: state.TrackConfigReducer.configData.find( trackerConfigs => (
+			trackerConfigs.id===props.trackerId
+		) ),
+
+		instancesData: state.TrackInstaReducer.instanceData.filter(instance => (
+			instance.trackerId === props.trackerId
 		)),
 	};
 }

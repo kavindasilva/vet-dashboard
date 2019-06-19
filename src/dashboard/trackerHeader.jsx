@@ -38,38 +38,29 @@ class TrackerHeader extends React.Component{
 
 	showTableHeaders(){
 		let returnArr=[ ];
-		//returnArr.push( <tr> );
-		//return(
-			this.props.configData.map( trackerData => { // all trackers config details
-				console.log("trackerHeader trackerData:", trackerData)
+		//return( <tr></tr> );
+		console.log("trackerHeader trackerData:", this.props.trackerConfigData)
 
+		console.log("matched trackerID:", this.props.trackerConfigData.id)
+
+		this.props.trackerConfigData.columns.map( column => { 
+
+			let usersVisibleColumns=(column.permissions.find( (userPermission) => 
+				userPermission.userId==this.props.metaData.userID,	
+			))
+			console.log("trackerHeader userVisible", usersVisibleColumns)
+
+			if( usersVisibleColumns.read === true ){
+				returnArr.push( 
+					<th 
+						key={ this.props.trackerConfigData.colId }
+					>
+						{ column.name }
+					</th> 
+				)
+			}
+		} )
 				
-				if(trackerData.id === this.props.trackerId){ // display correct tracker
-					console.log("matched trackerID:", trackerData.id)
-
-					trackerData.columns.map( column => { // map each table column of tracker
-
-						let usersVisibleColumns=(column.permissions.find( (userPermission) => 
-							userPermission.id==this.props.metaData.userID,	
-						))
-						console.log("trackerHeader userVisible", usersVisibleColumns)
-
-						if( usersVisibleColumns.read === true ){
-							returnArr.push( 
-								<th 
-									key={ trackerData.colId }
-								>
-									{ column.name }
-								</th> 
-							)
-						}
-					} )
-				}
-				
-			} )
-		//);
-		//returnArr.push( </tr> );
-
 
 		return returnArr;
 	}
@@ -86,12 +77,20 @@ class TrackerHeader extends React.Component{
 
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, props) => {
 	console.log('TrackerHeader.jsx-mapStateToProps', state);
 	return {
 		metaData: state.MetaReducer.metaData,
-		instanceData: state.TrackInstaReducer.instanceData,
-		configData: state.TrackConfigReducer.configData,
+
+		/** filter only the needed tracker instances */
+		instancesData: state.TrackInstaReducer.instanceData.filter( instances => (
+			instances.trackerId===props.trackerId
+		) ),
+
+		/** filter only the needed tracker's config */
+		trackerConfigData: state.TrackConfigReducer.configData.find( trackerConfigs => (
+			trackerConfigs.id===props.trackerId
+		) ),
 
 	};
 }

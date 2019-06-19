@@ -38,26 +38,69 @@ class TrackerTableData extends React.Component{
 
 	showTableData(){
 		let returnArr=[]; 
+
+		this.props.configData.columns.map( trackerInfo => { //each column of trackerConfig
+			let columnID=trackerInfo.id;
+
+			/** store user permissions of CURRENT COLUMN of trackerConfig user  */
+			let userPermission = trackerInfo.permissions.find( user => (
+				user.userId = this.props.metaData.userID
+			));
+
+			console.log("TrackerTableData permission", userPermission) 
+			// result: userId, read, write
+
+			//validate columnConfig is not empty
+
+			/** get tracker's current column's instance data */
+			let columnInfo = this.props.instanceData.data.find( column => (
+				column.columnId === columnID
+			) )
+			console.log("TrackerTableData colInfo", columnInfo) 
+			// result: columnId, value
+
+			if ( userPermission.read && userPermission.write ) {
+				returnArr.push( 
+					<td> 
+						{ columnInfo.value }
+					</td> 
+				)
+			}
+			else if( userPermission.read && !userPermission.write){
+				returnArr.push(
+					<td>
+						{ columnInfo.value } ro
+					</td>
+				)
+			}
+			
+		} )
+
+		return returnArr;
+	}
+
+	showTableData0(){
+		let returnArr=[]; 
 		//console.log("trackerBodyRowData props:", this.props);
 			this.props.instanceData.data.map( columnData => {
 				let columnConfig = this.props.configData.columns.find(column => (
 					column.id = columnData.columnId
 				));
 
+				/*let userVisibleData=(columnData.permissions.find( (userPermission) => 
+					userPermission.userId==this.props.metaData.userID,	
+				))*/
+				console.log("TrackerTableData colData", columnData)
+
 				//validate columnConfig is not empty
 
-				/*let permissions = columnConfig.permissions.find(rule => (
-					rule.userId == this.props
-				));*/
 
-				//if ( permissions.read || permission.write ) {
-					//if( usersVisibleColumns.read === true ){
-						returnArr.push( 
-							<td> 
-								{ columnData.value }
-							</td> 
-						)
-					//}
+				//if ( permission.read || permission.write ) {
+					returnArr.push( 
+						<td> 
+							{ columnData.value }
+						</td> 
+					)
 				//}
 				
 			} )
@@ -72,12 +115,12 @@ const mapStateToProps = (state, props) => {
 	return {
 		//...props,
 		configData: state.TrackConfigReducer.configData.find(tracker => (
-			tracker.id == props.trackerId
+			tracker.id === props.trackerId
 		)),
 		metaData: state.MetaReducer.metaData,
 
 		instanceData: state.TrackInstaReducer.instanceData.find(record => (
-			record.id = props.recordId
+			record.id === props.recordId
 		)),
 	};
 }
