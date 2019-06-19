@@ -13,7 +13,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
-import TrackerTableRowData from "../dashboard/trackerBodyRowData";
+import TrackerTableData from "../dashboard/trackerBodyRowData";
 
 // import trackersConfig from "../config-data/trackersConfig";
 // import trackerInstances from "../config-data/trackerInstance";
@@ -37,26 +37,32 @@ class TrackerBodyRow extends React.Component{
 			//<tr> <td>00</td> <td>00</td> <td>00</td> </tr>
 		)
     }
-
+	TrackerTableRow
 	showTableRows(){
 		let returnArr=[];
 		//return(
-			this.props.instanceData.map( rowArray => {
+			this.props.instanceData.map( record => {
 
 				//console.log("trackerBodyRow rowArray:", rowArray); 
-				// result: trackeId, id, data[columns]
+				// result: trackerId, id, data[columns]
+				// let trackerIndex = this.props.configData.find( tracker => (
+				// 	tracker.id === record.trackerId
+				// ) )
+				// //trackerIndex = trackerIndex;
+				// console.log("trackerBodyRow trackerIndex:", trackerIndex, record.trackerId)
 
-				/*let usersVisibleColumns=(instanceData.permissions.find( (userPermission) => 
+				/*let usersVisibleColumns=(this.props.configData.columns.permissions.find( (userPermission) => 
 					userPermission.id==this.props.metaData.userID,	
 				));
-				console.log("trackerBodyRow userVisible", usersVisibleColumns);*/
+				console.log("trackerBodyRow userVisible", usersVisibleColumns); /* */
 			
-				if( this.props.trackerId === rowArray.trackerId ){
+				if( 1 ){
 					returnArr.push(
 						<tr>
-							<TrackerTableRowData 
-								key={rowArray.id} 
-								rowData={ rowArray } 
+							<TrackerTableData 
+								key={record.id} 
+								recordId={ record.id }
+								trackerId = { record.trackerId }
 							/>
 						</tr>
 					)
@@ -70,12 +76,14 @@ class TrackerBodyRow extends React.Component{
 
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, props) => {
 	console.log('TrackerBodyRow.jsx-mapStateToProps', state);
 	return {
 		metaData: state.MetaReducer.metaData,
 		configData: state.TrackConfigReducer.configData,
-		instanceData: state.TrackInstaReducer.instanceData,
+		instanceData: state.TrackInstaReducer.instanceData.filter(record => (
+			record.trackerId = props.trackerId
+		)),
 	};
 }
 

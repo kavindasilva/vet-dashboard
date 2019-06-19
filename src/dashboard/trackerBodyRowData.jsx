@@ -39,7 +39,7 @@ class TrackerBodyRowData extends React.Component{
 	showTableData(){
 		let returnArr=[]; 
 		//console.log("trackerBodyRowData props:", this.props);
-			this.props.rowData.data.map( columnData => {
+			this.props.instanceData.data.map( columnData => {
 				//returnArr.push( <tr>); //make another component
 				//console.log("trackerBodyRowData columnData:", columnData);
 			
@@ -50,14 +50,25 @@ class TrackerBodyRowData extends React.Component{
 				));
 				console.log("trackerBodyRow userVisible", usersVisibleColumns);*/
 
+				let columnConfig = this.props.configData.columns.find(column => (
+					column.id = columnData.columnId
+				));
 
-				//if( usersVisibleColumns.read === true ){
-					returnArr.push( 
-						<td> 
-							{ columnData.value }
-						</td> 
-					)
-				//}
+				//validate columnConfig is not empty
+
+				let permissions = columnConfig.permissions.find(rule => (
+					rule.userId == this.props
+				));
+
+				if ( permissions.read || permission.write ) {
+					//if( usersVisibleColumns.read === true ){
+						returnArr.push( 
+							<td> 
+								{ columnData.value }
+							</td> 
+						)
+					//}
+				}
 				
 			} )
 
@@ -66,12 +77,18 @@ class TrackerBodyRowData extends React.Component{
 
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, props) => {
 	console.log('TrackerBodyRowData.jsx-mapStateToProps', state);
 	return {
 		//...props,
-		configData: state.TrackConfigReducer.configData,
+		configData: state.TrackConfigReducer.configData.find(tracker => (
+			tracker.id == props.trackerId
+		)),
 		metaData: state.MetaReducer.metaData,
+
+		instanceData: state.TrackInstaReducer.instanceData.find(record => (
+			record.id = props.recordId
+		)),
 	};
 }
 
