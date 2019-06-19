@@ -16,17 +16,17 @@ import Typography from '@material-ui/core/Typography';
 // import trackersConfig from "../config-data/trackersConfig";
 // import trackerInstances from "../config-data/trackerInstance";
 
-class TrackerBodyRowData extends React.Component{
+class TrackerTableData extends React.Component{
 	state = { 
         ...this.props.metaData, 
 
         tabValue:2,
-        TrackerBodyRowData: null,
+        TrackerTableData: null,
     }
 
 	componentDidMount(){
-		console.log("TrackerBodyRowData - mount. props:", this.props); //ok
-		//console.log("TrackerBodyRowData - mount. props.metaData:", this.props.metaData); 
+		console.log("TrackerTableData - mount. props:", this.props); //ok
+		//console.log("TrackerTableData - mount. props.metaData:", this.props.metaData); 
 	}
 
 	render(){
@@ -40,27 +40,17 @@ class TrackerBodyRowData extends React.Component{
 		let returnArr=[]; 
 		//console.log("trackerBodyRowData props:", this.props);
 			this.props.instanceData.data.map( columnData => {
-				//returnArr.push( <tr>); //make another component
-				//console.log("trackerBodyRowData columnData:", columnData);
-			
-				//if( columnData.trackerId == this.props.trackerId ){
-				
-				/*let usersVisibleColumns=(columnData.permissions.find( (userPermission) => 
-					userPermission.id==this.props.metaData.userID,	
-				));
-				console.log("trackerBodyRow userVisible", usersVisibleColumns);*/
-
 				let columnConfig = this.props.configData.columns.find(column => (
 					column.id = columnData.columnId
 				));
 
 				//validate columnConfig is not empty
 
-				let permissions = columnConfig.permissions.find(rule => (
+				/*let permissions = columnConfig.permissions.find(rule => (
 					rule.userId == this.props
-				));
+				));*/
 
-				if ( permissions.read || permission.write ) {
+				//if ( permissions.read || permission.write ) {
 					//if( usersVisibleColumns.read === true ){
 						returnArr.push( 
 							<td> 
@@ -68,7 +58,7 @@ class TrackerBodyRowData extends React.Component{
 							</td> 
 						)
 					//}
-				}
+				//}
 				
 			} )
 
@@ -78,7 +68,7 @@ class TrackerBodyRowData extends React.Component{
 }
 
 const mapStateToProps = (state, props) => {
-	console.log('TrackerBodyRowData.jsx-mapStateToProps', state);
+	console.log('TrackerTableData.jsx-mapStateToProps', state);
 	return {
 		//...props,
 		configData: state.TrackConfigReducer.configData.find(tracker => (
@@ -92,7 +82,7 @@ const mapStateToProps = (state, props) => {
 	};
 }
 
-//export default TrackerBodyRowData;
-export default connect(mapStateToProps)(TrackerBodyRowData);
-//export default connect(mapStateToProps)(withStyles(useStyles)(TrackerBodyRowData));
+//export default TrackerTableData;
+export default connect(mapStateToProps)(TrackerTableData);
+//export default connect(mapStateToProps)(withStyles(useStyles)(TrackerTableData));
 

@@ -13,22 +13,22 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
-import TrackerTableData from "../dashboard/trackerBodyRowData";
+import TrackerTableData from "../dashboard/trackerTableData";
 
 // import trackersConfig from "../config-data/trackersConfig";
 // import trackerInstances from "../config-data/trackerInstance";
 
-class TrackerBodyRow extends React.Component{
+class TrackerTableRow extends React.Component{
 	state = { 
         ...this.props.metaData, 
 
         tabValue:2,
-        TrackerBodyRow: null,
+        TrackerTableRow: null,
     }
 
 	componentDidMount(){
-		console.log("TrackerBodyRow - mount. props:", this.props); //ok
-		//console.log("TrackerBodyRow - mount. props.metaData:", this.props.metaData); 
+		console.log("TrackerTableRow - mount. props:", this.props); //ok
+		//console.log("TrackerTableRow - mount. props.metaData:", this.props.metaData); 
 	}
 
 	render(){
@@ -77,7 +77,7 @@ class TrackerBodyRow extends React.Component{
 }
 
 const mapStateToProps = (state, props) => {
-	console.log('TrackerBodyRow.jsx-mapStateToProps', state);
+	console.log('TrackerTableRow.jsx-mapStateToProps', state);
 	return {
 		metaData: state.MetaReducer.metaData,
 		configData: state.TrackConfigReducer.configData,
@@ -87,7 +87,7 @@ const mapStateToProps = (state, props) => {
 	};
 }
 
-//export default TrackerBodyRow;
-export default connect(mapStateToProps)(TrackerBodyRow);
-//export default connect(mapStateToProps)(withStyles(useStyles)(TrackerBodyRow));
+//export default TrackerTableRow;
+export default connect(mapStateToProps)(TrackerTableRow);
+//export default connect(mapStateToProps)(withStyles(useStyles)(TrackerTableRow));
 

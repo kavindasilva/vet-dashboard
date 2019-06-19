@@ -28,9 +28,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Menu from "../common/menu";
 
 import TrackerTableHeader from "../dashboard/trackerHeader";
-import TrackerTableBody from "../dashboard/trackerBody";
-import TrackerTableRow from "../dashboard/trackerBodyRow";
-import TrackerTableData from "../dashboard/trackerBodyRowData";
+//import TrackerTableBody from "../dashboard/trackerBody";
+import TrackerTableRow from "../dashboard/trackerTableRow";
+//import TrackerTableData from "../dashboard/trackerBodyRowData";
 
 import trackersConfig from "../config-data/trackersConfig";
 import trackerInstances from "../config-data/trackerInstance";
@@ -139,10 +139,10 @@ class Trackers extends React.Component{
             )),
 
             //usersVisibleColumns.push( column. )
-            usersVisibleColumns.trackerid= trackerInfo.id,
+            /*sersVisibleColumns.trackerid= trackerInfo.id,
             usersVisibleColumns.columnId= column.colId,
             usersVisibleColumns.columnName= column.name,
-            usersVisibleColumns.columnType= column.type,
+            usersVisibleColumns.columnType= column.type,*/
 
             console.log("showCols userVisibleCols", usersVisibleColumns),
             //this.printColumn(column, usersVisibleColumns, trackerInfo.id)
