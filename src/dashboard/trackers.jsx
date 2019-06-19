@@ -82,7 +82,7 @@ class Trackers extends React.Component{
                         <Tab label="staticTab" /*onClick={ () => this.handleChange(null,1)}*/ />
                         
                         {
-                            this.props.instanceData.map( tracker => (
+                            this.props.configData.map( tracker => (
                                 <Tab label={ tracker.name } />
                             ))
                         }
@@ -90,7 +90,7 @@ class Trackers extends React.Component{
                 </AppBar>
 
                 {
-                    this.props.instanceData.map( tracker => (
+                    this.props.configData.map( tracker => (
                         this.getUserPermittedColumns(tracker),
 
                         this.state.tabValue === tracker.id && 
@@ -106,7 +106,10 @@ class Trackers extends React.Component{
                                     </tr>
                                 </thead>
                                     <tbody >
-                                        <TrackerTableRow trackerId={tracker.id} trackerRecordId={null}>
+                                        <TrackerTableRow 
+                                            trackerId={tracker.id} 
+                                            tracker={ tracker }
+                                            trackerRecordId={null}>
                                         </TrackerTableRow>
                                     </tbody>
                             </table>
@@ -178,7 +181,8 @@ const mapStateToProps = state => {
 	console.log('trackers.jsx-mapStateToProps', state);
 	return {
 		metaData: state.MetaReducer.metaData,
-		instanceData: state.TrackInstaReducer.instanceData,
+		//instanceData: state.TrackInstaReducer.instanceData,
+		configData: state.TrackConfigReducer.configData,
 	};
 }
 

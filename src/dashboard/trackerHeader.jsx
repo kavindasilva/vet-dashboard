@@ -35,25 +35,34 @@ class TrackerHeader extends React.Component{
 		)
     }
 
+
 	showTableHeaders(){
 		let returnArr=[ ];
 		//returnArr.push( <tr> );
 		//return(
-			this.props.instanceData.map( array => {
-				console.log("trackerHeader array:", array)
+			this.props.configData.map( trackerData => { // all trackers config details
+				console.log("trackerHeader trackerData:", trackerData)
+
 				
-				if(array.id == this.props.trackerId){ // display correct tracker
-					console.log("matched trackerID:", array.id)
+				if(trackerData.id === this.props.trackerId){ // display correct tracker
+					console.log("matched trackerID:", trackerData.id)
 
-					array.columns.map( column => { // map each table column of tracker
+					trackerData.columns.map( column => { // map each table column of tracker
 
-						returnArr.push( 
-							<th 
-								key={ array.colId }
-							>
-								{ column.name }
-							</th> 
-						)
+						let usersVisibleColumns=(column.permissions.find( (userPermission) => 
+							userPermission.id==this.props.metaData.userID,	
+						))
+						console.log("trackerHeader userVisible", usersVisibleColumns)
+
+						if( usersVisibleColumns.read === true ){
+							returnArr.push( 
+								<th 
+									key={ trackerData.colId }
+								>
+									{ column.name }
+								</th> 
+							)
+						}
 					} )
 				}
 				
@@ -80,7 +89,10 @@ class TrackerHeader extends React.Component{
 const mapStateToProps = state => {
 	console.log('TrackerHeader.jsx-mapStateToProps', state);
 	return {
+		metaData: state.MetaReducer.metaData,
 		instanceData: state.TrackInstaReducer.instanceData,
+		configData: state.TrackConfigReducer.configData,
+
 	};
 }
 

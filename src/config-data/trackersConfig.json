@@ -42,7 +42,7 @@
                     {
                         "id" : 5, 
                         "read" : true,
-                        "write": false
+                        "write": true
                     }
                 ],
                 "rules": [

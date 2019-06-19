@@ -22,11 +22,11 @@ const initialState = {
     },
 
     TrackConfigReducer:{
-        configData: trackerInstances
+        configData: trackersConfig
     },
 
     TrackInstaReducer:{
-        instanceData: trackersConfig
+        instanceData: trackerInstances
     },
 
     /** This is for storing meta-data related to user and sessions */

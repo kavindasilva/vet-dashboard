@@ -41,10 +41,15 @@ class TrackerBodyRow extends React.Component{
 	showTableRows(){
 		let returnArr=[];
 		//return(
-			this.props.configData.map( rowArray => {
+			this.props.instanceData.map( rowArray => {
 
 				//console.log("trackerBodyRow rowArray:", rowArray); 
 				// result: trackeId, id, data[columns]
+
+				/*let usersVisibleColumns=(instanceData.permissions.find( (userPermission) => 
+					userPermission.id==this.props.metaData.userID,	
+				));
+				console.log("trackerBodyRow userVisible", usersVisibleColumns);*/
 			
 				if( this.props.trackerId === rowArray.trackerId ){
 					returnArr.push(
@@ -70,6 +75,7 @@ const mapStateToProps = state => {
 	return {
 		metaData: state.MetaReducer.metaData,
 		configData: state.TrackConfigReducer.configData,
+		instanceData: state.TrackInstaReducer.instanceData,
 	};
 }
 

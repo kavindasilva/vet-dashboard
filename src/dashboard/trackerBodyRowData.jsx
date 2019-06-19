@@ -25,7 +25,7 @@ class TrackerBodyRowData extends React.Component{
     }
 
 	componentDidMount(){
-		//console.log("TrackerBodyRowData - mount. props:", this.props); //ok
+		console.log("TrackerBodyRowData - mount. props:", this.props); //ok
 		//console.log("TrackerBodyRowData - mount. props.metaData:", this.props.metaData); 
 	}
 
@@ -44,6 +44,14 @@ class TrackerBodyRowData extends React.Component{
 				//console.log("trackerBodyRowData columnData:", columnData);
 			
 				//if( columnData.trackerId == this.props.trackerId ){
+				
+				/*let usersVisibleColumns=(columnData.permissions.find( (userPermission) => 
+					userPermission.id==this.props.metaData.userID,	
+				));
+				console.log("trackerBodyRow userVisible", usersVisibleColumns);*/
+
+
+				//if( usersVisibleColumns.read === true ){
 					returnArr.push( 
 						<td> 
 							{ columnData.value }
