@@ -66,6 +66,7 @@ const mapStateToProps = state => {
 	return {
 		//...props,
 		configData: state.TrackConfigReducer.configData,
+		metaData: state.MetaReducer.metaData,
 	};
 }
 

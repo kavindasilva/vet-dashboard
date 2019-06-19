@@ -43,16 +43,20 @@ class TrackerBodyRow extends React.Component{
 		//return(
 			this.props.configData.map( rowArray => {
 				//returnArr.push( <tr>); //make another component
-				console.log("trackerBodyRow rowArray:", rowArray); //id, data[columns]
+
+				console.log("trackerBodyRow rowArray:", rowArray); 
+				// trackeId, id, data[columns]
 			
-				returnArr.push(
-					<tr>
-						<TrackerTableRowData 
-							key={rowArray.id} 
-							rowData={ rowArray } 
-						/>
-					</tr>
-				)
+				if( this.props.trackerId === rowArray.trackerId ){
+					returnArr.push(
+						<tr>
+							<TrackerTableRowData 
+								key={rowArray.id} 
+								rowData={ rowArray } 
+							/>
+						</tr>
+					)
+				}
 				
 			} )
 		//);
@@ -65,6 +69,7 @@ class TrackerBodyRow extends React.Component{
 const mapStateToProps = state => {
 	console.log('TrackerBodyRow.jsx-mapStateToProps', state);
 	return {
+		metaData: state.MetaReducer.metaData,
 		configData: state.TrackConfigReducer.configData,
 	};
 }

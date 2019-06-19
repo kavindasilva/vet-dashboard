@@ -156,6 +156,7 @@ class Trackers extends React.Component{
 const mapStateToProps = state => {
 	console.log('trackers.jsx-mapStateToProps', state);
 	return {
+		metaData: state.MetaReducer.metaData,
 		instanceData: state.TrackInstaReducer.instanceData,
 	};
 }
