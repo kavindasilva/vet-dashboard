@@ -25,7 +25,7 @@ class TrackerHeader extends React.Component{
     }
 
 	componentDidMount(){
-		console.log("TrackerHeader - mount. props:", this.props); //ok
+		//console.log("TrackerHeader - mount. props:", this.props); //ok
 		//console.log("TrackerHeader - mount. props.metaData:", this.props.metaData); 
 	}
 
@@ -39,9 +39,9 @@ class TrackerHeader extends React.Component{
 	showTableHeaders(){
 		let returnArr=[ ];
 		//return( <tr></tr> );
-		console.log("trackerHeader trackerData:", this.props.trackerConfigData)
+		//console.log("trackerHeader trackerData:", this.props.trackerConfigData)
 
-		console.log("matched trackerID:", this.props.trackerConfigData.id)
+		//console.log("matched trackerID:", this.props.trackerConfigData.id)
 
 		this.props.trackerConfigData.columns.forEach( column => { 
 
@@ -55,7 +55,7 @@ class TrackerHeader extends React.Component{
 
 				returnArr.push( 
 					<th 
-						key={ this.props.trackerConfigData.id }
+						key={ column.id }
 					>
 						{ column.name }
 					</th> 
@@ -67,22 +67,12 @@ class TrackerHeader extends React.Component{
 				
 
 		return returnArr;
-	}
-	
-    showTableHeaders1(){
-		return(
-
-			<React.Fragment>
-				<th></th>
-			</React.Fragment>
-		);
-    }
-    
+	}    
 
 }
 
 const mapStateToProps = (state, props) => {
-	console.log('TrackerHeader.jsx-mapStateToProps', state);
+	//console.log('TrackerHeader.jsx-mapStateToProps', state);
 	return {
 		metaData: state.MetaReducer.metaData,
 

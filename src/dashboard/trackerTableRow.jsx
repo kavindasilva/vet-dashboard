@@ -27,7 +27,7 @@ class TrackerTableRow extends React.Component{
     }
 
 	componentDidMount(){
-		console.log("TrackerTableRow - mount. props:", this.props); //ok
+		//console.log("TrackerTableRow - mount. props:", this.props); //ok
 		//console.log("TrackerTableRow - mount. props.metaData:", this.props.metaData); 
 	}
 
@@ -44,7 +44,7 @@ class TrackerTableRow extends React.Component{
 	
 			if( 1 ){
 				returnArr.push(
-					<tr>
+					<tr key={record.id} >
 						<TrackerTableData 
 							key={record.id} 
 							recordId={ record.id }
@@ -62,7 +62,7 @@ class TrackerTableRow extends React.Component{
 }
 
 const mapStateToProps = (state, props) => {
-	console.log('TrackerTableRow.jsx-mapStateToProps', state);
+	//console.log('TrackerTableRow.jsx-mapStateToProps', state);
 	return {
 		metaData: state.MetaReducer.metaData,
 

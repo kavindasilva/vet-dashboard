@@ -1,0 +1,11 @@
+
+--jun 18
+make tracker tables
+add visualization filter based on user permissions
+
+--jun 20
+apply table styles
+try applying cell coloring rules
+add few data columns
+check drawer bug
+

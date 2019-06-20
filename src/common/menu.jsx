@@ -105,7 +105,7 @@ class Menu extends Component {
 }
 
 const mapStateToProps = state => {
-	console.log('menu.jsx-mapStateToProps', state);
+	//console.log('menu.jsx-mapStateToProps', state);
 	return {
 		metaData: state.MetaReducer.metaData,
 	};

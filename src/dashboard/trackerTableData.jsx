@@ -7,22 +7,22 @@ import { rootStore } from "../stores/pets";
 
 import Container from '@material-ui/core/Container';
 
-import Button from '@material-ui/core/Button';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-
+import TrackerPopup from "../dashboard/trackerPopup";
 // import trackersConfig from "../config-data/trackersConfig";
 // import trackerInstances from "../config-data/trackerInstance";
 
 class TrackerTableData extends React.Component{
 	state = { 
         ...this.props.metaData, 
-
-        tabValue:2,
-        TrackerTableData: null,
-    }
+	}
+	
+	columnDataTypes = {
+		// columnType: dataType
+		1: 'text',
+		2: 'number',
+		3: 'date',
+		4: 'date'
+	}
 
 	componentDidMount(){
 		console.log("TrackerTableData - mount. props:", this.props); //ok
@@ -46,7 +46,7 @@ class TrackerTableData extends React.Component{
 				user.userId === this.props.metaData.userId
 			));
 
-			console.log("TrackerTableData permission", userPermission) 
+			//console.log("TrackerTableData permission", userPermission) 
 			// result: userId, read, write
 
 			//validate columnConfig is not empty
@@ -56,57 +56,37 @@ class TrackerTableData extends React.Component{
 					column.columnId === trackerInfo.id
 				) )
 
-				console.log("TrackerTableData colInfo", columnInfo) 
+				//console.log("TrackerTableData colInfo", columnInfo) 
 				// result: columnId, value
 
 				if ( userPermission.read && userPermission.write ) {
+					// returnArr.push( 
+					// 	<td key={trackerInfo.id}> 
+					// 		{ columnInfo.value }
+					// 	</td> 
+					// )
 					returnArr.push( 
-						<td> 
+						<TrackerPopup
+							key={trackerInfo.id}
+							//identifier={  }
+							value={ columnInfo.value }
+							//property={  }
+							elementType={ this.columnDataTypes[trackerInfo.type] }
+						> 
 							{ columnInfo.value }
-						</td> 
+						</TrackerPopup> 
 					)
 				}
 				else if( userPermission.read && !userPermission.write){
 					returnArr.push(
-						<td>
+						<td key={trackerInfo.id}>
 							{ columnInfo.value } ro
 						</td>
 					)
 				}
-			}
-
-			
+			}			
 			
 		} )
-
-		return returnArr;
-	}
-
-	showTableData0(){
-		let returnArr=[]; 
-		//console.log("trackerBodyRowData props:", this.props);
-			this.props.instanceData.data.map( columnData => {
-				let columnConfig = this.props.configData.columns.find(column => (
-					column.id = columnData.columnId
-				));
-
-				/*let userVisibleData=(columnData.permissions.find( (userPermission) => 
-					userPermission.userId==this.props.metaData.userId,	
-				))*/
-				console.log("TrackerTableData colData", columnData)
-
-				//validate columnConfig is not empty
-
-
-				//if ( permission.read || permission.write ) {
-					returnArr.push( 
-						<td> 
-							{ columnData.value }
-						</td> 
-					)
-				//}
-				
-			} )
 
 		return returnArr;
 	}

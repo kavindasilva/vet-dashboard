@@ -4,19 +4,6 @@ import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
 import { rootStore } from "../stores/pets";
 
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-//import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -28,19 +15,14 @@ import { withStyles } from '@material-ui/core/styles';
 import Menu from "../common/menu";
 
 import TrackerTableHeader from "../dashboard/trackerHeader";
-//import TrackerTableBody from "../dashboard/trackerBody";
 import TrackerTableRow from "../dashboard/trackerTableRow";
-//import TrackerTableData from "../dashboard/trackerBodyRowData";
-
-import trackersConfig from "../config-data/trackersConfig";
-import trackerInstances from "../config-data/trackerInstance";
 
 class Trackers extends React.Component{
 	state = { 
         ...this.props.metaData, 
 
         tabValue:1,
-        trackers: trackersConfig,
+        //trackers: trackersConfig,
     }
 	//state = { Meta }
 
@@ -83,7 +65,7 @@ class Trackers extends React.Component{
                         
                         {
                             this.props.configData.map( tracker => (
-                                <Tab label={ tracker.name } />
+                                <Tab key={ tracker.id } label={ tracker.name } />
                             ))
                         }
                     </Tabs>
@@ -94,7 +76,7 @@ class Trackers extends React.Component{
                         this.getUserPermittedColumns(tracker),
 
                         this.state.tabValue === tracker.id && 
-                        <React.Fragment>
+                        <React.Fragment key={ tracker.id } >
                             <h3>Tracker Name: { tracker.name } </h3>
                             <p>Tracker ID: {tracker.id} </p>
 
@@ -130,20 +112,14 @@ class Trackers extends React.Component{
         let usersVisibleColumns=[];
 
         trackerInfo.columns.map( column => (
-            console.log("col:", column),
+            //console.log("col:", column),
             usersVisibleColumns=[],
 
             usersVisibleColumns=(column.permissions.find( (userPermission, i, arr) => 
                 userPermission.id===this.props.metaData.userId,
                 
             )),
-
-            //usersVisibleColumns.push( column. )
-            /*sersVisibleColumns.trackerid= trackerInfo.id,
-            usersVisibleColumns.columnId= column.colId,
-            usersVisibleColumns.columnName= column.name,
-            usersVisibleColumns.columnType= column.type,*/
-
+            
             console.log("showCols userVisibleCols", usersVisibleColumns),
             //this.printColumn(column, usersVisibleColumns, trackerInfo.id)
 
