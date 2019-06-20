@@ -15,15 +15,32 @@ const TrackInstaReducer = (state, action) => {
         state=null;
 
     switch (action.type) {
-        case 'SET_USER_PERMISSIONS':
+        case 'UPDATE_CELL_VALUE':
             newState = {
                 ...state,
-                TrackerInstanceReducer: {
-                    userPermissions: action.payload.permissions,
-                }
-                
+                instanceData: state.instanceData.map(trackerRecord => {
+                    let newRecord = {};
+                    
+                    if( trackerRecord.id === action.payload.trackerId ) { //get tracker
+                        trackerRecord.data.map( column => {
+                            if( column.columnId === action.payload.columnId ){
+                                //column.value=action.payload.value;
+                                //newRecord['data']['value'] = action.payload.value;
+                                newRecord[column.value] = action.payload.value;
+                            }
+                            else
+                                return {
+                                    ...trackerRecord,
+                                    ...newRecord,
+
+                                }
+                        });
+                    }
+                    else
+                        return trackerRecord;
+                })
             }
-            console.log("TrackInstaReducer SET_USER_PERMISSIONS: ", newState);
+            console.log("TrackInstaReducer UPDATE_CELL_VALUE: ", newState);
             return newState;
 
         default:

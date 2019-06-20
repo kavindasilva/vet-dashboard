@@ -11,11 +11,30 @@ import Typography from '@material-ui/core/Typography';
 
 import { withStyles } from '@material-ui/core/styles';
 //import { styles } from '@material-ui/pickers/DatePicker/components/Calendar';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 import Menu from "../common/menu";
 
 import TrackerTableHeader from "../dashboard/trackerHeader";
 import TrackerTableRow from "../dashboard/trackerTableRow";
+
+const styles = theme => ({
+	root: {
+	  width: "100%",
+	  marginTop: theme.spacing.unit * 3,
+	  overflowX: "auto"
+	},
+	head: {
+	  backgroundColor: "#eee",
+	  position: "sticky",
+	  top: 0
+	}
+});
 
 class Trackers extends React.Component{
 	state = { 
@@ -80,21 +99,23 @@ class Trackers extends React.Component{
                             <h3>Tracker Name: { tracker.name } </h3>
                             <p>Tracker ID: {tracker.id} </p>
 
-                            <table border="1">
-                                <thead>
-                                    <tr>
-                                        <TrackerTableHeader trackerId={tracker.id}>
-                                        </TrackerTableHeader>
-                                    </tr>
-                                </thead>
-                                    <tbody >
+                            <Paper style={ {} }>
+					            <Table size={'small'}>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TrackerTableHeader trackerId={tracker.id}>
+                                            </TrackerTableHeader>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody >
                                         <TrackerTableRow 
                                             trackerId={tracker.id} 
                                             tracker={ tracker }
                                             trackerRecordId={null}>
                                         </TrackerTableRow>
-                                    </tbody>
-                            </table>
+                                    </TableBody>
+                                </Table>
+                            </Paper>
 
                         </React.Fragment>
                     ))
@@ -163,6 +184,6 @@ const mapStateToProps = state => {
 }
 
 //export default Trackers;
-export default connect(mapStateToProps)(Trackers);
-//export default connect(mapStateToProps)(withStyles(useStyles)(Trackers));
+//export default connect(mapStateToProps)(Trackers);
+export default connect(mapStateToProps)(withStyles(styles)(Trackers));
 

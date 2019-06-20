@@ -10,8 +10,12 @@ import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
+
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+
 
 // import trackersConfig from "../config-data/trackersConfig";
 // import trackerInstances from "../config-data/trackerInstance";
@@ -32,28 +36,9 @@ class TrackerBody extends React.Component{
 	render(){
 		return(
 			//this.showTableBody()
-			<tbody></tbody>
+			<TableBody></TableBody>
 		)
     }
-
-	showTableBody(){
-		let returnArr=[];
-		//return(
-			this.props.instanceData.map( array => {
-				console.log("trackerHeader array:", array)
-				
-				if(array.id == this.props.trackerId){
-					console.log("matched", array.id)
-					array.columns.map( column => {
-						returnArr.push( <th>{column.name}</th> )
-					} )
-				}
-				
-			} )
-		//);
-
-		return returnArr;
-	}
     
 
 }

@@ -57,6 +57,32 @@
                         "conditions": "moment().isAfter(moment(valueOfColumn(4).add('5 days')"
                     }
                 ]
+            },
+            {
+                "id": 6, 
+                "name": "Completed",
+                "type": 3, 
+                "permissions": [
+                    {
+                        "userId" : 5,
+                        "read" : true,
+                        "write": true
+                    }
+                ],
+                "rules": []
+            },
+            {
+                "id": 7, 
+                "name": "Duration",
+                "type": 2, 
+                "permissions": [
+                    {
+                        "userId" : 5,
+                        "read" : true,
+                        "write": true
+                    }
+                ],
+                "rules": []
             }
         ]
 

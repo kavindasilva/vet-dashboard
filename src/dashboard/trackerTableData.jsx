@@ -11,16 +11,22 @@ import TrackerPopup from "../dashboard/trackerPopup";
 // import trackersConfig from "../config-data/trackersConfig";
 // import trackerInstances from "../config-data/trackerInstance";
 
+import TableCell from '@material-ui/core/TableCell';
+
 class TrackerTableData extends React.Component{
 	state = { 
         ...this.props.metaData, 
 	}
 	
+	/** 
+	 * defined by column dataType
+	 * 
+	 * columnType: dataType
+	 * */
 	columnDataTypes = {
-		// columnType: dataType
 		1: 'text',
 		2: 'number',
-		3: 'date',
+		3: 'radio',
 		4: 'date'
 	}
 
@@ -51,7 +57,7 @@ class TrackerTableData extends React.Component{
 
 			//validate columnConfig is not empty
 			if (userPermission) {
-				/** get tracker's current column's instance data */
+				/** get tracker's current column's instance COLUMN data */
 				let columnInfo = this.props.instanceData.data.find( column => (
 					column.columnId === trackerInfo.id
 				) )
@@ -68,10 +74,16 @@ class TrackerTableData extends React.Component{
 					returnArr.push( 
 						<TrackerPopup
 							key={trackerInfo.id}
-							//identifier={  }
+							trackerId={ this.props.instanceData.id }
+							columnId={ columnInfo.columnId }
+
 							value={ columnInfo.value }
+
 							//property={  }
+
+							// map columnDataTypes with json columnType
 							elementType={ this.columnDataTypes[trackerInfo.type] }
+							//data={ { valueSet: this.columnPredefinedValues[6] } }
 						> 
 							{ columnInfo.value }
 						</TrackerPopup> 
@@ -79,9 +91,9 @@ class TrackerTableData extends React.Component{
 				}
 				else if( userPermission.read && !userPermission.write){
 					returnArr.push(
-						<td key={trackerInfo.id}>
+						<TableCell key={trackerInfo.id}>
 							{ columnInfo.value } ro
-						</td>
+						</TableCell>
 					)
 				}
 			}			

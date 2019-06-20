@@ -157,7 +157,7 @@ class Records extends Component {
 
 	}/**/
 
-	render(){ //with mui-datatables // header sticky //more funtions
+	render0(){ //with mui-datatables // header sticky //more funtions
 		return(
 			<div className="container">
 				<Paper style={ this.styleMatUI.table }>
@@ -225,7 +225,7 @@ class Records extends Component {
 		)
 	}
 
-	render1(){ //with materialUI //sticky
+	render(){ //with materialUI //sticky
 		return(
 			<div className="container">
 				<Paper style={ this.styleMatUI.table }>

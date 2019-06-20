@@ -27,6 +27,7 @@ import Radio from '@material-ui/core/Radio';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 
+import TableCell from '@material-ui/core/TableCell';
 
 import { rootStore } from "../stores/pets";
 import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/core";
@@ -36,13 +37,28 @@ import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/
 //export default class PopDialog extends Component {
 class PopDialog extends Component {
 	state = {
-		/** record id. need in dispatching */	identifier		:this.props.identifier,
+		/** tracker id. need in dispatching */	trackerId		:this.props.trackerId,
+		/** column id. need in dispatching */	columnId		:this.props.columnId,
 		/** property value */     				attributeValue	:this.props.value,
 		/** property name */      				attributeName	:this.props.property,
 		/** element input type */ 				elementType		:this.props.elementType,
 		/** Detect popup modal open state */	isOpen			:false,
 		//** temporary day to keep calendar selected date */ tempDayCal: this.props.value,
 		//** data location Hubspot / DB */		dataLocation: 'db', //hubspot data not edited!
+	}
+
+	/** 
+	 * defined by columnId
+	 * 
+	 * columnId: { predefined value set }
+	 * */
+	columnPredefinedValues ={
+		1: null,				// clinic name
+
+		4: 0,					// RF sent date
+		5: null,				// RF completed date
+		6: [ { name:true, value:"OK" }, { name:false, value:"NotCompleted"} ],		// completed status
+		7: 24					// total duration
 	}
 
 	styleTD={
@@ -79,11 +95,11 @@ class PopDialog extends Component {
 
 	showPop( optionalAttribute1 ){
 		return(
-			<div style={ { minWidth: "20px", minHeight: "18px" } }>
+			<TableCell style={ { minWidth: "20px", minHeight: "18px" } }>
 				<div style={this.styleTD} 
 					onClick={ ()=>{ 
 						this.openPopUp();
-						console.log( "Popoup clicked: ",this ); 
+						//console.log( "Popoup clicked: ",this ); 
 					} } >
 
 					{ this.props.value } 
@@ -137,7 +153,7 @@ class PopDialog extends Component {
 					</DialogActions>
 				</Dialog>
 			
-			</div>
+			</TableCell>
 		);
 		
 	}
@@ -148,10 +164,12 @@ class PopDialog extends Component {
 	 */
 	dispatchUpdate = () => {
 		rootStore.dispatch({
-			type: 'UPDATE_TRACKER_CELL',
+			type: 'UPDATE_CELL_VALUE',
 			payload: {
-				identifier: this.state.identifier,
-				attribute: this.state.attributeName,
+				trackerId: this.state.trackerId,
+				columnId: this.state.columnId,
+
+				//attribute: this.state.attributeName, // replced by columnId
 				value: this.state.attributeValue
 			}
 		});
@@ -201,12 +219,12 @@ class PopDialog extends Component {
 									}
 								}
 							>	
-								{ this.props.data.valueSet.map( val => (
+								{ this.columnPredefinedValues[6].map( val => (
 									<FormControlLabel
-										key={val}
-										value={ val }
+										key={val.name}
+										value={ val.name }
 										control={<Radio color="primary" />}
-										label={ val }
+										label={ val.value }
 										labelPlacement="end"
 										/>
 									)
