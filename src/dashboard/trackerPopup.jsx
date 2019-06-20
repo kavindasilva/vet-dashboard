@@ -105,7 +105,7 @@ class PopDialog extends Component {
 						//console.log( "Popoup clicked: ",this ); 
 					} } 
 				>
-					{ this.props.instanceData.value } 
+					{ String(this.props.instanceData.value) } 
 				</div>
 
 
@@ -225,8 +225,8 @@ class PopDialog extends Component {
 							>	
 								{ this.columnPredefinedValues[6].map( val => (
 									<FormControlLabel
-										key={val.name}
-										value={ val.name }
+										key={ String(val.name) }
+										value={ String(val.name) }
 										control={<Radio color="primary" />}
 										label={ val.value }
 										labelPlacement="end"

@@ -76,7 +76,6 @@ class TrackerTableData extends React.Component{
 							key={trackerInfo.id}
 							trackerInstanceId={ this.props.instanceData.id }
 							columnId={ columnInfo.columnId }
-
 							value={ columnInfo.value }
 
 							//property={  }
