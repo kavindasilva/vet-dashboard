@@ -19,6 +19,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
 import Trackers from "../dashboard/trackers";
+import Phoenix from "../phoenix/records";
 import DrawerBody from "../common/drawerBody"
 
 import { withStyles } from '@material-ui/core/styles';
@@ -96,6 +97,7 @@ class MiniDrawer extends React.Component {
     menuItemData=[
         { value:"All Trackers", icon:<InboxIcon />, name:'allTrackers' },
         { value:"API failures", icon:<InboxIcon />, name:'apiFailures' },
+        { value:"Phoenix", icon:<InboxIcon />, name:'phoenix' },
     ];
 
     state = {
@@ -116,16 +118,17 @@ class MiniDrawer extends React.Component {
     }
 
     showBodyContent = () => {
-        //console.log("showBodyContent selectedMenuItem:", stateData.selectedMenuItem);
-        // if(stateData.selectedMenuItem=="allTrackers")
-        //     //return( <TrackersConfig /> );
-        //     return( <Trackers /> );
-        // else
-        //     return( defaultView() );
+        //console.log("showBodyContent selectedMenuItem:", this.state.selectedMenuItem);
+        if(this.state.selectedMenuItem=="allTrackers")
+            return( <Trackers /> );
+        else if(this.state.selectedMenuItem=="phoenix")
+            return( <Phoenix /> );
+        else
+            return( this.defaultView() );
     }
 
     setBodyContent = (menuItemName) => {
-        //stateData.selectedMenuItem=menuItemName;
+        //this.state.selectedMenuItem=menuItemName;
         //return showBodyContent();
         this.showBodyContent();
     }
@@ -201,10 +204,10 @@ class MiniDrawer extends React.Component {
                             <ListItem 
                                 button key={data.name} 
                                 onClick={ ()=>{ 
-                                    this.setBodyContent( "data.name" )
-                                    //stateData.selectedMenuItem='x'
-                                    //stateData.selectedMenuItem='allTrackers';
-                                    //console.log(stateData.selectedMenuItem) 
+                                    //this.setBodyContent( "data.name" )
+                                    this.setState({selectedMenuItem: data.name});
+                                    //this.state.selectedMenuItem='allTrackers';
+                                    console.log(this.state.selectedMenuItem) 
                                 } } 
                             >
                                 <ListItemIcon>{ data.icon }</ListItemIcon>
@@ -227,12 +230,13 @@ class MiniDrawer extends React.Component {
                 <main className={this.classes.content}>
                     <div className={this.classes.toolbar} />
                     <Typography paragraph={ false }>
-                        { //showBodyContent() 
+                        { 
+                            this.showBodyContent() 
                         }
-                        <DrawerBody
-                            elementToRender={ "trackers" }
-                            //elementToRender={ stateData.selectedMenuItem }
-                        />
+                        {/*<DrawerBody
+                            //elementToRender={ "trackers" }
+                            elementToRender={ this.state.selectedMenuItem }
+                        />*/}
                         
                     </Typography>
                 </main>
