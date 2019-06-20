@@ -21,9 +21,11 @@ import MailIcon from '@material-ui/icons/Mail';
 import Trackers from "../dashboard/trackers";
 import DrawerBody from "../common/drawerBody"
 
+import { withStyles } from '@material-ui/core/styles';
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
+
+const useStyles = theme => ({
     root: {
         display: 'flex',
     },
@@ -82,54 +84,62 @@ const useStyles = makeStyles(theme => ({
         flexGrow: 1,
         padding: theme.spacing(3),
     },
-}));
+});
 
-export default function MiniDrawer() {
-    const classes = useStyles();
-    const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+class MiniDrawer extends React.Component {
+    //const classes = useStyles();
+    //const theme = useTheme();
+    //[open, setOpen] = React.useState(false);
+    
+    classes=this.props.classes;   
 
-    const menuItemData=[
+    menuItemData=[
         { value:"All Trackers", icon:<InboxIcon />, name:'allTrackers' },
         { value:"API failures", icon:<InboxIcon />, name:'apiFailures' },
     ];
 
-    var stateData = {
-        selectedMenuItem: 'allTrackers',
+    state = {
+        drawerOpened: false,
+        selectedMenuItem: 'allTrackers000',
     }
 
-    function handleDrawerOpen() {
-        setOpen(true);
+    setOpen = (boolValue) =>{
+        this.setState({ drawerOpened: boolValue });
     }
 
-    function handleDrawerClose() {
-        setOpen(false);
+    handleDrawerOpen = () => {
+        this.setOpen(true);
     }
 
-    function showBodyContent(){
-        console.log("showBodyContent selectedMenuItem:", stateData.selectedMenuItem);
-        if(stateData.selectedMenuItem=="allTrackers")
-            //return( <TrackersConfig /> );
-            return( <Trackers /> );
-        else
-            return( defaultView() );
+    handleDrawerClose = () => {
+        this.setOpen(false);
     }
 
-    function setBodyContent(menuItemName){
-        stateData.selectedMenuItem=menuItemName;
-        return showBodyContent();
+    showBodyContent = () => {
+        //console.log("showBodyContent selectedMenuItem:", stateData.selectedMenuItem);
+        // if(stateData.selectedMenuItem=="allTrackers")
+        //     //return( <TrackersConfig /> );
+        //     return( <Trackers /> );
+        // else
+        //     return( defaultView() );
     }
 
-    function viewAllTrackers(){
+    setBodyContent = (menuItemName) => {
+        //stateData.selectedMenuItem=menuItemName;
+        //return showBodyContent();
+        this.showBodyContent();
+    }
+
+    viewAllTrackers = () =>{
         return(
             <Trackers />
         )
     }
 
-    function defaultView(){
+    defaultView = () =>{
         return(
             <React.Fragment>
-                <div className={classes.toolbar} />
+                <div className={this.classes.toolbar} />
                 <Typography paragraph>
                     Consequat Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
                 </Typography>
@@ -137,88 +147,101 @@ export default function MiniDrawer() {
         );
     }
 
-    return (
-        <div className={classes.root}>
-            <CssBaseline />
-            <AppBar
-                position="fixed"
-                className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open,
-                })}
-            >
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="Open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        className={clsx(classes.menuButton, {
-                            [classes.hide]: open,
-                        })}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" noWrap>
-                        Mini variant drawer
-          </Typography>
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                variant="permanent"
-                className={clsx(classes.drawer, {
-                    [classes.drawerOpen]: open,
-                    [classes.drawerClose]: !open,
-                })}
-                classes={{
-                    paper: clsx({
-                        [classes.drawerOpen]: open,
-                        [classes.drawerClose]: !open,
-                    }),
-                }}
-                open={open}
-            >
-                <div className={classes.toolbar}>
-                    <IconButton onClick={handleDrawerClose}>
-                        Close Drawer
-                        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                    </IconButton>
-                </div>
-                <Divider />
-                <List>
-                    { menuItemData.map((data, index) => (
-                        <ListItem 
-                            button key={data.name} 
-                            onClick={ ()=>{ 
-                                setBodyContent( "data.name" )
-                                //stateData.selectedMenuItem='x'
-                                //stateData.selectedMenuItem='allTrackers';
-                                //console.log(stateData.selectedMenuItem) 
-                            } } 
+    render(){
+        return (
+            <div className={this.classes.root}>
+                <CssBaseline />
+                <AppBar
+                    position="fixed"
+                    className={clsx(this.classes.appBar, {
+                        [this.classes.appBarShift]: this.state.drawerOpened,
+                    })}
+                >
+                    <Toolbar>
+                        <IconButton
+                            color="inherit"
+                            aria-label="Open drawer"
+                            onClick={ () => { this.handleDrawerOpen() } }
+                            edge="start"
+                            className={clsx(this.classes.menuButton, {
+                                [this.classes.hide]: this.state.drawerOpened,
+                            })}
                         >
-                            <ListItemIcon>{ data.icon }</ListItemIcon>
-                            <ListItemText primary={data.value} />
-                        </ListItem>
-                    ))}
-                </List>
-                <Divider />
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography variant="h6" noWrap>
+                            Mini variant drawer
+            </Typography>
+                    </Toolbar>
+                </AppBar>
+                <Drawer
+                    variant="permanent"
+                    className={clsx(this.classes.drawer, {
+                        [this.classes.drawerOpen]: this.state.drawerOpened,
+                        [this.classes.drawerClose]: !(this.state.drawerOpened),
+                    })}
+                    classes={{
+                        paper: clsx({
+                            [this.classes.drawerOpen]: this.state.drawerOpened,
+                            [this.classes.drawerClose]: !(this.state.drawerOpened),
+                        }),
+                    }}
+                    open={this.state.drawerOpened}
+                >
+                    <div className={this.classes.toolbar}>
+                        <IconButton onClick={ () => { this.handleDrawerClose() } }>
+                            Close Drawer
+                {/*theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />*/}
+                <ChevronLeftIcon />
+                        </IconButton>
+                    </div>
+                    <Divider />
+                    <List>
+                        { this.menuItemData.map((data, index) => (
+                            <ListItem 
+                                button key={data.name} 
+                                onClick={ ()=>{ 
+                                    this.setBodyContent( "data.name" )
+                                    //stateData.selectedMenuItem='x'
+                                    //stateData.selectedMenuItem='allTrackers';
+                                    //console.log(stateData.selectedMenuItem) 
+                                } } 
+                            >
+                                <ListItemIcon>{ data.icon }</ListItemIcon>
+                                <ListItemText primary={data.value} />
+                            </ListItem>
+                        ))}
+                    </List>
+                    <Divider />
 
-                <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List>
-            </Drawer>
+                    <List>
+                        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                            <ListItem button key={text}>
+                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                                <ListItemText primary={text} />
+                            </ListItem>
+                        ))}
+                    </List>
+                </Drawer>
 
-            <main className={classes.content}>
-                <div className={classes.toolbar} />
-                <Typography paragraph={ false }>
-                    { showBodyContent() }
-                    
-                </Typography>
-            </main>
-        </div>
-    );
+                <main className={this.classes.content}>
+                    <div className={this.classes.toolbar} />
+                    <Typography paragraph={ false }>
+                        { //showBodyContent() 
+                        }
+                        <DrawerBody
+                            elementToRender={ "trackers" }
+                            //elementToRender={ stateData.selectedMenuItem }
+                        />
+                        
+                    </Typography>
+                </main>
+            </div>
+        );
+    };
 }
+
+//export default MiniDrawer;
+export default withStyles(useStyles)(MiniDrawer);
+//export default connect(mapStateToProps)(withStyles(useStyles)(MiniDrawer));
+
