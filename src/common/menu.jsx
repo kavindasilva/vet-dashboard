@@ -43,6 +43,9 @@ class Menu extends Component {
 	viewMenuBar(){
 		return(
 			<React.Fragment>
+				<MiniDrawer />
+				
+				{ /** temporary menu bar * }
 				<div>
 					<div>
 						<Button style={{cursor:'pointer',float:'right',align:'right'}}
@@ -56,7 +59,8 @@ class Menu extends Component {
 					<Button onClick={ ()=>{ this.switchComponents('app') } } >Ticket</Button>
 					<Button onClick={ ()=>{ this.switchComponents('records') } } >Phoenix</Button>
 				</div>
-				<MiniDrawer />
+				{/*  */}
+				
 			</React.Fragment>
 		);
 	}
@@ -93,8 +97,6 @@ class Menu extends Component {
 		rootStore.dispatch({
 			type: 'UPDATE_META_DETAIL',
 			payload: {
-				//isLoggedIn: false,
-				//userId: 250
 				loggedData: {...this.state.serverData, isLoggedIn: false }
 			}
 		});

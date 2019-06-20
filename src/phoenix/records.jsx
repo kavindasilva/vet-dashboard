@@ -46,7 +46,7 @@ class Records extends Component {
 	table1Columns = [
 		//{ title: '<to display>', field: 'to get frmo json' },
 		
-		{ title:'ID', field:'id' },
+		{ title:'ID', field:'id', type: 'number' },
 		{ title:'Name', field:'name' },
 		{ title:'Hash', field:'hash' },
 		{ title:'PMS', field:'pms' },
@@ -268,7 +268,7 @@ class Records extends Component {
 	viewAll(){ //with booststrap & materialUI
 
 		return (
-			this.props.phoenixRecords.map( (pet, index) => (
+			this.state.phoenixRecords.map( (pet, index) => (
 				//console.log("records-- ", JSON.parse(tmpjson1).objectId );
 				<Record 
 					//key={pet.id} 

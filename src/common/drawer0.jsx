@@ -19,7 +19,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
 import Trackers from "../dashboard/trackers";
-import DrawerBody from "../common/drawerBody"
+//import TrackersConfig from "../dashboard/trackersConfig";
 
 const drawerWidth = 240;
 
@@ -107,17 +107,26 @@ export default function MiniDrawer() {
     }
 
     function showBodyContent(){
-        console.log("showBodyContent selectedMenuItem:", stateData.selectedMenuItem);
-        if(stateData.selectedMenuItem=="allTrackers")
-            //return( <TrackersConfig /> );
-            return( <Trackers /> );
+        console.log("showBodyContent selected:", stateData.selectedMenuItem);
+        /*switch(stateData.selectedMenuItem){
+            case 'allTrackers':
+                return( <Trackers /> );
+            //case '':
+                //return();
+            default:
+                return( defaultView() );
+        
+        }*/
+        if(stateData.selectedMenuItem=='allTrackers')
+                //return( <TrackersConfig /> );
+                return( <Trackers /> );
         else
             return( defaultView() );
     }
 
     function setBodyContent(menuItemName){
         stateData.selectedMenuItem=menuItemName;
-        return showBodyContent();
+        showBodyContent();
     }
 
     function viewAllTrackers(){
@@ -126,12 +135,21 @@ export default function MiniDrawer() {
         )
     }
 
+
     function defaultView(){
         return(
             <React.Fragment>
                 <div className={classes.toolbar} />
                 <Typography paragraph>
-                    Consequat Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
+                    Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
+                    facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
+                    tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
+                    consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
+                    vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
+                    hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
+                    tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
+                    nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
+                    accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
                 </Typography>
             </React.Fragment>
         );
@@ -160,7 +178,7 @@ export default function MiniDrawer() {
                     </IconButton>
                     <Typography variant="h6" noWrap>
                         Mini variant drawer
-          </Typography>
+                    </Typography>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -178,46 +196,46 @@ export default function MiniDrawer() {
                 open={open}
             >
                 <div className={classes.toolbar}>
+                    
                     <IconButton onClick={handleDrawerClose}>
-                        Close Drawer
+                        Close Menu
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                     </IconButton>
                 </div>
                 <Divider />
-                <List>
-                    { menuItemData.map((data, index) => (
-                        <ListItem 
-                            button key={data.name} 
-                            onClick={ ()=>{ 
-                                setBodyContent( "data.name" )
-                                //stateData.selectedMenuItem='x'
-                                //stateData.selectedMenuItem='allTrackers';
-                                //console.log(stateData.selectedMenuItem) 
-                            } } 
-                        >
-                            <ListItemIcon>{ data.icon }</ListItemIcon>
-                            <ListItemText primary={data.value} />
-                        </ListItem>
-                    ))}
-                </List>
-                <Divider />
 
                 <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem button key={text}>
+                    {['Tracker config', 'User config'].map((text, index) => (
+                        <ListItem button key={text}
+                            onClick={ ()=>{ console.log("cilcked") } }
+                        >
                             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                             <ListItemText primary={text} />
                         </ListItem>
                     ))}
                 </List>
+                <Divider />
+
+                <List>
+                    { menuItemData.forEach((data, index) => (
+                        <ListItem 
+                            button key={data.name} 
+                            onClick={ ()=>{ 
+                                setBodyContent( data.name )
+                                //stateData.selectedMenuItem='allTrackers';
+                                //console.log(stateData.selectedMenuItem) 
+                            } } 
+                        >
+                            <ListItemIcon>{  data.icon }</ListItemIcon>
+                            <ListItemText primary={data.value} />
+                        </ListItem>
+                    ))}
+                </List>
+                <Divider />
             </Drawer>
 
             <main className={classes.content}>
-                <div className={classes.toolbar} />
-                <Typography paragraph={ false }>
-                    { showBodyContent() }
-                    
-                </Typography>
+                { showBodyContent() }
             </main>
         </div>
     );
