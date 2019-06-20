@@ -102,7 +102,7 @@ class MiniDrawer extends React.Component {
 
     state = {
         drawerOpened: false,
-        selectedMenuItem: 'allTrackers000',
+        selectedMenuItem: 'allTrackers',
     }
 
     setOpen = (boolValue) =>{

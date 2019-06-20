@@ -27,6 +27,8 @@ import Radio from '@material-ui/core/Radio';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 
+import Popup from "reactjs-popup";
+
 import TableCell from '@material-ui/core/TableCell';
 
 import { connect } from "react-redux";
@@ -97,15 +99,40 @@ class PopDialog extends Component {
 	}
 
 	showPop( optionalAttribute1 ){
+		if(this.state.elementType ==="date")
 		return(
 			<TableCell style={ { minWidth: "20px", minHeight: "18px" } }>
-				<div style={this.styleTD} 
+				<div style={this.styleTD}
+					
 					onClick={ ()=>{ 
-						this.openPopUp();
+						if(this.state.elementType ==="date")
+							this.openPopUp();
+						else{
+							return(<Popup trigger={ <span > { this.state.attributeValue }  </span>  } position="bottom left">
+								{close => (
+									<div>
+										<a href="#" className="close" onClick={close}> &times; </a>
+										{ /*this.tempValue=this.state.name*/ }
+										<b>Change Name</b> <br/>
+										<input type="text" name="txtName" value={this.state.name} 
+											onChange={ e => this.setState({ name: e.target.value }) }  /> <br/>
+
+										<a onClick={close} >
+											<button onClick={ () => { this.setState({ name:this.state.name }); } } className="btn btn-sm btn-link" >OK</button>
+										</a>
+										{<a onClick={close} >
+											<button onClick={ () => this.setState({ name:this.props.name }) } className="btn btn-sm btn-link" >Cancel</button>
+										</a>}
+									</div>
+								)}
+							</Popup>)
+						}
 						//console.log( "Popoup clicked: ",this ); 
 					} } 
 				>
-					{ String(this.props.instanceData.value) } 
+					{ String(this.props.instanceData.value) }
+
+
 				</div>
 
 
@@ -158,8 +185,50 @@ class PopDialog extends Component {
 			
 			</TableCell>
 		);
+		else
+			return(
+				<TableCell>
+				<Popup trigger={ <span > { this.state.attributeValue }  </span>  } position="bottom left">
+					{close => (
+						<div>
+							<a href="#" className="close" onClick={close}> &times; </a>
+							{ /*this.tempValue=this.state.name*/ }
+							<b>Change Name</b> <br/>
+							<input type="text" name="txtName" value={this.state.name} 
+								onChange={ e => this.setState({ name: e.target.value }) }  /> <br/>
+
+							<a onClick={close} >
+								<button onClick={ () => { this.setState({ name:this.state.name }); } } className="btn btn-sm btn-link" >OK</button>
+							</a>
+							{<a onClick={close} >
+								<button onClick={ () => this.setState({ name:this.props.name }) } className="btn btn-sm btn-link" >Cancel</button>
+							</a>}
+						</div>
+					)}
+				</Popup>
+				</TableCell>
+			)
 		
 	}
+
+	//showPop2(){
+		showpop2 =close => (
+			<div>
+				<a href="#" className="close" onClick={close}> &times; </a>
+				{ /*this.tempValue=this.state.name*/ }
+				<b>Change Name</b> <br/>
+				<input type="text" name="txtName" value={this.state.name} 
+					onChange={ e => this.setState({ name: e.target.value }) }  /> <br/>
+
+				<a onClick={close} >
+					<button onClick={ () => { this.setState({ name:this.state.name }); } } className="btn btn-sm btn-link" >OK</button>
+				</a>
+				{<a onClick={close} >
+					<button onClick={ () => this.setState({ name:this.props.name }) } className="btn btn-sm btn-link" >Cancel</button>
+				</a>}
+			</div>
+		)
+	//}
 
 	/**
 	 * Update the store
@@ -213,6 +282,28 @@ class PopDialog extends Component {
 						);
 
 					case "radio":
+						return(
+							<Popup trigger={ <span > { this.state.name }  </span>  } position="bottom left">
+								{close => (
+									<div>
+										<a href="#" className="close" onClick={close}> &times; </a>
+										{ /*this.tempValue=this.state.name*/ }
+										<b>Change Name</b> <br/>
+										<input type="text" name="txtName" value={this.state.name} 
+											onChange={ e => this.setState({ name: e.target.value }) }  /> <br/>
+
+										<a onClick={close} >
+											<button onClick={ () => { this.setState({ name:this.state.name }); } } className="btn btn-sm btn-link" >OK</button>
+										</a>
+										{<a onClick={close} >
+											<button onClick={ () => this.setState({ name:this.props.name }) } className="btn btn-sm btn-link" >Cancel</button>
+										</a>}
+									</div>
+								)}
+							</Popup>
+						)
+
+					case "radio1": //popup
 						return (
 							<RadioGroup
 								name="genderSelect"
