@@ -74,7 +74,7 @@ class TrackerTableData extends React.Component{
 					returnArr.push( 
 						<TrackerPopup
 							key={trackerInfo.id}
-							trackerId={ this.props.instanceData.id }
+							trackerInstanceId={ this.props.instanceData.id }
 							columnId={ columnInfo.columnId }
 
 							value={ columnInfo.value }

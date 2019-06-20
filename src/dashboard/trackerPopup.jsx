@@ -29,6 +29,9 @@ import TextField from '@material-ui/core/TextField';
 
 import TableCell from '@material-ui/core/TableCell';
 
+import { connect } from "react-redux";
+import rootReducer from "../reducers/index";
+
 import { rootStore } from "../stores/pets";
 import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/core";
 
@@ -37,9 +40,9 @@ import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/
 //export default class PopDialog extends Component {
 class PopDialog extends Component {
 	state = {
-		/** tracker id. need in dispatching */	trackerId		:this.props.trackerId,
+		/** trackerInstaid. need in dispatching */	trackerInstanceIdId		:this.props.trackerInstanceId,
 		/** column id. need in dispatching */	columnId		:this.props.columnId,
-		/** property value */     				attributeValue	:this.props.value,
+		/** property value */     				attributeValue	:this.props.instanceData.value,
 		/** property name */      				attributeName	:this.props.property,
 		/** element input type */ 				elementType		:this.props.elementType,
 		/** Detect popup modal open state */	isOpen			:false,
@@ -100,9 +103,9 @@ class PopDialog extends Component {
 					onClick={ ()=>{ 
 						this.openPopUp();
 						//console.log( "Popoup clicked: ",this ); 
-					} } >
-
-					{ this.props.value } 
+					} } 
+				>
+					{ this.props.instanceData.value } 
 				</div>
 
 
@@ -130,7 +133,7 @@ class PopDialog extends Component {
 
 					<DialogActions>
 						<Button onClick={ ()=>{
-								this.setState({ attributeValue: this.props.value });
+								this.setState({ attributeValue: this.props.instanceData.value });
 								this.closePopUp() 
 							} }
 							style={ this.styleMatUI.closeButton }	
@@ -166,11 +169,12 @@ class PopDialog extends Component {
 		rootStore.dispatch({
 			type: 'UPDATE_CELL_VALUE',
 			payload: {
-				trackerId: this.state.trackerId,
+				trackerInstanceId: this.state.trackerInstanceIdId,
 				columnId: this.state.columnId,
-
-				//attribute: this.state.attributeName, // replced by columnId
 				value: this.state.attributeValue
+				// trackerInstanceIdId: 1,
+				// columnId: 7,
+				// value: 50
 			}
 		});
 	}
@@ -328,6 +332,10 @@ class PopDialog extends Component {
 		this.dispatchUpdate();
 	}
 
+	componentDidMount(){
+		console.log("trackerPopup didmount props:", this.props);
+	}
+
 }
 
 function PaperComponent(props) {
@@ -346,8 +354,37 @@ function PaperComponent0(props) {
   );
 }
 
+const mapStateToProps = (state, props) => {
+	//console.log('trackerPopup.jsx-mapStateToProps', state);
+
+	let trackerIndex = state.TrackInstaReducer.instanceData.findIndex( tracker => (
+		tracker.id === props.trackerInstanceId
+	) );
+
+	/*let column = state.TrackInstaReducer.instanceData[trackerIndex].data.map( column => (
+		column.columnId === props.columnId
+	) );
+	console.log("trackerPopup column:", column);*/
+
+	if( trackerIndex > -1 ){
+		return {
+			metaData: state.MetaReducer.metaData,
+
+			instanceData: state.TrackInstaReducer.instanceData[trackerIndex].data.find( column => (
+				column.columnId === props.columnId
+			) )
+
+			//configData: state.TrackConfigReducer.configData,
+		};
+	}
+	else
+		console.log("trackerPopup indexError")
+}
+
 /** NOT connected with store since this component is called only by the TrackerTableData */
-export default PopDialog;
+//export default PopDialog;
+export default connect(mapStateToProps)(PopDialog);
+
 //export default withStyles(styles)(PopDialog);
 //export default withStyles()(PopDialog);
 
