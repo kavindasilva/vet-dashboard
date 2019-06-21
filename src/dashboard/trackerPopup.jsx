@@ -43,7 +43,7 @@ import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/
 class PopDialog extends Component {
 	state = {
 		/** trackerInstaid. need in dispatching */	trackerInstanceIdId		:this.props.trackerInstanceId,
-		/** column id. need in dispatching */	columnId		:this.props.columnId,
+		/** column id. need in dispatching */	columnId		:this.props.instanceData.columnId,
 		/** property value */     				attributeValue	:this.props.instanceData.value,
 		/** property name */      				attributeName	:this.props.property,
 		/** element input type */ 				elementType		:this.props.elementType,
@@ -99,34 +99,14 @@ class PopDialog extends Component {
 	}
 
 	showPop( optionalAttribute1 ){
-		if(this.state.elementType ==="date")
-		return(
+		if(this.state.elementType ==="date" ){
+			console.log("tracker popup1MatUI:",this.props.instanceData.value);
+			return(
 			<TableCell style={ { minWidth: "20px", minHeight: "18px" } }>
 				<div style={this.styleTD}
 					
 					onClick={ ()=>{ 
-						if(this.state.elementType ==="date")
-							this.openPopUp();
-						else{
-							return(<Popup trigger={ <span > { this.state.attributeValue }  </span>  } position="bottom left">
-								{close => (
-									<div>
-										<a href="#" className="close" onClick={close}> &times; </a>
-										{ /*this.tempValue=this.state.name*/ }
-										<b>Change Name</b> <br/>
-										<input type="text" name="txtName" value={this.state.name} 
-											onChange={ e => this.setState({ name: e.target.value }) }  /> <br/>
-
-										<a onClick={close} >
-											<button onClick={ () => { this.setState({ name:this.state.name }); } } className="btn btn-sm btn-link" >OK</button>
-										</a>
-										{<a onClick={close} >
-											<button onClick={ () => this.setState({ name:this.props.name }) } className="btn btn-sm btn-link" >Cancel</button>
-										</a>}
-									</div>
-								)}
-							</Popup>)
-						}
+						this.openPopUp();
 						//console.log( "Popoup clicked: ",this ); 
 					} } 
 				>
@@ -185,17 +165,26 @@ class PopDialog extends Component {
 			
 			</TableCell>
 		);
-		else
+		}
+		else{
+			console.log("tracker popup2Pop:",this.props.instanceData.value);
+			
 			return(
 				<TableCell align={ (isNaN(this.props.instanceData.value))?'left':'right' } >
-				<Popup 
-					trigger={ <span > { this.props.instanceData.value }  </span>  } 
-					position="bottom right"
-				>
-					{this.showIntantPopup()}
-				</Popup>
+					<div style={this.styleTD}>
+						test{ String(this.props.instanceData.value) }
+						<Popup 
+							trigger={ <span > {
+								String(this.props.instanceData.value)
+								}  </span>  } 
+							position="bottom right"
+						>
+							{this.showIntantPopup()}
+						</Popup>
+					</div>
 				</TableCell>
 			)
+		}
 		
 	}
 
@@ -203,25 +192,13 @@ class PopDialog extends Component {
 		close => (
 			<div>
 				<a href="#" className="close" onClick={close}> &times; </a>
-				<b>Change { this.state.attributeName } </b> <br/>
+				<br/>
 				{ this.makeInputElements() } <br/>
-
-				<Button onClick={ ()=>{
-						this.setState({ attributeValue: this.props.instanceData.value });
-						close(); 
-					}
-				//close 
-				}
-					style={ this.styleMatUI.closeButton }	
-					variant="text"
-					color="primary"
-				>
-					Cancel
-				</Button>
 									
-				<Button onClick={ () => { 
+				<Button onClick={ (e) => { 
+						//e.preventDefault();
 						//this.setState({ attributeValue:this.state.attributeValue });
-						this.dispatchUpdate()
+						this.dispatchUpdate();
 						close(); 
 					} } 
 					variant="text" color="primary"
@@ -270,7 +247,7 @@ class PopDialog extends Component {
 	}
 
 	makeInputElements= () =>{
-			switch (this.state.elementType) {
+			switch (this.props.elementType) {
 				case "text": case "number":
 					return(
 						<TextField
@@ -302,7 +279,7 @@ class PopDialog extends Component {
 							</React.Fragment>
 						);
 
-					case "radio2":
+					case "radio2": // testing for small popup
 						return(
 							<Popup trigger={ <span > { this.state.name }  </span>  } position="bottom left">
 								{close => (
@@ -458,25 +435,12 @@ function PaperComponent(props) {
   );
 }
 
-function PaperComponent0(props) {
-  return (
-    <Draggable>
-      <Paper {...props} />
-    </Draggable>
-  );
-}
-
 const mapStateToProps = (state, props) => {
 	//console.log('trackerPopup.jsx-mapStateToProps', state);
 
 	let trackerIndex = state.TrackInstaReducer.instanceData.findIndex( tracker => (
 		tracker.id === props.trackerInstanceId
 	) );
-
-	/*let column = state.TrackInstaReducer.instanceData[trackerIndex].data.map( column => (
-		column.columnId === props.columnId
-	) );
-	console.log("trackerPopup column:", column);*/
 
 	if( trackerIndex > -1 ){
 		return {
