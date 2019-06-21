@@ -187,38 +187,59 @@ class PopDialog extends Component {
 		);
 		else
 			return(
-				<TableCell>
-				<Popup trigger={ <span > { this.state.attributeValue }  </span>  } position="bottom left">
-					{close => (
-						<div>
-							<a href="#" className="close" onClick={close}> &times; </a>
-							{ /*this.tempValue=this.state.name*/ }
-							<b>Change Name</b> <br/>
-							<input type="text" name="txtName" value={this.state.name} 
-								onChange={ e => this.setState({ name: e.target.value }) }  /> <br/>
-
-							<a onClick={close} >
-								<button onClick={ () => { this.setState({ name:this.state.name }); } } className="btn btn-sm btn-link" >OK</button>
-							</a>
-							{<a onClick={close} >
-								<button onClick={ () => this.setState({ name:this.props.name }) } className="btn btn-sm btn-link" >Cancel</button>
-							</a>}
-						</div>
-					)}
+				<TableCell align={ (isNaN(this.props.instanceData.value))?'left':'right' } >
+				<Popup 
+					trigger={ <span > { this.props.instanceData.value }  </span>  } 
+					position="bottom right"
+				>
+					{this.showIntantPopup()}
 				</Popup>
 				</TableCell>
 			)
 		
 	}
 
-	//showPop2(){
-		showpop2 =close => (
+	showIntantPopup = () => (
+		close => (
+			<div>
+				<a href="#" className="close" onClick={close}> &times; </a>
+				<b>Change { this.state.attributeName } </b> <br/>
+				{ this.makeInputElements() } <br/>
+
+				<Button onClick={ ()=>{
+						this.setState({ attributeValue: this.props.instanceData.value });
+						close(); 
+					}
+				//close 
+				}
+					style={ this.styleMatUI.closeButton }	
+					variant="text"
+					color="primary"
+				>
+					Cancel
+				</Button>
+									
+				<Button onClick={ () => { 
+						//this.setState({ attributeValue:this.state.attributeValue });
+						this.dispatchUpdate()
+						close(); 
+					} } 
+					variant="text" color="primary"
+					style={this.styleMatUI.closeButton} >OK
+				</Button>
+
+			</div>
+		)
+	)
+
+	Pop2_1 = () => (
+		close => (
 			<div>
 				<a href="#" className="close" onClick={close}> &times; </a>
 				{ /*this.tempValue=this.state.name*/ }
-				<b>Change Name</b> <br/>
-				<input type="text" name="txtName" value={this.state.name} 
-					onChange={ e => this.setState({ name: e.target.value }) }  /> <br/>
+				<b>Change { this.state.attributeName } </b> <br/>
+				<input type="text" name="txtName" value={this.state.attributeValue} 
+					onChange={ e => this.setState({ attributeValue: e.target.value }) }  /> <br/>
 
 				<a onClick={close} >
 					<button onClick={ () => { this.setState({ name:this.state.name }); } } className="btn btn-sm btn-link" >OK</button>
@@ -228,7 +249,7 @@ class PopDialog extends Component {
 				</a>}
 			</div>
 		)
-	//}
+	)
 
 	/**
 	 * Update the store
@@ -281,7 +302,7 @@ class PopDialog extends Component {
 							</React.Fragment>
 						);
 
-					case "radio":
+					case "radio2":
 						return(
 							<Popup trigger={ <span > { this.state.name }  </span>  } position="bottom left">
 								{close => (
@@ -303,7 +324,7 @@ class PopDialog extends Component {
 							</Popup>
 						)
 
-					case "radio1": //popup
+					case "radio": //popup
 						return (
 							<RadioGroup
 								name="genderSelect"
