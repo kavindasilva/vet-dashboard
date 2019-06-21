@@ -78,17 +78,19 @@ class TrackerTableData extends React.Component{
 							columnId={ columnInfo.columnId }
 							value={ columnInfo.value }
 
+							//trackerId={ this.props.instanceData.trackerId }
+							trackerId={ this.props.trackerId }
 							//property={  }
 
 							// map columnDataTypes with json columnType
 							elementType={ this.columnDataTypes[trackerInfo.type] }
 							//data={ { valueSet: this.columnPredefinedValues[6] } }
-						> 
+						>
 							{ columnInfo.value }
 						</TrackerPopup> 
 					)
 				}
-				else if( userPermission.read && !userPermission.write){
+				else if( userPermission.read ){
 					returnArr.push(
 						<TableCell key={trackerInfo.id}>
 							{ columnInfo.value } ro

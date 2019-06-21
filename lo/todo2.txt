@@ -9,4 +9,9 @@ try applying cell coloring rules
 add few data columns
 check drawer bug
 https://stackoverflow.com/questions/50664081/how-to-update-state-of-specific-object-nested-in-an-array  Tomasz Mularczyk
+https://stackoverflow.com/questions/175739/built-in-way-in-javascript-to-check-if-a-string-is-a-valid-number
+
+--jun 21
+
+
 
