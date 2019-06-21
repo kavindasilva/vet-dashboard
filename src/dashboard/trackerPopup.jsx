@@ -42,10 +42,6 @@ import moment from "moment";
 
 //import Checkbox from "./checkBoxComp";
 
-const evaluate=()=>{
-	
-}
-
 //export default class PopDialog extends Component {
 class PopDialog extends Component {
 	state = {
@@ -63,9 +59,12 @@ class PopDialog extends Component {
 		styleScript: {
 			//backgroundColor: "orange",
 			//backgroundColor: eval( this.props.configData.columns[4].rules[0].bgcolor ),
-			backgroundColor: {
-				...this.props.configData.rules[0]
-			}.bgcolor ,
+			// backgroundColor: {
+			// 	...this.props.configData.rules[0]
+			// }.bgcolor ,
+			// backgroundColor: this.evaluateExpr(
+			// 	{...this.props.configData.rules[0]}.bgcolor
+			// 	) ,
 		}
 
 	}
@@ -115,7 +114,9 @@ class PopDialog extends Component {
 			<React.Fragment>
 				<TableCell 
 					align={ (isNaN(this.props.instanceData.value))?'left':'right' } 
-					style={ this.state.styleScript }
+					//style={ this.state.styleScript }
+					//style={ { backgroundColor: this.evaluateExpr(10)} }
+					style={ { backgroundColor: this.evaluateExpr( {...this.props.configData.rules[0]}.conditions )} }
 				>
 					{ this.showPop() }
 				</TableCell>
@@ -227,25 +228,13 @@ class PopDialog extends Component {
 		)
 	)
 
-	/** not used for now */
-	Pop2_1 = () => (
-		close => (
-			<div>
-				<a href="#" className="close" onClick={close}> &times; </a>
-				{ /*this.tempValue=this.state.name*/ }
-				<b>Change { this.state.attributeName } </b> <br/>
-				<input type="text" name="txtName" value={this.state.attributeValue} 
-					onChange={ e => this.setState({ attributeValue: e.target.value }) }  /> <br/>
-
-				<a onClick={close} >
-					<button onClick={ () => { this.setState({ name:this.state.name }); } } className="btn btn-sm btn-link" >OK</button>
-				</a>
-				{<a onClick={close} >
-					<button onClick={ () => this.setState({ name:this.props.name }) } className="btn btn-sm btn-link" >Cancel</button>
-				</a>}
-			</div>
-		)
-	)
+	/** evaluates expressions and returns color */
+	evaluateExpr=( expr )=>{
+		if(expr < 10)
+			return "red"
+		else
+			return "blue"
+	}
 
 	/**
 	 * Update the store

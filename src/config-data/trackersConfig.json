@@ -86,7 +86,8 @@
                     {
                         "precedence": 1,
                         "bgcolor" : "orange",
-                        "conditions": "moment().endOf('day').fromNow()",
+                        "conditions": "8",
+                        "conditions3": "moment().endOf('day').fromNow()",
                         "conditions2": "moment().isAfter(moment(valueOfColumn(4)).add('3 days')",
                         "comment": "this is to test the eval function"
                     }
