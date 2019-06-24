@@ -13,6 +13,8 @@ import TrackerPopup from "../dashboard/trackerPopup";
 
 import TableCell from '@material-ui/core/TableCell';
 
+import { trackerColumnDataTypes } from "../common/constants";
+
 class TrackerTableData extends React.Component{
 	state = { 
         ...this.props.metaData, 
@@ -23,12 +25,13 @@ class TrackerTableData extends React.Component{
 	 * 
 	 * columnType: dataType
 	 * */
-	columnDataTypes = {
+	/*columnDataTypes = {
 		1: 'text',
 		2: 'number',
 		3: 'radio',
 		4: 'date'
-	}
+	}/* */
+	columnDataTypes = trackerColumnDataTypes;
 
 	componentDidMount(){
 		console.log("TrackerTableData - mount. props:", this.props); //ok

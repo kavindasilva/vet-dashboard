@@ -37,6 +37,8 @@ import rootReducer from "../reducers/index";
 import { rootStore } from "../stores/pets";
 import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/core";
 
+import { trackerPopupDefaultValues } from "../common/constants";
+
 import Moment from 'react-moment';
 import moment from "moment";
 
@@ -74,14 +76,15 @@ class PopDialog extends Component {
 	 * 
 	 * columnId: { predefined value set }
 	 * */
-	columnPredefinedValues ={
+	/*columnPredefinedValues ={
 		1: null,				// clinic name
 
 		4: 0,					// RF sent date
 		5: null,				// RF completed date
 		6: [ { name:true, value:"OK" }, { name:false, value:"NotCompleted"} ],		// completed status
 		7: 24					// total duration
-	}
+	}*/
+	columnPredefinedValues = trackerPopupDefaultValues;
 
 	/** style for the table's div content */
 	styleTD={
@@ -116,7 +119,7 @@ class PopDialog extends Component {
 					align={ (isNaN(this.props.instanceData.value))?'left':'right' } 
 					//style={ this.state.styleScript }
 					//style={ { backgroundColor: this.evaluateExpr(10)} }
-					style={ { backgroundColor: this.evaluateExpr( {...this.props.configData.rules[0]}.conditions )} }
+					style={ { backgroundColor: this.evaluateExpr( this.props.configData.rules )} }
 				>
 					{ this.showPop() }
 				</TableCell>
@@ -229,8 +232,25 @@ class PopDialog extends Component {
 	)
 
 	/** evaluates expressions and returns color */
-	evaluateExpr=( expr )=>{
-		if(expr < 10)
+	evaluateExpr=( rulesArr )=>{
+		console.log("trackerPopup expr:", rulesArr);
+		// [ { precedence, bgcolor, conditions } ]
+		// sort array by precedence descending
+		rulesArr=rulesArr.sort((a, b) => a.precedence > b.precedence).reverse();
+		
+		/** check if-else like */
+		rulesArr.forEach( condition => {
+			if(condition.conditions){
+				console.log("rules if", condition.bgcolor);
+				//break;
+			}
+			else{
+				console.log("rules else", condition.bgcolor);
+				// continue;
+			}
+		});
+
+		if(rulesArr < 10)
 			return "red"
 		else
 			return "blue"
@@ -438,6 +458,7 @@ class PopDialog extends Component {
 		//console.log("trackerPopup didmount propspart2:", {...this.props.configData.rules[0]}.bgcolor );
 		//console.log("trackerPopup didmount propspart2:", eval({...this.props.configData.rules[0]}.conditions) );
 		//console.log("trackerPopup didmount propspart2:", eval( 3+5 ) ); // ok 8
+		//console.log("trackerPopup didmount propspart2:", moment().isAfter(moment().valueOfColumn(4)).add('3 days') ); // ok 8
 	}
 
 }
@@ -485,7 +506,10 @@ const mapStateToProps = (state, props) => {
 
 			instanceData: state.TrackInstaReducer.instanceData[trackerIndex].data.find( column => (
 				column.columnId === props.columnId
-			) )
+			) ),
+
+			/** needs when evaluating conditions */
+			rowColumnData: state.TrackInstaReducer.instanceData[trackerIndex].data,
 
 			//configData: state.TrackConfigReducer.configData,
 		};

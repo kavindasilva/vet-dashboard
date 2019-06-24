@@ -12,6 +12,9 @@ https://stackoverflow.com/questions/50664081/how-to-update-state-of-specific-obj
 https://stackoverflow.com/questions/175739/built-in-way-in-javascript-to-check-if-a-string-is-a-valid-number
 
 --jun 21
+https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/
+https://stackoverflow.com/questions/43572436/sort-an-array-of-objects-in-react-and-render-them
+https://stackoverflow.com/questions/40560660/es6-how-to-import-const-after-export
 
 
 
