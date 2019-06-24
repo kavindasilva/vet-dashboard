@@ -49,17 +49,17 @@
                     {
                         "precedence": 1,
                         "bgcolor" : "amber",
-                        "conditions": "moment().isAfter(moment(valueOfColumn(4)).add('3 days')"
+                        "conditions": "moment().isAfter(moment(valueOfColumn(4)).add('3 days'))"
                     },
                     {
                         "precedence": 3,
                         "bgcolor" : "blue",
-                        "conditions": "moment().isAfter(moment(valueOfColumn(4)).add('6 days')"
+                        "conditions": "moment().isAfter(moment(valueOfColumn(4)).add('10 days'))"
                     },
                     {
                         "precedence": 2,
                         "bgcolor" : "red",
-                        "conditions": "moment().isAfter(moment(valueOfColumn(4)).add('5 days')"
+                        "conditions": "moment().isAfter(moment(valueOfColumn(4)).add('7 days'))"
                     }
                 ]
             },
