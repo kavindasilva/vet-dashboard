@@ -50,7 +50,7 @@ class TrackerHeader extends React.Component{
 			let usersVisibleColumns=(column.permissions.find( (userPermission) => 
 				userPermission.userId===this.props.metaData.userId,	
 			))
-			console.log("trackerHeader userVisible", usersVisibleColumns)
+			//console.log("trackerHeader userVisible", usersVisibleColumns)
 
 			// if usersVisibleColumns empty
 			if( usersVisibleColumns!==undefined && usersVisibleColumns.read ){

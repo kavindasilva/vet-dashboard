@@ -1,16 +1,5 @@
 import React, { Component } from "react";
 
-// https://react-day-picker.js.org/
-import DayPicker from 'react-day-picker';
-import 'react-day-picker/lib/style.css';
-
-import InfiniteCalendar from 'react-infinite-calendar';
-import 'react-infinite-calendar/styles.css';
-
-import DateFnsUtils from "@date-io/date-fns";
-import {format} from "date-fns";
-import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
-
 import '@y0c/react-datepicker/assets/styles/calendar.scss';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -28,6 +17,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 
 import Popup from "reactjs-popup";
+import CustomDatePicker from "../dashboard/datePicker";
+import InstantPopup from "../dashboard/instantPopup";
+//import SmallPop from "../dashboard/smallPop";
 
 import TableCell from '@material-ui/core/TableCell';
 
@@ -37,6 +29,12 @@ import rootReducer from "../reducers/index";
 import { rootStore } from "../stores/pets";
 import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/core";
 
+import DateFnsUtils from "@date-io/date-fns";
+import {format} from "date-fns";
+
+import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
+
+
 import { trackerPopupDefaultValues } from "../common/constants";
 
 import Moment from 'react-moment';
@@ -44,10 +42,19 @@ import moment from "moment";
 
 //import Checkbox from "./checkBoxComp";
 
-//export default class PopDialog extends Component {
-class PopDialog extends Component {
+// function getValueOfColumn(columnId){
+// 	let returnVal = props.rowColumnData.find( column => (
+// 		column.columnId === columnId
+// 	) );
+// 	console.log("constants getValueOfColumnns retVal:", returnVal);
+
+// 	return returnVal;
+// }
+
+//export default class TrackerPopup extends Component {
+class TrackerPopup extends Component {
 	state = {
-		/** trackerInstaid. need in dispatching */	trackerInstanceIdId		:this.props.trackerInstanceId,
+		/** trackerInstaid. need in dispatching */	trackerInstanceId		:this.props.trackerInstanceId,
 		/** column id. need in dispatching */	columnId		:this.props.instanceData.columnId,
 		/** property value */     				attributeValue	:this.props.instanceData.value,
 		/** property name */      				attributeName	:this.props.property,
@@ -133,113 +140,57 @@ class PopDialog extends Component {
 			//console.log("tracker popup1MatUI:",this.props.instanceData.value);
 			return(
 				<React.Fragment>
-					<div style={this.styleTD}
-						onClick={ ()=>{ 
-							this.openPopUp();
-							//console.log( "Popoup clicked: ",this ); 
-						} } 
-					>
-						{ String(this.props.instanceData.value) }
-					</div>
-
-					{/* popup modal UI */}
-					<Dialog
-						open={this.state.isOpen}
-						onClose={this.closePopUp}
-						aria-labelledby="draggable-dialog-title"
-					>
-						{/* <AppBar position="relative" ></AppBar> */}
-						<DialogTitle id="draggable-dialog-title" 
-						style={
-							{ ...this.styleMatUI.titleBarPrimary,  padding: "18px 24px 16px 24px" }
-						}
-						>
-
-							Change { this.state.attributeName }
-
-						</DialogTitle>
-
-						<DialogContent>
-								{ this.makeInputElements() }		
-						</DialogContent>
-
-						<DialogActions>
-							<Button onClick={ ()=>{
-									this.setState({ attributeValue: this.props.instanceData.value });
-									this.closePopUp() 
-								} }
-								style={ this.styleMatUI.closeButton }	
-								variant="text"
-								color="primary"
-							>
-								Cancel
-							</Button>
-												
-							<Button onClick={ () => { 
-									//this.setState({ attributeValue:this.state.attributeValue });
-									this.dispatchUpdate()
-									this.closePopUp(); 
-								} } 
-								variant="text" color="primary"
-								style={this.styleMatUI.closeButton} >OK
-							</Button>
-						</DialogActions>
-					</Dialog>
-				
+					<CustomDatePicker
+						trackerInstanceId={ this.props.trackerInstanceId }
+						columnId={ this.props.instanceData.columnId }
+						value={ this.props.instanceData.value }
+						elementType={ this.props.elementType }
+					/>
 				</React.Fragment>
+				
 			);
 		}
 		else{
 			return(
 				<div style={this.styleTD}>
 					test{ String(this.props.instanceData.value) }
-					<Popup 
-						trigger={ <span > {
-							String(this.props.instanceData.value)
-							}  </span>  } 
-						position="bottom right"
-					>
-						{this.showIntantPopup()}
-					</Popup>
+					
+						<InstantPopup
+							trackerInstanceId={ this.props.trackerInstanceId }
+							columnId={ this.props.instanceData.columnId }
+							value={ this.state.attributeValue }
+							elementType={ this.props.elementType }
+						>
+						</InstantPopup>
+					
 				</div>
 			);
 		}
 		
 	}
 
-	/** small popup box */
-	showIntantPopup = () => (
-		close => (
-			<div>
-				<a href="#" className="close" onClick={close}> &times; </a>
-				<br/>
-				{ this.makeInputElements() } <br/>
-									
-				<Button onClick={ (e) => { 
-						//e.preventDefault();
-						//this.setState({ attributeValue:this.state.attributeValue });
-						this.dispatchUpdate();
-						close(); 
-					} } 
-					variant="text" color="primary"
-					style={this.styleMatUI.closeButton} 
-				>
-					OK
-				</Button>
-
-			</div>
-		)
-	)
 
 	/** evaluates expressions and returns color */
 	evaluateExpr=( rulesArr )=>{
 		console.log("trackerPopup expr:", rulesArr);
 		// [ { precedence, bgcolor, conditions } ]
 		// sort array by precedence descending
-		rulesArr=rulesArr.sort((a, b) => a.precedence > b.precedence).reverse();
+		rulesArr=rulesArr.sort((a, b) => a.precedence > b.precedence);//.reverse();
+
+		//console.log("trackerPopup rowCol value:", getValueOfColumn(1) )
+		//console.log("trackerPopup rowCol value:", getValueOfColumn(this.props.rowColumnData,1) )
 		
 		/** check if-else like */
 		rulesArr.forEach( condition => {
+			//let evalResult=eval(condition.conditions);
+			//let evalResult=eval( String(condition.conditions) );
+
+			//console.log("rules conditions", evalResult  );
+			//console.log("rules conditions", condition.conditions  );
+			console.log("rules conditions", eval( condition.conditions )  );
+			//console.log("rules conditions", eval( String(moment().isAfter(moment('2019-02-05').add('1 days'))) ) ); // true
+			//console.log("rules conditions", eval( moment().isAfter(moment('2019-02-05').add('1 days')) ) ); // true
+
 			if(condition.conditions){
 				console.log("rules if", condition.bgcolor);
 				//break;
@@ -250,183 +201,10 @@ class PopDialog extends Component {
 			}
 		});
 
-		if(rulesArr < 10)
-			return "red"
-		else
-			return "blue"
-	}
-
-	/**
-	 * Update the store
-	 * DB update should be called in the reducer
-	 */
-	dispatchUpdate = () => {
-		rootStore.dispatch({
-			type: 'UPDATE_CELL_VALUE',
-			payload: {
-				trackerInstanceId: this.state.trackerInstanceIdId,
-				columnId: this.state.columnId,
-				value: this.state.attributeValue
-				// trackerInstanceIdId: 1,
-				// columnId: 7,
-				// value: 50
-			}
-		});
-	}
-
-	makeInputElements= () =>{
-			switch (this.props.elementType) {
-				case "text":
-				case "number":
-					return(
-						<TextField
-							label={ this.state.attributeName }
-							value={this.state.attributeValue}
-							onChange={ e => (
-								e.preventDefault(),
-								this.setState({ attributeValue: e.target.value }),
-								console.log('New Value', e.target.value, this.state.attributeValue)
-								) }
-
-							type={ this.state.elementType }
-						/>
-					);
-
-				case "select":
-					return (
-						<React.Fragment>
-							<br />
-							<Select value={ this.state.attributeValue } 
-								onChange={ e => this.setState({ attributeValue: e.target.value }) }
-								fullWidth={true}
-							>
-								{
-									this.props.data.valueSet.map( item =>
-											<MenuItem key={ item.value } value={ item.value } >{ item.label }</MenuItem>
-										)
-								}
-							</Select>
-						</React.Fragment>
-					);
-
-				case "radio2": // testing for small popup// not used for now
-					return(
-						<Popup trigger={ <span > { this.state.name }  </span>  } position="bottom left">
-							{close => (
-								<div>
-									<a href="#" className="close" onClick={close}> &times; </a>
-									{ /*this.tempValue=this.state.name*/ }
-									<b>Change Name</b> <br/>
-									<input type="text" name="txtName" value={this.state.name} 
-										onChange={ e => this.setState({ name: e.target.value }) }  /> <br/>
-
-									<a onClick={close} >
-										<button onClick={ () => { this.setState({ name:this.state.name }); } } className="btn btn-sm btn-link" >OK</button>
-									</a>
-									{<a onClick={close} >
-										<button onClick={ () => this.setState({ name:this.props.name }) } className="btn btn-sm btn-link" >Cancel</button>
-									</a>}
-								</div>
-							)}
-						</Popup>
-					)
-
-				case "radio": //popup
-					return (
-						<RadioGroup
-							name="genderSelect"
-							value={ this.state.attributeValue }
-							onChange={ (e)=>{
-								this.setState({ attributeValue: e.target.value});
-								console.log(e)
-								}
-							}
-						>	
-							{ this.columnPredefinedValues[6].map( val => (
-								<FormControlLabel
-									key={ String(val.name) }
-									value={ String(val.name) }
-									control={<Radio color="primary" />}
-									label={ val.value }
-									labelPlacement="end"
-									/>
-								)
-							)}
-							
-						</RadioGroup>
-					);
-
-				case "checkBox":
-					return(
-						<FormGroup>
-							{this.props.data.valueSet.map( (val, index) => (
-								<div key={index} >
-									<FormControlLabel
-										control={ 
-											<Checkbox
-												key={index}
-												checked={
-													this.state.attributeValue.includes( val.name)/**/
-												}
-												onChange={ (e)=>{
-													if(e.target.checked){
-															this.setState({
-																	attributeValue: [...this.state.attributeValue, e.target.value]
-															})
-													}
-													else{ 
-															var index = this.state.attributeValue.indexOf(e.target.value);
-															if (index > -1) {
-																//prevState.list.filter( itm=> itm != index);
-																let newArr = [...this.state.attributeValue]; //
-																	newArr.splice(index, 1);
-																	this.setState({
-																			attributeValue: newArr
-																	})
-															} 
-													}
-												}}
-
-												value={val.name}
-												color="primary"
-											/>
-										}
-										style={ { width: "100%" } }
-										label={ val.value }
-									>
-									</FormControlLabel>
-
-								</div>
-							)
-							)}
-						</FormGroup>
-					);
-
-				case "date":
-					return(
-						<MuiPickersUtilsProvider utils={DateFnsUtils} onClick={() =>  this.setState({ isOpen: true}) }>
-							<DatePicker
-								autoFocus = { false }
-								//onlyCalendar
-								//variant="inline"
-								format="yyyy/MM/dd"
-								label="Pet admitted date"
-								//helperText="No year selection"
-								value={ this.state.attributeValue }
-								onChange={ this.changeDatepickerValue }
-								onAccept={ this.acceptDatepickerValue }
-								open={ this.state.isOpen }
-								onOpen={ this.openDatepicker }
-								onClose={ this.closeDatepicker }
-								onClick={ this.openDatepicker }
-							/>
-							</MuiPickersUtilsProvider>
-					);
-				
-				default:
-					console.log("invalid case");
-					break;
-			}
+		// if(rulesArr < 10)
+		// 	return "red"
+		// else
+		// 	return "blue"
 	}
 
 	openPopUp = () => {
@@ -437,19 +215,6 @@ class PopDialog extends Component {
 		this.setState({ isOpen: false });
 	};
 
-	openDatepicker = () => {
-		this.setState({ isOpen: true})
-	}
-	closeDatepicker = () => {
-		this.setState({ isOpen: false})
-	}
-	changeDatepickerValue = (selectedDate) => {
-		this.setState({ attributeValue: format(new Date(selectedDate), 'yyyy-MM-dd') });
-	}
-
-	acceptDatepickerValue = () => {
-		this.dispatchUpdate();
-	}
 
 	componentDidMount(){
 		console.log("trackerPopup didmount props:", this.props);
@@ -463,13 +228,6 @@ class PopDialog extends Component {
 
 }
 
-function PaperComponent(props) {
-  return (
-    <Draggable>
-      <Paper {...props} />
-    </Draggable>
-  );
-}
 
 const mapStateToProps = (state, props) => {
 	//console.log('trackerPopup.jsx-mapStateToProps', state);
@@ -524,9 +282,9 @@ const mapStateToProps = (state, props) => {
 }
 
 /** NOT connected with store since this component is called only by the TrackerTableData */
-//export default PopDialog;
-export default connect(mapStateToProps)(PopDialog);
+//export default TrackerPopup;
+export default connect(mapStateToProps)(TrackerPopup);
 
-//export default withStyles(styles)(PopDialog);
-//export default withStyles()(PopDialog);
+//export default withStyles(styles)(TrackerPopup);
+//export default withStyles()(TrackerPopup);
 
