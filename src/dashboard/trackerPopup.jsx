@@ -207,15 +207,6 @@ class TrackerPopup extends Component {
 		// 	return "blue"
 	}
 
-	openPopUp = () => {
-		this.setState({ isOpen: true });
-	};
-
-	closePopUp = () => {
-		this.setState({ isOpen: false });
-	};
-
-
 	componentDidMount(){
 		console.log("trackerPopup didmount props:", this.props);
 		//console.log("trackerPopup didmount moment:", moment().endOf('day').fromNow() ); // ok  in 8 hours

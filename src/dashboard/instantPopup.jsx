@@ -57,15 +57,16 @@ class InstantPopup extends React.Component{
         trackerInstanceId: this.props.trackerInstanceId,
         columnId: this.props.columnId,
         isOpen: false,
-        attributeValue: this.props.value,
+        //attributeValue: this.props.value,
+        attributeValue: this.props.popValue.value,
     }
 
     render(){
         return(
             <React.Fragment>
                 <Popup 
-                    trigger={ <span > {
-                        String(this.props.value)
+                    trigger={ <span > T{
+                        String( this.props.popValue.value )
                         }  </span>  } 
                     position="bottom right"
                 >
@@ -232,7 +233,12 @@ class InstantPopup extends React.Component{
 
 const mapStateToProps = (state, props) => {
     return {
-        dateData: props
+        popData: props,
+        popValue: state.TrackInstaReducer.instanceData.find( tracker => (
+            tracker.id === props.trackerInstanceId
+        ) ).data.find( col => (
+            col.columnId === props.columnId
+        ) )
     };
 }
 

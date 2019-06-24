@@ -59,7 +59,7 @@ class CustomDatePicker extends React.Component{
                         //console.log( "Popoup clicked: ",this ); 
                         ) } 
                 >
-                    { String(this.props.value) }
+                    { String(this.props.dateValue.value) }
                 </div>
 
                 {/* popup modal UI */}
@@ -172,7 +172,12 @@ class CustomDatePicker extends React.Component{
 
 const mapStateToProps = (state, props) => {
     return {
-        dateData: props
+        dateData: props,
+        dateValue: state.TrackInstaReducer.instanceData.find( tracker => (
+            tracker.id === props.trackerInstanceId
+        ) ).data.find( col => (
+            col.columnId === props.columnId
+        ) )
     };
 }
 
