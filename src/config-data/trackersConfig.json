@@ -59,7 +59,7 @@
                     {
                         "precedence": 2,
                         "bgcolor" : "red",
-                        "conditions": "Date.now"
+                        "conditions": "moment().endOf('day').fromNow()"
                     }
                 ]
             },

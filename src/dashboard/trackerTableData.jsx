@@ -68,12 +68,7 @@ class TrackerTableData extends React.Component{
 				//console.log("TrackerTableData colInfo", columnInfo) 
 				// result: columnId, value
 
-				if ( userPermission.read && userPermission.write ) {
-					// returnArr.push( 
-					// 	<td key={trackerInfo.id}> 
-					// 		{ columnInfo.value }
-					// 	</td> 
-					// )
+				if ( userPermission.read && userPermission.write ) { // read & write
 					returnArr.push( 
 						<TrackerPopup
 							key={trackerInfo.id}
@@ -93,7 +88,7 @@ class TrackerTableData extends React.Component{
 						</TrackerPopup> 
 					)
 				}
-				else if( userPermission.read ){
+				else if( userPermission.read ){ // read only permission
 					returnArr.push(
 						<TableCell key={trackerInfo.id}>
 							{ columnInfo.value } ro
@@ -113,11 +108,14 @@ const mapStateToProps = (state, props) => {
 	console.log('TrackerTableData.jsx-mapStateToProps', state);
 	return {
 		//...props,
+		metaData: state.MetaReducer.metaData,
+
+		/** particular tracker related config data */
 		configData: state.TrackConfigReducer.configData.find(tracker => (
 			tracker.id === props.trackerId
 		)),
-		metaData: state.MetaReducer.metaData,
 
+		/** particular tracker related instance data */
 		instanceData: state.TrackInstaReducer.instanceData.find(record => (
 			record.id === props.recordId
 		)),

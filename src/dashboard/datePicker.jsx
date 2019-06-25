@@ -46,10 +46,13 @@ class CustomDatePicker extends React.Component{
         trackerInstanceId: this.props.trackerInstanceId,
         columnId: this.props.columnId,
         isOpen: this.props.show,
-        attributeValue: this.props.value,
+        attributeValue: this.props.dateValue.value,
+        //attributeValue: this.props.value,
     }
 
     render(){
+        console.log('datePicker: Rendering cell content');
+        
         return(
             <React.Fragment>
                 <div style={this.styleTD}
@@ -104,7 +107,7 @@ class CustomDatePicker extends React.Component{
 
                     <DialogActions>
                         <Button onClick={ ()=>{
-                                this.setState({ attributeValue: this.props.value });
+                                this.setState({ attributeValue: this.props.dateValue.value });
                                 this.closePopUp() 
                             } }
                             style={ this.styleMatUI.closeButton }	

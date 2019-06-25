@@ -57,15 +57,37 @@ class InstantPopup extends React.Component{
         trackerInstanceId: this.props.trackerInstanceId,
         columnId: this.props.columnId,
         isOpen: false,
-        //attributeValue: this.props.value,
         attributeValue: this.props.popValue.value,
+        //attributeValue: null //this.props.popValue.value,
+    }
+
+    render2(){
+        return(
+            <React.Fragment>
+                <Button onClick={ (e) => { 
+						//e.preventDefault();
+						//this.setState({ attributeValue:this.state.attributeValue });
+						this.dispatchUpdate();
+						//close(); 
+					} } 
+					variant="text" color="primary"
+					style={this.styleMatUI.closeButton} 
+				>
+					OK
+				</Button>
+                <div>
+                    { this.props.popValue.value }
+                    { this.makeInputElements() }
+                </div>
+            </React.Fragment>
+        );
     }
 
     render(){
         return(
             <React.Fragment>
                 <Popup 
-                    trigger={ <span > T{
+                    trigger={ <span style={ {width: "100%" } }> T{
                         String( this.props.popValue.value )
                         }  </span>  } 
                     position="bottom right"
@@ -86,7 +108,7 @@ class InstantPopup extends React.Component{
 				{ this.makeInputElements() } <br/>
 									
 				<Button onClick={ (e) => { 
-						//e.preventDefault();
+						e.preventDefault();
 						//this.setState({ attributeValue:this.state.attributeValue });
 						this.dispatchUpdate();
 						close(); 

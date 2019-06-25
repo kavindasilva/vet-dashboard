@@ -40,12 +40,12 @@ class TrackerTableRow extends React.Component{
 			//<tr> <td>00</td> <td>00</td> <td>00</td> </tr>
 		)
     }
-	TrackerTableRow
+	//TrackerTableRow
 	showTableRows(){
 		let returnArr=[];
 		this.props.instancesData.map( record => {
 	
-			if( 1 ){
+			if( 1 ){ // kept to add user permissions row-wise later
 				returnArr.push(
 					<tr key={record.id} >
 						<TrackerTableData 
@@ -70,10 +70,12 @@ const mapStateToProps = (state, props) => {
 		metaData: state.MetaReducer.metaData,
 
 		//trackerConfigData: state.TrackConfigReducer.configData,
+		/** particular tracker related config data */
 		trackerConfigData: state.TrackConfigReducer.configData.find( trackerConfigs => (
 			trackerConfigs.id===props.trackerId
 		) ),
 
+		/** particular tracker instance related instance data */
 		instancesData: state.TrackInstaReducer.instanceData.filter(instance => (
 			instance.trackerId === props.trackerId
 		)),

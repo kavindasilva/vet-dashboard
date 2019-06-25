@@ -141,19 +141,19 @@ class Trackers extends React.Component{
                 
             )),
             
-            console.log("showCols userVisibleCols", usersVisibleColumns),
+            //console.log("showCols userVisibleCols", usersVisibleColumns),
             //this.printColumn(column, usersVisibleColumns, trackerInfo.id)
 
             userTrackerPermissions.push( usersVisibleColumns )
 
         ) );
-        console.log("showCols userPermissions", userTrackerPermissions)
+        //console.log("showCols userPermissions", userTrackerPermissions)
         //this.dispatchPermissions()
 
     }
 
     /**
-     * Merges two arrays, and return new array
+     * Merges two arrays, and return new array.
      * source: https://plainjs.com/javascript/utilities/merge-two-javascript-objects-19/
      */
     objectMerge(obj, src) {
@@ -177,8 +177,12 @@ class Trackers extends React.Component{
 const mapStateToProps = state => {
 	console.log('trackers.jsx-mapStateToProps', state);
 	return {
-		metaData: state.MetaReducer.metaData,
-		instanceData: state.TrackInstaReducer.instanceData,
+        metaData: state.MetaReducer.metaData,
+        
+        /** all the tracker instances related data */
+        instanceData: state.TrackInstaReducer.instanceData,
+        
+        /** all the trackers configuration related data */
 		configData: state.TrackConfigReducer.configData,
 	};
 }

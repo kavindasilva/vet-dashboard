@@ -119,7 +119,7 @@ class TrackerPopup extends Component {
 	}	
 
   	render() {
-		console.log('Rendering cell content');
+		console.log('trackerPopup: Rendering cell content');
 		return (
 			<React.Fragment>
 				<TableCell 
@@ -182,13 +182,19 @@ class TrackerPopup extends Component {
 		
 		/** check if-else like */
 		rulesArr.forEach( condition => {
+			//let stmt = moment().endOf('day').fromNow();
+			let stmt = "var moment="+moment+"; alert( moment().endOf('day').fromNow() )";
+			//stmt = (condition.conditions); //.toString();
 			//let evalResult=eval(condition.conditions);
 			//let evalResult=eval( String(condition.conditions) );
 
-			//console.log("rules conditions", evalResult  );
+			//console.log("rules conditions", stmt  );
+			//console.log("rules conditions", eval(stmt)  );
 			//console.log("rules conditions", condition.conditions  );
-			console.log("rules conditions", eval( condition.conditions )  );
-			//console.log("rules conditions", eval( String(moment().isAfter(moment('2019-02-05').add('1 days'))) ) ); // true
+			//console.log("rules conditions", eval( condition.conditions )  );
+			//console.log("rules conditions", eval( "moment().endOf('day').fromNow();" ) ); //
+			//console.log("rules conditions", eval("moment().isAfter(moment('2019-02-05').add('1 days'))") ); // true
+			//console.log("rules conditions EoD", moment().endOf('day').fromNow()  ); // true
 			//console.log("rules conditions", eval( moment().isAfter(moment('2019-02-05').add('1 days')) ) ); // true
 
 			if(condition.conditions){
@@ -208,13 +214,14 @@ class TrackerPopup extends Component {
 	}
 
 	componentDidMount(){
-		console.log("trackerPopup didmount props:", this.props);
+		//console.log("trackerPopup didmount props:", this.props);
 		//console.log("trackerPopup didmount moment:", moment().endOf('day').fromNow() ); // ok  in 8 hours
 		//console.log("trackerPopup didmount moment:", Moment.endOf('day').fromNow() );
 		//console.log("trackerPopup didmount propspart2:", {...this.props.configData.rules[0]}.bgcolor );
 		//console.log("trackerPopup didmount propspart2:", eval({...this.props.configData.rules[0]}.conditions) );
 		//console.log("trackerPopup didmount propspart2:", eval( 3+5 ) ); // ok 8
-		//console.log("trackerPopup didmount propspart2:", moment().isAfter(moment().valueOfColumn(4)).add('3 days') ); // ok 8
+		//console.log("trackerPopup didmount propspart2:", moment().isAfter(moment().valueOfColumn(4)).add('3 days') ); // 
+
 	}
 
 }
@@ -253,11 +260,15 @@ const mapStateToProps = (state, props) => {
 
 			metaData: state.MetaReducer.metaData,
 
+			/** tracker instance's particular column's data */
 			instanceData: state.TrackInstaReducer.instanceData[trackerIndex].data.find( column => (
 				column.columnId === props.columnId
 			) ),
 
-			/** needs when evaluating conditions */
+			/**
+			 * particular tracker instance's all column data.
+			 * needs when evaluating conditions 
+			 * */
 			rowColumnData: state.TrackInstaReducer.instanceData[trackerIndex].data,
 
 			//configData: state.TrackConfigReducer.configData,
