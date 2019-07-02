@@ -21,6 +21,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import Trackers from "../dashboard/trackers";
 import Phoenix from "../phoenix/records";
 import DrawerBody from "../common/drawerBody"
+import Hubspot1 from "../components/pets"
+import UserComponent from "../users/users"
 
 import { withStyles } from '@material-ui/core/styles';
 const drawerWidth = 240;
@@ -98,11 +100,15 @@ class MiniDrawer extends React.Component {
         { value:"All Trackers", icon:<InboxIcon />, name:'allTrackers' },
         { value:"API failures", icon:<InboxIcon />, name:'apiFailures' },
         { value:"Phoenix", icon:<InboxIcon />, name:'phoenix' },
+        { value:"Hubspot temp", icon:<InboxIcon />, name:'hubtemp' },
+
+        { value:"Users", icon:<InboxIcon />, name:'users' },
     ];
 
     state = {
         drawerOpened: false,
-        selectedMenuItem: 'allTrackers',
+        //selectedMenuItem: 'allTrackers',
+        selectedMenuItem: 'users',
     }
 
     setOpen = (boolValue) =>{
@@ -119,10 +125,14 @@ class MiniDrawer extends React.Component {
 
     showBodyContent = () => {
         //console.log("showBodyContent selectedMenuItem:", this.state.selectedMenuItem);
-        if(this.state.selectedMenuItem=="allTrackers")
+        if(this.state.selectedMenuItem==="allTrackers")
             return( <Trackers /> );
-        else if(this.state.selectedMenuItem=="phoenix")
+        else if(this.state.selectedMenuItem==="phoenix")
             return( <Phoenix /> );
+        else if(this.state.selectedMenuItem==="hubtemp")
+            return( <Hubspot1 /> );
+        else if(this.state.selectedMenuItem==="users")
+            return( <UserComponent /> );
         else
             return( this.defaultView() );
     }

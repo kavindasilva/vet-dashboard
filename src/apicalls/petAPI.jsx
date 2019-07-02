@@ -15,7 +15,8 @@ const DEFAULT_QUERY = 'redux';
 
 
 const client = new ApolloClient({
-  uri: 'http://ontrack.dev.io/rest/apiv/list/hubspot',
+  //uri: 'http://ontrack.dev.io/rest/apiv/list/hubspot',
+  uri: 'http://ontrack.dev.io/api/list/hubspot',
 })
 
 class petAPI extends React.Component{

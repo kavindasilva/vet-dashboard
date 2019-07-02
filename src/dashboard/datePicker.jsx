@@ -175,7 +175,7 @@ class CustomDatePicker extends React.Component{
 
 const mapStateToProps = (state, props) => {
     return {
-        dateData: props,
+        //dateData: props,
         dateValue: state.TrackInstaReducer.instanceData.find( tracker => (
             tracker.id === props.trackerInstanceId
         ) ).data.find( col => (

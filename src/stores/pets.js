@@ -13,7 +13,8 @@ const initialState = {
     PetReducer: {
         tickets: [
             {id: 10000}
-        ]
+        ],
+        admissions: []
     },
 
     PhoenixReducer:{
@@ -27,6 +28,10 @@ const initialState = {
 
     TrackInstaReducer:{
         instanceData: trackerInstances
+    },
+
+    UserConfigReducer:{
+        userData: null
     },
 
     /** This is for storing meta-data related to user and sessions */

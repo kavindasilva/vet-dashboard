@@ -3,12 +3,12 @@ import React from 'react';
 import axios from 'axios';
 
 
-const APIlistUrl = 'http://ontrack.dev.io/rest/apiv/list/DB';
-const APIselectUrl = 'http://ontrack.dev.io/rest/apiv/select/';
+const APIlistUrl = 'http://ontrack.dev.io/api/list/DB';
+const APIselectUrl = 'http://ontrack.dev.io/api/select/';
 //const APIauthenticateUrl = "http://ontrack.dev.io/api/user/login/";
 //const APIauthenticateUrl = "http://ontrack.dev.io/login/user/login";
 const APIauthenticateUrl = "http://ontrack.dev.io/login/user/login";
-const altAPIauthenticateUrl = "http://ontrack.dev.io/rest/apiv/signin";
+const altAPIauthenticateUrl = "http://ontrack.dev.io/api/signin";
 
 
 class loginAPI extends React.Component{

@@ -1,0 +1,35 @@
+[
+    {
+        "id": 5,
+        "name": "config user21 adm",
+        "type": "admin",
+
+        "trackers":[
+            1,
+            2
+        ]
+    },
+
+
+    {
+        "id": 22,
+        "name": "config 22user std",
+        "type": "standard",
+
+        "trackers":[
+            1
+        ]
+    },
+
+
+    {
+        "id": 6,
+        "name": "config user23 adm",
+        "type": "admin",
+
+        "trackers":[
+            1,
+            2
+        ]
+    }
+]

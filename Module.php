@@ -25,8 +25,11 @@ class Module implements ModuleDefinitionInterface
 
         $loader->registerNamespaces(
             [
-                'Vetstoria\OnTrack\Admin\Controllers' => __DIR__."/../Admin/Controllers/",
-                'Vetstoria\OnTrack\Admin\Models' => __DIR__."/../app/Admin/Models/",
+                //'Vetstoria\OnTrack\Admin\Controllers' => __DIR__."/../Admin/Controllers/",
+                //'Vetstoria\OnTrack\Admin\Models' => __DIR__."/../app/Admin/Models/",
+                
+                'Vetstoria\OnTrack\Admin\Controllers' => __DIR__."/../Admin1/Controllers/",
+                'Vetstoria\OnTrack\Admin\Models' => __DIR__."/../app/Admin1/Models/",
             ]
         );
 

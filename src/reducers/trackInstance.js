@@ -5,7 +5,7 @@ import trackerInstances from "../config-data/trackerInstance";
 
 const TrackInstaReducer = (state, action) => {
     console.log("TrackInstaReducer: state: ", state, "\naction: ", action)
-    let newState = {
+    let newState0 = {
         TrackerInstaReducer:{
             instanceData: false,
         }
@@ -33,16 +33,7 @@ const TrackInstaReducer = (state, action) => {
                     newState.instanceData[trackerIndex].data[columnIndex].value = action.payload.value;
                 }
                 else
-                    console.log("trackerInstance: err1")
-
-                /*.data.map(columnRecord => {
-                        let newRecord = {};
-                        
-                    if( columnRecord.columnId === action.payload.columnId ) { //get column
-                        newState.instanceData[recordIndex].data.value = 
-                    }
-                })*/
-                
+                    console.log("trackerInstance: err1")                
             }
             else
                 console.log("trackerInstance: err1")
@@ -51,7 +42,7 @@ const TrackInstaReducer = (state, action) => {
             return newState;
 
         default:
-            console.log("TrackInstaReducer default: ", newState);
+            console.log("TrackInstaReducer default: ", newState0);
             return state;
     }
 

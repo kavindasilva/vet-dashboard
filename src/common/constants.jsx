@@ -41,6 +41,16 @@ export const trackerPopupDefaultValues={
     7: 24					// total duration
 };
 
+/**
+ * System user types
+ * { id:<int: DB>, type:string, label:string }
+ */
+export const userTypes=[
+    { id:3, type:"admin", label:"Admini" },
+    { id:5, type:"partner", label:"Partner" },
+    { id:102, type:"rest", label:"Restrict" },
+];
+
 /** */
 // export function getValueOfColumn(columnId){
 // //export function getValueOfColumn(rowColumnData, columnId){

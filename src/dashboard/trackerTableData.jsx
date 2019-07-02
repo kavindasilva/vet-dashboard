@@ -105,7 +105,7 @@ class TrackerTableData extends React.Component{
 }
 
 const mapStateToProps = (state, props) => {
-	console.log('TrackerTableData.jsx-mapStateToProps', state);
+	//console.log('TrackerTableData.jsx-mapStateToProps', state);
 	return {
 		//...props,
 		metaData: state.MetaReducer.metaData,

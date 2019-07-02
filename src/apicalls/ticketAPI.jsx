@@ -7,10 +7,12 @@ import axios from 'axios';
 
 const DEFAULT_QUERY = 'redux';
 
-const APIlistUrl = 'http://ontrack.dev.io/rest/apiv/list/DB';
-const APIselectUrl = 'http://ontrack.dev.io/rest/apiv/select/';
-const APIsaveUrl = "http://ontrack.dev.io/rest/apiv/insertdata";
+const APIlistUrl = 'http://ontrack.dev.io/api/list/DB';
+const APIselectUrl = 'http://ontrack.dev.io/api/select/';
 
+
+//const APIsaveUrl = "http://ontrack.dev.io/rest/apiv/insertdata";
+const APIsaveUrl = "http://ontrack.dev.io/api/insertdata/x"; // x to add garbage para
 
 
 class ticketAPI extends React.Component{
