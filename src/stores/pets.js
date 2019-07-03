@@ -27,7 +27,8 @@ const initialState = {
     },
 
     TrackInstaReducer:{
-        instanceData: trackerInstances
+        instanceData: trackerInstances,
+        hubspotTickets: null,
     },
 
     UserConfigReducer:{

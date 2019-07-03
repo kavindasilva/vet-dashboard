@@ -14,10 +14,10 @@ const TrackInstaReducer = (state, action) => {
     if(state===undefined || isUndefined(state))
         state=null;
 
+    let newState = { ...state };    
+
     switch (action.type) {
         case 'UPDATE_CELL_VALUE':
-            let newState = { ...state };
-            
             // get tracker's index
             let trackerIndex = state.instanceData.findIndex( tracker=> (
                 tracker.id === action.payload.trackerInstanceId
@@ -39,6 +39,17 @@ const TrackInstaReducer = (state, action) => {
                 console.log("trackerInstance: err1")
 
             console.log("TrackInstaReducer UPDATE_CELL_VALUE: ", newState);
+            return newState;
+
+        case 'GET_HUBSPOT_TICKETS':
+            newState = {
+                ...state,
+                hubspotTickets: action.payload.ticketData.map(
+                    record => { return record }
+                )
+            };
+
+            console.log("TrackInstaReducer GET_HUBSPOT_TICKETS: ", newState);
             return newState;
 
         default:

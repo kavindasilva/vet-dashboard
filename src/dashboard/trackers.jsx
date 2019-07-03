@@ -20,8 +20,12 @@ import Paper from '@material-ui/core/Paper';
 
 import Menu from "../common/menu";
 
+import ticketAPI from "../apicalls/ticketAPI";
+
 import TrackerTableHeader from "../dashboard/trackerHeader";
 import TrackerTableRow from "../dashboard/trackerTableRow";
+
+const ticketAPIobj = new ticketAPI();
 
 const styles = theme => ({
 	root: {
@@ -46,6 +50,7 @@ class Trackers extends React.Component{
 	//state = { Meta }
 
 	componentDidMount(){
+        this.loadTickets(0);
 		console.log("Trackers - mount. props:", this.props); //ok
 		//console.log("Trackers - mount. props.metaData:", this.props.metaData); 
 	}
@@ -170,6 +175,31 @@ class Trackers extends React.Component{
 				permissions: {...this.state.serverData, isLoggedIn: true }
 			}
 		});
+    }
+    
+    loadTickets = ( ticketid ) => {
+		console.log("trackers - loadTickets");
+		let data = ticketAPIobj.callHubspot( )
+			// .then( response => {
+			// 	console.log("trackers.jsx - Tresponse1: ",response);
+
+			// 	this.setState({ petAdmission: response.data })
+			// 	return response;
+
+			// })
+			.then(
+				response => {
+					console.log("trackers.jsx - Tresponse2: ", response);
+
+					rootStore.dispatch({
+						type: 'GET_HUBSPOT_TICKETS',
+						payload: {
+							ticketData: response.data
+						}
+					})
+
+				}
+			) /* */
 	}
 
 }
