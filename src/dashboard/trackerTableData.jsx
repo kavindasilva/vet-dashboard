@@ -51,7 +51,7 @@ class TrackerTableData extends React.Component{
 		returnArr.push(
 			<TableCell >
 				{
-					this.props.instanceData.hb.clinic_name
+					this.props.instanceData.hubData.clinic_name
 				}
 			</TableCell>
 		)
@@ -117,12 +117,14 @@ const mapStateToProps = (state, props) => {
 		record.id === props.recordId
 	));
 
-	let hubspotData={ hb: {clinic_name:"SampleClinic1", con_value:"STATIC" } };
-	// if(state.TrackInstaReducer.hubspotTickets !== null){
-	// 	hubspotData = state.TrackInstaReducer.hubspotTickets.find(record => (
-	// 		record.id === props.recordId
-	// 	));
-	// }
+	let hubspotData={ hubData: {clinic_name:"SampleClinic1", con_value:"STATIC" } };
+	if(state.TrackInstaReducer.hubspotTickets !== null){
+		hubspotData = state.TrackInstaReducer.hubspotTickets.find(record => (
+			record.clinic_name === instanceData.data.find( column => (
+				column.columnId===1
+			) ).value
+		));
+	}
 	console.log('TrackerTableData.jsx-mapStateToProps', state);
 
 	return {
@@ -135,7 +137,7 @@ const mapStateToProps = (state, props) => {
 		)),
 
 		/** particular tracker related instance data && hubspot data */
-		instanceData: { ...instanceData, ...hubspotData },
+		instanceData: { ...instanceData, hubData:{ ...hubspotData} },
 
 
 		
