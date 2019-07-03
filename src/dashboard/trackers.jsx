@@ -179,7 +179,7 @@ class Trackers extends React.Component{
     
     loadTickets = ( ticketid ) => {
 		console.log("trackers - loadTickets");
-		let data = ticketAPIobj.callHubspot( )
+		let data = ticketAPIobj.callHubspot( 0,0 )
 			// .then( response => {
 			// 	console.log("trackers.jsx - Tresponse1: ",response);
 
@@ -194,7 +194,7 @@ class Trackers extends React.Component{
 					rootStore.dispatch({
 						type: 'GET_HUBSPOT_TICKETS',
 						payload: {
-							ticketData: response.data
+							ticketData: response.data.tickets
 						}
 					})
 
