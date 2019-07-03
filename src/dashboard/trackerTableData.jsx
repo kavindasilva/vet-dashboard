@@ -48,6 +48,14 @@ class TrackerTableData extends React.Component{
 	showTableData(){
 		let returnArr=[]; 
 
+		returnArr.push(
+			<TableCell >
+				{
+					this.props.instanceData.hb.clinic_name
+				}
+			</TableCell>
+		)
+
 		this.props.configData.columns.forEach( trackerInfo => { //each column of trackerConfig
 			
 			/** store user permissions of CURRENT COLUMN of trackerConfig user  */
@@ -105,7 +113,18 @@ class TrackerTableData extends React.Component{
 }
 
 const mapStateToProps = (state, props) => {
-	//console.log('TrackerTableData.jsx-mapStateToProps', state);
+	let instanceData = state.TrackInstaReducer.instanceData.find(record => (
+		record.id === props.recordId
+	));
+
+	let hubspotData={ hb: {clinic_name:"SampleClinic1", con_value:"STATIC" } };
+	// if(state.TrackInstaReducer.hubspotTickets !== null){
+	// 	hubspotData = state.TrackInstaReducer.hubspotTickets.find(record => (
+	// 		record.id === props.recordId
+	// 	));
+	// }
+	console.log('TrackerTableData.jsx-mapStateToProps', state);
+
 	return {
 		//...props,
 		metaData: state.MetaReducer.metaData,
@@ -115,10 +134,11 @@ const mapStateToProps = (state, props) => {
 			tracker.id === props.trackerId
 		)),
 
-		/** particular tracker related instance data */
-		instanceData: state.TrackInstaReducer.instanceData.find(record => (
-			record.id === props.recordId
-		)),
+		/** particular tracker related instance data && hubspot data */
+		instanceData: { ...instanceData, ...hubspotData },
+
+
+		
 	};
 }
 

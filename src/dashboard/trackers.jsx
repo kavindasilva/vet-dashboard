@@ -97,7 +97,6 @@ class Trackers extends React.Component{
 
                 {
                     this.props.configData.map( tracker => (
-                        this.getUserPermittedColumns(tracker),
 
                         this.state.tabValue === tracker.id && 
                         <React.Fragment key={ tracker.id } >
@@ -130,32 +129,6 @@ class Trackers extends React.Component{
 		);
     }
     
-    /** 
-     * Gets current user authorized column details
-     * */
-    getUserPermittedColumns( trackerInfo ){
-        let userTrackerPermissions=[];
-        let usersVisibleColumns=[];
-
-        trackerInfo.columns.map( column => (
-            //console.log("col:", column),
-            usersVisibleColumns=[],
-
-            usersVisibleColumns=(column.permissions.find( (userPermission, i, arr) => 
-                userPermission.id===this.props.metaData.userId,
-                
-            )),
-            
-            //console.log("showCols userVisibleCols", usersVisibleColumns),
-            //this.printColumn(column, usersVisibleColumns, trackerInfo.id)
-
-            userTrackerPermissions.push( usersVisibleColumns )
-
-        ) );
-        //console.log("showCols userPermissions", userTrackerPermissions)
-        //this.dispatchPermissions()
-
-    }
 
     /**
      * Merges two arrays, and return new array.
@@ -180,13 +153,6 @@ class Trackers extends React.Component{
     loadTickets = ( ticketid ) => {
 		console.log("trackers - loadTickets");
 		let data = ticketAPIobj.callHubspot( 0,0 )
-			// .then( response => {
-			// 	console.log("trackers.jsx - Tresponse1: ",response);
-
-			// 	this.setState({ petAdmission: response.data })
-			// 	return response;
-
-			// })
 			.then(
 				response => {
 					console.log("trackers.jsx - Tresponse2: ", response);

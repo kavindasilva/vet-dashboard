@@ -40,9 +40,11 @@ class TrackerHeader extends React.Component{
 
 	showTableHeaders(){
 		let returnArr=[ ];
-		//return( <tr></tr> );
+		returnArr.push(
+			<TableCell>HS_con_value</TableCell> 
+		);
+		
 		//console.log("trackerHeader trackerData:", this.props.trackerConfigData)
-
 		//console.log("matched trackerID:", this.props.trackerConfigData.id)
 
 		this.props.trackerConfigData.columns.forEach( column => { 

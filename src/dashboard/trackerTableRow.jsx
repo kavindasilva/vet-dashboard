@@ -79,6 +79,12 @@ const mapStateToProps = (state, props) => {
 		instancesData: state.TrackInstaReducer.instanceData.filter(instance => (
 			instance.trackerId === props.trackerId
 		)),
+
+		/** particular tracker instance related HUBSPOT data */
+		// hubspotData: state.TrackInstaReducer.hubspotTickets.filter(ticket => (
+		// 	ticket.trackerId === props.trackerId
+		// )),
+
 	};
 }
 
