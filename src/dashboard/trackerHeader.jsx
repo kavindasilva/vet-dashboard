@@ -18,6 +18,16 @@ import TableCell from '@material-ui/core/TableCell';
 // import trackersConfig from "../config-data/trackersConfig";
 // import trackerInstances from "../config-data/trackerInstance";
 
+/** to be moved to constants */
+const hubspotcolumns=[
+	{ name:"clinic name" },
+	{ name:"ticket id" },
+	{ name:"ticket name" },
+	{ name:"ticket status" },
+	{ name:"pipeline id" },
+	{ name:"pipeline status id" },
+]
+
 class TrackerHeader extends React.Component{
 	state = { 
         ...this.props.metaData, 
@@ -40,10 +50,7 @@ class TrackerHeader extends React.Component{
 
 	showTableHeaders(){
 		let returnArr=[ ];
-		returnArr.push(
-			<TableCell>HS_con_value</TableCell> 
-		);
-		
+				
 		//console.log("trackerHeader trackerData:", this.props.trackerConfigData)
 		//console.log("matched trackerID:", this.props.trackerConfigData.id)
 
@@ -54,7 +61,7 @@ class TrackerHeader extends React.Component{
 			))
 			//console.log("trackerHeader userVisible", usersVisibleColumns)
 
-			// if usersVisibleColumns empty
+			// if usersVisibleColumns not empty
 			if( usersVisibleColumns!==undefined && usersVisibleColumns.read ){
 
 				returnArr.push( 
@@ -67,7 +74,15 @@ class TrackerHeader extends React.Component{
 
 			}
 			
-		} )
+		} );
+
+		
+		hubspotcolumns.forEach( column => (
+			returnArr.push(
+				<TableCell> { column.name } </TableCell> 
+			)
+		) );
+		
 				
 
 		return returnArr;

@@ -48,14 +48,6 @@ class TrackerTableData extends React.Component{
 	showTableData(){
 		let returnArr=[]; 
 
-		returnArr.push(
-			<TableCell >
-				{
-					this.props.instanceData.hubData.clinic_name
-				}
-			</TableCell>
-		)
-
 		this.props.configData.columns.forEach( trackerInfo => { //each column of trackerConfig
 			
 			/** store user permissions of CURRENT COLUMN of trackerConfig user  */
@@ -107,6 +99,18 @@ class TrackerTableData extends React.Component{
 			
 		} )
 
+		let hubspotData = this.props.instanceData.hubData;
+		Object.keys(hubspotData).map( (key, index) => {
+			//return key;
+			returnArr.push(
+				<TableCell key={key}>
+					{ hubspotData[key].toString() }
+				</TableCell> 
+			)
+			//console.log("XX", hubspotData[key]);
+		} )
+
+
 		return returnArr;
 	}
 
@@ -121,7 +125,7 @@ const mapStateToProps = (state, props) => {
 	if(state.TrackInstaReducer.hubspotTickets !== null){
 		hubspotData = state.TrackInstaReducer.hubspotTickets.find(record => (
 			record.clinic_name === instanceData.data.find( column => (
-				column.columnId===1
+				column.columnId===1 //clinic name
 			) ).value
 		));
 	}
