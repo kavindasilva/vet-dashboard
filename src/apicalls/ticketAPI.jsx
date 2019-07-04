@@ -9,7 +9,7 @@ import gql from 'graphql-tag'
 
 const APIlistUrl = 'http://ontrack.dev.io/api/list/DB'; // from db
 const APIselectUrl = 'http://ontrack.dev.io/api/select/';
-const HubspotUrl="https://api.hubapi.com/crm-objects/v1/objects/tickets/paged?hapikey=07c1dc26-d097-4ec3-aad1-a47b7a541d01&properties=hs_pipeline_stage&properties=subject&properties=clinic_name";
+const HubspotUrl="https://api.hubapi.com/crm-objects/v1/objects/tickets/paged?hapikey=<key>&properties=hs_pipeline_stage&properties=subject&properties=clinic_name";
 
 const APIsaveUrl = "http://ontrack.dev.io/api/insertdata/x"; // x to add garbage para
 

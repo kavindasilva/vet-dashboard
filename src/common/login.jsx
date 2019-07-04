@@ -72,12 +72,12 @@ class Login extends React.Component{
 	}
 
 	render(){
-		//this.viewForm() 
+		//this.handleForm() 
 		return(
 			<React.Fragment>
 				{ 
 					//this.viewMenu()
-					this.viewForm()	
+					this.handleForm()	
 				}
 
 				
@@ -114,6 +114,13 @@ class Login extends React.Component{
 			this.setState({serverData: serverData.data});
 
 			this.dispatchLogin();
+
+			/** temporary. needs to add security token from backend */
+			localStorage.setItem( "logged", "true" );
+            localStorage.setItem( "userId", serverData.data.user_id );
+			localStorage.setItem( "userType", serverData.data.type );
+			localStorage.setItem( "accountId", serverData.data.account_id );
+			
 			//this.setState({isLoggedIn: true});
 		}
 		else if( serverData.data =="Bad Request" ){
@@ -128,97 +135,28 @@ class Login extends React.Component{
 	 * Display login if user not logged in.
 	 * Display Menu bar if user logged in.
 	 */
-	viewForm(){
-		console.log('login.jsx - viewForm', this.props);
+	handleForm(){
+		console.log('login.jsx - handleForm', localStorage.getItem("logged")==='true', localStorage.getItem("userId"));
 		if(this.props.metaData.isLoggedIn===true){
 			return this.viewMenu();
 		}
+		else if( localStorage.getItem("logged")==="true" && localStorage.getItem("userId")!=="0" ){
+			//console.log("LOGGED");
+			let loggedData = {
+				account_id:  localStorage.getItem("accountId") ,
+				type: parseInt( localStorage.getItem("userType") ),
+				user_id: parseInt( localStorage.getItem("userId") ),
+			}
+			this.setState({serverData: loggedData});
+			this.dispatchLogin();
+			//return this.viewMenu();
+		}
+		// else if( 1 ){
+		// 	console.log("login - Storage", localStorage.getItem("logged"), localStorage.getItem("userId"));
+		// 	//localStorage.getItem("logged")===true && localStorage.getItem("userId")!==0
+		// }
 		else{
-			return (
-				<Container component="main" maxWidth="xs">
-					<CssBaseline />
-					<div className={this.classes.paper}>
-						<Avatar className={this.classes.avatar}>
-							<LockOutlinedIcon />
-						</Avatar>
-						<Typography component="h1" variant="h5">
-							Sign in
-						</Typography>
-
-						<form className={this.classes.form} 
-							//noValidate={ true } 
-							onSubmit={ this.getFormData }
-						>
-							<TextField
-								variant="outlined"
-								margin="normal"
-								required
-								fullWidth
-								id="email"
-								label="Email Address"
-								name="email"
-								autoComplete="email"
-								onChange = { (e)=>{ this.setState({username: e.target.value}) } }
-								autoFocus
-							/>
-							<TextField
-								variant="outlined"
-								margin="normal"
-								required
-								fullWidth
-								name="password"
-								label="Password"
-								type="password"
-								id="password"
-								onChange = { (e)=>{ this.setState({password: e.target.value}) } }
-								//autoComplete="current-password"
-							/>
-
-							<TextField
-								variant="outlined"
-								margin="normal"
-								required
-								fullWidth
-								name="otp"
-								label="otp"
-								type="otp"
-								id="otp"
-								value={ this.state.otp }
-								onChange = { (e)=>{ this.setState({otp: e.target.value}) } }
-								//autoComplete=""
-							/>
-							
-							<Button
-								type="button"
-								fullWidth
-								variant="contained"
-								color="primary"
-								className={this.classes.submit}
-								//onClick={ this.getFormData }
-								onClick={ this.sendCredentials }
-							>
-								Sign In
-							</Button>
-
-							<Grid container>
-								<Grid item xs>
-									<Link href="#" variant="body2">
-										Forgot password?
-									</Link>
-								</Grid>
-								<Grid item>
-									<Link href="#" variant="body2">
-										{"Don't have an account? Sign Up"}
-									</Link>
-								</Grid>
-							</Grid>
-						</form>
-					</div>
-					<Box mt={5}>
-						
-					</Box>
-				</Container>
-			);
+			return this.viewLoginForm();
 		}
 	}
 
@@ -229,26 +167,7 @@ class Login extends React.Component{
 		)
 	}
 
-	/** This function is not used */
-	viewMenuBar0(){
-		return(
-			<div>
-				<div>
-					<Button style={{cursor:'pointer',float:'right',align:'right'}}
-						onClick={ () => { this.logOutUser() } }
-					>
-						LogOut
-					</Button> <hr />
-				</div>
-
-				Temporary menu bar: 
-				<Button onClick={ ()=>{ this.switchComponents('app') } } >Ticket</Button>
-				<Button onClick={ ()=>{ this.switchComponents('records') } } >Phoenix</Button>
-			</div>
-		);
-	}
-
-	/** update the reducx store after successful login */
+	/** update the redux store after successful login */
 	dispatchLogin = () => {
 		rootStore.dispatch({
 			type: 'UPDATE_META_DETAIL',
@@ -258,6 +177,94 @@ class Login extends React.Component{
 				loggedData: {...this.state.serverData, isLoggedIn: true }
 			}
 		});
+	}
+
+	viewLoginForm(){
+		return (
+			<Container component="main" maxWidth="xs">
+				<CssBaseline />
+				<div className={this.classes.paper}>
+					<Avatar className={this.classes.avatar}>
+						<LockOutlinedIcon />
+					</Avatar>
+					<Typography component="h1" variant="h5">
+						Sign in
+					</Typography>
+
+					<form className={this.classes.form} 
+						//noValidate={ true } 
+						onSubmit={ this.getFormData }
+					>
+						<TextField
+							variant="outlined"
+							margin="normal"
+							required
+							fullWidth
+							id="email"
+							label="Email Address"
+							name="email"
+							autoComplete="email"
+							onChange = { (e)=>{ this.setState({username: e.target.value}) } }
+							autoFocus
+						/>
+						<TextField
+							variant="outlined"
+							margin="normal"
+							required
+							fullWidth
+							name="password"
+							label="Password"
+							type="password"
+							id="password"
+							onChange = { (e)=>{ this.setState({password: e.target.value}) } }
+							//autoComplete="current-password"
+						/>
+
+						<TextField
+							variant="outlined"
+							margin="normal"
+							required
+							fullWidth
+							name="otp"
+							label="otp"
+							type="otp"
+							id="otp"
+							value={ this.state.otp }
+							onChange = { (e)=>{ this.setState({otp: e.target.value}) } }
+							//autoComplete=""
+						/>
+						
+						<Button
+							type="button"
+							fullWidth
+							variant="contained"
+							color="primary"
+							className={this.classes.submit}
+							//onClick={ this.getFormData }
+							onClick={ this.sendCredentials }
+						>
+							Sign In
+						</Button>
+
+						<Grid container>
+							<Grid item xs>
+								<Link href="#" variant="body2">
+									Forgot password?
+								</Link>
+							</Grid>
+							<Grid item>
+								<Link href="#" variant="body2">
+									{"Don't have an account? Sign Up"}
+								</Link>
+							</Grid>
+						</Grid>
+					</form>
+				</div>
+				<Box mt={5}>
+					
+				</Box>
+			</Container>
+		);
 	}
 
 }
