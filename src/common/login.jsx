@@ -63,8 +63,12 @@ class Login extends React.Component{
 
 	classes=this.props.classes;
 
-	state = { ...this.props.metaData, otp:"qaauto", 
-		username:"info@vetstoria.com", password:"123" }
+	state = { 
+		otp:"qaauto", 
+		username:"info@vetstoria.com", 
+		password:"123",
+		serverData: null,
+	}
 	//state = { Meta }
 
 	componentDidMount(){
@@ -113,13 +117,13 @@ class Login extends React.Component{
 			console.log("credentials validated. serverData:", serverData);
 			this.setState({serverData: serverData.data});
 
-			this.dispatchLogin();
-
 			/** temporary. needs to add security token from backend */
 			localStorage.setItem( "logged", "true" );
             localStorage.setItem( "userId", serverData.data.user_id );
 			localStorage.setItem( "userType", serverData.data.type );
 			localStorage.setItem( "accountId", serverData.data.account_id );
+
+			this.dispatchLogin();
 			
 			//this.setState({isLoggedIn: true});
 		}
@@ -136,7 +140,7 @@ class Login extends React.Component{
 	 * Display Menu bar if user logged in.
 	 */
 	handleForm(){
-		console.log('login.jsx - handleForm', localStorage.getItem("logged")==='true', localStorage.getItem("userId"));
+		//console.log('login.jsx - handleForm', localStorage.getItem("logged")==='true', localStorage.getItem("userId"));
 		if(this.props.metaData.isLoggedIn===true){
 			return this.viewMenu();
 		}
@@ -147,14 +151,14 @@ class Login extends React.Component{
 				type: parseInt( localStorage.getItem("userType") ),
 				user_id: parseInt( localStorage.getItem("userId") ),
 			}
-			this.setState({serverData: loggedData});
+			this.setState({serverData: 1});
+			console.log('login.jsx - handleForm', this.state.serverData );
+			//console.log('login.jsx - handleForm', this.state );
+
 			this.dispatchLogin();
 			//return this.viewMenu();
+
 		}
-		// else if( 1 ){
-		// 	console.log("login - Storage", localStorage.getItem("logged"), localStorage.getItem("userId"));
-		// 	//localStorage.getItem("logged")===true && localStorage.getItem("userId")!==0
-		// }
 		else{
 			return this.viewLoginForm();
 		}
@@ -172,11 +176,10 @@ class Login extends React.Component{
 		rootStore.dispatch({
 			type: 'UPDATE_META_DETAIL',
 			payload: {
-				//isLoggedIn: false,
-				//userId: 250
-				loggedData: {...this.state.serverData, isLoggedIn: true }
+				loggedData: { ...this.state.serverData, isLoggedIn: true }
 			}
 		});
+		console.log('login.jsx - dispatchLogin', { ...this.state.serverData, isLoggedIn: true } );
 	}
 
 	viewLoginForm(){

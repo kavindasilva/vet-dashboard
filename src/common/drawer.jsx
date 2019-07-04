@@ -217,6 +217,7 @@ class MiniDrawer extends React.Component {
                         </Typography>
 
                         <Typography align="right" float="right">
+                            Hi user ID: ... { this.props.metaData.userId } ...
                             <Button 
                                 style={ {align:"right", float:"right"} }
                                 onClick={ () => this.logOutUser() }
@@ -296,7 +297,13 @@ class MiniDrawer extends React.Component {
     };
 }
 
+const mapStateToProps = ( state, props ) => {
+    return{
+		metaData: state.MetaReducer.metaData,
+    }
+}
+
 //export default MiniDrawer;
-export default withStyles(useStyles)(MiniDrawer);
-//export default connect(mapStateToProps)(withStyles(useStyles)(MiniDrawer));
+//export default withStyles(useStyles)(MiniDrawer);
+export default connect(mapStateToProps)(withStyles(useStyles)(MiniDrawer));
 
