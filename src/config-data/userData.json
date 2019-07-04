@@ -1,8 +1,9 @@
 [
     {
-        "id": 5,
+        "user_id": 5,
         "name": "config user21 adm",
-        "type": "admin",
+        "email": "hc.user21@gmail.com",
+        "user_type_id": "admin",
 
         "trackers":[
             1,
@@ -12,9 +13,10 @@
 
 
     {
-        "id": 22,
+        "user_id": 22,
         "name": "config 22user std",
-        "type": "standard",
+        "email": "hc.user22@gmail.com",
+        "user_type_id": "standard",
 
         "trackers":[
             1
@@ -23,9 +25,10 @@
 
 
     {
-        "id": 6,
+        "user_id": 6,
         "name": "config user23 adm",
-        "type": "admin",
+        "email": "hc.user23@gmail.com",
+        "user_type_id": "admin",
 
         "trackers":[
             1,

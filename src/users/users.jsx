@@ -79,15 +79,16 @@ class Users extends React.Component{
     }
 
 	componentDidMount(){
-        console.log("Users - mount. props:", this.props); //ok
+        //console.log("Users - mount. props:", this.props); //ok
         let allPartners =userAPIObj.getUsers()
         .then(
             result => {
                 let resultArr=[];
-                for(var i in result){
-                    resultArr.push([i, result [i]]);
+                for(var i in result.data){
+                    resultArr.push( result.data[i] );
                 }
-                this.setState({allPartners: resultArr.data });
+                console.log("users mount2 resultArr", resultArr); // type: arr
+                this.setState({allPartners: resultArr });
                 this.dispatchUsers()
             }
             
@@ -113,7 +114,7 @@ class Users extends React.Component{
 		rootStore.dispatch({
 			type: 'GET_SYSTEM_PARTNERS',
 			payload: {
-				userData: {...this.state.allPartners }
+				userData: this.state.allPartners
 			}
 		});
     }
@@ -186,15 +187,15 @@ class Users extends React.Component{
                             {
                                 this.props.userData.map( user => (
                                     <TableRow>
-                                        <TableCell>{ user.id }</TableCell>
+                                        <TableCell>{ user.user_id }</TableCell>
                                         <TableCell>{ user.name }</TableCell>
-                                        <TableCell></TableCell>
-                                        <TableCell>{ user.type }</TableCell>
+                                        <TableCell>{ user.email }</TableCell>
+                                        <TableCell>{ user.user_type_id }</TableCell>
                                         
                                         <TableCell>
                                             <Button
                                                 onClick={ ()=>{
-                                                    this.setState({userIdToEdit: user.id});
+                                                    this.setState({userIdToEdit: user.user_id});
                                                     this.setState({componentToRender: "editUser"})
                                                 } }
                                             >
