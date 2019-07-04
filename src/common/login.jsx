@@ -67,7 +67,7 @@ class Login extends React.Component{
 		otp:"qaauto", 
 		username:"info@vetstoria.com", 
 		password:"123",
-		serverData: null,
+		serverData: { account_id:0, type:0, user_id:0},
 	}
 	//state = { Meta }
 
@@ -151,11 +151,16 @@ class Login extends React.Component{
 				type: parseInt( localStorage.getItem("userType") ),
 				user_id: parseInt( localStorage.getItem("userId") ),
 			}
-			this.setState({serverData: 1});
-			console.log('login.jsx - handleForm', this.state.serverData );
+			console.log('login.jsx - handleForm1', loggedData );
+
+			this.setState({serverData: loggedData}, function(){
+				console.log('login.jsx - handleForm2', this.state.serverData );
+				this.dispatchLogin();
+			});
+			//console.log('login.jsx - handleForm2', this.state.serverData );
 			//console.log('login.jsx - handleForm', this.state );
 
-			this.dispatchLogin();
+			//this.dispatchLogin();
 			//return this.viewMenu();
 
 		}
