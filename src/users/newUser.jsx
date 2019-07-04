@@ -11,6 +11,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Select from '@material-ui/core/Select';
 import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/core";
 
+import Radio from '@material-ui/core/Radio';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 //import { styles } from '@material-ui/pickers/DatePicker/components/Calendar';
@@ -54,7 +55,7 @@ const predefinedData=[
 class NewUser extends React.Component{
     state = {
         ...this.props.metaData, 
-
+        newUserType: null,
     }
 
 	componentDidMount(){
@@ -89,45 +90,57 @@ class NewUser extends React.Component{
                     />
                 </Grid>
 
+                {/* user type radio btn */}
+                <Grid item xs={12} sm={12}>
+                    <RadioGroup
+                        name="genderSelect"
+                        value={ this.state.newUserType }
+                        onChange={ (e)=>{
+                            this.setState({ newUserType: e.target.value});
+                            //console.log(e)
+                        } }
+                    >	
+                        { 
+                            userTypes.map( val => (
+                                <FormControlLabel
+                                    key={val.id}
+                                    value={ val.type }
+                                    control={<Radio color="primary" />}
+                                    label={ val.label }
+                                    labelPlacement="end"
+                                />
+                            ) )
+                        }
+                        
+                    </RadioGroup>
+                </Grid>
+
+                {/* user type select bar */}
                 <Grid item xs={12} sm={12}>
                     <Select 
-                        value={ this.state.attributeValue } 
-                        onChange={ e => this.setState({ attributeValue: e.target.value }) }
+                        value={ this.state.newUserType } 
+                        onChange={ e => this.setState({ newUserType: e.target.value }) }
                         fullWidth={true}
                     >
                         {
                             userTypes.map( item =>
-                                    <MenuItem 
-                                        key={ item.id }
-                                        value={ item.type } 
-                                    >{ item.label }</MenuItem>
-                                )
+                                <MenuItem 
+                                    key={ item.id }
+                                    value={ item.type } 
+                                >
+                                { item.label }
+                                </MenuItem>
+                            )
                         }
                     </Select>
                 </Grid>
 
-                <Grid item xs={12}>
-                    <TextField
-                        //required
-                        id="username"
-                        name="username"
-                        label="Name"
-                        fullWidth
-                        //autoComplete="billing address-line1"
-                    />
-                </Grid>
+                {/* display user type specific inputs */}
+                {
+                    this.checkNewUserType()
+                }
 
-                <Grid item xs={12}>
-                    <TextField
-                        type="email"
-                        id="email"
-                        name="email"
-                        label="Email"
-                        fullWidth
-                        //autoComplete="billing address-line2"
-                    />
-                </Grid>
-
+                {/* save cancel btns */}                
                 <Grid item xs={6}>
                     <Button
                         //onClick={}
@@ -147,6 +160,140 @@ class NewUser extends React.Component{
                 
             </Grid>
         );
+    }
+
+    checkNewUserType = () =>{
+        switch(this.state.newUserType){
+            case "partner":
+                return this.newPartner();
+            case "partnerUser":
+                    return this.newUserforPartner();
+            default:
+                console.log("newUser - unknown user type selected", this.state.newUserType);
+        }
+    }
+
+    newPartner(){
+        return(
+            <React.Fragment>
+                {/* partner name */}
+                <Grid item xs={12}>
+                    <TextField
+                        type="text"
+                        id="name"
+                        name="name"
+                        label="Partner Name"
+                        fullWidth
+                    />
+                </Grid>
+
+                {/* partner's email */}
+                <Grid item xs={12}>
+                    <TextField
+                        type="email"
+                        id="account_email"
+                        name="account_email"
+                        label="Partner email Address"
+                        fullWidth
+                    />
+                </Grid>
+            </React.Fragment>
+
+        );
+    }
+
+    newUserforPartner(){
+        return(
+            <React.Fragment>
+                {/* user type partner/admin */}                
+                <Grid item xs={12} sm={12}>
+                    <Select 
+                        value={ this.state.attributeValue } 
+                        onChange={ e => this.setState({ attributeValue: e.target.value }) }
+                        fullWidth={true}
+                    >
+                        {
+                            userTypes.map( item =>
+                                <MenuItem 
+                                    key={ item.id }
+                                    value={ item.type } 
+                                >
+                                { item.label }
+                                </MenuItem>
+                            )
+                        }
+                    </Select>
+                </Grid>
+
+                {/* user's partner */}                
+                <Grid item xs={6}>
+                    <TextField
+                        //required
+                        id="partnerAccountId"
+                        name="partnerAccountId"
+                        label="Last Name"
+                        fullWidth
+                    />
+                </Grid>
+
+
+                {/* user's  */}                
+                <Grid item xs={6}>
+                    <TextField
+                        id="partnerAccountId"
+                        name="partnerAccountId"
+                        label="Last Name"
+                        fullWidth
+                    />
+                </Grid>
+
+                {/* user first name, last name boxes */}
+                <Grid item xs={6}>
+                    <TextField
+                        //required
+                        id="first_name"
+                        name="first_name"
+                        label="First Name"
+                        fullWidth
+                    />
+                </Grid>
+                <Grid item xs={6}>
+                    <TextField
+                        //required
+                        id="last_name"
+                        name="last_name"
+                        label="Last Name"
+                        fullWidth
+                    />
+                </Grid>
+
+                {/* email */}
+                <Grid item xs={12}>
+                    <TextField
+                        type="email"
+                        id="email"
+                        name="email"
+                        label="Email Address"
+                        fullWidth
+                    />
+                </Grid>
+
+                {/* user telephone */}
+                <Grid item xs={6}>
+                    <TextField
+                        //required
+                        id="last_name"
+                        name="last_name"
+                        label="Last Name"
+                        fullWidth
+                    />
+                </Grid>
+
+
+
+
+            </React.Fragment>
+        )
     }
 
     
