@@ -63,7 +63,8 @@ class Login extends React.Component{
 
 	classes=this.props.classes;
 
-	state = { ...this.props.metaData, otp:"qaauto" }
+	state = { ...this.props.metaData, otp:"qaauto", 
+		username:"info@vetstoria.com", password:"123" }
 	//state = { Meta }
 
 	componentDidMount(){

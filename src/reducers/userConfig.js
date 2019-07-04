@@ -2,11 +2,16 @@
 import { isUndefined } from "util";
 import userConfig from "../config-data/userData.json";
 
+import userAPI from "../apicalls/userAPI"
+
+const userAPIObj = new userAPI();
+
 
 const UserConfigReducer = (state, action) => {
     console.log("UserConfigReducer: state: ", state, "\naction: ", action)
     let newState = {
         //userData: false,
+        //userData: userAPIObj.getUsers().data,
         userData: userConfig,
     };
 
@@ -14,9 +19,9 @@ const UserConfigReducer = (state, action) => {
         state=newState;
 
     switch (action.type) {
-        case 'UPDATE_META_DETAIL00':
-            newState = {}
-            console.log("UserConfigReducer_UPDATE_META_DETAIL: ", newState);
+        case 'GET_SYSTEM_PARTNERS':
+            newState = { userData: action.payload.userData }
+            console.log("UserConfigReducer_GET_SYSTEM_PARTNERS: ", newState);
 
             return newState;
 

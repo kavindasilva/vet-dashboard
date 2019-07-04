@@ -52,8 +52,8 @@ class loginAPI extends React.Component{
 
     //axios.post( APIauthenticateUrl, "{ 'account_email':'ks@vetstoria.com' }" ) // POST 400
     return axios.post( 
-      //APIauthenticateUrl,
-      altAPIauthenticateUrl, 
+      APIauthenticateUrl,
+      //altAPIauthenticateUrl, 
 
        data ,
 

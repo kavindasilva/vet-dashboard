@@ -31,6 +31,9 @@ import NewUser from "../users/newUser";
 import EditUser from "../users/editUser";
 import { Button } from '@material-ui/core';
 
+import userAPI from "../apicalls/userAPI"
+const userAPIObj = new userAPI();
+
 const styles = theme => ({
 	root: {
 	  width: "100%",
@@ -76,7 +79,21 @@ class Users extends React.Component{
     }
 
 	componentDidMount(){
-		console.log("Users - mount. props:", this.props); //ok
+        console.log("Users - mount. props:", this.props); //ok
+        let allPartners =userAPIObj.getUsers()
+        .then(
+            result => {
+                let resultArr=[];
+                for(var i in result){
+                    resultArr.push([i, result [i]]);
+                }
+                this.setState({allPartners: resultArr.data });
+                this.dispatchUsers()
+            }
+            
+        )
+        
+        
 		//console.log("Users - mount. props.metaData:", this.props.metaData); 
 	}
 
@@ -90,6 +107,15 @@ class Users extends React.Component{
                 }
 			</React.Fragment>
 		)
+    }
+
+    dispatchUsers = () => {
+		rootStore.dispatch({
+			type: 'GET_SYSTEM_PARTNERS',
+			payload: {
+				userData: {...this.state.allPartners }
+			}
+		});
     }
 
     renderUserView(){
