@@ -32,6 +32,9 @@ import TrackerTableRow from "../dashboard/trackerTableRow";
 //import userData from "../config-data/userData.json";
 import { userTypes } from "../common/constants";
 
+import userAPI from "../apicalls/userAPI"
+const userAPIObj = new userAPI();
+
 const styles = theme => ({
 	root: {
 	  width: "100%",
@@ -55,12 +58,30 @@ const predefinedData=[
 class NewUser extends React.Component{
     state = {
         ...this.props.metaData, 
+        partnerList: [],
+
         newUserType: null,
+        name:'', //partner name
+        account_email: '', //partner email
+        user_type_id: '6', // user type id 3-admin, 6-partner
+        account_id:'', // partner id for user
+        email:'', //user email
+        telephone:'', //user telephone
+        password:'', //user password
+        first_name:'', //user fname
+        last_name:'', //user lname
     }
 
 	componentDidMount(){
 		console.log("NewUser - mount. props:", this.props); //ok
-		//console.log("NewUser - mount. props.metaData:", this.props.metaData); 
+        //console.log("NewUser - mount. props.metaData:", this.props.metaData); 
+        
+        userAPIObj.getPartners()
+            .then(
+                res => {
+                    this.setState({partnerList: res.data });
+                }
+            )
 	}
 
 	render(){
@@ -79,6 +100,26 @@ class NewUser extends React.Component{
     viewNewUserForm(){
         return(
             <Grid container spacing={3}>
+                {/* user type select bar */}
+                <Grid item xs={12} sm={12}>
+                    <Select 
+                        value={ this.state.newUserType } 
+                        onChange={ e => this.setState({ newUserType: e.target.value }) }
+                        fullWidth={true}
+                    >
+                        {
+                            userTypes.map( item =>
+                                <MenuItem 
+                                    key={ item.id }
+                                    value={ item.type } 
+                                >
+                                { item.label }
+                                </MenuItem>
+                            )
+                        }
+                    </Select>
+                </Grid>
+
                 <Grid item xs={12} sm={12}>
                     <TextField
                         disabled={ true} //required
@@ -86,7 +127,6 @@ class NewUser extends React.Component{
                         name="id"
                         label="ID"
                         fullWidth
-                        //autoComplete="fname"
                     />
                 </Grid>
 
@@ -115,26 +155,6 @@ class NewUser extends React.Component{
                     </RadioGroup>
                 </Grid>
 
-                {/* user type select bar */}
-                <Grid item xs={12} sm={12}>
-                    <Select 
-                        value={ this.state.newUserType } 
-                        onChange={ e => this.setState({ newUserType: e.target.value }) }
-                        fullWidth={true}
-                    >
-                        {
-                            userTypes.map( item =>
-                                <MenuItem 
-                                    key={ item.id }
-                                    value={ item.type } 
-                                >
-                                { item.label }
-                                </MenuItem>
-                            )
-                        }
-                    </Select>
-                </Grid>
-
                 {/* display user type specific inputs */}
                 {
                     this.checkNewUserType()
@@ -143,7 +163,9 @@ class NewUser extends React.Component{
                 {/* save cancel btns */}                
                 <Grid item xs={6}>
                     <Button
-                        //onClick={}
+                        onClick={ () => {
+                            console.log("newUser", this.state);
+                        } }
                         //fullWidth
                     >
                         Save
@@ -173,6 +195,7 @@ class NewUser extends React.Component{
         }
     }
 
+    /** add new partner with new user */
     newPartner(){
         return(
             <React.Fragment>
@@ -184,6 +207,11 @@ class NewUser extends React.Component{
                         name="name"
                         label="Partner Name"
                         fullWidth
+                        value={ this.state.name }
+                        onChange={ (e)=> { 
+                            e.preventDefault(); 
+                            this.setState({name: e.target.value}) 
+                        } }
                     />
                 </Grid>
 
@@ -195,6 +223,61 @@ class NewUser extends React.Component{
                         name="account_email"
                         label="Partner email Address"
                         fullWidth
+                        value={ this.state.account_email }
+                        onChange={ (e)=> { 
+                            e.preventDefault(); 
+                            this.setState({account_email: e.target.value}) 
+                        } }
+                    />
+                </Grid>
+
+                <Grid item xs={12}>
+                    <Grid item xs={12} sm={12}>Initial User</Grid>
+                </Grid>
+                
+                {/* user first name, last name boxes */}
+                <Grid item xs={6}>
+                    <TextField
+                        //required
+                        id="first_name"
+                        name="first_name"
+                        label="First Name"
+                        fullWidth
+                        value={ this.state.first_name }
+                        onChange={ (e)=> { 
+                            e.preventDefault(); 
+                            this.setState({first_name: e.target.value}) 
+                        } }
+                    />
+                </Grid>
+                <Grid item xs={6}>
+                    <TextField
+                        //required
+                        id="last_name"
+                        name="last_name"
+                        label="Last Name"
+                        fullWidth
+                        value={ this.state.last_name }
+                        onChange={ (e)=> { 
+                            e.preventDefault(); 
+                            this.setState({last_name: e.target.value}) 
+                        } }
+                    />
+                </Grid>
+
+                {/* user telephone */}
+                <Grid item xs={12}>
+                    <TextField
+                        //required
+                        id="telephone"
+                        name="telephone"
+                        label="Telephone"
+                        fullWidth
+                        value={ this.state.telephone }
+                        onChange={ (e)=> { 
+                            e.preventDefault(); 
+                            this.setState({telephone: e.target.value}) 
+                        } }
                     />
                 </Grid>
             </React.Fragment>
@@ -202,23 +285,24 @@ class NewUser extends React.Component{
         );
     }
 
+    /** add new user to existing partner */
     newUserforPartner(){
         return(
             <React.Fragment>
                 {/* user type partner/admin */}                
                 <Grid item xs={12} sm={12}>
                     <Select 
-                        value={ this.state.attributeValue } 
-                        onChange={ e => this.setState({ attributeValue: e.target.value }) }
+                        value={ this.state.account_id } 
+                        onChange={ e => this.setState({ account_id: e.target.value }) }
                         fullWidth={true}
                     >
                         {
-                            userTypes.map( item =>
+                            this.state.partnerList.map( item =>
                                 <MenuItem 
-                                    key={ item.id }
-                                    value={ item.type } 
+                                    key={ item.partner_id }
+                                    value={ item.partner_id } 
                                 >
-                                { item.label }
+                                { item.partner_id } -- { item.name } -- {item.account_email}
                                 </MenuItem>
                             )
                         }
@@ -231,8 +315,9 @@ class NewUser extends React.Component{
                         //required
                         id="partnerAccountId"
                         name="partnerAccountId"
-                        label="Last Name"
+                        label="Partner"
                         fullWidth
+                        value={ this.state.account_id }
                     />
                 </Grid>
 
@@ -244,6 +329,7 @@ class NewUser extends React.Component{
                         name="partnerAccountId"
                         label="Last Name"
                         fullWidth
+                        //value={}
                     />
                 </Grid>
 
@@ -255,6 +341,11 @@ class NewUser extends React.Component{
                         name="first_name"
                         label="First Name"
                         fullWidth
+                        value={ this.state.first_name }
+                        onChange={ (e)=> { 
+                            e.preventDefault(); 
+                            this.setState({first_name: e.target.value}) 
+                        } }
                     />
                 </Grid>
                 <Grid item xs={6}>
@@ -264,6 +355,11 @@ class NewUser extends React.Component{
                         name="last_name"
                         label="Last Name"
                         fullWidth
+                        value={ this.state.last_name }
+                        onChange={ (e)=> { 
+                            e.preventDefault(); 
+                            this.setState({last_name: e.target.value}) 
+                        } }
                     />
                 </Grid>
 
@@ -275,17 +371,27 @@ class NewUser extends React.Component{
                         name="email"
                         label="Email Address"
                         fullWidth
+                        value={ this.state.email }
+                        onChange={ (e)=> { 
+                            e.preventDefault(); 
+                            this.setState({email: e.target.value}) 
+                        } }
                     />
                 </Grid>
 
                 {/* user telephone */}
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                     <TextField
                         //required
-                        id="last_name"
-                        name="last_name"
-                        label="Last Name"
+                        id="telephone"
+                        name="telephone"
+                        label="Telephone"
                         fullWidth
+                        value={ this.state.telephone }
+                        onChange={ (e)=> { 
+                            e.preventDefault(); 
+                            this.setState({telephone: e.target.value}) 
+                        } }
                     />
                 </Grid>
 

@@ -46,10 +46,10 @@ export const trackerPopupDefaultValues={
  * { id:<int: DB>, type:string, label:string }
  */
 export const userTypes=[
-    { id:3, type:"admin", label:"Admini" },
+    //{ id:3, type:"admin", label:"Admini" },
     { id:6, type:"partner", label:"Partner" },
     { id:6, type:"partnerUser", label:"User for Partner" },
-    { id:102, type:"rest", label:"Restrict" },
+    //{ id:102, type:"rest", label:"Restrict" },
 ];
 
 /** */
