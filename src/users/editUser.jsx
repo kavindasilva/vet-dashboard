@@ -65,7 +65,7 @@ class EditUser extends React.Component{
 
 	componentDidMount(){
 		//console.log("EditUser - mount. props:", this.props); //
-        console.log("EditUser - state:", this.state); 
+        console.log("EditUser - state:", this.state, "props", this.props); 
         
         userAPIObj.getPartners()
             .then(
@@ -181,11 +181,13 @@ class EditUser extends React.Component{
     saveEditedUserData=()=>{
         switch(this.state.editUserType){
             case "partner":
-                userAPIObj.saveEditPartner( this.state, this.props.user_id ); // not implemented
+                userAPIObj.saveEditPartner( this.state, this.props.userId ); 
+                break; // not implemented
             case "user":
-                userAPIObj.saveEditUser( this.state, this.props.user_id);
+                userAPIObj.saveEditUser( this.state, this.props.userId);
+                break;
             default:
-                console.log("newUser - unknown user type to save", this.state.newUserType);
+                console.log("newUser - unknown user type to saveEdit", this.state.newUserType);
         }
     }
 
@@ -338,7 +340,7 @@ class EditUser extends React.Component{
                         name="userId"
                         label="User ID"
                         fullWidth
-                        value={ this.props.user_id }
+                        value={ this.props.userId }
                     />
                 </Grid>
 
