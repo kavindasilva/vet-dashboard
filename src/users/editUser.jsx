@@ -60,7 +60,7 @@ class EditUser extends React.Component{
     state = {
         ...this.props.metaData, 
         ...this.props.userData,
-        editType: "user",
+        editUserType: "user",
     }
 
 	componentDidMount(){
@@ -158,7 +158,7 @@ class EditUser extends React.Component{
                     <Button
                         onClick={ () => {
                             console.log("editUser", this.state);
-                            //userAPIObj.saveUser( this.state );
+                            this.saveEditedUserData();
                         } }
                         //fullWidth
                     >
@@ -178,15 +178,26 @@ class EditUser extends React.Component{
         );
     }
 
+    saveEditedUserData=()=>{
+        switch(this.state.editUserType){
+            case "partner":
+                userAPIObj.saveEditPartner( this.state, this.props.user_id ); // not implemented
+            case "user":
+                userAPIObj.saveEditUser( this.state, this.props.user_id);
+            default:
+                console.log("newUser - unknown user type to save", this.state.newUserType);
+        }
+    }
+
     /** determine partner or user */
     checkEditUserType = () =>{
-        switch(this.state.editType){
+        switch(this.state.editUserType){
             case "partner":
                 return this.editPartner();
             case "user":
                     return this.editUser();
             default:
-                console.log("editUser - unknown user type selected", this.state.editType);
+                console.log("editUser - unknown user type selected", this.state.editUserType);
         }
     }
 

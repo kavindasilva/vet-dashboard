@@ -8,14 +8,14 @@ const uriAllPartners="http://ontrack.dev.io/rest/partner"
 const alturiAllUsers = "http://ontrack.dev.io/api/getUsers";
 
 
-const newUserSave="http://ontrack.dev.io/rest/user"; // post
-const newPartnerSave="http://ontrack.dev.io/rest/partner"; // post
+const uriNewUserSave="http://ontrack.dev.io/rest/user"; // post
+const uriNewPartnerSave="http://ontrack.dev.io/rest/partner"; // post
 
-const editUserSave="http://ontrack.dev.io/rest/"; // 
-const ediPartnerSave="http://ontrack.dev.io/rest/"; // 
+const uriEditUserSave="http://ontrack.dev.io/rest/user/"; // put
+const uriEdiPartnerSave="http://ontrack.dev.io/rest/partner/"; // put
 
-const uriSingleUser="http://ontrack.dev.io/rest/user/" // get
-const uriSinglePartner="http://ontrack.dev.io/rest/partner/" // get
+const uriSingleUser="http://ontrack.dev.io/rest/user/" // g
+const uriSinglePartner="http://ontrack.dev.io/rest/partner/" // ge
 
 
 class userAPI extends React.Component{
@@ -64,10 +64,38 @@ class userAPI extends React.Component{
 
   }
 
+  /** save EDIT user data to API. http://ontrack.dev.io/rest/user/9 */
+  saveEditUser( data, userId ){
+    console.log("userAPI - saveEditUser", data, userId); return;
+    axios.put( uriEditUserSave, data )
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+      .catch(error => {
+        console.log("userAPI.jsx - saveEditUser-Err", error);
+        return error;
+      });
+  }
+
+  /** save EDIT partner data to API. http://ontrack.dev.io/rest/partner/9 */
+  saveEditPartner( data, partnerId ){
+    console.log("userAPI - saveEditPartner", data, partnerId); return;
+    axios.put( uriEdiPartnerSave, data )
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+      .catch(error => {
+        console.log("userAPI.jsx - saveEditPartner-Err", error);
+        return error;
+      });
+  }
+
   /** save new user data to API */
   saveUser( data ){
-    console.log("userAPI - saveUser", data);
-    axios.post( newUserSave, data )
+    console.log("userAPI - saveUser", data); return;
+    axios.post( uriNewUserSave, data )
       .then(res => {
         console.log(res);
         console.log(res.data);
@@ -80,8 +108,8 @@ class userAPI extends React.Component{
 
   /** save new partner user data to API */
   savePartner( data ){
-    console.log("userAPI - savePartner", data);
-    axios.post( newUserSave, data )
+    console.log("userAPI - savePartner", data); return;
+    axios.post( uriNewPartnerSave, data )
       .then(res => {
         console.log(res);
         console.log(res.data);

@@ -165,7 +165,8 @@ class NewUser extends React.Component{
                     <Button
                         onClick={ () => {
                             console.log("newUser", this.state);
-                            userAPIObj.saveUser( this.state );
+                            this.saveNewUserData()
+                            //userAPIObj.saveUser( this.state );
                         } }
                         //fullWidth
                     >
@@ -185,6 +186,18 @@ class NewUser extends React.Component{
         );
     }
 
+    saveNewUserData=()=>{
+        switch(this.state.newUserType){
+            case "partner":
+                userAPIObj.savePartner( this.state ); break;
+            case "partnerUser":
+                userAPIObj.saveUser( this.state ); break;
+            default:
+                console.log("newUser - unknown user type to save", this.state.newUserType);
+        }
+    }
+
+    /** display user type specific input fields */
     checkNewUserType = () =>{
         switch(this.state.newUserType){
             case "partner":
