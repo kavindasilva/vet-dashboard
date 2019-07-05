@@ -73,10 +73,9 @@ class EditUser extends React.Component{
                     this.setState({partnerList: res.data });
                 }
             )
-	}
+    }
 
 	render(){
-		//this.viewForm() 
 		return(
 			<React.Fragment>
                 edit user form
@@ -293,6 +292,8 @@ class EditUser extends React.Component{
                         fullWidth={true}
                     >
                         {
+                            // to prevent loading delay caused error
+                            (this.state.partnerList)?
                             this.state.partnerList.map( item =>
                                 <MenuItem 
                                     key={ item.partner_id }
@@ -300,7 +301,8 @@ class EditUser extends React.Component{
                                 >
                                 { item.partner_id } -- { item.name } -- {item.account_email}
                                 </MenuItem>
-                            )
+                            ):
+                            <MenuItem key={0} value={0}>Loading...</MenuItem>
                         }
                     </Select>
                 </Grid>
@@ -321,11 +323,11 @@ class EditUser extends React.Component{
                 {/* user's  */}                
                 <Grid item xs={6}>
                     <TextField
-                        id="partnerAccountId"
-                        name="partnerAccountId"
-                        label="Last Name"
+                        id="userId"
+                        name="userId"
+                        label="User ID"
                         fullWidth
-                        //value={}
+                        value={ this.props.user_id }
                     />
                 </Grid>
 
@@ -403,10 +405,10 @@ class EditUser extends React.Component{
 }
 
 const mapStateToProps = (state, props) => {
-	console.log('users.jsx-mapStateToProps', state);
+	console.log('users.jsx-mapStateToProps', state, props);
 	return {
         userData: state.UserConfigReducer.userData.find( user => (
-            user.id === props.userIdToEdit
+            user.user_id === props.userId
         ) ),
 
 	};

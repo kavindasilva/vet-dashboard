@@ -197,8 +197,10 @@ class Users extends React.Component{
                                         <TableCell>
                                             <Button
                                                 onClick={ ()=>{
-                                                    this.setState({userIdToEdit: user.user_id});
-                                                    this.setState({componentToRender: "editUser"})
+                                                    this.setState({userIdToEdit: user.user_id}, function(){
+                                                        this.setState({componentToRender: "editUser"})
+                                                    });
+                                                    
                                                 } }
                                             >
                                                 Edit
