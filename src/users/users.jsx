@@ -88,8 +88,10 @@ class Users extends React.Component{
                     resultArr.push( result.data[i] );
                 }
                 console.log("users mount2 resultArr", resultArr); // type: arr
-                this.setState({allPartners: resultArr });
-                this.dispatchUsers()
+                this.setState({allPartners: resultArr }, function(){
+                    this.dispatchUsers()
+                });
+                //this.dispatchUsers()
             }
             
         )

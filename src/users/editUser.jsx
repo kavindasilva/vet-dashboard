@@ -20,6 +20,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Radio from '@material-ui/core/Radio';
+
 
 import MaterialTable from 'material-table';
 import Menu from "../common/menu";
@@ -30,6 +32,9 @@ import TrackerTableRow from "../dashboard/trackerTableRow";
 
 //import userData from "../config-data/userData.json";
 import { userTypes } from "../common/constants";
+
+import userAPI from "../apicalls/userAPI"
+const userAPIObj = new userAPI();
 
 const styles = theme => ({
 	root: {
@@ -55,92 +60,116 @@ class EditUser extends React.Component{
     state = {
         ...this.props.metaData, 
         ...this.props.userData,
+        editType: "user",
     }
 
 	componentDidMount(){
-		console.log("EditUser - mount. props:", this.props); //ok
-		//console.log("EditUser - mount. props.metaData:", this.props.metaData); 
+		//console.log("EditUser - mount. props:", this.props); //
+        console.log("EditUser - state:", this.state); 
+        
+        userAPIObj.getPartners()
+            .then(
+                res => {
+                    this.setState({partnerList: res.data });
+                }
+            )
 	}
 
 	render(){
 		//this.viewForm() 
 		return(
 			<React.Fragment>
-                new user form
+                edit user form
                 { 
-                    this.viewNewUserForm() 
+                    this.viewEditUserForm() 
                 }
 			</React.Fragment>
 		)
     }
 
-    
-    viewNewUserForm(){
+    viewEditUserForm(){
         return(
             <Grid container spacing={3}>
+                {/* user type select bar */}
+                <Grid item xs={12} sm={12}>
+                    <Select 
+                        //value={ this.state.user_type_id } 
+                        value="partnerUser"
+                        onChange={ e => this.setState({ user_type_id: e.target.value }) }
+                        fullWidth={true}
+                    >
+                        {
+                            userTypes.map( item =>
+                                <MenuItem 
+                                    key={ item.id }
+                                    value={ item.type } 
+                                >
+                                { item.label }
+                                </MenuItem>
+                            )
+                        }
+                    </Select>
+                </Grid>
+
+                {/* account id */}
                 <Grid item xs={12} sm={12}>
                     <TextField
                         disabled={ true} //required
                         id="id"
                         name="id"
                         label="ID"
+                        value={ this.state.account_id }
                         fullWidth
-                        value={ this.props.userData.id }
                     />
                 </Grid>
 
+                {/* user type radio btn */}
                 <Grid item xs={12} sm={12}>
-                    <Select 
-                        label="Name"
-                        value={ this.state.type } 
-                        onChange={ e => this.setState({ type: e.target.value }) }
-                        fullWidth={true}
-                    >
-                        {
-                            userTypes.map( item =>
-                                    <MenuItem 
-                                        key={ item.id }
-                                        value={ item.type } 
-                                    >{ item.label }</MenuItem>
-                                )
+                    <RadioGroup
+                        name="genderSelect"
+                        //value={ this.state.user_type_id }
+                        value="partnerUser"
+                        onChange={ (e)=>{
+                            this.setState({ user_type_id: e.target.value});
+                            //console.log(e)
+                        } }
+                    >	
+                        { 
+                            userTypes.map( val => (
+                                <FormControlLabel
+                                    key={val.id}
+                                    value={ val.type }
+                                    control={<Radio color="primary" />}
+                                    label={ val.label }
+                                    labelPlacement="end"
+                                />
+                            ) )
                         }
-                    </Select>
+                        
+                    </RadioGroup>
                 </Grid>
 
-                <Grid item xs={12}>
-                    <TextField
-                        onChange={ (e) => this.setState({name: e.target.value}) }
-                        id="username"
-                        name="username"
-                        label="Name"
-                        fullWidth
-                        value={ this.state.name }
-                    />
-                </Grid>
+                {/* display user type specific inputs */}
+                {
+                    this.checkEditUserType()
+                }
 
-                <Grid item xs={12}>
-                    <TextField
-                        type="email"
-                        id="email"
-                        name="email"
-                        label="Email"
-                        fullWidth
-                        //autoComplete="billing address-line2"
-                    />
-                </Grid>
-
-                <Grid item xs={12}>
+                {/* save cancel btns */}                
+                <Grid item xs={6}>
                     <Button
-                        //onClick={}
-                        fullWidth
+                        onClick={ () => {
+                            console.log("editUser", this.state);
+                            //userAPIObj.saveUser( this.state );
+                        } }
+                        //fullWidth
                     >
                         Save
                     </Button>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                     <Button 
-                        fullWidth
                         onClick={ () => this.props.cancelForm() }
+                        //fullWidth
                     >
                         Cancel
                     </Button>
@@ -148,6 +177,225 @@ class EditUser extends React.Component{
                 
             </Grid>
         );
+    }
+
+    /** determine partner or user */
+    checkEditUserType = () =>{
+        switch(this.state.editType){
+            case "partner":
+                return this.editPartner();
+            case "user":
+                    return this.editUser();
+            default:
+                console.log("editUser - unknown user type selected", this.state.editType);
+        }
+    }
+
+    /** edit partner - not implemented */
+    editPartner(){
+        return(
+            <React.Fragment>
+                {/* partner name */}
+                <Grid item xs={12}>
+                    <TextField
+                        type="text"
+                        id="name"
+                        name="name"
+                        label="Partner Name"
+                        fullWidth
+                        value={ this.state.name }
+                        onChange={ (e)=> { 
+                            e.preventDefault(); 
+                            this.setState({name: e.target.value}) 
+                        } }
+                    />
+                </Grid>
+
+                {/* partner's email */}
+                <Grid item xs={12}>
+                    <TextField
+                        type="email"
+                        id="account_email"
+                        name="account_email"
+                        label="Partner email Address"
+                        fullWidth
+                        value={ this.state.account_email }
+                        onChange={ (e)=> { 
+                            e.preventDefault(); 
+                            this.setState({account_email: e.target.value}) 
+                        } }
+                    />
+                </Grid>
+
+                <Grid item xs={12}>
+                    <Grid item xs={12} sm={12}>Initial User</Grid>
+                </Grid>
+                
+                {/* user first name, last name boxes */}
+                <Grid item xs={6}>
+                    <TextField
+                        //required
+                        id="first_name"
+                        name="first_name"
+                        label="First Name"
+                        fullWidth
+                        value={ this.state.first_name }
+                        onChange={ (e)=> { 
+                            e.preventDefault(); 
+                            this.setState({first_name: e.target.value}) 
+                        } }
+                    />
+                </Grid>
+                <Grid item xs={6}>
+                    <TextField
+                        //required
+                        id="last_name"
+                        name="last_name"
+                        label="Last Name"
+                        fullWidth
+                        value={ this.state.last_name }
+                        onChange={ (e)=> { 
+                            e.preventDefault(); 
+                            this.setState({last_name: e.target.value}) 
+                        } }
+                    />
+                </Grid>
+
+                {/* user telephone */}
+                <Grid item xs={12}>
+                    <TextField
+                        //required
+                        id="telephone"
+                        name="telephone"
+                        label="Telephone"
+                        fullWidth
+                        value={ this.state.telephone }
+                        onChange={ (e)=> { 
+                            e.preventDefault(); 
+                            this.setState({telephone: e.target.value}) 
+                        } }
+                    />
+                </Grid>
+            </React.Fragment>
+
+        );
+    }
+
+    /** edit user */
+    editUser(){
+        return(
+            <React.Fragment>
+                {/* user type partner/admin */}                
+                <Grid item xs={12} sm={12}>
+                    <Select 
+                        value={ this.state.account_id } 
+                        onChange={ e => this.setState({ account_id: e.target.value }) }
+                        fullWidth={true}
+                    >
+                        {
+                            this.state.partnerList.map( item =>
+                                <MenuItem 
+                                    key={ item.partner_id }
+                                    value={ item.partner_id } 
+                                >
+                                { item.partner_id } -- { item.name } -- {item.account_email}
+                                </MenuItem>
+                            )
+                        }
+                    </Select>
+                </Grid>
+
+                {/* user's partner */}                
+                <Grid item xs={6}>
+                    <TextField
+                        //required
+                        id="partnerAccountId"
+                        name="partnerAccountId"
+                        label="Partner"
+                        fullWidth
+                        value={ this.state.account_id }
+                    />
+                </Grid>
+
+
+                {/* user's  */}                
+                <Grid item xs={6}>
+                    <TextField
+                        id="partnerAccountId"
+                        name="partnerAccountId"
+                        label="Last Name"
+                        fullWidth
+                        //value={}
+                    />
+                </Grid>
+
+                {/* user first name, last name boxes */}
+                <Grid item xs={6}>
+                    <TextField
+                        //required
+                        id="first_name"
+                        name="first_name"
+                        label="First Name"
+                        fullWidth
+                        value={ this.state.first_name }
+                        onChange={ (e)=> { 
+                            e.preventDefault(); 
+                            this.setState({first_name: e.target.value}) 
+                        } }
+                    />
+                </Grid>
+                <Grid item xs={6}>
+                    <TextField
+                        //required
+                        id="last_name"
+                        name="last_name"
+                        label="Last Name"
+                        fullWidth
+                        value={ this.state.last_name }
+                        onChange={ (e)=> { 
+                            e.preventDefault(); 
+                            this.setState({last_name: e.target.value}) 
+                        } }
+                    />
+                </Grid>
+
+                {/* email */}
+                <Grid item xs={12}>
+                    <TextField
+                        type="email"
+                        id="email"
+                        name="email"
+                        label="Email Address"
+                        fullWidth
+                        value={ this.state.email }
+                        onChange={ (e)=> { 
+                            e.preventDefault(); 
+                            this.setState({email: e.target.value}) 
+                        } }
+                    />
+                </Grid>
+
+                {/* user telephone */}
+                <Grid item xs={12}>
+                    <TextField
+                        //required
+                        id="telephone"
+                        name="telephone"
+                        label="Telephone"
+                        fullWidth
+                        value={ this.state.telephone }
+                        onChange={ (e)=> { 
+                            e.preventDefault(); 
+                            this.setState({telephone: e.target.value}) 
+                        } }
+                    />
+                </Grid>
+
+
+
+
+            </React.Fragment>
+        )
     }
 
     
@@ -158,7 +406,7 @@ const mapStateToProps = (state, props) => {
 	console.log('users.jsx-mapStateToProps', state);
 	return {
         userData: state.UserConfigReducer.userData.find( user => (
-            user.id === props.userId
+            user.id === props.userIdToEdit
         ) ),
 
 	};

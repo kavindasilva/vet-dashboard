@@ -4,12 +4,19 @@ import axios from 'axios';
 
 //const APIGetUrl = 'http://127.0.0.1/ucsc5/vet-dashboard/vet-dashboard/phpApi/getData.php?q=';
 const uriAllUsers = "http://ontrack.dev.io/rest/user/?type_id=6";
+const uriAllPartners="http://ontrack.dev.io/rest/partner"
 const alturiAllUsers = "http://ontrack.dev.io/api/getUsers";
 
-const DEFAULT_QUERY = 'redux';
-const uriAllPartners="http://ontrack.dev.io/rest/partner"
 
-const newUserSave="http://ontrack.dev.io/rest/partner"; // post
+const newUserSave="http://ontrack.dev.io/rest/user"; // post
+const newPartnerSave="http://ontrack.dev.io/rest/partner"; // post
+
+const editUserSave="http://ontrack.dev.io/rest/"; // 
+const ediPartnerSave="http://ontrack.dev.io/rest/"; // 
+
+const uriSingleUser="http://ontrack.dev.io/rest/user/" // get
+const uriSinglePartner="http://ontrack.dev.io/rest/partner/" // get
+
 
 class userAPI extends React.Component{
 
@@ -22,7 +29,7 @@ class userAPI extends React.Component{
         return result;
       })
       .catch(error => {
-        console.log("userAPI.jsx - getUsersErr", error);
+        console.log("userAPI.jsx - getUsers-Err", error);
         return error;
       });
 
@@ -37,7 +44,21 @@ class userAPI extends React.Component{
         return result;
       })
       .catch(error => {
-        console.log("userAPI.jsx - getPartnersErr", error);
+        console.log("userAPI.jsx - getPartners-Err", error);
+        return error;
+      });
+
+  }
+
+  /** get single user. http://ontrack.dev.io/rest/user/1 */
+  getSingleUser( userId ){
+    return axios.get(uriSingleUser + userId )
+      .then(result => {
+        console.log("userAPI.jsx - getSingleUser", result);
+        return result;
+      })
+      .catch(error => {
+        console.log("userAPI.jsx - getSingleUser-Err", error);
         return error;
       });
 
@@ -45,15 +66,30 @@ class userAPI extends React.Component{
 
   /** save new user data to API */
   saveUser( data ){
-    console.log("ticketAPI - saveToDB", data);
-    //var postUri;
-    //let data1 = { product_id_list: ['pid1234', 'pid1235'] };
-    
+    console.log("userAPI - saveUser", data);
     axios.post( newUserSave, data )
       .then(res => {
         console.log(res);
         console.log(res.data);
       })
+      .catch(error => {
+        console.log("userAPI.jsx - saveUser-Err", error);
+        return error;
+      });
+  }
+
+  /** save new partner user data to API */
+  savePartner( data ){
+    console.log("userAPI - savePartner", data);
+    axios.post( newUserSave, data )
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+      .catch(error => {
+        console.log("userAPI.jsx - savePartner-Err", error);
+        return error;
+      });
   }
 
 

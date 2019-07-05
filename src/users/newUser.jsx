@@ -165,6 +165,7 @@ class NewUser extends React.Component{
                     <Button
                         onClick={ () => {
                             console.log("newUser", this.state);
+                            userAPIObj.saveUser( this.state );
                         } }
                         //fullWidth
                     >
