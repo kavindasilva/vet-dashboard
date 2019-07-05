@@ -46,7 +46,10 @@ const styles = theme => ({
 	  backgroundColor: "#eee",
 	  position: "sticky",
 	  top: 0
-	}
+    },
+    hiddenField: {
+        backgroundColor: "#888888"
+    }
 });
 
 /** to be imported from constants.js */
@@ -60,6 +63,7 @@ class EditUser extends React.Component{
     state = {
         ...this.props.metaData, 
         ...this.props.userData,
+        partnerList: this.props.partnerData,
         editUserType: "user",
     }
 
@@ -67,12 +71,12 @@ class EditUser extends React.Component{
 		//console.log("EditUser - mount. props:", this.props); //
         console.log("EditUser - state:", this.state, "props", this.props); 
         
-        userAPIObj.getPartners()
-            .then(
-                res => {
-                    this.setState({partnerList: res.data });
-                }
-            )
+        // userAPIObj.getPartners()
+        //     .then(
+        //         res => {
+        //             this.setState({partnerList: res.data });
+        //         }
+        //     )
     }
 
 	render(){
@@ -92,8 +96,9 @@ class EditUser extends React.Component{
                 {/* user type select bar */}
                 <Grid item xs={12} sm={12}>
                     <Select 
+                        className={  this.props.classes.hiddenField }
                         //value={ this.state.user_type_id } 
-                        value="partnerUser"
+                        value="partnerForUser"
                         onChange={ e => this.setState({ user_type_id: e.target.value }) }
                         fullWidth={true}
                     >
@@ -113,6 +118,7 @@ class EditUser extends React.Component{
                 {/* account id */}
                 <Grid item xs={12} sm={12}>
                     <TextField
+                        className={  this.props.classes.hiddenField }
                         disabled={ true} //required
                         id="id"
                         name="id"
@@ -127,7 +133,7 @@ class EditUser extends React.Component{
                     <RadioGroup
                         name="genderSelect"
                         //value={ this.state.user_type_id }
-                        value="partnerUser"
+                        value="partnerForUser"
                         onChange={ (e)=>{
                             this.setState({ user_type_id: e.target.value});
                             //console.log(e)
@@ -323,7 +329,7 @@ class EditUser extends React.Component{
                 {/* user's partner */}                
                 <Grid item xs={6}>
                     <TextField
-                        //required
+                        className={  this.props.classes.hiddenField }                        
                         id="partnerAccountId"
                         name="partnerAccountId"
                         label="Partner"
@@ -331,11 +337,10 @@ class EditUser extends React.Component{
                         value={ this.state.account_id }
                     />
                 </Grid>
-
-
                 {/* user's  */}                
                 <Grid item xs={6}>
                     <TextField
+                        className={  this.props.classes.hiddenField }
                         id="userId"
                         name="userId"
                         label="User ID"
@@ -423,6 +428,10 @@ const mapStateToProps = (state, props) => {
         userData: state.UserConfigReducer.userData.find( user => (
             user.user_id === props.userId
         ) ),
+
+        //userData: ,
+
+        partnerData: state.UserConfigReducer.partnerData,
 
 	};
 }

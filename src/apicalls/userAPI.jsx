@@ -66,7 +66,7 @@ class userAPI extends React.Component{
 
   /** save EDIT user data to API. http://ontrack.dev.io/rest/user/9 */
   saveEditUser( data, userId ){
-    console.log("userAPI - saveEditUser", data, userId); //return;
+    console.log("userAPI - saveEditUser", data, userId); return;
     axios.put( uriEditUserSave+userId, data )
       .then(res => {
         console.log(res);

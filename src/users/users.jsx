@@ -31,6 +31,8 @@ import NewUser from "../users/newUser";
 import EditUser from "../users/editUser";
 import { Button } from '@material-ui/core';
 
+import { userTypeArray } from "../common/constants";
+
 import userAPI from "../apicalls/userAPI"
 const userAPIObj = new userAPI();
 
@@ -206,11 +208,12 @@ class Users extends React.Component{
                         <TableHead>
                             <TableRow>
                                 <TableCell>User ID</TableCell>
-                                <TableCell>User Name</TableCell>
+                                <TableCell>Name</TableCell>
                                 <TableCell>Email</TableCell>
                                 <TableCell>Type</TableCell>
 
                                 <TableCell></TableCell>
+                                <TableCell>Telephone</TableCell>
                             </TableRow>
                         </TableHead>
 
@@ -219,9 +222,9 @@ class Users extends React.Component{
                                 this.props.userData.map( user => (
                                     <TableRow>
                                         <TableCell>{ user.user_id }</TableCell>
-                                        <TableCell>{ user.name }</TableCell>
+                                        <TableCell>{ user.first_name+" "+user.last_name }</TableCell>
                                         <TableCell>{ user.email }</TableCell>
-                                        <TableCell>{ user.user_type_id }</TableCell>
+                                        <TableCell>{ userTypeArray[user.user_type_id] }</TableCell>
                                         
                                         <TableCell>
                                             <Button
@@ -235,6 +238,8 @@ class Users extends React.Component{
                                                 Edit
                                             </Button>
                                         </TableCell>
+
+                                        <TableCell>{ user.telephone }</TableCell>
                                     </TableRow>
                                 ) )
                             }
@@ -275,6 +280,7 @@ const mapStateToProps = state => {
 	console.log('users.jsx-mapStateToProps', state);
 	return {
         userData: state.UserConfigReducer.userData,
+        partnerData: state.UserConfigReducer.partnerData,
 
 	};
 }

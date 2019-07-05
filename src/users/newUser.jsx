@@ -45,7 +45,10 @@ const styles = theme => ({
 	  backgroundColor: "#eee",
 	  position: "sticky",
 	  top: 0
-	}
+    },
+    hiddenField: {
+        backgroundColor: "#888888"
+    }
 });
 
 /** to be imported from constants.js */
@@ -58,9 +61,10 @@ const predefinedData=[
 class NewUser extends React.Component{
     state = {
         ...this.props.metaData, 
-        partnerList: [],
+        partnerList: this.props.partnerData,
+        newUserType: "partnerForUser",
 
-        newUserType: null,
+        //newUserType: null,
         name:'', //partner name
         account_email: '', //partner email
         user_type_id: '6', // user type id 3-admin, 6-partner
@@ -76,12 +80,12 @@ class NewUser extends React.Component{
 		console.log("NewUser - mount. props:", this.props); //ok
         //console.log("NewUser - mount. props.metaData:", this.props.metaData); 
         
-        userAPIObj.getPartners()
-            .then(
-                res => {
-                    this.setState({partnerList: res.data });
-                }
-            )
+        // userAPIObj.getPartners()
+        //     .then(
+        //         res => {
+        //             this.setState({partnerList: res.data });
+        //         }
+        //     )
 	}
 
 	render(){
@@ -103,6 +107,7 @@ class NewUser extends React.Component{
                 {/* user type select bar */}
                 <Grid item xs={12} sm={12}>
                     <Select 
+                        className={  this.props.classes.hiddenField }
                         value={ this.state.newUserType } 
                         onChange={ e => this.setState({ newUserType: e.target.value }) }
                         fullWidth={true}
@@ -122,6 +127,7 @@ class NewUser extends React.Component{
 
                 <Grid item xs={12} sm={12}>
                     <TextField
+                        className={  this.props.classes.hiddenField }
                         disabled={ true} //required
                         id="id"
                         name="id"
@@ -190,7 +196,7 @@ class NewUser extends React.Component{
         switch(this.state.newUserType){
             case "partner":
                 userAPIObj.savePartner( this.state ); break;
-            case "partnerUser":
+            case "partnerForUser":
                 userAPIObj.saveUser( this.state ); break;
             default:
                 console.log("newUser - unknown user type to save", this.state.newUserType);
@@ -202,7 +208,7 @@ class NewUser extends React.Component{
         switch(this.state.newUserType){
             case "partner":
                 return this.newPartner();
-            case "partnerUser":
+            case "partnerForUser":
                     return this.newUserforPartner();
             default:
                 console.log("newUser - unknown user type selected", this.state.newUserType);
@@ -326,7 +332,7 @@ class NewUser extends React.Component{
                 {/* user's partner */}                
                 <Grid item xs={6}>
                     <TextField
-                        //required
+                        className={  this.props.classes.hiddenField }
                         id="partnerAccountId"
                         name="partnerAccountId"
                         label="Partner"
@@ -335,10 +341,10 @@ class NewUser extends React.Component{
                     />
                 </Grid>
 
-
                 {/* user's  */}                
                 <Grid item xs={6}>
                     <TextField
+                        className={  this.props.classes.hiddenField }
                         id="partnerAccountId"
                         name="partnerAccountId"
                         label="Last Name"
@@ -423,7 +429,8 @@ class NewUser extends React.Component{
 const mapStateToProps = state => {
 	console.log('users.jsx-mapStateToProps', state);
 	return {
-        userData: state.UserConfigReducer.userData,
+        // userData: state.UserConfigReducer.userData,
+        partnerData: state.UserConfigReducer.partnerData,
 
 	};
 }
