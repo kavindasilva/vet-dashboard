@@ -22,5 +22,8 @@ https://stackoverflow.com/questions/20385664/php-stdclass-check-for-property-exi
 --jul 04
 https://stackoverflow.com/questions/30782948/why-calling-react-setstate-method-doesnt-mutate-the-state-immediately
 
+--jul 05
+https://stackoverflow.com/questions/36741581/fetch-api-unable-to-get-session-from-php-server
+
 
 

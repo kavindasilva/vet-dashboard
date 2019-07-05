@@ -80,20 +80,33 @@ class Users extends React.Component{
 
 	componentDidMount(){
         //console.log("Users - mount. props:", this.props); //ok
-        let allPartners =userAPIObj.getUsers()
+        let allUsers =userAPIObj.getUsers()
         .then(
             result => {
                 let resultArr=[];
                 for(var i in result.data){
                     resultArr.push( result.data[i] );
                 }
-                console.log("users mount2 resultArr", resultArr); // type: arr
-                this.setState({allPartners: resultArr }, function(){
-                    this.dispatchUsers()
+                console.log("users mount2 usersArr", resultArr); // type: arr
+                this.setState({allUsers: resultArr }, function(){
+                    this.dispatchUsers("users")
                 });
                 //this.dispatchUsers()
             }
-            
+        );
+
+        let allPartners =userAPIObj.getPartners()
+        .then(
+            result => {
+                let resultArr=[];
+                for(var i in result.data){
+                    resultArr.push( result.data[i] );
+                }
+                console.log("users mount2 partnersArr", resultArr); // type: arr
+                this.setState({allPartners: resultArr }, function(){
+                    this.dispatchUsers("partners")
+                });
+            }
         )
         
         
@@ -112,13 +125,29 @@ class Users extends React.Component{
 		)
     }
 
-    dispatchUsers = () => {
-		rootStore.dispatch({
-			type: 'GET_SYSTEM_PARTNERS',
-			payload: {
-				userData: this.state.allPartners
-			}
-		});
+    dispatchUsers = ( type ) => {
+        switch(type){
+            case "users":
+                rootStore.dispatch({
+                    type: 'GET_SYSTEM_USERS',
+                    payload: {
+                        userData: this.state.allUsers
+                    }
+                });
+                break;
+
+            case "partners":
+                rootStore.dispatch({
+                    type: 'GET_SYSTEM_PARTNERS',
+                    payload: {
+                        partnerData: this.state.allPartners
+                    }
+                });
+                break;
+
+            default:
+                console.log("users dispatch unknown type: ", type);
+        }
     }
 
     renderUserView(){
