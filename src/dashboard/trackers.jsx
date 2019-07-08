@@ -20,8 +20,12 @@ import Paper from '@material-ui/core/Paper';
 
 import Menu from "../common/menu";
 
+import ticketAPI from "../apicalls/ticketAPI";
+
 import TrackerTableHeader from "../dashboard/trackerHeader";
 import TrackerTableRow from "../dashboard/trackerTableRow";
+
+const ticketAPIobj = new ticketAPI();
 
 const styles = theme => ({
 	root: {
@@ -46,6 +50,7 @@ class Trackers extends React.Component{
 	//state = { Meta }
 
 	componentDidMount(){
+        this.loadTickets(0);
 		console.log("Trackers - mount. props:", this.props); //ok
 		//console.log("Trackers - mount. props.metaData:", this.props.metaData); 
 	}
@@ -92,7 +97,6 @@ class Trackers extends React.Component{
 
                 {
                     this.props.configData.map( tracker => (
-                        this.getUserPermittedColumns(tracker),
 
                         this.state.tabValue === tracker.id && 
                         <React.Fragment key={ tracker.id } >
@@ -125,32 +129,6 @@ class Trackers extends React.Component{
 		);
     }
     
-    /** 
-     * Gets current user authorized column details
-     * */
-    getUserPermittedColumns( trackerInfo ){
-        let userTrackerPermissions=[];
-        let usersVisibleColumns=[];
-
-        trackerInfo.columns.map( column => (
-            //console.log("col:", column),
-            usersVisibleColumns=[],
-
-            usersVisibleColumns=(column.permissions.find( (userPermission, i, arr) => 
-                userPermission.id===this.props.metaData.userId,
-                
-            )),
-            
-            //console.log("showCols userVisibleCols", usersVisibleColumns),
-            //this.printColumn(column, usersVisibleColumns, trackerInfo.id)
-
-            userTrackerPermissions.push( usersVisibleColumns )
-
-        ) );
-        //console.log("showCols userPermissions", userTrackerPermissions)
-        //this.dispatchPermissions()
-
-    }
 
     /**
      * Merges two arrays, and return new array.
@@ -170,6 +148,24 @@ class Trackers extends React.Component{
 				permissions: {...this.state.serverData, isLoggedIn: true }
 			}
 		});
+    }
+    
+    loadTickets = ( ticketid ) => {
+		console.log("trackers - loadTickets");
+		let data = ticketAPIobj.callHubspot( 0,0 )
+			.then(
+				response => {
+					console.log("trackers.jsx - Tresponse2: ", response);
+
+					rootStore.dispatch({
+						type: 'GET_HUBSPOT_TICKETS',
+						payload: {
+							ticketData: response.data.tickets
+						}
+					})
+
+				}
+			) /* */
 	}
 
 }

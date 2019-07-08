@@ -16,5 +16,17 @@ https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/
 https://stackoverflow.com/questions/43572436/sort-an-array-of-objects-in-react-and-render-them
 https://stackoverflow.com/questions/40560660/es6-how-to-import-const-after-export
 
+--jul 03
+https://stackoverflow.com/questions/20385664/php-stdclass-check-for-property-exist/20386054
+
+--jul 04
+https://stackoverflow.com/questions/30782948/why-calling-react-setstate-method-doesnt-mutate-the-state-immediately
+
+--jul 05
+https://stackoverflow.com/questions/36741581/fetch-api-unable-to-get-session-from-php-server
+
+--jul 08
+https://stackoverflow.com/questions/22197678/how-to-connect-multiple-database-in-phalcon-framework
+
 
 

@@ -140,6 +140,7 @@ class TrackerPopup extends Component {
 			//console.log("tracker popup1MatUI:",this.props.instanceData.value);
 			return(
 				<React.Fragment>
+					{ /*this.props.instanceData.value /* wrong output. old value */ }
 					<CustomDatePicker
 						trackerInstanceId={ this.props.trackerInstanceId }
 						columnId={ this.props.instanceData.columnId }
@@ -158,7 +159,8 @@ class TrackerPopup extends Component {
 						<InstantPopup
 							trackerInstanceId={ this.props.trackerInstanceId }
 							columnId={ this.props.instanceData.columnId }
-							value={ this.state.attributeValue }
+							//value={ this.state.attributeValue }
+							value={ this.props.instanceData.value }
 							elementType={ this.props.elementType }
 						>
 						</InstantPopup>
@@ -183,7 +185,7 @@ class TrackerPopup extends Component {
 		/** check if-else like */
 		rulesArr.forEach( condition => {
 			//let stmt = moment().endOf('day').fromNow();
-			let stmt = "var moment="+moment+"; alert( moment().endOf('day').fromNow() )";
+			//let stmt = "var moment="+moment+"; alert( moment().endOf('day').fromNow() )";
 			//stmt = (condition.conditions); //.toString();
 			//let evalResult=eval(condition.conditions);
 			//let evalResult=eval( String(condition.conditions) );

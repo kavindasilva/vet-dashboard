@@ -23,12 +23,12 @@ const TrackConfigReducer = (state, action) => {
                 }
                 
             }
-            console.log("MetaReducer_UPDATE_META_DETAIL: ", newState);
+            console.log("TrackConfigReducer_UPDATE_META_DETAIL: ", newState);
 
             return newState;
 
         default:
-            console.log("MetaReducer_default: ", newState);
+            console.log("TrackConfigReducer_default: ", newState);
             return state;
     }
 

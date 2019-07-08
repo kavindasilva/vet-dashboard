@@ -6,8 +6,8 @@
 
 import React, { Component } from 'react';
 import Pet from '../components/pet';
-// import { rootStore } from "../stores/pets";
 
+import { rootStore } from "../stores/pets";
 import PetReducer from '../reducers/pets'
 import { connect } from "react-redux";
 
@@ -19,9 +19,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-
 import petAPI from "../apicalls/petAPI";
+import ticketAPI from "../apicalls/ticketAPI";
+
 const petAPIobj = new petAPI();
+const ticketAPIobj = new ticketAPI();
+
 //console.log(petAPIobj);
 
 //import Clock from '../components/clock';
@@ -44,6 +47,7 @@ class Pets extends Component {
 	}
 
 	componentDidMount(){
+		this.loadInitialData();
 		console.log("Pets didMount - props", this.props);
 	}
 
@@ -105,6 +109,63 @@ class Pets extends Component {
 	getObjId = (obj) =>{
 		//console.log("pets - getobj obj: ", obj);
 		return obj.objectId;
+	}
+
+	loadInitialData = () => {
+		this.loadData(0,0); // working
+	}
+
+	loadData(property, value){ 
+		console.log("App - loadData");
+		let data = petAPIobj.callGraphQL( property, value )
+			.then( response => {
+				console.log("app.jsx - response1: ",response);
+				if( response.data ){
+					console.log("app.jsx - componenetDidMount");
+					this.setState({ petAdmission: response.data.tickets })
+					return response;
+				}
+			})
+			.then(
+				response => {
+					console.log("app.jsx - response2: ", response);
+
+					rootStore.dispatch({
+						type: 'FETCH_FROM_API',
+						payload: {
+							hubspotData: response.data.tickets
+						}
+					})
+				}
+			)
+
+		this.loadTickets(0);
+	}
+
+	loadTickets = ( ticketid ) => {
+		console.log("App - loadTickets");
+		let data = ticketAPIobj.callApiDb( )
+			.then( response => {
+				console.log("app.jsx - Tresponse1: ",response);
+
+				console.log("app.jsx - componenetDidMount");
+				this.setState({ petAdmission: response.data })
+				return response;
+
+			})
+			.then(
+				response => {
+					console.log("app.jsx - Tresponse2: ", response);
+
+					rootStore.dispatch({
+						type: 'FETCH_TICKETS_FROM_API',
+						payload: {
+							ticketData: response.data
+						}
+					})
+
+				}
+			) /* */
 	}
 	
 }

@@ -5,7 +5,7 @@ import trackerInstances from "../config-data/trackerInstance";
 
 const TrackInstaReducer = (state, action) => {
     console.log("TrackInstaReducer: state: ", state, "\naction: ", action)
-    let newState = {
+    let newState0 = {
         TrackerInstaReducer:{
             instanceData: false,
         }
@@ -14,10 +14,10 @@ const TrackInstaReducer = (state, action) => {
     if(state===undefined || isUndefined(state))
         state=null;
 
+    let newState = { ...state };    
+
     switch (action.type) {
         case 'UPDATE_CELL_VALUE':
-            let newState = { ...state };
-            
             // get tracker's index
             let trackerIndex = state.instanceData.findIndex( tracker=> (
                 tracker.id === action.payload.trackerInstanceId
@@ -33,16 +33,7 @@ const TrackInstaReducer = (state, action) => {
                     newState.instanceData[trackerIndex].data[columnIndex].value = action.payload.value;
                 }
                 else
-                    console.log("trackerInstance: err1")
-
-                /*.data.map(columnRecord => {
-                        let newRecord = {};
-                        
-                    if( columnRecord.columnId === action.payload.columnId ) { //get column
-                        newState.instanceData[recordIndex].data.value = 
-                    }
-                })*/
-                
+                    console.log("trackerInstance: err1")                
             }
             else
                 console.log("trackerInstance: err1")
@@ -50,8 +41,19 @@ const TrackInstaReducer = (state, action) => {
             console.log("TrackInstaReducer UPDATE_CELL_VALUE: ", newState);
             return newState;
 
+        case 'GET_HUBSPOT_TICKETS':
+            newState = {
+                ...state,
+                hubspotTickets: action.payload.ticketData.map(
+                    record => { return record }
+                )
+            };
+
+            console.log("TrackInstaReducer GET_HUBSPOT_TICKETS: ", newState);
+            return newState;
+
         default:
-            console.log("TrackInstaReducer default: ", newState);
+            console.log("TrackInstaReducer default: ", newState0);
             return state;
     }
 

@@ -41,6 +41,34 @@ export const trackerPopupDefaultValues={
     7: 24					// total duration
 };
 
+/**
+ * System user types for user management interface
+ * { id:<int: DB>, type:string, label:string }
+ */
+export const userTypes=[
+    //{ id:3, type:"admin", label:"Admini" },
+    { id:6, type:"partner", label:"Partner with initial User" },
+    { id:6, type:"partnerForUser", label:"User for existing Partner" },
+    //{ id:102, type:"rest", label:"Restrict" },
+];
+
+/**
+ * system user types indexed
+ */
+export const userTypeArray=[
+    "USER_NONE", //0
+    "USER_VISITOR",
+    "USER_CLINIC",
+    "USER_ADMIN", 
+    "USER_VG", //4
+    "USER_VENDOR",
+    "USER_PARTNER",
+    "USER_PROXY",
+    "USER_KIOSK", //8
+    "USER_ANY",
+]
+
+
 /** */
 // export function getValueOfColumn(columnId){
 // //export function getValueOfColumn(rowColumnData, columnId){

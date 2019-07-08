@@ -28,13 +28,6 @@ import { trackerPopupDefaultValues } from "../common/constants";
 
 class InstantPopup extends React.Component{
 
-    /** 
-     * defined by columnId
-     * 
-     * columnId: { predefined value set }
-     * */
-    columnPredefinedValues = trackerPopupDefaultValues;
-
     styleMatUI={
 		closeButton: {
 			cursor:'pointer', 
@@ -54,33 +47,12 @@ class InstantPopup extends React.Component{
     }	
     
     state ={
-        trackerInstanceId: this.props.trackerInstanceId,
-        columnId: this.props.columnId,
-        isOpen: false,
-        attributeValue: this.props.popValue.value,
+        // trackerInstanceId: this.props.trackerInstanceId,
+        // columnId: this.props.columnId,
+        // isOpen: false,
+        // attributeName: this.props.rowData.attributeName,
+        attributeValue: this.props.selectedValue,
         //attributeValue: null //this.props.popValue.value,
-    }
-
-    render2(){
-        return(
-            <React.Fragment>
-                <Button onClick={ (e) => { 
-						//e.preventDefault();
-						//this.setState({ attributeValue:this.state.attributeValue });
-						this.dispatchUpdate();
-						//close(); 
-					} } 
-					variant="text" color="primary"
-					style={this.styleMatUI.closeButton} 
-				>
-					OK
-				</Button>
-                <div>
-                    { this.props.popValue.value }
-                    { this.makeInputElements() }
-                </div>
-            </React.Fragment>
-        );
     }
 
     render(){
@@ -90,7 +62,7 @@ class InstantPopup extends React.Component{
             <React.Fragment>
                 <Popup 
                     trigger={ <span style={ {width: "100%" } }> T{
-                        String( this.props.popValue.value )
+                        String( this.props.selectedValue )
                         }  </span>  } 
                     position="bottom right"
                 >
@@ -183,7 +155,7 @@ class InstantPopup extends React.Component{
                             }
                         }
                     >	
-                        { this.columnPredefinedValues[6].map( val => (
+                        { this.props.predefinedData.map( val => (
                             <FormControlLabel
                                 key={ String(val.name) }
                                 value={ String(val.name) }
@@ -267,7 +239,7 @@ const mapStateToProps = (state, props) => {
 }
 
 
-//export default InstantPopup;
-export default connect(mapStateToProps)(InstantPopup);
+export default InstantPopup;
+//export default connect(mapStateToProps)(InstantPopup);
 
 

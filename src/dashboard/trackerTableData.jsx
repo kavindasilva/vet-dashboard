@@ -99,13 +99,38 @@ class TrackerTableData extends React.Component{
 			
 		} )
 
+		let hubspotData = this.props.instanceData.hubData;
+		Object.keys(hubspotData).map( (key, index) => {
+			//return key;
+			returnArr.push(
+				<TableCell key={key}>
+					{ hubspotData[key].toString() }
+				</TableCell> 
+			)
+			//console.log("XX", hubspotData[key]);
+		} )
+
+
 		return returnArr;
 	}
 
 }
 
 const mapStateToProps = (state, props) => {
+	let instanceData = state.TrackInstaReducer.instanceData.find(record => (
+		record.id === props.recordId
+	));
+
+	let hubspotData={ hubData: {clinic_name:"SampleClinic1", con_value:"STATIC" } };
+	if(state.TrackInstaReducer.hubspotTickets !== null){
+		hubspotData = state.TrackInstaReducer.hubspotTickets.find(record => (
+			record.clinic_name === instanceData.data.find( column => (
+				column.columnId===1 //clinic name
+			) ).value
+		));
+	}
 	console.log('TrackerTableData.jsx-mapStateToProps', state);
+
 	return {
 		//...props,
 		metaData: state.MetaReducer.metaData,
@@ -115,10 +140,11 @@ const mapStateToProps = (state, props) => {
 			tracker.id === props.trackerId
 		)),
 
-		/** particular tracker related instance data */
-		instanceData: state.TrackInstaReducer.instanceData.find(record => (
-			record.id === props.recordId
-		)),
+		/** particular tracker related instance data && hubspot data */
+		instanceData: { ...instanceData, hubData:{ ...hubspotData} },
+
+
+		
 	};
 }
 

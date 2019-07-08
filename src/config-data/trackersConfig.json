@@ -17,6 +17,24 @@
                 "rules": []
             },
             {
+                "id": 2, 
+                "name": "ClinicName2",
+                "type": 1, 
+                "permissions": [
+                    {
+                        "userId" : 5,
+                        "read" : true,
+                        "write": false
+                    },
+                    {
+                        "userId" : 6,
+                        "read" : true,
+                        "write": false
+                    }
+                ],
+                "rules": []
+            },
+            {
                 "id": 4, 
                 "name": "RF Sent Date",
                 "type": 4,
@@ -157,7 +175,7 @@
                     {
                         "precedence": 1,
                         "bgcolor" : "amber",
-                        "conditions": "moment().endOf('day').fromNow()"
+                        "conditions": "new Date()"
                     },
                     {
                         "precedence": 2,
