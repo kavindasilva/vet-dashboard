@@ -100,6 +100,7 @@ class TrackerTableData extends React.Component{
 			
 		} )
 
+		/** mapping objects as an array */
 		let hubspotData = this.props.instanceData.hubData;
 		Object.keys(hubspotData).map( (key, index) => {
 			//return key;
@@ -126,8 +127,11 @@ const mapStateToProps = (state, props) => {
 	let hubspotData={ hubData: {clinic_name:"SampleClinic1", con_value:"STATIC" } };
 	if(state.TrackInstaReducer.hubspotTickets !== null){
 		hubspotData = state.TrackInstaReducer.hubspotTickets.find(record => (
-			record.clinic_name === instanceData.data.find( column => (
-				column.columnId===1 //clinic name
+			// record.clinic_name === instanceData.data.find( column => (
+			// 	column.columnId===1 //clinic name
+			// ) ).value
+			record.objectId === instanceData.data.find( column => (
+				column.name==="ticketId" //ticket id
 			) ).value
 		));
 	}
