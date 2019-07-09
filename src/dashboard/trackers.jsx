@@ -21,11 +21,13 @@ import Paper from '@material-ui/core/Paper';
 import Menu from "../common/menu";
 
 import ticketAPI from "../apicalls/ticketAPI";
+import trackersAPI from "../apicalls/trackersAPI";
 
 import TrackerTableHeader from "../dashboard/trackerHeader";
 import TrackerTableRow from "../dashboard/trackerTableRow";
 
 const ticketAPIobj = new ticketAPI();
+const trackersAPIobj = new trackersAPI();
 
 const styles = theme => ({
 	root: {
@@ -52,7 +54,9 @@ class Trackers extends React.Component{
 	componentDidMount(){
         this.loadTickets(0);
 		console.log("Trackers - mount. props:", this.props); //ok
-		//console.log("Trackers - mount. props.metaData:", this.props.metaData); 
+        //console.log("Trackers - mount. props.metaData:", this.props.metaData); 
+        
+        //this.getTrackersConfig();
 	}
 
 	render(){
@@ -128,6 +132,22 @@ class Trackers extends React.Component{
 			</div>
 		);
     }
+
+    /**
+     * retrieve trackers configuration data from DB
+     */
+    getTrackersConfig(){
+        trackersAPIobj.getTrackerConfig()
+        .then(
+            res => {
+                console.log("trackers res:", res.data);
+                //let m=Object.values(res.data);
+                this.setState({ trackersConfigData: res.data }, function(){
+                    this.dispatchTrackerConfigs();
+                }); /* */
+            }
+        )
+    }
     
 
     /**
@@ -139,13 +159,11 @@ class Trackers extends React.Component{
 	    return obj;
     }
     
-    dispatchPermissions = () => {
+    dispatchTrackerConfigs = () => {
 		rootStore.dispatch({
-			type: 'SET_USER_PERMISSIONS',
+			type: 'GET_CONFIG_FROM_DB',
 			payload: {
-				//isLoggedIn: false,
-				//userId: 250
-				permissions: {...this.state.serverData, isLoggedIn: true }
+				data: this.state.trackersConfigData
 			}
 		});
     }

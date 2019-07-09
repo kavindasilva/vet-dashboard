@@ -8,7 +8,7 @@ import rootReducer from "../reducers/index";
 const trackersConfig=[
     {
         "id" : 1, 
-        "name": "Independent",
+        "name": "initIndependent",
         "columns": [
             {
                 "id": 1, 
@@ -142,12 +142,12 @@ const trackerInstances=[
             {
                 "columnId": 1,
                 "name": "clinicName",
-                "value" : "SampleClinic1"
+                "value" : "stat11"
             },
             {
                 "columnId": 2,
                 "name": "clinicName2",
-                "value" : "My Vet Clinic11"
+                "value" : "statt11"
             },
             {
                 "columnId": 4,

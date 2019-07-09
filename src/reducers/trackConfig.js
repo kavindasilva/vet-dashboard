@@ -1,7 +1,5 @@
 
 import { isUndefined } from "util";
-import trackersConfig from "../config-data/trackersConfig";
-
 
 const TrackConfigReducer = (state, action) => {
     console.log("TrackConfigReducer: state: ", state, "\naction: ", action)
@@ -15,20 +13,17 @@ const TrackConfigReducer = (state, action) => {
         state=null;
 
     switch (action.type) {
-        case 'UPDATE_META_DETAIL00':
+        case 'GET_CONFIG_FROM_DB':
             newState = {
-                ...state,
-                TrackerConfigReducer: {
-                    configData: action.payload.loggedData.isLoggedIn,
-                }
+                configData: action.payload.data,
                 
             }
-            console.log("TrackConfigReducer_UPDATE_META_DETAIL: ", newState);
+            console.log("TrackConfigReducer GET_CONFIG_FROM_DB: ", newState);
 
             return newState;
 
         default:
-            console.log("TrackConfigReducer_default: ", newState);
+            console.log("TrackConfigReducer default: ", newState);
             return state;
     }
 
