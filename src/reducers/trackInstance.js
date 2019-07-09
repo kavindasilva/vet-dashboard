@@ -1,7 +1,5 @@
 
 import { isUndefined } from "util";
-import trackerInstances from "../config-data/trackerInstance";
-
 
 const TrackInstaReducer = (state, action) => {
     console.log("TrackInstaReducer: state: ", state, "\naction: ", action)
@@ -14,10 +12,10 @@ const TrackInstaReducer = (state, action) => {
     if(state===undefined || isUndefined(state))
         state=null;
 
-    let newState = { ...state };    
+    let newState = { ...state };
 
     switch (action.type) {
-        case 'UPDATE_CELL_VALUE':
+        case 'UPDATE_CELL_VALUE': // update cell value changes
             // get tracker's index
             let trackerIndex = state.instanceData.findIndex( tracker=> (
                 tracker.id === action.payload.trackerInstanceId
@@ -41,7 +39,7 @@ const TrackInstaReducer = (state, action) => {
             console.log("TrackInstaReducer UPDATE_CELL_VALUE: ", newState);
             return newState;
 
-        case 'GET_HUBSPOT_TICKETS':
+        case 'GET_HUBSPOT_TICKETS': // get ticket data from hubspot
             newState = {
                 ...state,
                 hubspotTickets: action.payload.ticketData.map(
@@ -50,6 +48,15 @@ const TrackInstaReducer = (state, action) => {
             };
 
             console.log("TrackInstaReducer GET_HUBSPOT_TICKETS: ", newState);
+            return newState;
+        
+        case "GET_INSTANCE_FROM_DB": // get instance data from DB
+            newState = {
+                ...state,
+                instanceData: action.payload.data,
+            }
+
+            console.log("TrackConfigReducer GET_INSTANCE_FROM_DB: ", newState);
             return newState;
 
         default:

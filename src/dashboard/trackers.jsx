@@ -57,6 +57,7 @@ class Trackers extends React.Component{
         //console.log("Trackers - mount. props.metaData:", this.props.metaData); 
         
         this.getTrackersConfig();
+        this.getTrackerInstances();
 	}
 
 	render(){
@@ -140,10 +141,25 @@ class Trackers extends React.Component{
         trackersAPIobj.getTrackerConfig()
         .then(
             res => {
-                console.log("trackers res:", res.data);
+                console.log("trackers config res:", res.data);
                 //let m=Object.values(res.data);
                 this.setState({ trackersConfigData: res.data }, function(){
                     this.dispatchTrackerConfigs();
+                }); /* */
+            }
+        )
+    }
+
+    /**
+     * retrieve tracker instances data from DB
+     */
+    getTrackerInstances(){
+        trackersAPIobj.getTrackerInstance()
+        .then(
+            res => {
+                console.log("trackers insta res:", res.data);
+                this.setState({ trackersInstanceData: res.data }, function(){
+                    this.dispatchTrackerInstances();
                 }); /* */
             }
         )
@@ -164,6 +180,15 @@ class Trackers extends React.Component{
 			type: 'GET_CONFIG_FROM_DB',
 			payload: {
 				data: this.state.trackersConfigData
+			}
+		});
+    }
+
+    dispatchTrackerInstances = () => {
+		rootStore.dispatch({
+			type: 'GET_INSTANCE_FROM_DB',
+			payload: {
+				data: this.state.trackersInstanceData
 			}
 		});
     }
