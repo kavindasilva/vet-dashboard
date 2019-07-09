@@ -5,7 +5,8 @@
         "columns": [
             {
                 "id": 1, 
-                "name": "Clinic Name",
+                "name": "clinicName",
+                "label": "Clinic Name",
                 "type": 1, 
                 "permissions": [
                     {
@@ -18,7 +19,8 @@
             },
             {
                 "id": 2, 
-                "name": "ClinicName2",
+                "name": "clinicName2",
+                "label": "ClinicName2",
                 "type": 1, 
                 "permissions": [
                     {
@@ -36,7 +38,8 @@
             },
             {
                 "id": 4, 
-                "name": "RF Sent Date",
+                "name": "RFSentDate",
+                "label": "RF Sent Date",
                 "type": 4,
                 "permissions": [
                     {
@@ -54,7 +57,8 @@
             },
             {
                 "id": 5, 
-                "name": "RF Completed Date",
+                "name": "RFCompletedDate",
+                "label": "RF Completed Date",
                 "type": 4, 
                 "permissions": [
                     {
@@ -83,7 +87,8 @@
             },
             {
                 "id": 6, 
-                "name": "Completed",
+                "name": "completed",
+                "label": "Completed",
                 "type": 3, 
                 "permissions": [
                     {
@@ -96,7 +101,8 @@
             },
             {
                 "id": 7, 
-                "name": "Duration",
+                "name": "duration",
+                "label": "Duration",
                 "type": 2, 
                 "permissions": [
                     {
@@ -126,7 +132,8 @@
         "columns": [
             {
                 "id": 1, 
-                "name": "Clinic Name",
+                "name": "clinicName",
+                "label": "Clinic Name",
                 "type": 1, 
                 "permissions": [
                     {
@@ -149,7 +156,8 @@
             },
             {
                 "id": 4, 
-                "name": "RF Sent Date",
+                "name": "RFSentDate",
+                "label": "RF Sent Date",
                 "type": 4,
                 "permissions": [
                     {
@@ -162,7 +170,8 @@
             },
             {
                 "id": 5,
-                "name": "RF Completed Date",
+                "name": "RFCompletedDate",
+                "label": "RF Completed Date",
                 "type": 4, 
                 "permissions": [
                     {

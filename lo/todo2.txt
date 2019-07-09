@@ -25,11 +25,8 @@ https://stackoverflow.com/questions/30782948/why-calling-react-setstate-method-d
 --jul 05
 https://stackoverflow.com/questions/36741581/fetch-api-unable-to-get-session-from-php-server
 
-<<<<<<< HEAD
 --jul 08
 https://stackoverflow.com/questions/22197678/how-to-connect-multiple-database-in-phalcon-framework
 
-=======
->>>>>>> debab707bd0b3efe69d70dd0b03e38ac4fdb99ec
 
 

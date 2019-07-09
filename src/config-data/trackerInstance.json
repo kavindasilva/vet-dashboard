@@ -5,26 +5,32 @@
         "data": [
             {
                 "columnId": 1,
+                "name": "clinicName",
                 "value" : "SampleClinic1"
             },
             {
                 "columnId": 2,
+                "name": "clinicName2",
                 "value" : "My Vet Clinic11"
             },
             {
                 "columnId": 4,
+                "name": "RFSentDate",
                 "value" : "2019-01-01"
             },
             {
                 "columnId": 5,
+                "name": "RFCompletedDate",
                 "value" : "2019-01-07"
             },
             {
                 "columnId": 6,
+                "name": "completed",
                 "value" : "true"
             },
             {
                 "columnId": 7,
+                "name": "duration",
                 "value" : 120
             }
         ]
@@ -35,26 +41,32 @@
         "data": [
             {
                 "columnId": 1,
+                "name": "clinicName",
                 "value" : "Test Clinic2"
             },
             {
                 "columnId": 2,
+                "name": "clinicName2",
                 "value" : "My Vet Clinic12"
             },
             {
                 "columnId": 4,
+                "name": "RFSentDate",
                 "value" : "2019-01-02"
             },
             {
                 "columnId": 5,
+                "name": "RFCompletedDate",
                 "value" : "2019-01-21"
             },
             {
                 "columnId": 6,
+                "name": "completed",
                 "value" : "true"
             },
             {
                 "columnId": 7,
+                "name": "duration",
                 "value" : 103
             }
         ]
@@ -65,26 +77,32 @@
         "data": [
             {
                 "columnId": 1,
+                "name": "clinicName",
                 "value" : "Example2"
             },
             {
                 "columnId": 2,
+                "name": "clinicName2",
                 "value" : "My Vet Clinic14"
             },
             {
                 "columnId": 4,
+                "name": "RFSentDate",
                 "value" : "2019-01-01"
             },
             {
                 "columnId": 5,
+                "name": "RFCompletedDate",
                 "value" : "2019-01-03"
             },
             {
                 "columnId": 6,
+                "name": "completed",
                 "value" : "false"
             },
             {
                 "columnId": 7,
+                "name": "duration",
                 "value" : 131
             }
         ]
@@ -95,26 +113,32 @@
         "data": [
             {
                 "columnId": 1,
+                "name": "clinicName",
                 "value" : "Example3"
             },
             {
                 "columnId": 2,
+                "name": "clinicName2",
                 "value" : "My Vet Clinic15 (14 copy)"
             },
             {
                 "columnId": 4,
+                "name": "RFSentDate",
                 "value" : "2019-01-01"
             },
             {
                 "columnId": 5,
+                "name": "RFCompletedDate",
                 "value" : "2019-01-03"
             },
             {
                 "columnId": 6,
+                "name": "completed",
                 "value" : "false"
             },
             {
                 "columnId": 7,
+                "name": "duration",
                 "value" : 152
             }
         ]
@@ -126,18 +150,22 @@
         "data": [
             {
                 "columnId": 1,
+                "name": "clinicName",
                 "value" : "My 21 Vet Clinic"
             },
             {
                 "columnId": 2,
+                "name": "clinicName2",
                 "value" : "My Vet Clinic21"
             },
             {
                 "columnId": 4,
+                "name": "RFSentDate",
                 "value" : "2019-02-22"
             },
             {
                 "columnId": 5,
+                "name": "RFCompletedDate",
                 "value" : "2019-02-28"
             }
         ]
@@ -148,18 +176,22 @@
         "data": [
             {
                 "columnId": 1,
+                "name": "clinicName",
                 "value" : "Clinic num22"
             },
             {
                 "columnId": 2,
+                "name": "clinicName2",
                 "value" : "My Vet Clinic22"
             },
             {
                 "columnId": 4,
+                "name": "RFSentDate",
                 "value" : "2019-02-02"
             },
             {
                 "columnId": 5,
+                "name": "RFCompletedDate",
                 "value" : "2019-02-08"
             }
         ]
@@ -170,18 +202,22 @@
         "data": [
             {
                 "columnId": 1,
+                "name": "clinicName",
                 "value" : "clininc 23"
             },
             {
                 "columnId": 2,
+                "name": "clinicName2",
                 "value" : "My Vet Clinic23"
             },
             {
                 "columnId": 4,
+                "name": "RFSentDate",
                 "value" : "2019-02-20"
             },
             {
                 "columnId": 5,
+                "name": "RFCompletedDate",
                 "value" : "2019-02-21"
             }
         ]
@@ -192,18 +228,22 @@
         "data": [
             {
                 "columnId": 1,
+                "name": "clinicName",
                 "value" : "My 24 Vet Clinic"
             },
             {
                 "columnId": 2,
+                "name": "clinicName2",
                 "value" : "My Vet Clinic24"
             },
             {
                 "columnId": 4,
+                "name": "RFSentDate",
                 "value" : "2019-02-02"
             },
             {
                 "columnId": 5,
+                "name": "RFCompletedDate",
                 "value" : "2019-02-11"
             }
         ]
@@ -215,18 +255,22 @@
         "data": [
             {
                 "columnId": 1,
+                "name": "clinicName",
                 "value" : "My Vet Clinic"
             },
             {
                 "columnId": 2,
+                "name": "clinicName2",
                 "value" : "My Vet Clinic31"
             },
             {
                 "columnId": 4,
+                "name": "RFSentDate",
                 "value" : "2019-03-03"
             },
             {
                 "columnId": 5,
+                "name": "RFCompletedDate",
                 "value" : "2019-03-30"
             }
         ]
