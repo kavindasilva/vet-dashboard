@@ -138,7 +138,7 @@ const trackerInstances=[
     {
         "instanceId" : 11, 
         "trackerId" : 1,    
-        "data": [
+        "columnData": [
             {
                 "columnId": 1,
                 "name": "clinicName",

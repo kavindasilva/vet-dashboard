@@ -253,7 +253,7 @@ const mapStateToProps = (state, props) => {
 		console.log("trackerPopup trackerConfigIndex error");
 
 
-	let data = state.TrackInstaReducer.instanceData[trackerIndex].data.find( column => (
+	let data = state.TrackInstaReducer.instanceData[trackerIndex].columnData.find( column => (
 		column.columnId === props.columnId
 	) );
 	if( trackerIndex > -1 ){
@@ -263,7 +263,7 @@ const mapStateToProps = (state, props) => {
 			metaData: state.MetaReducer.metaData,
 
 			/** tracker instance's particular column's data */
-			instanceData: state.TrackInstaReducer.instanceData[trackerIndex].data.find( column => (
+			instanceData: state.TrackInstaReducer.instanceData[trackerIndex].columnData.find( column => (
 				column.columnId === props.columnId
 			) ),
 
@@ -271,7 +271,7 @@ const mapStateToProps = (state, props) => {
 			 * particular tracker instance's all column data.
 			 * needs when evaluating conditions 
 			 * */
-			rowColumnData: state.TrackInstaReducer.instanceData[trackerIndex].data,
+			rowColumnData: state.TrackInstaReducer.instanceData[trackerIndex].columnData,
 
 			//configData: state.TrackConfigReducer.configData,
 		};

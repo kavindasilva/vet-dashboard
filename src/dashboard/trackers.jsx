@@ -56,7 +56,7 @@ class Trackers extends React.Component{
 		console.log("Trackers - mount. props:", this.props); //ok
         //console.log("Trackers - mount. props.metaData:", this.props.metaData); 
         
-        //this.getTrackersConfig();
+        this.getTrackersConfig();
 	}
 
 	render(){

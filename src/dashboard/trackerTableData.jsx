@@ -61,7 +61,7 @@ class TrackerTableData extends React.Component{
 			//validate columnConfig is not empty
 			if (userPermission) {
 				/** get tracker's current column's instance COLUMN data */
-				let columnInfo = this.props.instanceData.data.find( column => (
+				let columnInfo = this.props.instanceData.columnData.find( column => (
 					column.columnId === trackerInfo.id
 				) )
 
@@ -130,7 +130,7 @@ const mapStateToProps = (state, props) => {
 			// record.clinic_name === instanceData.data.find( column => (
 			// 	column.columnId===1 //clinic name
 			// ) ).value
-			record.objectId === instanceData.data.find( column => (
+			record.objectId === instanceData.columnData.find( column => (
 				column.name==="ticketId" //ticket id
 			) ).value
 		));
