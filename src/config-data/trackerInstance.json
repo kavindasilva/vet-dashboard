@@ -32,6 +32,11 @@
                 "columnId": 7,
                 "name": "duration",
                 "value" : 120
+            },
+            {
+                "columnId": 100,
+                "name": "hub_ticket_id",
+                "value" : "33843436"
             }
         ]
     },
@@ -68,6 +73,11 @@
                 "columnId": 7,
                 "name": "duration",
                 "value" : 103
+            },
+            {
+                "columnId": 100,
+                "name": "hub_ticket_id",
+                "value" : "33820473"
             }
         ]
     },
@@ -104,6 +114,11 @@
                 "columnId": 7,
                 "name": "duration",
                 "value" : 131
+            },
+            {
+                "columnId": 100,
+                "name": "hub_ticket_id",
+                "value" : "33843434"
             }
         ]
     },
@@ -140,6 +155,11 @@
                 "columnId": 7,
                 "name": "duration",
                 "value" : 152
+            },
+            {
+                "columnId": 100,
+                "name": "hub_ticket_id",
+                "value" : ""
             }
         ]
     },
@@ -167,6 +187,11 @@
                 "columnId": 5,
                 "name": "RFCompletedDate",
                 "value" : "2019-02-28"
+            },
+            {
+                "columnId": 100,
+                "name": "hub_ticket_id",
+                "value" : ""
             }
         ]
     },
@@ -193,6 +218,11 @@
                 "columnId": 5,
                 "name": "RFCompletedDate",
                 "value" : "2019-02-08"
+            },
+            {
+                "columnId": 100,
+                "name": "hub_ticket_id",
+                "value" : ""
             }
         ]
     },
@@ -219,6 +249,11 @@
                 "columnId": 5,
                 "name": "RFCompletedDate",
                 "value" : "2019-02-21"
+            },
+            {
+                "columnId": 100,
+                "name": "hub_ticket_id",
+                "value" : ""
             }
         ]
     },
@@ -245,6 +280,11 @@
                 "columnId": 5,
                 "name": "RFCompletedDate",
                 "value" : "2019-02-11"
+            },
+            {
+                "columnId": 100,
+                "name": "hub_ticket_id",
+                "value" : ""
             }
         ]
     },
@@ -272,6 +312,11 @@
                 "columnId": 5,
                 "name": "RFCompletedDate",
                 "value" : "2019-03-30"
+            },
+            {
+                "columnId": 100,
+                "name": "hub_ticket_id",
+                "value" : ""
             }
         ]
     }

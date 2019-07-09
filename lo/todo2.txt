@@ -28,5 +28,7 @@ https://stackoverflow.com/questions/36741581/fetch-api-unable-to-get-session-fro
 --jul 08
 https://stackoverflow.com/questions/22197678/how-to-connect-multiple-database-in-phalcon-framework
 
+--jul 09
+https://stackoverflow.com/questions/17575239/is-it-allowed-to-set-return-to-json-in-documentation
 
 

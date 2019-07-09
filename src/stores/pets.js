@@ -1,9 +1,182 @@
 import { createStore } from "redux";
 //import PetReducer from "../reducers/pets";
 import rootReducer from "../reducers/index";
-import trackerInstances from "../config-data/trackerInstance";
-import trackersConfig from "../config-data/trackersConfig";
+// import trackerInstances from "../config-data/trackerInstance";
+// import trackersConfig from "../config-data/trackersConfig";
 
+/** staic config for initial state of trackers & config */
+const trackersConfig=[
+    {
+        "id" : 1, 
+        "name": "Independent",
+        "columns": [
+            {
+                "id": 1, 
+                "name": "clinicName",
+                "label": "Clinic Name",
+                "type": 1, 
+                "permissions": [
+                    {
+                        "userId" : 5,
+                        "read" : false,
+                        "write": false
+                    }
+                ],
+                "rules": []
+            },
+            {
+                "id": 2, 
+                "name": "clinicName2",
+                "label": "ClinicName2",
+                "type": 1, 
+                "permissions": [
+                    {
+                        "userId" : 5,
+                        "read" : true,
+                        "write": false
+                    },
+                    {
+                        "userId" : 6,
+                        "read" : true,
+                        "write": false
+                    }
+                ],
+                "rules": []
+            },
+            {
+                "id": 4, 
+                "name": "RFSentDate",
+                "label": "RF Sent Date",
+                "type": 4,
+                "permissions": [
+                    {
+                        "userId" : 5, 
+                        "read" : true,
+                        "write": false
+                    },
+                    {
+                        "userId" : 6, 
+                        "read" : true,
+                        "write": false
+                    }
+                ],
+                "rules":[]
+            },
+            {
+                "id": 5, 
+                "name": "RFCompletedDate",
+                "label": "RF Completed Date",
+                "type": 4, 
+                "permissions": [
+                    {
+                        "userId" : 5, 
+                        "read" : true,
+                        "write": true
+                    }
+                ],
+                "rules": [
+                    {
+                        "precedence": 1,
+                        "bgcolor" : "amber",
+                        "conditions": ""
+                    },
+                    {
+                        "precedence": 3,
+                        "bgcolor" : "blue",
+                        "conditions": "3"
+                    },
+                    {
+                        "precedence": 2,
+                        "bgcolor" : "red",
+                        "conditions": "moment().endOf('day').fromNow()"
+                    }
+                ]
+            },
+            {
+                "id": 6, 
+                "name": "completed",
+                "label": "Completed",
+                "type": 3, 
+                "permissions": [
+                    {
+                        "userId" : 5,
+                        "read" : true,
+                        "write": true
+                    }
+                ],
+                "rules": []
+            },
+            {
+                "id": 7, 
+                "name": "duration",
+                "label": "Duration",
+                "type": 2, 
+                "permissions": [
+                    {
+                        "userId" : 5,
+                        "read" : true,
+                        "write": true
+                    }
+                ],
+                "rules": [
+                    {
+                        "precedence": 1,
+                        "bgcolor" : "orange",
+                        "conditions": "8",
+                        "conditions3": "moment().endOf('day').fromNow()",
+                        "conditions2": "moment().isAfter(moment(valueOfColumn(4)).add('3 days')",
+                        "comment": "this is to test the eval function"
+                    }
+                ]
+            }
+        ]
+
+    }
+];
+
+const trackerInstances=[
+    {
+        "id" : 11, 
+        "trackerId" : 1,    
+        "data": [
+            {
+                "columnId": 1,
+                "name": "clinicName",
+                "value" : "SampleClinic1"
+            },
+            {
+                "columnId": 2,
+                "name": "clinicName2",
+                "value" : "My Vet Clinic11"
+            },
+            {
+                "columnId": 4,
+                "name": "RFSentDate",
+                "value" : "2019-01-01"
+            },
+            {
+                "columnId": 5,
+                "name": "RFCompletedDate",
+                "value" : "2019-01-07"
+            },
+            {
+                "columnId": 6,
+                "name": "completed",
+                "value" : "true"
+            },
+            {
+                "columnId": 7,
+                "name": "duration",
+                "value" : 120
+            },
+            {
+                "columnId": 100,
+                "name": "hub_ticket_id",
+                "value" : "33843436"
+            }
+        ]
+    }
+];
 
 const initialState = {
     /** 
@@ -55,3 +228,6 @@ const initialState = {
 };
 //export const rootStore = createStore(PetReducer, initialState);
 export const rootStore = createStore(rootReducer, initialState);
+
+
+
