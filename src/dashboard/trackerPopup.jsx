@@ -234,12 +234,12 @@ const mapStateToProps = (state, props) => {
 
 	/** tracker's instance's index */
 	let trackerIndex = state.TrackInstaReducer.instanceData.findIndex( tracker => (
-		tracker.id === props.trackerInstanceId
+		tracker.instanceId === props.trackerInstanceId
 	) );
 
 	/** tracker's config's index */
 	let trackerConfigIndex = state.TrackConfigReducer.configData.findIndex(tracker => (
-		tracker.id === props.trackerId
+		tracker.trackerId === props.trackerId
 	));
 
 	/** tracker's config's column data */

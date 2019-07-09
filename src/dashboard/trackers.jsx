@@ -93,7 +93,7 @@ class Trackers extends React.Component{
                         
                         {
                             this.props.configData.map( tracker => (
-                                <Tab key={ tracker.id } label={ tracker.name } />
+                                <Tab key={ tracker.trackerId } label={ tracker.name } />
                             ))
                         }
                     </Tabs>
@@ -102,22 +102,22 @@ class Trackers extends React.Component{
                 {
                     this.props.configData.map( tracker => (
 
-                        this.state.tabValue === tracker.id && 
-                        <React.Fragment key={ tracker.id } >
+                        this.state.tabValue === tracker.trackerId && 
+                        <React.Fragment key={ tracker.trackerId } >
                             <h3>Tracker Name: { tracker.name } </h3>
-                            <p>Tracker ID: {tracker.id} </p>
+                            <p>Tracker ID: {tracker.trackerId} </p>
 
                             <Paper style={ {} }>
 					            <Table size={'small'}>
                                     <TableHead>
                                         <TableRow>
-                                            <TrackerTableHeader trackerId={tracker.id}>
+                                            <TrackerTableHeader trackerId={tracker.trackerId}>
                                             </TrackerTableHeader>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody >
                                         <TrackerTableRow 
-                                            trackerId={tracker.id} 
+                                            trackerId={tracker.trackerId} 
                                             tracker={ tracker }
                                             trackerRecordId={null}>
                                         </TrackerTableRow>

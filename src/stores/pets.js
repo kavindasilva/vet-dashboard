@@ -7,7 +7,7 @@ import rootReducer from "../reducers/index";
 /** staic config for initial state of trackers & config */
 const trackersConfig=[
     {
-        "id" : 1, 
+        "trackerId" : 1, 
         "name": "initIndependent",
         "columns": [
             {
@@ -136,18 +136,18 @@ const trackersConfig=[
 
 const trackerInstances=[
     {
-        "id" : 11, 
+        "instanceId" : 11, 
         "trackerId" : 1,    
         "data": [
             {
                 "columnId": 1,
                 "name": "clinicName",
-                "value" : "stat11"
+                "value" : "SampleClinic1"
             },
             {
                 "columnId": 2,
                 "name": "clinicName2",
-                "value" : "statt11"
+                "value" : "react init"
             },
             {
                 "columnId": 4,

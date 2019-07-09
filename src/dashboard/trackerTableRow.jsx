@@ -47,10 +47,10 @@ class TrackerTableRow extends React.Component{
 	
 			if( 1 ){ // kept to add user permissions row-wise later
 				returnArr.push(
-					<tr key={record.id} >
+					<tr key={record.instanceId} >
 						<TrackerTableData 
-							key={record.id} 
-							recordId={ record.id }
+							key={record.instanceId} 
+							recordId={ record.instanceId }
 							trackerId = { record.trackerId }
 						/>
 					</tr>
@@ -72,7 +72,7 @@ const mapStateToProps = (state, props) => {
 		//trackerConfigData: state.TrackConfigReducer.configData,
 		/** particular tracker related config data */
 		trackerConfigData: state.TrackConfigReducer.configData.find( trackerConfigs => (
-			trackerConfigs.id===props.trackerId
+			trackerConfigs.trackerId===props.trackerId
 		) ),
 
 		/** particular tracker instance related instance data */

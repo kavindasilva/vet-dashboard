@@ -72,7 +72,8 @@ class TrackerTableData extends React.Component{
 					returnArr.push( 
 						<TrackerPopup
 							key={trackerInfo.id}
-							trackerInstanceId={ this.props.instanceData.id }
+							//trackerInstanceId={ this.props.instanceData.id }
+							trackerInstanceId={ this.props.instanceData.instanceId }
 							columnId={ columnInfo.columnId }
 							value={ columnInfo.value }
 
@@ -118,7 +119,8 @@ class TrackerTableData extends React.Component{
 
 const mapStateToProps = (state, props) => {
 	let instanceData = state.TrackInstaReducer.instanceData.find(record => (
-		record.id === props.recordId
+		//record.instanceId === props.recordId
+		record.instanceId === props.recordId
 	));
 
 	let hubspotData={ hubData: {clinic_name:"SampleClinic1", con_value:"STATIC" } };
@@ -137,7 +139,7 @@ const mapStateToProps = (state, props) => {
 
 		/** particular tracker related config data */
 		configData: state.TrackConfigReducer.configData.find(tracker => (
-			tracker.id === props.trackerId
+			tracker.trackerId === props.trackerId
 		)),
 
 		/** particular tracker related instance data && hubspot data */

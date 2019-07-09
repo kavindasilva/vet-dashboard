@@ -259,7 +259,7 @@ const mapStateToProps = (state, props) => {
     return {
         //popData: props,
         popValue: state.TrackInstaReducer.instanceData.find( tracker => (
-            tracker.id === props.trackerInstanceId
+            tracker.instanceId === props.trackerInstanceId
         ) ).data.find( col => (
             col.columnId === props.columnId
         ) )
