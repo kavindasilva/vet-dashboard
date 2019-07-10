@@ -44,7 +44,7 @@ class CustomDatePicker extends React.Component{
     
     state ={
         trackerInstanceId: this.props.trackerInstanceId,
-        columnId: this.props.columnId,
+        columnName: this.props.columnName,
         isOpen: this.props.show,
         attributeValue: this.props.dateValue.value,
         //attributeValue: this.props.value,
@@ -138,7 +138,7 @@ class CustomDatePicker extends React.Component{
 			type: 'UPDATE_CELL_VALUE',
 			payload: {
 				trackerInstanceId: this.state.trackerInstanceId,
-				columnId: this.state.columnId,
+				columnName: this.state.columnName,
 				value: this.state.attributeValue
 			}
 		});
@@ -179,7 +179,7 @@ const mapStateToProps = (state, props) => {
         dateValue: state.TrackInstaReducer.instanceData.find( tracker => (
             tracker.instanceId === props.trackerInstanceId
         ) ).columnData.find( col => (
-            col.columnId === props.columnId
+            col.name === props.columnName
         ) )
     };
 }

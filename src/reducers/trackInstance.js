@@ -24,7 +24,8 @@ const TrackInstaReducer = (state, action) => {
             if(trackerIndex >-1 ){
                 // get tracker data column's index by column ID
                 let columnIndex = newState.instanceData[trackerIndex].columnData.findIndex( column=> (
-                    column.columnId === action.payload.columnId
+                    column.name === action.payload.columnName
+                    //column.columnId === action.payload.columnId
                 ) );
 
                 if(columnIndex >-1 ){

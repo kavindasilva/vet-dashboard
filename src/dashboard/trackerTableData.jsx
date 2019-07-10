@@ -62,19 +62,18 @@ class TrackerTableData extends React.Component{
 			if (userPermission) {
 				/** get tracker's current column's instance COLUMN data */
 				let columnInfo = this.props.instanceData.columnData.find( column => (
-					column.columnId === trackerInfo.id
+					column.name === trackerInfo.name
 				) )
 
-				//console.log("TrackerTableData colInfo", columnInfo) 
-				// result: columnId, value
+				console.log("TrackerTableData colInfo", columnInfo) 
 
 				if ( userPermission.read && userPermission.write ) { // read & write
 					returnArr.push( 
 						<TrackerPopup
-							key={trackerInfo.id}
+							key={trackerInfo.name}
 							//trackerInstanceId={ this.props.instanceData.id }
 							trackerInstanceId={ this.props.instanceData.instanceId }
-							columnId={ columnInfo.columnId }
+							columnName={ columnInfo.name }
 							value={ columnInfo.value }
 
 							//trackerId={ this.props.instanceData.trackerId }
@@ -91,7 +90,7 @@ class TrackerTableData extends React.Component{
 				}
 				else if( userPermission.read ){ // read only permission
 					returnArr.push(
-						<TableCell key={trackerInfo.id}>
+						<TableCell key={trackerInfo.name}>
 							{ columnInfo.value } ro
 						</TableCell>
 					)

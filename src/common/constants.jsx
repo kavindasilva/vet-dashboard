@@ -30,15 +30,23 @@ export const trackerColumnDataTypes={
 
 /**
  * tracker popup data related default values
- * columnId: default value
-*/
-export const trackerPopupDefaultValues={
+ * columnName: default value
+*
+/*export const trackerPopupDefaultValues={
     1: null,				// clinic name
 
     4: 0,					// RF sent date
     5: null,				// RF completed date
     6: [ { name:true, value:"OK" }, { name:false, value:"NotCompleted"} ],		// completed status
     7: 24					// total duration
+};*/
+export const trackerPopupDefaultValues={
+    "clinicName": { columnId:1, value:null },				// clinic name
+
+    "RFSentDate": { columnId:4, value:null },					// RF sent date
+    "RFCompletedDate": { columnId:5, value:null },				// RF completed date
+    "completedStatus": [ { name:true, value:"OK" }, { name:false, value:"NotCompleted"} ],		// completed status
+    "duration": { columnId:7, value:24 }					// total duration
 };
 
 /**

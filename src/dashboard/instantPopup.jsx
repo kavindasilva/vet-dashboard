@@ -55,7 +55,7 @@ class InstantPopup extends React.Component{
     
     state ={
         trackerInstanceId: this.props.trackerInstanceId,
-        columnId: this.props.columnId,
+        columnName: this.props.columnName,
         isOpen: false,
         attributeValue: this.props.popValue.value,
         //attributeValue: null //this.props.popValue.value,
@@ -130,7 +130,7 @@ class InstantPopup extends React.Component{
 			type: 'UPDATE_CELL_VALUE',
 			payload: {
 				trackerInstanceId: this.state.trackerInstanceId,
-				columnId: this.state.columnId,
+				columnName: this.state.columnName,
 				value: this.state.attributeValue
 			}
 		});
@@ -183,7 +183,7 @@ class InstantPopup extends React.Component{
                             }
                         }
                     >	
-                        { this.columnPredefinedValues[6].map( val => (
+                        { this.columnPredefinedValues["completedStatus"].map( val => (
                             <FormControlLabel
                                 key={ String(val.name) }
                                 value={ String(val.name) }
@@ -261,7 +261,7 @@ const mapStateToProps = (state, props) => {
         popValue: state.TrackInstaReducer.instanceData.find( tracker => (
             tracker.instanceId === props.trackerInstanceId
         ) ).columnData.find( col => (
-            col.columnId === props.columnId
+            col.name === props.columnName
         ) )
     };
 }

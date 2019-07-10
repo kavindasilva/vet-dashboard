@@ -42,9 +42,9 @@ import moment from "moment";
 
 //import Checkbox from "./checkBoxComp";
 
-// function getValueOfColumn(columnId){
+// function getValueOfColumn(columnName){
 // 	let returnVal = props.rowColumnData.find( column => (
-// 		column.columnId === columnId
+// 		column.columnName === columnName
 // 	) );
 // 	console.log("constants getValueOfColumnns retVal:", returnVal);
 
@@ -55,7 +55,7 @@ import moment from "moment";
 class TrackerPopup extends Component {
 	state = {
 		/** trackerInstaid. need in dispatching */	trackerInstanceId		:this.props.trackerInstanceId,
-		/** column id. need in dispatching */	columnId		:this.props.instanceData.columnId,
+		/** column id. need in dispatching */	columnName		:this.props.instanceData.name,
 		/** property value */     				attributeValue	:this.props.instanceData.value,
 		/** property name */      				attributeName	:this.props.property,
 		/** element input type */ 				elementType		:this.props.elementType,
@@ -79,9 +79,9 @@ class TrackerPopup extends Component {
 	}
 
 	/** 
-	 * defined by columnId
+	 * defined by columnName
 	 * 
-	 * columnId: { predefined value set }
+	 * columnName: { predefined value set }
 	 * */
 	/*columnPredefinedValues ={
 		1: null,				// clinic name
@@ -91,7 +91,7 @@ class TrackerPopup extends Component {
 		6: [ { name:true, value:"OK" }, { name:false, value:"NotCompleted"} ],		// completed status
 		7: 24					// total duration
 	}*/
-	columnPredefinedValues = trackerPopupDefaultValues;
+	//columnPredefinedValues = trackerPopupDefaultValues;
 
 	/** style for the table's div content */
 	styleTD={
@@ -143,7 +143,7 @@ class TrackerPopup extends Component {
 					{ /*this.props.instanceData.value /* wrong output. old value */ }
 					<CustomDatePicker
 						trackerInstanceId={ this.props.trackerInstanceId }
-						columnId={ this.props.instanceData.columnId }
+						columnName={ this.props.instanceData.name }
 						value={ this.props.instanceData.value }
 						elementType={ this.props.elementType }
 					/>
@@ -158,7 +158,7 @@ class TrackerPopup extends Component {
 					
 						<InstantPopup
 							trackerInstanceId={ this.props.trackerInstanceId }
-							columnId={ this.props.instanceData.columnId }
+							columnName={ this.props.instanceData.name }
 							//value={ this.state.attributeValue }
 							value={ this.props.instanceData.value }
 							elementType={ this.props.elementType }
@@ -247,7 +247,7 @@ const mapStateToProps = (state, props) => {
 	var trackerConfig = null;
 	if(trackerConfigIndex>-1){
 		trackerConfig = state.TrackConfigReducer.configData[trackerConfigIndex].columns.find(column => (
-			column.id === props.columnId
+			column.name === props.columnName
 		));
 	}
 	else
@@ -255,7 +255,7 @@ const mapStateToProps = (state, props) => {
 
 
 	let data = state.TrackInstaReducer.instanceData[trackerIndex].columnData.find( column => (
-		column.columnId === props.columnId
+		column.columnName === props.columnName
 	) );
 	if( trackerIndex > -1 ){
 		let response = {
@@ -265,7 +265,7 @@ const mapStateToProps = (state, props) => {
 
 			/** tracker instance's particular column's data */
 			instanceData: state.TrackInstaReducer.instanceData[trackerIndex].columnData.find( column => (
-				column.columnId === props.columnId
+				column.name === props.columnName
 			) ),
 
 			/**
@@ -277,7 +277,7 @@ const mapStateToProps = (state, props) => {
 			//configData: state.TrackConfigReducer.configData,
 		};
 
-		//console.log('instanceData', trackerIndex, props.columnId, data, response);
+		//console.log('instanceData', trackerIndex, props.columnName, data, response);
 
 		return response;
 
