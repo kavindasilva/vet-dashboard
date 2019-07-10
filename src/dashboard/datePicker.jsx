@@ -168,7 +168,7 @@ class CustomDatePicker extends React.Component{
 	};
     
     componentDidMount(){
-        console.log("custom datepicker mount:", this.props);
+        console.log("custom datepicker mount: props:", this.props, "state:", this.state);
     }
 }
 

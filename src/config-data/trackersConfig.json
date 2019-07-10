@@ -1,120 +1,120 @@
 [
     {
-        "id" : 1, 
+        "trackerId" : 1, 
         "name": "Independent",
         "columns": [
             {
-                "id": 1, 
+                "id": 1,
                 "name": "clinicName",
                 "label": "Clinic Name",
-                "type": 1, 
+                "type": 1,
                 "permissions": [
                     {
-                        "userId" : 5,
-                        "read" : false,
+                        "userId": 5,
+                        "read": false,
                         "write": false
                     }
                 ],
                 "rules": []
             },
             {
-                "id": 2, 
+                "id": 2,
                 "name": "clinicName2",
                 "label": "ClinicName2",
-                "type": 1, 
+                "type": 1,
                 "permissions": [
                     {
-                        "userId" : 5,
-                        "read" : true,
+                        "userId": 5,
+                        "read": true,
                         "write": false
                     },
                     {
-                        "userId" : 6,
-                        "read" : true,
+                        "userId": 6,
+                        "read": true,
                         "write": false
                     }
                 ],
                 "rules": []
             },
             {
-                "id": 4, 
+                "id": 4,
                 "name": "RFSentDate",
                 "label": "RF Sent Date",
                 "type": 4,
                 "permissions": [
                     {
-                        "userId" : 5, 
-                        "read" : true,
+                        "userId": 5,
+                        "read": true,
                         "write": false
                     },
                     {
-                        "userId" : 6, 
-                        "read" : true,
+                        "userId": 6,
+                        "read": true,
                         "write": false
                     }
                 ],
-                "rules":[]
+                "rules": []
             },
             {
-                "id": 5, 
+                "id": 5,
                 "name": "RFCompletedDate",
                 "label": "RF Completed Date",
-                "type": 4, 
+                "type": 4,
                 "permissions": [
                     {
-                        "userId" : 5, 
-                        "read" : true,
+                        "userId": 5,
+                        "read": true,
                         "write": true
                     }
                 ],
                 "rules": [
                     {
                         "precedence": 1,
-                        "bgcolor" : "amber",
+                        "bgcolor": "amber",
                         "conditions": ""
                     },
                     {
                         "precedence": 3,
-                        "bgcolor" : "blue",
+                        "bgcolor": "blue",
                         "conditions": "3"
                     },
                     {
                         "precedence": 2,
-                        "bgcolor" : "red",
+                        "bgcolor": "red",
                         "conditions": "moment().endOf('day').fromNow()"
                     }
                 ]
             },
             {
-                "id": 6, 
+                "id": 6,
                 "name": "completed",
                 "label": "Completed",
-                "type": 3, 
+                "type": 3,
                 "permissions": [
                     {
-                        "userId" : 5,
-                        "read" : true,
+                        "userId": 5,
+                        "read": true,
                         "write": true
                     }
                 ],
                 "rules": []
             },
             {
-                "id": 7, 
+                "id": 7,
                 "name": "duration",
                 "label": "Duration",
-                "type": 2, 
+                "type": 2,
                 "permissions": [
                     {
-                        "userId" : 5,
-                        "read" : true,
+                        "userId": 5,
+                        "read": true,
                         "write": true
                     }
                 ],
                 "rules": [
                     {
                         "precedence": 1,
-                        "bgcolor" : "orange",
+                        "bgcolor": "orange",
                         "conditions": "8",
                         "conditions3": "moment().endOf('day').fromNow()",
                         "conditions2": "moment().isAfter(moment(valueOfColumn(4)).add('3 days')",

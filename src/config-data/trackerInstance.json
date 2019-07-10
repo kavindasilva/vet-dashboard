@@ -1,47 +1,52 @@
 [
     {
-        "id" : 11, 
-        "trackerId" : 1,    
-        "data": [
+        "instanceId" : 11,
+        "trackerId" : 1,
+        "columnData": [
             {
                 "columnId": 1,
                 "name": "clinicName",
-                "value" : "SampleClinic1"
+                "value": "dbSampleClinic1"
             },
             {
                 "columnId": 2,
                 "name": "clinicName2",
-                "value" : "My Vet Clinic11"
+                "value": "db-init"
+            },
+            {
+                "columnId": 3,
+                "name": "ticketId",
+                "value": 28868819
             },
             {
                 "columnId": 4,
                 "name": "RFSentDate",
-                "value" : "2019-01-01"
+                "value": "2019-01-01"
             },
             {
                 "columnId": 5,
                 "name": "RFCompletedDate",
-                "value" : "2019-01-07"
+                "value": "2019-01-07"
             },
             {
                 "columnId": 6,
                 "name": "completed",
-                "value" : "true"
+                "value": "true"
             },
             {
                 "columnId": 7,
                 "name": "duration",
-                "value" : 120
+                "value": 120
             },
             {
                 "columnId": 100,
                 "name": "hub_ticket_id",
-                "value" : "33843436"
+                "value": "33843436"
             }
         ]
     },
     {
-        "id" : 12, 
+        "id" : 12,
         "trackerId" : 1,
         "data": [
             {
@@ -82,7 +87,7 @@
         ]
     },
     {
-        "id" : 14, 
+        "id" : 14,
         "trackerId" : 1,
         "data": [
             {
@@ -123,7 +128,7 @@
         ]
     },
     {
-        "id" : 15, 
+        "id" : 15,
         "trackerId" : 1,
         "data": [
             {
@@ -165,7 +170,7 @@
     },
 
     {
-        "id" : 21, 
+        "id" : 21,
         "trackerId" : 2,
         "data": [
             {
@@ -196,7 +201,7 @@
         ]
     },
     {
-        "id" : 22, 
+        "id" : 22,
         "trackerId" : 2,
         "data": [
             {
@@ -227,7 +232,7 @@
         ]
     },
     {
-        "id" : 23, 
+        "id" : 23,
         "trackerId" : 2,
         "data": [
             {
@@ -258,7 +263,7 @@
         ]
     },
     {
-        "id" : 24, 
+        "id" : 24,
         "trackerId" : 2,
         "data": [
             {
@@ -290,7 +295,7 @@
     },
 
     {
-        "id" : 31, 
+        "id" : 31,
         "trackerId" : 3,
         "data": [
             {
