@@ -130,9 +130,10 @@ const mapStateToProps = (state, props) => {
 			// record.clinic_name === instanceData.data.find( column => (
 			// 	column.columnId===1 //clinic name
 			// ) ).value
-			record.objectId === instanceData.columnData.find( column => (
-				column.name==="ticketId" //ticket id
-			) ).value
+			record.objectId === parseInt(instanceData.columnData.find( column => (
+				//column.name==="ticketId" //ticket id previous
+				column.name==="hub_ticket_id" //ticket id
+			) ).value)
 		));
 	}
 	console.log('TrackerTableData.jsx-mapStateToProps', state);
