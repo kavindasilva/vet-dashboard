@@ -68,6 +68,17 @@ export const userTypeArray=[
     "USER_ANY",
 ]
 
+/**
+ * table headers for hubspot data
+ */
+export const hubspotColumnData=[
+	{ name:"clinicName", label:"Clinic name" },
+	{ name:"ticketId", label:"Ticket ID" },
+	{ name:"ticketName", label:"Ticket Name" },
+	{ name:"ticketStatus", label:"Ticket Status" },
+	{ name:"pipelineId", label:"Pipeline Id" },
+	{ name:"pipelineStatusId", label:"Pipeline Status ID" },
+]
 
 /** */
 // export function getValueOfColumn(columnId){

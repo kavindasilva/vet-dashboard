@@ -174,6 +174,7 @@ class TrackerPopup extends Component {
 
 	/** evaluates expressions and returns color */
 	evaluateExpr=( rulesArr )=>{
+		//return "red"; //ok
 		console.log("trackerPopup expr:", rulesArr);
 		// [ { precedence, bgcolor, conditions } ]
 		// sort array by precedence descending
