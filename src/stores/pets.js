@@ -204,8 +204,8 @@ const initialState = {
         configData: trackersConfig
     },
 
-    TrackInstaReducer:{
-        instanceData: trackerInstances,
+    ticketsDataReducer:{
+        ticketsData: trackerInstances,
         hubspotTickets: null,
     },
 

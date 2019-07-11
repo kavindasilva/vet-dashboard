@@ -219,7 +219,7 @@ const mapStateToProps = state => {
         metaData: state.MetaReducer.metaData,
         
         /** all the tracker instances related data */
-        instanceData: state.TrackInstaReducer.instanceData,
+        ticketsData: state.ticketsDataReducer.ticketsData,
         
         /** all the trackers configuration related data */
 		configData: state.TrackConfigReducer.configData,

@@ -61,22 +61,22 @@ class TrackerTableData extends React.Component{
 			//validate columnConfig is not empty
 			if (userPermission) {
 				/** get tracker's current column's instance COLUMN data */
-				let columnInfo = this.props.instanceData.columnData.find( column => (
+				let columnInfo = this.props.ticketsData.columnData.find( column => (
 					column.name === trackerInfo.name
 				) )
 
-				console.log("TrackerTableData colInfo", columnInfo) 
+				//console.log("TrackerTableData colInfo", columnInfo) 
 
 				if ( userPermission.read && userPermission.write ) { // read & write
 					returnArr.push( 
 						<TrackerPopup
 							key={trackerInfo.name}
-							//trackerInstanceId={ this.props.instanceData.id }
-							trackerInstanceId={ this.props.instanceData.instanceId }
+							//trackerInstanceId={ this.props.ticketsData.id }
+							trackerInstanceId={ this.props.ticketsData.instanceId }
 							columnName={ columnInfo.name }
 							value={ columnInfo.value }
 
-							//trackerId={ this.props.instanceData.trackerId }
+							//trackerId={ this.props.ticketsData.trackerId }
 							trackerId={ this.props.trackerId }
 							//property={  }
 
@@ -100,7 +100,7 @@ class TrackerTableData extends React.Component{
 		} )
 
 		/** mapping objects as an array */
-		let hubspotData = this.props.instanceData.hubData;
+		let hubspotData = this.props.ticketsData.hubData;
 		Object.keys(hubspotData).map( (key, index) => {
 			//return key;
 			returnArr.push(
@@ -118,18 +118,18 @@ class TrackerTableData extends React.Component{
 }
 
 const mapStateToProps = (state, props) => {
-	let instanceData = state.TrackInstaReducer.instanceData.find(record => (
+	let ticketsData = state.ticketsDataReducer.ticketsData.find(record => (
 		//record.instanceId === props.recordId
 		record.instanceId === props.recordId
 	));
 
 	let hubspotData={ hubData: {clinic_name:"SampleClinic1", con_value:"STATIC" } };
-	if(state.TrackInstaReducer.hubspotTickets !== null){
-		hubspotData = state.TrackInstaReducer.hubspotTickets.find(record => (
-			// record.clinic_name === instanceData.data.find( column => (
+	if(state.ticketsDataReducer.hubspotTickets !== null){
+		hubspotData = state.ticketsDataReducer.hubspotTickets.find(record => (
+			// record.clinic_name === ticketsData.data.find( column => (
 			// 	column.columnId===1 //clinic name
 			// ) ).value
-			record.objectId === parseInt(instanceData.columnData.find( column => (
+			record.objectId === parseInt(ticketsData.columnData.find( column => (
 				//column.name==="ticketId" //ticket id previous
 				column.name==="hub_ticket_id" //ticket id
 			) ).value)
@@ -147,7 +147,7 @@ const mapStateToProps = (state, props) => {
 		)),
 
 		/** particular tracker related instance data && hubspot data */
-		instanceData: { ...instanceData, hubData:{ ...hubspotData} },
+		ticketsData: { ...ticketsData, hubData:{ ...hubspotData} },
 
 
 		

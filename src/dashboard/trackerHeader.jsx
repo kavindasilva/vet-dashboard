@@ -99,7 +99,7 @@ const mapStateToProps = (state, props) => {
 		metaData: state.MetaReducer.metaData,
 
 		/** filter only the needed tracker instances */
-		instancesData: state.TrackInstaReducer.instanceData.filter( instances => (
+		instancesData: state.ticketsDataReducer.ticketsData.filter( instances => (
 			instances.trackerId===props.trackerId
 		) ),
 

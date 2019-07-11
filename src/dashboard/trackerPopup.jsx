@@ -55,8 +55,8 @@ import moment from "moment";
 class TrackerPopup extends Component {
 	state = {
 		/** trackerInstaid. need in dispatching */	trackerInstanceId		:this.props.trackerInstanceId,
-		/** column id. need in dispatching */	columnName		:this.props.instanceData.name,
-		/** property value */     				attributeValue	:this.props.instanceData.value,
+		/** column id. need in dispatching */	columnName		:this.props.ticketsData.name,
+		/** property value */     				attributeValue	:this.props.ticketsData.value,
 		/** property name */      				attributeName	:this.props.property,
 		/** element input type */ 				elementType		:this.props.elementType,
 		/** Detect popup modal open state */	isOpen			:false,
@@ -123,7 +123,7 @@ class TrackerPopup extends Component {
 		return (
 			<React.Fragment>
 				<TableCell 
-					align={ (isNaN(this.props.instanceData.value))?'left':'right' } 
+					align={ (isNaN(this.props.ticketsData.value))?'left':'right' } 
 					//style={ this.state.styleScript }
 					//style={ { backgroundColor: this.evaluateExpr(10)} }
 					style={ { backgroundColor: this.evaluateExpr( this.props.configData.rules )} }
@@ -135,16 +135,16 @@ class TrackerPopup extends Component {
 	}
 
 	showPop(){
-		//console.log("generating cell input elements", this.props.instanceData, this.state);
+		//console.log("generating cell input elements", this.props.ticketsData, this.state);
 		if(this.state.elementType ==="date" ){
-			//console.log("tracker popup1MatUI:",this.props.instanceData.value);
+			//console.log("tracker popup1MatUI:",this.props.ticketsData.value);
 			return(
 				<React.Fragment>
-					{ /*this.props.instanceData.value /* wrong output. old value */ }
+					{ /*this.props.ticketsData.value /* wrong output. old value */ }
 					<CustomDatePicker
 						trackerInstanceId={ this.props.trackerInstanceId }
-						columnName={ this.props.instanceData.name }
-						value={ this.props.instanceData.value }
+						columnName={ this.props.ticketsData.name }
+						value={ this.props.ticketsData.value }
 						elementType={ this.props.elementType }
 					/>
 				</React.Fragment>
@@ -154,13 +154,13 @@ class TrackerPopup extends Component {
 		else{
 			return(
 				<div style={this.styleTD}>
-					test{ String(this.props.instanceData.value) }
+					test{ String(this.props.ticketsData.value) }
 					
 						<InstantPopup
 							trackerInstanceId={ this.props.trackerInstanceId }
-							columnName={ this.props.instanceData.name }
+							columnName={ this.props.ticketsData.name }
 							//value={ this.state.attributeValue }
-							value={ this.props.instanceData.value }
+							value={ this.props.ticketsData.value }
 							elementType={ this.props.elementType }
 						>
 						</InstantPopup>
@@ -234,7 +234,7 @@ const mapStateToProps = (state, props) => {
 	//console.log('trackerPopup.jsx-mapStateToProps', state);
 
 	/** tracker's instance's index */
-	let trackerIndex = state.TrackInstaReducer.instanceData.findIndex( tracker => (
+	let trackerIndex = state.ticketsDataReducer.ticketsData.findIndex( tracker => (
 		tracker.instanceId === props.trackerInstanceId
 	) );
 
@@ -254,7 +254,7 @@ const mapStateToProps = (state, props) => {
 		console.log("trackerPopup trackerConfigIndex error");
 
 
-	let data = state.TrackInstaReducer.instanceData[trackerIndex].columnData.find( column => (
+	let data = state.ticketsDataReducer.ticketsData[trackerIndex].columnData.find( column => (
 		column.columnName === props.columnName
 	) );
 	if( trackerIndex > -1 ){
@@ -264,7 +264,7 @@ const mapStateToProps = (state, props) => {
 			metaData: state.MetaReducer.metaData,
 
 			/** tracker instance's particular column's data */
-			instanceData: state.TrackInstaReducer.instanceData[trackerIndex].columnData.find( column => (
+			ticketsData: state.ticketsDataReducer.ticketsData[trackerIndex].columnData.find( column => (
 				column.name === props.columnName
 			) ),
 
@@ -272,12 +272,12 @@ const mapStateToProps = (state, props) => {
 			 * particular tracker instance's all column data.
 			 * needs when evaluating conditions 
 			 * */
-			rowColumnData: state.TrackInstaReducer.instanceData[trackerIndex].columnData,
+			rowColumnData: state.ticketsDataReducer.ticketsData[trackerIndex].columnData,
 
 			//configData: state.TrackConfigReducer.configData,
 		};
 
-		//console.log('instanceData', trackerIndex, props.columnName, data, response);
+		//console.log('ticketsData', trackerIndex, props.columnName, data, response);
 
 		return response;
 

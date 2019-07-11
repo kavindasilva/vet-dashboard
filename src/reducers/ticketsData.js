@@ -1,11 +1,11 @@
 
 import { isUndefined } from "util";
 
-const TrackInstaReducer = (state, action) => {
-    console.log("TrackInstaReducer: state: ", state, "\naction: ", action)
+const ticketsDataReducer = (state, action) => {
+    console.log("ticketsDataReducer: state: ", state, "\naction: ", action)
     let newState0 = {
-        TrackerInstaReducer:{
-            instanceData: false,
+        ticketsReducer:{
+            ticketsData: false,
         }
     };
 
@@ -17,19 +17,19 @@ const TrackInstaReducer = (state, action) => {
     switch (action.type) {
         case 'UPDATE_CELL_VALUE': // update cell value changes
             // get tracker's index by tracker ID
-            let trackerIndex = state.instanceData.findIndex( tracker=> (
+            let trackerIndex = state.ticketsData.findIndex( tracker=> (
                 tracker.instanceId === action.payload.trackerInstanceId
             ) );
 
             if(trackerIndex >-1 ){
                 // get tracker data column's index by column ID
-                let columnIndex = newState.instanceData[trackerIndex].columnData.findIndex( column=> (
+                let columnIndex = newState.ticketsData[trackerIndex].columnData.findIndex( column=> (
                     column.name === action.payload.columnName
                     //column.columnId === action.payload.columnId
                 ) );
 
                 if(columnIndex >-1 ){
-                    newState.instanceData[trackerIndex].columnData[columnIndex].value = action.payload.value;
+                    newState.ticketsData[trackerIndex].columnData[columnIndex].value = action.payload.value;
                 }
                 else
                     console.log("trackerInstance: err1")                
@@ -37,7 +37,7 @@ const TrackInstaReducer = (state, action) => {
             else
                 console.log("trackerInstance: err2")
 
-            console.log("TrackInstaReducer UPDATE_CELL_VALUE: ", newState);
+            console.log("ticketsDataReducer UPDATE_CELL_VALUE: ", newState);
             return newState;
 
 
@@ -49,14 +49,14 @@ const TrackInstaReducer = (state, action) => {
                 )
             };
 
-            console.log("TrackInstaReducer GET_HUBSPOT_TICKETS: ", newState);
+            console.log("ticketsDataReducer GET_HUBSPOT_TICKETS: ", newState);
             return newState;
         
 
         case "GET_INSTANCE_FROM_DB": // get instance data from DB
             newState = {
                 ...state,
-                instanceData: action.payload.data,
+                ticketsData: action.payload.data,
             }
 
             console.log("TrackConfigReducer GET_INSTANCE_FROM_DB: ", newState);
@@ -64,11 +64,11 @@ const TrackInstaReducer = (state, action) => {
 
 
         default:
-            console.log("TrackInstaReducer default: ", newState0);
+            console.log("ticketsDataReducer default: ", newState0);
             return state;
     }
 
 }
 
 
-export default TrackInstaReducer
+export default ticketsDataReducer

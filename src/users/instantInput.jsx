@@ -230,7 +230,7 @@ class InstantPopup extends React.Component{
 const mapStateToProps = (state, props) => {
     return {
         //popData: props,
-        popValue: state.TrackInstaReducer.instanceData.find( tracker => (
+        popValue: state.ticketsDataReducer.ticketsData.find( tracker => (
             tracker.id === props.trackerInstanceId
         ) ).data.find( col => (
             col.columnId === props.columnId
