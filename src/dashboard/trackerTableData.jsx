@@ -64,10 +64,16 @@ class TrackerTableData extends React.Component{
 				let columnInfo = this.props.ticketsData.columnData.find( column => (
 					column.name === trackerInfo.name
 				) )
+				/** sometimes columnInfo may be undefined when columns are variabe */
 
 				//console.log("TrackerTableData colInfo", columnInfo) 
 
-				if ( userPermission.read && userPermission.write ) { // read & write
+				if(columnInfo===undefined){
+					returnArr.push(
+						<TableCell>??</TableCell>
+					)
+				}
+				else if ( columnInfo!==undefined && userPermission.read && userPermission.write ) { // read & write
 					returnArr.push( 
 						<TrackerPopup
 							key={trackerInfo.name}
@@ -88,7 +94,7 @@ class TrackerTableData extends React.Component{
 						</TrackerPopup> 
 					)
 				}
-				else if( userPermission.read ){ // read only permission
+				else if( columnInfo!==undefined && userPermission.read ){ // read only permission
 					returnArr.push(
 						<TableCell key={trackerInfo.name}>
 							{ columnInfo.value } ro
@@ -123,17 +129,18 @@ const mapStateToProps = (state, props) => {
 		record.ticketId === props.recordId
 	));
 
+	/** initial data to prevent undefined error */
 	let hubspotData={ hubData: {clinic_name:"SampleClinic1", con_value:"STATIC" } };
+
 	if(state.ticketsDataReducer.hubspotTickets !== null){
-		hubspotData = state.ticketsDataReducer.hubspotTickets.find(record => (
-			// record.clinic_name === ticketsData.data.find( column => (
-			// 	column.columnId===1 //clinic name
-			// ) ).value
-			record.objectId === parseInt(ticketsData.columnData.find( column => (
-				//column.name==="ticketId" //ticket id previous
-				column.name==="hub_ticket_id" //ticket id
-			) ).value)
-		));
+		let currentTicket=ticketsData.columnData.find( column => (
+			column.name==="hub_ticket_id" //ticket id
+		) );
+		if(currentTicket !== undefined && currentTicket!==""){
+			hubspotData = state.ticketsDataReducer.hubspotTickets.find(record => (
+				record.objectId === parseInt(currentTicket.value)
+			));
+		}
 	}
 	console.log('TrackerTableData.jsx-mapStateToProps', state);
 

@@ -7,14 +7,14 @@ import rootReducer from "../reducers/index";
 /** staic config for initial state of trackers & config */
 const trackersConfig=[
     {
-        "trackerId" : 1, 
+        "trackerId" : 1,
         "name": "initIndependent",
         "columns": [
             {
-                "id": 1, 
+                "id": 1,
                 "name": "clinicName",
                 "label": "Clinic Name",
-                "type": 1, 
+                "type": 1,
                 "permissions": [
                     {
                         "userId" : 5,
@@ -25,10 +25,10 @@ const trackersConfig=[
                 "rules": []
             },
             {
-                "id": 2, 
-                "name": "clinicName2",
+                "id": 2,
+                "name": "clinicName22",
                 "label": "ClinicName2",
-                "type": 1, 
+                "type": 1,
                 "permissions": [
                     {
                         "userId" : 5,
@@ -44,18 +44,18 @@ const trackersConfig=[
                 "rules": []
             },
             {
-                "id": 4, 
+                "id": 4,
                 "name": "RFSentDate",
                 "label": "RF Sent Date",
                 "type": 4,
                 "permissions": [
                     {
-                        "userId" : 5, 
+                        "userId" : 5,
                         "read" : true,
                         "write": false
                     },
                     {
-                        "userId" : 6, 
+                        "userId" : 6,
                         "read" : true,
                         "write": false
                     }
@@ -63,13 +63,13 @@ const trackersConfig=[
                 "rules":[]
             },
             {
-                "id": 5, 
+                "id": 5,
                 "name": "RFCompletedDate",
                 "label": "RF Completed Date",
-                "type": 4, 
+                "type": 4,
                 "permissions": [
                     {
-                        "userId" : 5, 
+                        "userId" : 5,
                         "read" : true,
                         "write": true
                     }
@@ -93,10 +93,10 @@ const trackersConfig=[
                 ]
             },
             {
-                "id": 6, 
+                "id": 6,
                 "name": "completed",
                 "label": "Completed",
-                "type": 3, 
+                "type": 3,
                 "permissions": [
                     {
                         "userId" : 5,
@@ -107,10 +107,10 @@ const trackersConfig=[
                 "rules": []
             },
             {
-                "id": 7, 
+                "id": 7,
                 "name": "duration",
                 "label": "Duration",
-                "type": 2, 
+                "type": 2,
                 "permissions": [
                     {
                         "userId" : 5,
@@ -136,56 +136,40 @@ const trackersConfig=[
 
 const trackerInstances=[
     {
-        "ticketId" : 11, 
-        "trackerId" : 1,    
+        "ticketId" : 11,
+        "trackerId" : 1,
         "columnData": [
             {
-                "columnId": 1,
                 "name": "clinicName",
                 "value" : "SampleClinic1"
             },
             {
-                "columnId": 2,
                 "name": "clinicName2",
                 "value" : "react init"
             },
             {
-                "columnId": 3,
-                "name": "ticketId",
-                "value" : 28868819
-            },
-            {
-                "columnId": 4,
                 "name": "RFSentDate",
                 "value" : "2019-01-01"
             },
             {
-                "columnId": 5,
                 "name": "RFCompletedDate",
                 "value" : "2019-01-07"
             },
             {
-                "columnId": 6,
                 "name": "completed",
                 "value" : "true"
             },
             {
-                "columnId": 7,
                 "name": "duration",
                 "value" : 120
-            },
-            {
-                "columnId": 100,
-                "name": "hub_ticket_id",
-                "value" : "33843436"
             }
         ]
     }
 ];
 
 const initialState = {
-    /** 
-     * This is for retrieve and store HUBSPOT and hubspot related DB (version) data 
+    /**
+     * This is for retrieve and store HUBSPOT and hubspot related DB (version) data
      * PetReducer:[ admissions:[], tickets[] ]
      * */
     PetReducer: {
@@ -233,6 +217,3 @@ const initialState = {
 };
 //export const rootStore = createStore(PetReducer, initialState);
 export const rootStore = createStore(rootReducer, initialState);
-
-
-
