@@ -186,7 +186,7 @@ class Trackers extends React.Component{
 
     dispatchTrackerInstances = () => {
 		rootStore.dispatch({
-			type: 'GET_INSTANCE_FROM_DB',
+			type: 'GET_TICKETS_FROM_DB',
 			payload: {
 				data: this.state.trackersInstanceData
 			}

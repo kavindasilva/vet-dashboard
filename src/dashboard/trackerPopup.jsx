@@ -40,17 +40,6 @@ import { trackerPopupDefaultValues } from "../common/constants";
 import Moment from 'react-moment';
 import moment from "moment";
 
-//import Checkbox from "./checkBoxComp";
-
-// function getValueOfColumn(columnName){
-// 	let returnVal = props.rowColumnData.find( column => (
-// 		column.columnName === columnName
-// 	) );
-// 	console.log("constants getValueOfColumnns retVal:", returnVal);
-
-// 	return returnVal;
-// }
-
 //export default class TrackerPopup extends Component {
 class TrackerPopup extends Component {
 	state = {

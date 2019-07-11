@@ -43,7 +43,7 @@ class TrackerTableRow extends React.Component{
 	//TrackerTableRow
 	showTableRows(){
 		let returnArr=[];
-		this.props.instancesData.map( record => {
+		this.props.ticketsData.map( record => {
 	
 			if( 1 ){ // kept to add user permissions row-wise later
 				returnArr.push(
@@ -75,12 +75,12 @@ const mapStateToProps = (state, props) => {
 			trackerConfigs.trackerId===props.trackerId
 		) ),
 
-		/** particular tracker instance related instance data */
-		instancesData: state.ticketsDataReducer.ticketsData.filter(instance => (
-			instance.trackerId === props.trackerId
+		/** particular tracker ticket related ticket data */
+		ticketsData: state.ticketsDataReducer.ticketsData.filter(ticket => (
+			ticket.trackerId === props.trackerId
 		)),
 
-		/** particular tracker instance related HUBSPOT data */
+		/** particular tracker ticket related HUBSPOT data */
 		// hubspotData: state.ticketsDataReducer.hubspotTickets.filter(ticket => (
 		// 	ticket.trackerId === props.trackerId
 		// )),

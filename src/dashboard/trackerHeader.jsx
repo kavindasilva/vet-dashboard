@@ -101,9 +101,9 @@ const mapStateToProps = (state, props) => {
 	return {
 		metaData: state.MetaReducer.metaData,
 
-		/** filter only the needed tracker instances */
-		instancesData: state.ticketsDataReducer.ticketsData.filter( instances => (
-			instances.trackerId===props.trackerId
+		/** filter only the needed tracker tickets */
+		ticketsData: state.ticketsDataReducer.ticketsData.filter( tickets => (
+			tickets.trackerId===props.trackerId
 		) ),
 
 		/** filter only the needed tracker's config */

@@ -53,13 +53,13 @@ const ticketsDataReducer = (state, action) => {
             return newState;
         
 
-        case "GET_INSTANCE_FROM_DB": // get instance data from DB
+        case "GET_TICKETS_FROM_DB": // get instance data from DB
             newState = {
                 ...state,
                 ticketsData: action.payload.data,
             }
 
-            console.log("TrackConfigReducer GET_INSTANCE_FROM_DB: ", newState);
+            console.log("TrackConfigReducer GET_TICKETS_FROM_DB: ", newState);
             return newState;
 
 
