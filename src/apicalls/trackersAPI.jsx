@@ -3,7 +3,7 @@ import React from 'react';
 import axios from 'axios';
 
 const uriGetConfigData = 'http://ontrack.dev.io/rest/trackerconfig'; // from db
-const uriGetInstanceData = 'http://ontrack.dev.io/rest/trackerInstance'; // from db
+//const uriGetInstanceData = 'http://ontrack.dev.io/rest/trackerInstance'; // from db
 const APIselectUrl = 'http://ontrack.dev.io/rest/trackerconfig/';
 
 const APIsaveUrl = "http://ontrack.dev.io/api/insertdata/x"; // x to add garbage para
@@ -32,8 +32,8 @@ class trackersAPI extends React.Component{
       });
   }
 
-  getTrackerInstance( ticketID ){
-    var getUri=uriGetInstanceData;
+  getTrackerInstancexx( ticketID ){
+    var getUri="uriGetInstanceData";
     if( ticketID!="" && ticketID!=null )
       getUri=APIselectUrl + ticketID
 

@@ -57,7 +57,7 @@ class Trackers extends React.Component{
         //console.log("Trackers - mount. props.metaData:", this.props.metaData); 
         
         this.getTrackersConfig();
-        this.getTrackerInstances();
+        this.getTicketData();
 	}
 
 	render(){
@@ -153,8 +153,8 @@ class Trackers extends React.Component{
     /**
      * retrieve tracker instances data from DB
      */
-    getTrackerInstances(){
-        trackersAPIobj.getTrackerInstance()
+    getTicketData(){
+        ticketAPIobj.getTicketProperties()
         .then(
             res => {
                 console.log("trackers insta res:", res.data);

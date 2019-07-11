@@ -11,6 +11,9 @@ const APIlistUrl = 'http://ontrack.dev.io/api/list/DB'; // from db
 const APIselectUrl = 'http://ontrack.dev.io/api/select/';
 const HubspotUrl="https://api.hubapi.com/crm-objects/v1/objects/tickets/paged?hapikey=<key>&properties=hs_pipeline_stage&properties=subject&properties=clinic_name";
 
+const uriGetTicketData = 'http://ontrack.dev.io/rest/ticket/'; // 
+
+
 const APIsaveUrl = "http://ontrack.dev.io/api/insertdata/x"; // x to add garbage para
 
 const APIHubspotList="http://ontrack.dev.io/api/list/hubspot"
@@ -21,6 +24,24 @@ const client = new ApolloClient({
 
 
 class ticketAPI extends React.Component{
+
+  /** gets all ticket information from db */
+  getTicketProperties( ticketID ){
+    var getUri= uriGetTicketData;
+    if( ticketID!="" && ticketID!=null )
+      getUri=APIselectUrl + ticketID
+
+    console.log("ticketAPI call uri:", getUri);
+    return axios.get( getUri )
+      .then(result => {
+        console.log("ticketAPI.jsx - getTrackerConfig",result);
+        return result;
+      })
+      .catch(error => {
+        console.log("ticketAPI error", error);
+        return error;
+      });
+  }
   
   /** get data from api connected to DB */
   callApiDb( ticketID ){
