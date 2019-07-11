@@ -18,7 +18,7 @@ const ticketsDataReducer = (state, action) => {
         case 'UPDATE_CELL_VALUE': // update cell value changes
             // get tracker's index by tracker ID
             let trackerIndex = state.ticketsData.findIndex( tracker=> (
-                tracker.instanceId === action.payload.trackerInstanceId
+                tracker.ticketId === action.payload.trackerInstanceId
             ) );
 
             if(trackerIndex >-1 ){

@@ -72,7 +72,7 @@ class TrackerTableData extends React.Component{
 						<TrackerPopup
 							key={trackerInfo.name}
 							//trackerInstanceId={ this.props.ticketsData.id }
-							trackerInstanceId={ this.props.ticketsData.instanceId }
+							trackerInstanceId={ this.props.ticketsData.ticketId }
 							columnName={ columnInfo.name }
 							value={ columnInfo.value }
 
@@ -119,8 +119,8 @@ class TrackerTableData extends React.Component{
 
 const mapStateToProps = (state, props) => {
 	let ticketsData = state.ticketsDataReducer.ticketsData.find(record => (
-		//record.instanceId === props.recordId
-		record.instanceId === props.recordId
+		//record.ticketId === props.recordId
+		record.ticketId === props.recordId
 	));
 
 	let hubspotData={ hubData: {clinic_name:"SampleClinic1", con_value:"STATIC" } };

@@ -259,7 +259,7 @@ const mapStateToProps = (state, props) => {
     return {
         //popData: props,
         popValue: state.ticketsDataReducer.ticketsData.find( tracker => (
-            tracker.instanceId === props.trackerInstanceId
+            tracker.ticketId === props.trackerInstanceId
         ) ).columnData.find( col => (
             col.name === props.columnName
         ) )

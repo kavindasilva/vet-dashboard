@@ -235,7 +235,7 @@ const mapStateToProps = (state, props) => {
 
 	/** tracker's instance's index */
 	let trackerIndex = state.ticketsDataReducer.ticketsData.findIndex( tracker => (
-		tracker.instanceId === props.trackerInstanceId
+		tracker.ticketId === props.trackerInstanceId
 	) );
 
 	/** tracker's config's index */

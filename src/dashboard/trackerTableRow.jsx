@@ -47,10 +47,10 @@ class TrackerTableRow extends React.Component{
 	
 			if( 1 ){ // kept to add user permissions row-wise later
 				returnArr.push(
-					<tr key={record.instanceId} >
+					<tr key={record.ticketId} >
 						<TrackerTableData 
-							key={record.instanceId} 
-							recordId={ record.instanceId }
+							key={record.ticketId} 
+							recordId={ record.ticketId }
 							trackerId = { record.trackerId }
 						/>
 					</tr>

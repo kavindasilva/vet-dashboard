@@ -136,7 +136,7 @@ const trackersConfig=[
 
 const trackerInstances=[
     {
-        "instanceId" : 11, 
+        "ticketId" : 11, 
         "trackerId" : 1,    
         "columnData": [
             {
