@@ -98,17 +98,18 @@ class TrackerHeader extends React.Component{
 
 const mapStateToProps = (state, props) => {
 	//console.log('TrackerHeader.jsx-mapStateToProps', state);
+	console.log('state.ticketsDataReducer', state.ticketsDataReducer);
 	return {
 		metaData: state.MetaReducer.metaData,
 
 		/** filter only the needed tracker tickets */
 		ticketsData: state.ticketsDataReducer.ticketsData.filter( tickets => (
-			tickets.trackerId===props.trackerId
+			tickets.tracker_id===props.trackerId
 		) ),
 
 		/** filter only the needed tracker's config */
 		trackerConfigData: state.TrackConfigReducer.configData.find( trackerConfigs => (
-			trackerConfigs.trackerId===props.trackerId
+			trackerConfigs.tracker_id===props.trackerId
 		) ),
 
 	};

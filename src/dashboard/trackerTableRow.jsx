@@ -47,11 +47,11 @@ class TrackerTableRow extends React.Component{
 	
 			if( 1 ){ // kept to add user permissions row-wise later
 				returnArr.push(
-					<tr key={record.ticketId} >
+					<tr key={record.ticket_id} >
 						<TrackerTableData 
-							key={record.ticketId} 
-							recordId={ record.ticketId }
-							trackerId = { record.trackerId }
+							key={record.ticket_id} 
+							recordId={ record.ticket_id }
+							trackerId = { record.tracker_id }
 						/>
 					</tr>
 				)
@@ -77,7 +77,7 @@ const mapStateToProps = (state, props) => {
 
 		/** particular tracker ticket related ticket data */
 		ticketsData: state.ticketsDataReducer.ticketsData.filter(ticket => (
-			ticket.trackerId === props.trackerId
+			ticket.tracker_id === props.trackerId
 		)),
 
 		/** particular tracker ticket related HUBSPOT data */

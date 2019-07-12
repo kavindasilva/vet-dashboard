@@ -177,11 +177,9 @@ class CustomDatePicker extends React.Component{
 const mapStateToProps = (state, props) => {
     return {
         //dateData: props,
-        dateValue: state.ticketsDataReducer.ticketsData.find( tracker => (
-            tracker.ticketId === props.ticketTicketId
-        ) ).columnData.find( col => (
-            col.name === props.columnName
-        ) )
+        dateValue: state.ticketsDataReducer.ticketsData.find(
+                        tracker => (tracker.ticketId === props.ticketTicketId)
+                    )[props.columnName]
     };
 }
 

@@ -52,7 +52,6 @@ class Trackers extends React.Component{
 	//state = { Meta }
 
 	componentDidMount(){
-        this.loadTickets(0);
 		console.log("Trackers - mount. props:", this.props); //ok
         //console.log("Trackers - mount. props.metaData:", this.props.metaData); 
         
@@ -61,7 +60,6 @@ class Trackers extends React.Component{
 	}
 
 	render(){
-		//this.viewForm() 
 		return(
 			<React.Fragment>
                 { this.viewTabs() }
@@ -94,7 +92,7 @@ class Trackers extends React.Component{
                         
                         {
                             this.props.configData.map( tracker => (
-                                <Tab key={ tracker.trackerId } label={ tracker.name } />
+                                <Tab key={ tracker.tracker_id } label={ tracker.name } />
                             ))
                         }
                     </Tabs>
@@ -103,22 +101,22 @@ class Trackers extends React.Component{
                 {
                     this.props.configData.map( tracker => (
 
-                        this.state.tabValue === tracker.trackerId && 
-                        <React.Fragment key={ tracker.trackerId } >
+                        this.state.tabValue === tracker.tracker_id && 
+                        <React.Fragment key={ tracker.tracker_id } >
                             <h3>Tracker Name: { tracker.name } </h3>
-                            <p>Tracker ID: {tracker.trackerId} </p>
+                            <p>Tracker ID: {tracker.tracker_id} </p>
 
                             <Paper style={ {} }>
 					            <Table size={'small'}>
                                     <TableHead>
                                         <TableRow>
-                                            <TrackerTableHeader trackerId={tracker.trackerId}>
+                                            <TrackerTableHeader trackerId={tracker.tracker_id}>
                                             </TrackerTableHeader>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody >
                                         <TrackerTableRow 
-                                            trackerId={tracker.trackerId} 
+                                            trackerId={tracker.tracker_id} 
                                             tracker={ tracker }
                                             trackerRecordId={null}>
                                         </TrackerTableRow>
@@ -192,24 +190,6 @@ class Trackers extends React.Component{
 			}
 		});
     }
-    
-    loadTickets = ( ticketid ) => {
-		console.log("trackers - loadTickets");
-		let data = ticketAPIobj.callHubspot( 0,0 )
-			.then(
-				response => {
-					console.log("trackers.jsx - Tresponse2: ", response);
-
-					rootStore.dispatch({
-						type: 'GET_HUBSPOT_TICKETS',
-						payload: {
-							ticketData: response.data.tickets
-						}
-					})
-
-				}
-			) /* */
-	}
 
 }
 

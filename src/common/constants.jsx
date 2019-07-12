@@ -89,16 +89,3 @@ export const hubspotColumnData=[
 	{ name:"pipelineStatusId", label:"Pipeline Status ID" },
 ]
 
-/** */
-// export function getValueOfColumn(columnId){
-// //export function getValueOfColumn(rowColumnData, columnId){
-//     let rowColumnData = this.props.rowColumnData;
-//     let returnVal = rowColumnData.find( column => (
-//         column.columnId === columnId
-//     ) );
-//     console.log("constants getValueOfColumnns retVal:", returnVal);
-
-//     return returnVal;
-//     //return null;
-// }
-

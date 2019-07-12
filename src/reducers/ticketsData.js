@@ -20,30 +20,20 @@ const ticketsDataReducer = (state, action) => {
     switch (action.type) {
         case 'UPDATE_CELL_VALUE': // update cell value changes
             // get tracker's index by tracker ID
-            let trackerIndex = state.ticketsData.findIndex( tracker=> (
-                tracker.ticketId === action.payload.ticketTicketId
-            ) );
+            let trackerIndex = state.ticketsData.findIndex(
+                    tracker => (tracker.ticketId === action.payload.ticketTicketId)
+                );
 
             if(trackerIndex >-1 ){
-                // get tracker data column's index by column ID
-                let columnIndex = newState.ticketsData[trackerIndex].columnData.findIndex( column=> (
-                    column.name === action.payload.columnName
-                    //column.columnId === action.payload.columnId
-                ) );
+                newState.ticketsData[trackerIndex][action.payload.columnName].value = action.payload.value;
 
-                if(columnIndex >-1 ){
-                    newState.ticketsData[trackerIndex].columnData[columnIndex].value = action.payload.value;
-
-                    updateTicketData( {
-                        columnName:action.payload.columnName,
-                        ticketId: action.payload.ticketTicketId,
-                        newValue: action.payload.value,
-                    },
-                    action.payload.entryId
-                    );
-                }
-                else
-                    console.log("trackerInstance: err1")                
+                updateTicketData( {
+                    //columnName:action.payload.columnName,
+                    //ticketId: action.payload.ticketTicketId,
+                    value: action.payload.value,
+                },
+                action.payload.entryId
+                );
             }
             else
                 console.log("trackerInstance: err2")

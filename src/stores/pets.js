@@ -136,34 +136,8 @@ const trackersConfig=[
 
 const initialTicket=[
     {
-        "ticketId" : 11,
-        "trackerId" : 1,
-        "columnData": [
-            {
-                "name": "clinicName",
-                "value" : "SampleClinic1"
-            },
-            {
-                "name": "clinicName2",
-                "value" : "react init"
-            },
-            {
-                "name": "RFSentDate",
-                "value" : "2019-01-01"
-            },
-            {
-                "name": "RFCompletedDate",
-                "value" : "2019-01-07"
-            },
-            {
-                "name": "completed",
-                "value" : "true"
-            },
-            {
-                "name": "duration",
-                "value" : 120
-            }
-        ]
+        "ticket_id" : 11,
+        "tracker_id" : 1,
     }
 ];
 

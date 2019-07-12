@@ -48,6 +48,8 @@ class TrackerTableData extends React.Component{
 	showTableData(){
 		let returnArr=[]; 
 
+		console.log('this.props.configData', this.props.configData);
+
 		this.props.configData.columns.forEach( trackerInfo => { //each column of trackerConfig
 			
 			/** store user permissions of CURRENT COLUMN of trackerConfig user  */
@@ -61,9 +63,8 @@ class TrackerTableData extends React.Component{
 			//validate columnConfig is not empty
 			if ( userPermission) {
 				/** get tracker's current column's instance COLUMN data */
-				let columnInfo = this.props.ticketsData.columnData.find( column => (
-					column.name === trackerInfo.name
-				) )
+				let columnInfo = this.props.ticketsData[trackerInfo.name];
+
 				/** sometimes columnInfo may be undefined when columns are variable */
 
 				//console.log("TrackerTableData colInfo", columnInfo) 
@@ -121,16 +122,13 @@ const mapStateToProps = (state, props) => {
 	));
 	//console.log("trackerTableData ticketData", ticketsData);
 
-	let coll=state.TrackConfigReducer.configData.find(tracker => (
-		tracker.trackerId === props.trackerId
-	))
-	//console.log("trackerTableData configData", coll);
 
 
 	/** initial data to prevent undefined error */
 	let hubspotData={  };
 
 	console.log('TrackerTableData.jsx-mapStateToProps', state);
+	console.log('state.TrackConfigReducer.configData', state.TrackConfigReducer.configData, props);
 
 	return {
 		//...props,
@@ -138,7 +136,7 @@ const mapStateToProps = (state, props) => {
 
 		/** particular tracker related config data */
 		configData: state.TrackConfigReducer.configData.find(tracker => (
-			tracker.trackerId === props.trackerId
+			tracker.tracker_id === props.trackerId
 		)),
 
 		/** particular tracker related instance data && hubspot data */

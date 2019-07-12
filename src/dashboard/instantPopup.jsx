@@ -57,8 +57,8 @@ class InstantPopup extends React.Component{
         ticketTicketId: this.props.ticketTicketId,
         columnName: this.props.columnName,
         isOpen: false,
-        attributeValue: this.props.popValue.value,
-        //attributeValue: null //this.props.popValue.value,
+        attributeValue: this.props.value,
+        //attributeValue: this.props.popValue.value,
     }
 
     render2(){
@@ -76,7 +76,7 @@ class InstantPopup extends React.Component{
 					OK
 				</Button>
                 <div>
-                    { this.props.popValue.value }
+                    { this.props.value }
                     { this.makeInputElements() }
                 </div>
             </React.Fragment>
@@ -90,7 +90,7 @@ class InstantPopup extends React.Component{
             <React.Fragment>
                 <Popup 
                     trigger={ <span style={ {width: "100%" } }> T{
-                        String( this.props.popValue.value )
+                        String( this.props.value )
                         }  </span>  } 
                     position="bottom right"
                 >
@@ -259,11 +259,9 @@ class InstantPopup extends React.Component{
 const mapStateToProps = (state, props) => {
     return {
         //popData: props,
-        popValue: state.ticketsDataReducer.ticketsData.find( tracker => (
-            tracker.ticketId === props.ticketTicketId
-        ) ).columnData.find( col => (
-            col.name === props.columnName
-        ) )
+        popValue: state.ticketsDataReducer.ticketsData.find(
+                tracker => (tracker.ticket_id === props.ticketTicketId)
+            )[props.columnName]
     };
 }
 
