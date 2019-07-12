@@ -20,6 +20,7 @@ export default function Records(){
 /**
  * tracker data columns related dataTypes
  * data type id: data type
+ * these types are defined in the column configuration
  */
 export const trackerColumnDataTypes={
     1: 'text',

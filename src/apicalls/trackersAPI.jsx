@@ -32,34 +32,7 @@ class trackersAPI extends React.Component{
       });
   }
 
-  getTrackerInstancexx( ticketID ){
-    var getUri="uriGetInstanceData";
-    if( ticketID!="" && ticketID!=null )
-      getUri=APIselectUrl + ticketID
 
-    console.log("trackersAPI call uri:", getUri);
-    return axios.get( getUri )
-      .then(result => {
-        console.log("trackersAPI.jsx - getTrackerConfig",result);
-        return result;
-      })
-      .catch(error => {
-        console.log("trackersAPI error", error);
-        return error;
-      });
-  }
-
-
-  /** save / update data to API */
-  saveToDBxx( data ){
-    console.log("trackersAPI - saveToDB", data);
-    
-    axios.post( APIsaveUrl, data )
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-      })
-  }
 
 }
 

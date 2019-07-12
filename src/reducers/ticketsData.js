@@ -1,6 +1,9 @@
 
 import { isUndefined } from "util";
 
+import ticketAPI from "../apicalls/ticketAPI"
+const ticketAPIobj = new ticketAPI();
+
 const ticketsDataReducer = (state, action) => {
     console.log("ticketsDataReducer: state: ", state, "\naction: ", action)
     let newState0 = {
@@ -68,6 +71,35 @@ const ticketsDataReducer = (state, action) => {
             return state;
     }
 
+}
+
+const updateTicketData = (allData) => {
+    console.log("ticketData updateTicketData - saveToDB", allData);
+    ticketAPIobj.saveToDB(allData);
+    //console.log("popup - saveToDB", allData.ticket_id);
+    /*let data = ticketAPIobj.callApiDb()
+        .then(response => {
+            console.log("popup - Tresponse1: ", response);
+
+            console.log("popup - componenetDidMount");
+            this.setState({ petAdmission: response.data })
+            return response;
+
+        })
+        .then(
+            response => {
+                console.log("popup - Tresponse2: ", response);
+
+                // 
+                /*rootStore.dispatch({
+                    type: 'FETCH_TICKETS_FROM_API',
+                    payload: {
+                        ticketData: response.data
+                    }
+                }) /* * /
+
+            }
+        ) /* */
 }
 
 

@@ -154,7 +154,7 @@ class Trackers extends React.Component{
      * retrieve tracker instances data from DB
      */
     getTicketData(){
-        ticketAPIobj.getTicketProperties()
+        ticketAPIobj.getTicketsAndProperties()
         .then(
             res => {
                 console.log("trackers insta res:", res.data);

@@ -59,14 +59,14 @@ class TrackerTableData extends React.Component{
 			// result: userId, read, write
 
 			//validate columnConfig is not empty
-			if (userPermission) {
+			if ( 1 || userPermission) {
 				/** get tracker's current column's instance COLUMN data */
 				let columnInfo = this.props.ticketsData.columnData.find( column => (
 					column.name === trackerInfo.name
 				) )
 				/** sometimes columnInfo may be undefined when columns are variabe */
 
-				//console.log("TrackerTableData colInfo", columnInfo) 
+				console.log("TrackerTableData colInfo", columnInfo) 
 
 				if(columnInfo===undefined){
 					returnArr.push(
@@ -77,16 +77,12 @@ class TrackerTableData extends React.Component{
 					returnArr.push( 
 						<TrackerPopup
 							key={trackerInfo.name}
-							//trackerInstanceId={ this.props.ticketsData.id }
 							trackerInstanceId={ this.props.ticketsData.ticketId }
 							columnName={ columnInfo.name }
 							value={ columnInfo.value }
 
-							//trackerId={ this.props.ticketsData.trackerId }
 							trackerId={ this.props.trackerId }
-							//property={  }
 
-							// map columnDataTypes with json columnType
 							elementType={ this.columnDataTypes[trackerInfo.type] }
 							//data={ { valueSet: this.columnPredefinedValues[6] } }
 						>
@@ -101,21 +97,28 @@ class TrackerTableData extends React.Component{
 						</TableCell>
 					)
 				}
+				else{
+					returnArr.push(
+						<TableCell key={trackerInfo.name}>
+							{ columnInfo.value } NV
+						</TableCell>
+					)
+				}
 			}			
 			
 		} )
 
 		/** mapping objects as an array */
-		let hubspotData = this.props.ticketsData.hubData;
-		Object.keys(hubspotData).map( (key, index) => {
-			//return key;
-			returnArr.push(
-				<TableCell key={key}>
-					{ hubspotData[key].toString() }
-				</TableCell> 
-			)
-			//console.log("XX", hubspotData[key]);
-		} )
+		// let hubspotData = this.props.ticketsData.hubData;
+		// Object.keys(hubspotData).map( (key, index) => {
+		// 	//return key;
+		// 	returnArr.push(
+		// 		<TableCell key={key}>
+		// 			{ hubspotData[key].toString() }
+		// 		</TableCell> 
+		// 	)
+		// 	//console.log("XX", hubspotData[key]);
+		// } )
 
 
 		return returnArr;
@@ -124,24 +127,21 @@ class TrackerTableData extends React.Component{
 }
 
 const mapStateToProps = (state, props) => {
+	//console.log("trackerTableData", props);
 	let ticketsData = state.ticketsDataReducer.ticketsData.find(record => (
-		//record.ticketId === props.recordId
 		record.ticketId === props.recordId
 	));
+	console.log("trackerTableData ticketData", ticketsData);
+
+	let coll=state.TrackConfigReducer.configData.find(tracker => (
+		tracker.trackerId === props.trackerId
+	))
+	console.log("trackerTableData configData", coll);
+
 
 	/** initial data to prevent undefined error */
-	let hubspotData={ hubData: {clinic_name:"SampleClinic1", con_value:"STATIC" } };
+	let hubspotData={  };
 
-	if(state.ticketsDataReducer.hubspotTickets !== null){
-		let currentTicket=ticketsData.columnData.find( column => (
-			column.name==="hub_ticket_id" //ticket id
-		) );
-		if(currentTicket !== undefined && currentTicket!==""){
-			hubspotData = state.ticketsDataReducer.hubspotTickets.find(record => (
-				record.objectId === parseInt(currentTicket.value)
-			));
-		}
-	}
 	console.log('TrackerTableData.jsx-mapStateToProps', state);
 
 	return {

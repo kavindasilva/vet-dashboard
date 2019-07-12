@@ -11,7 +11,8 @@ const APIlistUrl = 'http://ontrack.dev.io/api/list/DB'; // from db
 const APIselectUrl = 'http://ontrack.dev.io/api/select/';
 const HubspotUrl="https://api.hubapi.com/crm-objects/v1/objects/tickets/paged?hapikey=<key>&properties=hs_pipeline_stage&properties=subject&properties=clinic_name";
 
-const uriGetTicketData = 'http://ontrack.dev.io/rest/ticket/'; // 
+//const uriGetTicketData = 'http://ontrack.dev.io/rest/ticket/'; // 
+const uriGetTicketData = 'http://ontrack.dev.io/rest/tickets/'; // 
 
 
 const APIsaveUrl = "http://ontrack.dev.io/api/insertdata/x"; // x to add garbage para
@@ -25,8 +26,11 @@ const client = new ApolloClient({
 
 class ticketAPI extends React.Component{
 
-  /** gets all ticket information from db */
-  getTicketProperties( ticketID ){
+  /** 
+   * gets all ticket information from db
+   * using rest api made to store tickets
+   * */
+  getTicketsAndProperties( ticketID ){
     var getUri= uriGetTicketData;
     if( ticketID!="" && ticketID!=null )
       getUri=APIselectUrl + ticketID
@@ -43,7 +47,7 @@ class ticketAPI extends React.Component{
       });
   }
   
-  /** get data from api connected to DB */
+  /** get data from api connected to DB (temporary hubspot mapping) */
   callApiDb( ticketID ){
     var getUri=APIlistUrl;
     if( ticketID!="" && ticketID!=null )
@@ -62,7 +66,7 @@ class ticketAPI extends React.Component{
   }
 
 
-  /** save / update data to API */
+  /** save / update data to API (temporary hubspot mapping) */
   saveToDB( data ){
     console.log("ticketAPI - saveToDB", data);
     //var postUri;
