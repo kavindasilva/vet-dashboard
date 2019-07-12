@@ -47,7 +47,7 @@ class InstantPopup extends React.Component{
     }	
     
     state ={
-        // trackerInstanceId: this.props.trackerInstanceId,
+        // ticketTicketId: this.props.ticketTicketId,
         // columnId: this.props.columnId,
         // isOpen: false,
         // attributeName: this.props.rowData.attributeName,
@@ -101,7 +101,7 @@ class InstantPopup extends React.Component{
 		rootStore.dispatch({
 			type: 'UPDATE_CELL_VALUE',
 			payload: {
-				trackerInstanceId: this.state.trackerInstanceId,
+				ticketTicketId: this.state.ticketTicketId,
 				columnId: this.state.columnId,
 				value: this.state.attributeValue
 			}
@@ -231,7 +231,7 @@ const mapStateToProps = (state, props) => {
     return {
         //popData: props,
         popValue: state.ticketsDataReducer.ticketsData.find( tracker => (
-            tracker.id === props.trackerInstanceId
+            tracker.id === props.ticketTicketId
         ) ).data.find( col => (
             col.columnId === props.columnId
         ) )
