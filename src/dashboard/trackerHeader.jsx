@@ -83,11 +83,11 @@ class TrackerHeader extends React.Component{
 		} );
 
 		/** show hubspot ticket headers */
-		hubspotcolumns.forEach( column => (
-			returnArr.push(
-				<TableCell> { column.name } </TableCell> 
-			)
-		) );
+		// hubspotcolumns.forEach( column => (
+		// 	returnArr.push(
+		// 		<TableCell> { column.name } </TableCell> 
+		// 	)
+		// ) );
 		
 				
 
