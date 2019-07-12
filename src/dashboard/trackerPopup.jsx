@@ -114,7 +114,7 @@ class TrackerPopup extends Component {
 			//console.log("tracker popup1MatUI:",this.props.ticketsData.value);
 			return(
 				<React.Fragment>
-					{ /*this.props.ticketsData.value /* wrong output. old value */ }
+					{ /*this.props.ticketsData.value */ }
 					<CustomDatePicker
 						ticketTicketId={ this.props.ticketTicketId }
 						columnName={ this.props.ticketsData.name }

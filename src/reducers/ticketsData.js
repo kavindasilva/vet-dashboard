@@ -35,12 +35,12 @@ const ticketsDataReducer = (state, action) => {
                     newState.ticketsData[trackerIndex].columnData[columnIndex].value = action.payload.value;
 
                     updateTicketData( {
-                        entryId: 0,
                         columnName:action.payload.columnName,
                         ticketId: action.payload.ticketTicketId,
                         newValue: action.payload.value,
                     },
-                     );
+                    action.payload.entryId
+                    );
                 }
                 else
                     console.log("trackerInstance: err1")                

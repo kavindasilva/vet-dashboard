@@ -69,9 +69,9 @@ class ticketAPI extends React.Component{
 
   /** save / update data to API (temporary hubspot mapping) */
   updateTicketPropery( data, entryId ){
-    console.log("ticketAPI - saveToDB", data); //return;
+    console.log("ticketAPI - saveToDB", data, entryId); return;
     
-    axios.put( APIsaveUrl, data )
+    axios.put( uriPutTicketData+entryId, data )
       .then(res => {
         console.log(res);
         //console.log(res.data);

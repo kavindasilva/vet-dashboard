@@ -64,14 +64,15 @@ class TrackerTableData extends React.Component{
 				let columnInfo = this.props.ticketsData.columnData.find( column => (
 					column.name === trackerInfo.name
 				) )
-				/** sometimes columnInfo may be undefined when columns are variabe */
+				/** sometimes columnInfo may be undefined when columns are variable */
 
-				console.log("TrackerTableData colInfo", columnInfo) 
+				//console.log("TrackerTableData colInfo", columnInfo) 
+				// result: entryId: 5, name: "RFCompletedDate", value: "2019-01-25"
 
-				if(columnInfo===undefined){
-					returnArr.push(
-						<TableCell>??</TableCell>
-					)
+				if(columnInfo===undefined){ // to check undefined values
+					// returnArr.push(
+					// 	<TableCell>??</TableCell>
+					// )
 				}
 				else if ( columnInfo!==undefined && userPermission.read && userPermission.write ) { // read & write
 					returnArr.push( 
@@ -118,12 +119,12 @@ const mapStateToProps = (state, props) => {
 	let ticketsData = state.ticketsDataReducer.ticketsData.find(record => (
 		record.ticketId === props.recordId
 	));
-	console.log("trackerTableData ticketData", ticketsData);
+	//console.log("trackerTableData ticketData", ticketsData);
 
 	let coll=state.TrackConfigReducer.configData.find(tracker => (
 		tracker.trackerId === props.trackerId
 	))
-	console.log("trackerTableData configData", coll);
+	//console.log("trackerTableData configData", coll);
 
 
 	/** initial data to prevent undefined error */
@@ -148,7 +149,5 @@ const mapStateToProps = (state, props) => {
 	};
 }
 
-//export default TrackerTableData;
 export default connect(mapStateToProps)(TrackerTableData);
-//export default connect(mapStateToProps)(withStyles(useStyles)(TrackerTableData));
 

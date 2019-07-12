@@ -131,7 +131,8 @@ class InstantPopup extends React.Component{
 			payload: {
 				ticketTicketId: this.state.ticketTicketId,
 				columnName: this.state.columnName,
-				value: this.state.attributeValue
+                value: this.state.attributeValue,
+                entryId: this.props.popValue.entryId,
 			}
 		});
 	}
