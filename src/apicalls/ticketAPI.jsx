@@ -13,7 +13,7 @@ const HubspotUrl="https://api.hubapi.com/crm-objects/v1/objects/tickets/paged?ha
 
 //const uriGetTicketData = 'http://ontrack.dev.io/rest/ticket/'; // 
 const uriGetTicketData = 'http://ontrack.dev.io/rest/tickets/'; // 
-const uriPutTicketData = 'http://ontrack.dev.io/rest/ticketproperty/'; // 
+const uriTickets = 'http://ontrack.dev.io/rest/tickets/'; // 
 
 
 
@@ -43,14 +43,13 @@ class ticketAPI extends React.Component{
   
 
   /** save / update data to API (temporary hubspot mapping) */
-  updateTicketPropery( data, entryId ){
-    console.log("ticketAPI - saveToDB", data, entryId); //return;
+  updateTicketPropery (ticketId, data) {
+    console.log("ticketAPI - saveToDB", ticketId, data);
     
-    axios.put( uriPutTicketData+entryId, data )
-      .then(res => {
-        console.log(res);
-        //console.log(res.data);
-      })
+    return axios.patch(uriTickets + ticketId, data)
+                .then(res => {
+                    console.log(res);
+                });
   }
 
 

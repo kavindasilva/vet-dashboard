@@ -50,62 +50,45 @@ class TrackerTableData extends React.Component{
 
 		console.log('this.props.configData', this.props.configData);
 
-		this.props.configData.columns.forEach( trackerInfo => { //each column of trackerConfig
-			
+		this.props.configData.columns.forEach( column => {
+			//each column of trackerConfig
+
 			/** store user permissions of CURRENT COLUMN of trackerConfig user  */
-			let userPermission = trackerInfo.permissions.find( user => (
+			let userPermission = column.permissions.find( user => (
 				user.userId === this.props.metaData.userId
 			));
 
-			//console.log("TrackerTableData permission", userPermission) 
-			// result: userId, read, write
+			if (userPermission) {
+				let columnValue = this.props.ticketsData[column.name];
 
-			//validate columnConfig is not empty
-			if ( userPermission) {
-				/** get tracker's current column's instance COLUMN data */
-				let columnInfo = this.props.ticketsData[trackerInfo.name];
-
-				/** sometimes columnInfo may be undefined when columns are variable */
-
-				//console.log("TrackerTableData colInfo", columnInfo) 
-				// result: entryId: 5, name: "RFCompletedDate", value: "2019-01-25"
-
-				if(columnInfo===undefined){ // to check undefined values
-					// returnArr.push(
-					// 	<TableCell>??</TableCell>
-					// )
+				if (undefined == columnValue){ // to check undefined values
+					returnArr.push(
+					 	<TableCell>-</TableCell>
+					)
 				}
-				else if ( columnInfo!==undefined && userPermission.read && userPermission.write ) { // read & write
+				else if (userPermission.read && userPermission.write) {
+					// read & write
 					returnArr.push( 
 						<TrackerPopup
-							key={trackerInfo.name}
-							ticketTicketId={ this.props.ticketsData.ticketId }
-							columnName={ columnInfo.name }
-							value={ columnInfo.value }
-
+							key={ column.name }
+							ticketId={ this.props.ticketsData.ticket_id }
+							columnName={ column.name }
+							value={ columnValue }
 							trackerId={ this.props.trackerId }
-
-							elementType={ this.columnDataTypes[trackerInfo.type] }
-							//data={ { valueSet: this.columnPredefinedValues[6] } }
+							elementType={ this.columnDataTypes[column.type] }
 						>
-							{ columnInfo.value }
+							{ columnValue }
 						</TrackerPopup> 
 					)
 				}
-				else if( columnInfo!==undefined && userPermission.read ){ // read only permission
+				else if (userPermission.read) {
+					// read only permission
 					returnArr.push(
-						<TableCell key={trackerInfo.name}>
-							{ columnInfo.value } ro
+						<TableCell key={column.name}>
+							{ columnValue } (r/o)
 						</TableCell>
 					)
 				}
-				// else{ // testing non visible
-				// 	returnArr.push(
-				// 		<TableCell key={trackerInfo.name}>
-				// 			{ columnInfo.value } NV
-				// 		</TableCell>
-				// 	)
-				// }
 			}			
 			
 		} )
@@ -116,11 +99,11 @@ class TrackerTableData extends React.Component{
 }
 
 const mapStateToProps = (state, props) => {
-	//console.log("trackerTableData", props);
+	console.log("trackerTableData", props);
 	let ticketsData = state.ticketsDataReducer.ticketsData.find(record => (
-		record.ticketId === props.recordId
+		record.ticket_id === props.ticketId
 	));
-	//console.log("trackerTableData ticketData", ticketsData);
+	console.log("trackerTableData ticketData", ticketsData);
 
 
 

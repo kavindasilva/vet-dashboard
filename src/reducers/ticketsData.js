@@ -19,21 +19,20 @@ const ticketsDataReducer = (state, action) => {
 
     switch (action.type) {
         case 'UPDATE_CELL_VALUE': // update cell value changes
-            // get tracker's index by tracker ID
-            let trackerIndex = state.ticketsData.findIndex(
-                    tracker => (tracker.ticketId === action.payload.ticketTicketId)
+            let index = state.ticketsData.findIndex(
+                    ticket => (ticket.ticket_id === action.payload.ticketId)
                 );
 
-            if(trackerIndex >-1 ){
-                newState.ticketsData[trackerIndex][action.payload.columnName].value = action.payload.value;
+            if (index >-1 ) {
+                let ticket = newState.ticketsData[index];
 
-                updateTicketData( {
-                    //columnName:action.payload.columnName,
-                    //ticketId: action.payload.ticketTicketId,
-                    value: action.payload.value,
-                },
-                action.payload.entryId
-                );
+                let update = {};
+                update[action.payload.property] = action.payload.value;
+
+                newState.ticketsData[index][action.payload.property] = action.payload.value;
+                //newState.ticketsData[index] = {...ticket, ...update};
+
+                //updateTicketData(action.payload.ticketId, update);
             }
             else
                 console.log("trackerInstance: err2")
@@ -71,33 +70,9 @@ const ticketsDataReducer = (state, action) => {
 
 }
 
-const updateTicketData = (allData, entryId) => {
-    console.log("ticketData updateTicketData - saveToDB", allData);
-    ticketAPIobj.updateTicketPropery(allData, entryId);
-    //console.log("popup - saveToDB", allData.ticket_id);
-    /*let data = ticketAPIobj.callApiDb()
-        .then(response => {
-            console.log("popup - Tresponse1: ", response);
-
-            console.log("popup - componenetDidMount");
-            this.setState({ petAdmission: response.data })
-            return response;
-
-        })
-        .then(
-            response => {
-                console.log("popup - Tresponse2: ", response);
-
-                // 
-                /*rootStore.dispatch({
-                    type: 'FETCH_TICKETS_FROM_API',
-                    payload: {
-                        ticketData: response.data
-                    }
-                }) /* * /
-
-            }
-        ) /* */
+const updateTicketData = (ticketId, data) => {
+    console.log("ticketData updateTicketData - saveToDB", data);
+    return ticketAPIobj.updateTicketPropery(ticketId, data);
 }
 
 

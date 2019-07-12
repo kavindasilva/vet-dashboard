@@ -43,10 +43,10 @@ class CustomDatePicker extends React.Component{
 	}
     
     state ={
-        ticketTicketId: this.props.ticketTicketId,
+        ticketId: this.props.ticketId,
         columnName: this.props.columnName,
         isOpen: this.props.show,
-        attributeValue: this.props.dateValue.value,
+        attributeValue: this.props.value,
         //attributeValue: this.props.value,
     }
 
@@ -62,7 +62,7 @@ class CustomDatePicker extends React.Component{
                         //console.log( "Popoup clicked: ",this ); 
                         ) } 
                 >
-                    { String(this.props.dateValue.value) }
+                    { String(this.props.value) }
                 </div>
 
                 {/* popup modal UI */}
@@ -107,7 +107,7 @@ class CustomDatePicker extends React.Component{
 
                     <DialogActions>
                         <Button onClick={ ()=>{
-                                this.setState({ attributeValue: this.props.dateValue.value });
+                                this.setState({ attributeValue: this.props.value });
                                 this.closePopUp() 
                             } }
                             style={ this.styleMatUI.closeButton }	
@@ -137,7 +137,7 @@ class CustomDatePicker extends React.Component{
 		rootStore.dispatch({
 			type: 'UPDATE_CELL_VALUE',
 			payload: {
-				ticketTicketId: this.state.ticketTicketId,
+				ticketId: this.state.ticketId,
 				columnName: this.state.columnName,
                 value: this.state.attributeValue,
                 entryId: this.props.dateValue.entryId,
@@ -178,7 +178,7 @@ const mapStateToProps = (state, props) => {
     return {
         //dateData: props,
         dateValue: state.ticketsDataReducer.ticketsData.find(
-                        tracker => (tracker.ticketId === props.ticketTicketId)
+                        ticket => (ticket.ticket_id === props.ticketId)
                     )[props.columnName]
     };
 }

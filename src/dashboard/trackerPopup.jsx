@@ -43,10 +43,9 @@ import moment from "moment";
 //export default class TrackerPopup extends Component {
 class TrackerPopup extends Component {
 	state = {
-		/** trackerInstaid. need in dispatching */	ticketTicketId		:this.props.ticketTicketId,
-		/** column id. need in dispatching */	columnName		:this.props.ticketProperty.name,
+		/** trackerInstaid. need in dispatching */	ticketId	:this.props.ticketId,
+		/** property name */					columnName		:this.props.ticketProperty.property,
 		/** property value */     				attributeValue	:this.props.ticketProperty.value,
-		/** property name */      				attributeName	:this.props.property,
 		/** element input type */ 				elementType		:this.props.elementType,
 		/** Detect popup modal open state */	isOpen			:false,
 		//** temporary day to keep calendar selected date */ tempDayCal: this.props.value,
@@ -105,8 +104,8 @@ class TrackerPopup extends Component {
 				<React.Fragment>
 					{ /*this.props.ticketProperty.value */ }
 					<CustomDatePicker
-						ticketTicketId={ this.props.ticketTicketId }
-						columnName={ this.props.ticketProperty.name }
+						ticketId={ this.props.ticketId }
+						columnName={ this.props.ticketProperty.property }
 						value={ this.props.ticketProperty.value }
 						elementType={ this.props.elementType }
 					/>
@@ -120,9 +119,8 @@ class TrackerPopup extends Component {
 					{/* test{ String(this.props.ticketProperty.value) } */}
 					
 						<InstantPopup
-							ticketTicketId={ this.props.ticketTicketId }
-							columnName={ this.props.ticketProperty.name }
-							//value={ this.state.attributeValue }
+							ticketId={ this.props.ticketId }
+							columnName={ this.props.ticketProperty.property }
 							value={ this.props.ticketProperty.value }
 							elementType={ this.props.elementType }
 						>
@@ -158,8 +156,8 @@ const mapStateToProps = (state, props) => {
 	//console.log('trackerPopup.jsx-mapStateToProps', state);
 
 	/** tracker's instance's index */
-	let trackerIndex = state.ticketsDataReducer.ticketsData.findIndex( tracker => (
-		tracker.ticketId === props.ticketTicketId
+	let trackerIndex = state.ticketsDataReducer.ticketsData.findIndex( ticket => (
+		ticket.ticket_id === props.ticketId
 	) );
 
 	/** tracker's config's index */
@@ -186,8 +184,9 @@ const mapStateToProps = (state, props) => {
 
 			/** tracker instance's particular column's data */
 			ticketProperty: {
-				'name' 	: props.columnName,
-				'value' : state.ticketsDataReducer.ticketsData[trackerIndex][props.columnName]
+				'property'	: props.columnName,
+				'value' 	: state.ticketsDataReducer.ticketsData[trackerIndex][props.columnName],
+				'ticketId'  : state.ticketsDataReducer.ticketsData['ticket_id'],
 			},
 		};
 	}

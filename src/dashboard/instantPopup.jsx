@@ -54,7 +54,7 @@ class InstantPopup extends React.Component{
     }	
     
     state ={
-        ticketTicketId: this.props.ticketTicketId,
+        ticketId: this.props.ticketId,
         columnName: this.props.columnName,
         isOpen: false,
         attributeValue: this.props.value,
@@ -129,10 +129,9 @@ class InstantPopup extends React.Component{
 		rootStore.dispatch({
 			type: 'UPDATE_CELL_VALUE',
 			payload: {
-				ticketTicketId: this.state.ticketTicketId,
-				columnName: this.state.columnName,
+				ticketId: this.state.ticketId,
+				property: this.state.columnName,
                 value: this.state.attributeValue,
-                entryId: this.props.popValue.entryId,
 			}
 		});
 	}
@@ -251,16 +250,17 @@ class InstantPopup extends React.Component{
     }
     
     componentDidMount(){
-        console.log("instant popup mount:", this.props);
+        //console.log("instant popup mount:", this.props);
     }
 }
 
 
 const mapStateToProps = (state, props) => {
+    console.log("instant popup", props);
     return {
         //popData: props,
         popValue: state.ticketsDataReducer.ticketsData.find(
-                tracker => (tracker.ticket_id === props.ticketTicketId)
+                tracker => (tracker.ticket_id === props.ticketId)
             )[props.columnName]
     };
 }
