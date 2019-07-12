@@ -35,9 +35,12 @@ const ticketsDataReducer = (state, action) => {
                     newState.ticketsData[trackerIndex].columnData[columnIndex].value = action.payload.value;
 
                     updateTicketData( {
+                        entryId: 0,
                         columnName:action.payload.columnName,
-                        ticketId: 1
-                    } );
+                        ticketId: action.payload.ticketTicketId,
+                        newValue: action.payload.value,
+                    },
+                     );
                 }
                 else
                     console.log("trackerInstance: err1")                
@@ -78,9 +81,9 @@ const ticketsDataReducer = (state, action) => {
 
 }
 
-const updateTicketData = (allData) => {
+const updateTicketData = (allData, entryId) => {
     console.log("ticketData updateTicketData - saveToDB", allData);
-    ticketAPIobj.updateTicketPropery(allData);
+    ticketAPIobj.updateTicketPropery(allData, entryId);
     //console.log("popup - saveToDB", allData.ticket_id);
     /*let data = ticketAPIobj.callApiDb()
         .then(response => {

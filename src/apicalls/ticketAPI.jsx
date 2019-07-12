@@ -13,6 +13,7 @@ const HubspotUrl="https://api.hubapi.com/crm-objects/v1/objects/tickets/paged?ha
 
 //const uriGetTicketData = 'http://ontrack.dev.io/rest/ticket/'; // 
 const uriGetTicketData = 'http://ontrack.dev.io/rest/tickets/'; // 
+const uriPutTicketData = 'http://ontrack.dev.io/rest/tickets/'; // 
 
 
 const APIsaveUrl = "http://ontrack.dev.io/api/insertdata/x"; // x to add garbage para
@@ -67,13 +68,13 @@ class ticketAPI extends React.Component{
 
 
   /** save / update data to API (temporary hubspot mapping) */
-  updateTicketPropery( data ){
-    console.log("ticketAPI - saveToDB", data); return;
+  updateTicketPropery( data, entryId ){
+    console.log("ticketAPI - saveToDB", data); //return;
     
-    axios.post( APIsaveUrl, data )
+    axios.put( APIsaveUrl, data )
       .then(res => {
         console.log(res);
-        console.log(res.data);
+        //console.log(res.data);
       })
   }
 

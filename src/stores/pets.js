@@ -1,7 +1,7 @@
 import { createStore } from "redux";
 //import PetReducer from "../reducers/pets";
 import rootReducer from "../reducers/index";
-// import trackerInstances from "../config-data/trackerInstance";
+// import initialTicket from "../config-data/trackerInstance";
 // import trackersConfig from "../config-data/trackersConfig";
 
 /** staic config for initial state of trackers & config */
@@ -134,7 +134,7 @@ const trackersConfig=[
     }
 ];
 
-const trackerInstances=[
+const initialTicket=[
     {
         "ticketId" : 11,
         "trackerId" : 1,
@@ -189,7 +189,7 @@ const initialState = {
     },
 
     ticketsDataReducer:{
-        ticketsData: trackerInstances,
+        ticketsData: initialTicket,
         hubspotTickets: null,
     },
 

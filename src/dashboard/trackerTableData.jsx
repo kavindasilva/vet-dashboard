@@ -97,7 +97,7 @@ class TrackerTableData extends React.Component{
 						</TableCell>
 					)
 				}
-				// else{
+				// else{ // testing non visible
 				// 	returnArr.push(
 				// 		<TableCell key={trackerInfo.name}>
 				// 			{ columnInfo.value } NV
@@ -107,19 +107,6 @@ class TrackerTableData extends React.Component{
 			}			
 			
 		} )
-
-		/** mapping objects as an array */
-		// let hubspotData = this.props.ticketsData.hubData;
-		// Object.keys(hubspotData).map( (key, index) => {
-		// 	//return key;
-		// 	returnArr.push(
-		// 		<TableCell key={key}>
-		// 			{ hubspotData[key].toString() }
-		// 		</TableCell> 
-		// 	)
-		// 	//console.log("XX", hubspotData[key]);
-		// } )
-
 
 		return returnArr;
 	}
