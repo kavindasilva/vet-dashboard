@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import { rootStore } from "../stores/pets";
+import { rootStore } from "../stores/mainStore";
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -90,7 +90,7 @@ class InstantPopup extends React.Component{
             <React.Fragment>
                 <Popup 
                     trigger={ <span style={ {width: "100%" } }> T{
-                        String( this.props.value )
+                        String( this.props.popValue )
                         }  </span>  } 
                     position="bottom right"
                 >
@@ -256,9 +256,8 @@ class InstantPopup extends React.Component{
 
 
 const mapStateToProps = (state, props) => {
-    console.log("instant popup", props);
+    //console.log("instant popup", props);
     return {
-        //popData: props,
         popValue: state.ticketsDataReducer.ticketsData.find(
                 tracker => (tracker.ticket_id === props.ticketId)
             )[props.columnName]

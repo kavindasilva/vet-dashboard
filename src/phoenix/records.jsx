@@ -11,7 +11,7 @@ import MaterialTable from 'material-table';
 import MUIDataTable from "mui-datatables";
 
 
-import { rootStore } from "../stores/pets";
+import { rootStore } from "../stores/mainStore";
 import { connect } from 'react-redux';
 
 //import { withStyles } from "material-ui/styles";

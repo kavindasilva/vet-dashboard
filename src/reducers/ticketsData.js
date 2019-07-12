@@ -32,7 +32,7 @@ const ticketsDataReducer = (state, action) => {
                 newState.ticketsData[index][action.payload.property] = action.payload.value;
                 //newState.ticketsData[index] = {...ticket, ...update};
 
-                //updateTicketData(action.payload.ticketId, update);
+                updateTicketData(action.payload.ticketId, update);
             }
             else
                 console.log("trackerInstance: err2")

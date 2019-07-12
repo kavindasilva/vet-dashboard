@@ -7,7 +7,7 @@
 import React, { Component } from 'react';
 import Pet from '../components/pet';
 
-import { rootStore } from "../stores/pets";
+import { rootStore } from "../stores/mainStore";
 import PetReducer from '../reducers/pets'
 import { connect } from "react-redux";
 

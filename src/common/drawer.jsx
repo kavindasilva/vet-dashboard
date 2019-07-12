@@ -27,7 +27,7 @@ import UserComponent from "../users/users"
 
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
-import { rootStore } from "../stores/pets";
+import { rootStore } from "../stores/mainStore";
 
 import { withStyles } from '@material-ui/core/styles';
 const drawerWidth = 240;

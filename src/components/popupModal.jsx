@@ -28,7 +28,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 
 
-import { rootStore } from "../stores/pets";
+import { rootStore } from "../stores/mainStore";
 import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/core";
 
 //import Checkbox from "./checkBoxComp";

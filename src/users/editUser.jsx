@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
-import { rootStore } from "../stores/pets";
+import { rootStore } from "../stores/mainStore";
 
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';

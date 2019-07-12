@@ -4,7 +4,7 @@
 
 import ticketAPI from "../apicalls/ticketAPI";
 import petAPI from "../apicalls/petAPI";
-import { rootStore } from "../stores/pets";
+import { rootStore } from "../stores/mainStore";
 import { stat } from "fs";
 import { isUndefined } from "util";
 

@@ -26,7 +26,7 @@ import TableCell from '@material-ui/core/TableCell';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
 
-import { rootStore } from "../stores/pets";
+import { rootStore } from "../stores/mainStore";
 import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/core";
 
 import DateFnsUtils from "@date-io/date-fns";

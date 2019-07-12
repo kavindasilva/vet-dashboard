@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
 
-import { rootStore } from "../stores/pets";
+import { rootStore } from "../stores/mainStore";
 import DateFnsUtils from "@date-io/date-fns";
 import {format} from "date-fns";
 
@@ -62,7 +62,7 @@ class CustomDatePicker extends React.Component{
                         //console.log( "Popoup clicked: ",this ); 
                         ) } 
                 >
-                    { String(this.props.value) }
+                    { String(this.props.dateValue) }
                 </div>
 
                 {/* popup modal UI */}
@@ -138,9 +138,8 @@ class CustomDatePicker extends React.Component{
 			type: 'UPDATE_CELL_VALUE',
 			payload: {
 				ticketId: this.state.ticketId,
-				columnName: this.state.columnName,
+				property: this.state.columnName,
                 value: this.state.attributeValue,
-                entryId: this.props.dateValue.entryId,
 			}
 		});
 	}

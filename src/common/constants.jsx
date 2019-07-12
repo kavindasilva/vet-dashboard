@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 
 import { connect } from "react-redux";
-import { rootStore } from "../stores/pets"
+import { rootStore } from "../stores/mainStore"
 
 import Button from '@material-ui/core/Button';
 

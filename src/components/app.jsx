@@ -23,7 +23,7 @@ import TextField from '@material-ui/core/TextField';
 
 import Login from "../common/login";
 
-import { rootStore } from "../stores/pets";
+import { rootStore } from "../stores/mainStore";
 //import { createStore } from "redux";
 //import PetReducer from "../reducers/pets";
 
