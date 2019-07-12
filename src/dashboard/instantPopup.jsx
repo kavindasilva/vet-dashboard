@@ -58,29 +58,6 @@ class InstantPopup extends React.Component{
         columnName: this.props.columnName,
         isOpen: false,
         attributeValue: this.props.value,
-        //attributeValue: this.props.popValue.value,
-    }
-
-    render2(){
-        return(
-            <React.Fragment>
-                <Button onClick={ (e) => { 
-						//e.preventDefault();
-						//this.setState({ attributeValue:this.state.attributeValue });
-						this.dispatchUpdate();
-						//close(); 
-					} } 
-					variant="text" color="primary"
-					style={this.styleMatUI.closeButton} 
-				>
-					OK
-				</Button>
-                <div>
-                    { this.props.value }
-                    { this.makeInputElements() }
-                </div>
-            </React.Fragment>
-        );
     }
 
     render(){
@@ -264,8 +241,6 @@ const mapStateToProps = (state, props) => {
     };
 }
 
-
-//export default InstantPopup;
 export default connect(mapStateToProps)(InstantPopup);
 
 

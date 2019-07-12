@@ -17,18 +17,6 @@ import TableCell from '@material-ui/core/TableCell';
 
 import { hubspotColumnData } from "../common/constants"
 
-// import trackersConfig from "../config-data/trackersConfig";
-// import trackerInstances from "../config-data/trackerInstance";
-
-/** to be moved to constants */
-/*const hubspotcolumns=[
-	{ name:"clinic name" },
-	{ name:"ticket id" },
-	{ name:"ticket name" },
-	{ name:"ticket status" },
-	{ name:"pipeline id" },
-	{ name:"pipeline status id" },
-]*/
 const hubspotcolumns=hubspotColumnData;
 
 class TrackerHeader extends React.Component{
@@ -80,16 +68,7 @@ class TrackerHeader extends React.Component{
 
 			}
 			
-		} );
-
-		/** show hubspot ticket headers */
-		// hubspotcolumns.forEach( column => (
-		// 	returnArr.push(
-		// 		<TableCell> { column.name } </TableCell> 
-		// 	)
-		// ) );
-		
-				
+		} );		
 
 		return returnArr;
 	}    
@@ -115,7 +94,5 @@ const mapStateToProps = (state, props) => {
 	};
 }
 
-//export default TrackerHeader;
 export default connect(mapStateToProps)(TrackerHeader);
-//export default connect(mapStateToProps)(withStyles(useStyles)(TrackerHeader));
 

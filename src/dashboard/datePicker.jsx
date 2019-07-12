@@ -47,7 +47,6 @@ class CustomDatePicker extends React.Component{
         columnName: this.props.columnName,
         isOpen: this.props.show,
         attributeValue: this.props.value,
-        //attributeValue: this.props.value,
     }
 
     render(){
@@ -57,9 +56,7 @@ class CustomDatePicker extends React.Component{
             <React.Fragment>
                 <div style={this.styleTD}
                     onClick={ ()=>(
-                        //this.openPopUp()
                         this.setState({ isOpen: true })
-                        //console.log( "Popoup clicked: ",this ); 
                         ) } 
                 >
                     { String(this.props.dateValue) }
@@ -118,7 +115,6 @@ class CustomDatePicker extends React.Component{
                         </Button>
                                             
                         <Button onClick={ () => { 
-                                //this.setState({ attributeValue:this.state.attributeValue });
                                 this.dispatchUpdate()
                                 this.closePopUp(); 
                             } } 
@@ -175,7 +171,6 @@ class CustomDatePicker extends React.Component{
 
 const mapStateToProps = (state, props) => {
     return {
-        //dateData: props,
         dateValue: state.ticketsDataReducer.ticketsData.find(
                         ticket => (ticket.ticket_id === props.ticketId)
                     )[props.columnName]
@@ -183,7 +178,6 @@ const mapStateToProps = (state, props) => {
 }
 
 
-//export default CustomDatePicker;
 export default connect(mapStateToProps)(CustomDatePicker);
 
 

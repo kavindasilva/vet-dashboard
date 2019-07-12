@@ -4,8 +4,6 @@ import axios from 'axios';
 
 const uriGetConfigData = 'http://ontrack.dev.io/rest/trackers/'; // from db
 
-//const APIsaveUrl = "http://ontrack.dev.io/api/insertdata/x"; // x to add garbage para
-
 
 class trackersAPI extends React.Component{
   

@@ -97,9 +97,7 @@ class TrackerPopup extends Component {
 	}
 
 	showPop(){
-		//console.log("generating cell input elements", this.props.ticketProperty, this.state);
 		if(this.state.elementType ==="date" ){
-			//console.log("tracker popup1MatUI:",this.props.ticketProperty.value);
 			return(
 				<React.Fragment>
 					{ /*this.props.ticketProperty.value */ }

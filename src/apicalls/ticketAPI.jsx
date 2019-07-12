@@ -1,22 +1,9 @@
 
 import React from 'react';
 import axios from 'axios';
-//import ApolloClient from 'apollo-boost'
 
-import ApolloClient from 'apollo-boost'
-import gql from 'graphql-tag'
-
-
-const APIlistUrl = 'http://ontrack.dev.io/api/list/DB'; // from db
-const APIselectUrl = 'http://ontrack.dev.io/api/select/';
-const HubspotUrl="https://api.hubapi.com/crm-objects/v1/objects/tickets/paged?hapikey=<key>&properties=hs_pipeline_stage&properties=subject&properties=clinic_name";
-
-//const uriGetTicketData = 'http://ontrack.dev.io/rest/ticket/'; // 
 const uriGetTicketData = 'http://ontrack.dev.io/rest/tickets/'; // 
 const uriTickets = 'http://ontrack.dev.io/rest/tickets/'; // 
-
-
-
 
 class ticketAPI extends React.Component{
 
@@ -44,7 +31,7 @@ class ticketAPI extends React.Component{
 
   /** save / update data to API (temporary hubspot mapping) */
   updateTicketPropery (ticketId, data) {
-    console.log("ticketAPI - saveToDB", ticketId, data); return;
+    console.log("ticketAPI - saveToDB", ticketId, data); //return;
     
     return axios.patch(uriTickets + ticketId, data)
                 .then(res => {

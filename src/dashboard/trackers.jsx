@@ -9,6 +9,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
+
+
 import { withStyles } from '@material-ui/core/styles';
 //import { styles } from '@material-ui/pickers/DatePicker/components/Calendar';
 import Table from '@material-ui/core/Table';
@@ -47,9 +49,8 @@ class Trackers extends React.Component{
         ...this.props.metaData, 
 
         tabValue:1,
-        //trackers: trackersConfig,
+
     }
-	//state = { Meta }
 
 	componentDidMount(){
 		console.log("Trackers - mount. props:", this.props); //ok
@@ -143,7 +144,7 @@ class Trackers extends React.Component{
                 //let m=Object.values(res.data);
                 this.setState({ trackersConfigData: res.data }, function(){
                     this.dispatchTrackerConfigs();
-                }); /* */
+                });
             }
         )
     }
@@ -158,7 +159,7 @@ class Trackers extends React.Component{
                 console.log("trackers insta res:", res.data);
                 this.setState({ ticketsData: res.data }, function(){
                     this.dispatchTicketInstances();
-                }); /* */
+                }); 
             }
         )
     }
@@ -206,7 +207,6 @@ const mapStateToProps = state => {
 	};
 }
 
-//export default Trackers;
-//export default connect(mapStateToProps)(Trackers);
+
 export default connect(mapStateToProps)(withStyles(styles)(Trackers));
 

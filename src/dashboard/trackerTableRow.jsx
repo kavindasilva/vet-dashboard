@@ -18,8 +18,6 @@ import TableCell from '@material-ui/core/TableCell';
 
 import TrackerTableData from "../dashboard/trackerTableData";
 
-// import trackersConfig from "../config-data/trackersConfig";
-// import trackerInstances from "../config-data/trackerInstance";
 
 class TrackerTableRow extends React.Component{
 	state = { 
@@ -80,15 +78,8 @@ const mapStateToProps = (state, props) => {
 			ticket.tracker_id === props.trackerId
 		)),
 
-		/** particular tracker ticket related HUBSPOT data */
-		// hubspotData: state.ticketsDataReducer.hubspotTickets.filter(ticket => (
-		// 	ticket.trackerId === props.trackerId
-		// )),
-
 	};
 }
 
-//export default TrackerTableRow;
 export default connect(mapStateToProps)(TrackerTableRow);
-//export default connect(mapStateToProps)(withStyles(useStyles)(TrackerTableRow));
 

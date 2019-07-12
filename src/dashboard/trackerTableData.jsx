@@ -8,8 +8,6 @@ import { rootStore } from "../stores/mainStore";
 import Container from '@material-ui/core/Container';
 
 import TrackerPopup from "../dashboard/trackerPopup";
-// import trackersConfig from "../config-data/trackersConfig";
-// import trackerInstances from "../config-data/trackerInstance";
 
 import TableCell from '@material-ui/core/TableCell';
 
@@ -103,15 +101,9 @@ const mapStateToProps = (state, props) => {
 	let ticketsData = state.ticketsDataReducer.ticketsData.find(record => (
 		record.ticket_id === props.ticketId
 	));
-	console.log("trackerTableData ticketData", ticketsData);
 
-
-
-	/** initial data to prevent undefined error */
-	let hubspotData={  };
-
-	console.log('TrackerTableData.jsx-mapStateToProps', state);
-	console.log('state.TrackConfigReducer.configData', state.TrackConfigReducer.configData, props);
+	// console.log("trackerTableData ticketData", ticketsData);
+	// console.log('TrackerTableData.jsx-mapStateToProps', state);
 
 	return {
 		//...props,
@@ -123,7 +115,7 @@ const mapStateToProps = (state, props) => {
 		)),
 
 		/** particular tracker related instance data && hubspot data */
-		ticketsData: { ...ticketsData, hubData:{ ...hubspotData} },
+		ticketsData: { ...ticketsData },
 
 
 		
