@@ -33,7 +33,7 @@ class ticketAPI extends React.Component{
   getTicketsAndProperties( ticketID ){
     var getUri= uriGetTicketData;
     if( ticketID!="" && ticketID!=null )
-      getUri=APIselectUrl + ticketID
+      getUri=uriGetTicketData + ticketID
 
     console.log("ticketAPI call uri:", getUri);
     return axios.get( getUri )
@@ -67,10 +67,8 @@ class ticketAPI extends React.Component{
 
 
   /** save / update data to API (temporary hubspot mapping) */
-  saveToDB( data ){
-    console.log("ticketAPI - saveToDB", data);
-    //var postUri;
-    //let data1 = { product_id_list: ['pid1234', 'pid1235'] };
+  updateTicketPropery( data ){
+    console.log("ticketAPI - saveToDB", data); return;
     
     axios.post( APIsaveUrl, data )
       .then(res => {

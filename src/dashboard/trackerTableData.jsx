@@ -59,7 +59,7 @@ class TrackerTableData extends React.Component{
 			// result: userId, read, write
 
 			//validate columnConfig is not empty
-			if ( 1 || userPermission) {
+			if ( userPermission) {
 				/** get tracker's current column's instance COLUMN data */
 				let columnInfo = this.props.ticketsData.columnData.find( column => (
 					column.name === trackerInfo.name
@@ -97,13 +97,13 @@ class TrackerTableData extends React.Component{
 						</TableCell>
 					)
 				}
-				else{
-					returnArr.push(
-						<TableCell key={trackerInfo.name}>
-							{ columnInfo.value } NV
-						</TableCell>
-					)
-				}
+				// else{
+				// 	returnArr.push(
+				// 		<TableCell key={trackerInfo.name}>
+				// 			{ columnInfo.value } NV
+				// 		</TableCell>
+				// 	)
+				// }
 			}			
 			
 		} )

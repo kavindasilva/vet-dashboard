@@ -158,8 +158,8 @@ class Trackers extends React.Component{
         .then(
             res => {
                 console.log("trackers insta res:", res.data);
-                this.setState({ trackersInstanceData: res.data }, function(){
-                    this.dispatchTrackerInstances();
+                this.setState({ ticketsData: res.data }, function(){
+                    this.dispatchTicketInstances();
                 }); /* */
             }
         )
@@ -184,11 +184,11 @@ class Trackers extends React.Component{
 		});
     }
 
-    dispatchTrackerInstances = () => {
+    dispatchTicketInstances = () => {
 		rootStore.dispatch({
 			type: 'GET_TICKETS_FROM_DB',
 			payload: {
-				data: this.state.trackersInstanceData
+				data: this.state.ticketsData
 			}
 		});
     }

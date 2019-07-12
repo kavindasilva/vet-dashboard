@@ -67,21 +67,6 @@ class TrackerPopup extends Component {
 
 	}
 
-	/** 
-	 * defined by columnName
-	 * 
-	 * columnName: { predefined value set }
-	 * */
-	/*columnPredefinedValues ={
-		1: null,				// clinic name
-
-		4: 0,					// RF sent date
-		5: null,				// RF completed date
-		6: [ { name:true, value:"OK" }, { name:false, value:"NotCompleted"} ],		// completed status
-		7: 24					// total duration
-	}*/
-	//columnPredefinedValues = trackerPopupDefaultValues;
-
 	/** style for the table's div content */
 	styleTD={
 		width: "100%" ,
@@ -143,7 +128,7 @@ class TrackerPopup extends Component {
 		else{
 			return(
 				<div style={this.styleTD}>
-					test{ String(this.props.ticketsData.value) }
+					{/* test{ String(this.props.ticketsData.value) } */}
 					
 						<InstantPopup
 							trackerInstanceId={ this.props.trackerInstanceId }
@@ -275,10 +260,7 @@ const mapStateToProps = (state, props) => {
 		console.log("trackerPopup indexError")
 }
 
-/** NOT connected with store since this component is called only by the TrackerTableData */
-//export default TrackerPopup;
+
 export default connect(mapStateToProps)(TrackerPopup);
 
-//export default withStyles(styles)(TrackerPopup);
-//export default withStyles()(TrackerPopup);
 
