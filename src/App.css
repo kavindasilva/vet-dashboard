@@ -30,3 +30,11 @@
     transform: rotate(360deg);
   }
 }
+
+
+/** 0715 */
+.read-only-input{
+  color: "#ddd";
+  /*font-style: italic;*/
+}
+

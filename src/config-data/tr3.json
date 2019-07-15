@@ -1,0 +1,272 @@
+[
+    {
+        "name": "hospital",
+        "label": "Hospital",
+        "type": 1,
+        "permissions": [
+            {
+                "userId": 5,
+                "read": true,
+                "write": false
+            }
+        ],
+        "rules": []
+    },
+    {
+        "name": "siteWeb",
+        "label": "Site Web",
+        "type": 1,
+        "permissions": [
+            {
+                "userId": 5,
+                "read": true,
+                "write": false
+            },
+            {
+                "userId": 6,
+                "read": true,
+                "write": false
+            }
+        ],
+        "rules": []
+    },
+    {
+        "name": "fournisseurSiteWeb",
+        "label": "Fournisseur Site Web",
+        "type": 1,
+        "permissions": [
+            {
+                "userId": 5,
+                "read": true,
+                "write": true
+            },
+            {
+                "userId": 6,
+                "read": true,
+                "write": true
+            }
+        ],
+        "rules": []
+    },
+    {
+        "name": "nomDuContact",
+        "label": "Nom du Contact",
+        "type": 1,
+        "permissions": [
+            {
+                "userId": 5,
+                "read": true,
+                "write": true
+            },
+            {
+                "userId": 6,
+                "read": true,
+                "write": true
+            }
+        ],
+        "rules": []
+    },
+    {
+        "name": "contactEmail",
+        "label": "Contact Email",
+        "type": 1,
+        "permissions": [
+            {
+                "userId": 5,
+                "read": true,
+                "write": true
+            },
+            {
+                "userId": 6,
+                "read": true,
+                "write": true
+            }
+        ],
+        "rules": []
+    },
+    {
+        "name": "API",
+        "label": "API",
+        "type": 1,
+        "permissions": [
+            {
+                "userId": 5,
+                "read": true,
+                "write": true
+            },
+            {
+                "userId": 6,
+                "read": true,
+                "write": true
+            }
+        ],
+        "rules": []
+    },
+
+
+    {
+        "name": "notes",
+        "label": "Notes",
+        "type": 1,
+        "permissions": [
+            {
+                "userId": 5,
+                "read": true,
+                "write": false
+            },
+            {
+                "userId": 6,
+                "read": true,
+                "write": false
+            }
+        ],
+        "rules": []
+    },
+    {
+        "name": "sendingRegistrationForm",
+        "label": "Sending Registration Form",
+        "type": 2,
+        "permissions": [
+            {
+                "userId": 5,
+                "read": true,
+                "write": false
+            },
+            {
+                "userId": 6,
+                "read": true,
+                "write": true
+            }
+        ],
+        "rules": []
+    },
+    {
+        "name": "registrationFormCompleted",
+        "label": "Registration form completed",
+        "type": 1,
+        "permissions": [
+            {
+                "userId": 5,
+                "read": true,
+                "write": true
+            },
+            {
+                "userId": 6,
+                "read": true,
+                "write": true
+            }
+        ],
+        "rules": []
+    },
+    {
+        "name": "APIConnectionStatus",
+        "label": "API Connection status (Date)",
+        "type": 4,
+        "permissions": [
+            {
+                "userId": 5,
+                "read": true,
+                "write": false
+            },
+            {
+                "userId": 6,
+                "read": true,
+                "write": true
+            }
+        ],
+        "rules": []
+    },
+    {
+        "name": "bookingLinkSentforTesting",
+        "label": "Booking Link Sent for Testing (Date)",
+        "type": 4,
+        "permissions": [
+            {
+                "userId": 5,
+                "read": true,
+                "write": false
+            },
+            {
+                "userId": 6,
+                "read": true,
+                "write": true
+            }
+        ],
+        "rules": []
+    },
+
+
+    {
+        "name": "testing",
+        "label": "Testing ?",
+        "type": 1,
+        "permissions": [
+            {
+                "userId": 5,
+                "read": true,
+                "write": false
+            },
+            {
+                "userId": 6,
+                "read": true,
+                "write": false
+            }
+        ],
+        "rules": []
+    },
+    {
+        "name": "formation",
+        "label": "Formation",
+        "type": 1,
+        "permissions": [
+            {
+                "userId": 5,
+                "read": true,
+                "write": true
+            },
+            {
+                "userId": 6,
+                "read": true,
+                "write": true
+            }
+        ],
+        "rules": []
+    },
+    {
+        "name": "PROJECTEDClientLive",
+        "label": "PROJECTED Client Live (Date)",
+        "type": 4,
+        "permissions": [
+            {
+                "userId": 5,
+                "read": true,
+                "write": false
+            },
+            {
+                "userId": 6,
+                "read": true,
+                "write": true
+            }
+        ],
+        "rules": []
+    },
+    {
+        "name": "APPROVEDClientLive",
+        "label": "APPROVED Client Live (Date)",
+        "type": 4,
+        "permissions": [
+            {
+                "userId": 5,
+                "read": true,
+                "write": false
+            },
+            {
+                "userId": 6,
+                "read": true,
+                "write": true
+            }
+        ],
+        "rules": []
+    }
+
+]

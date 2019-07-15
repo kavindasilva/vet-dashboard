@@ -5,13 +5,24 @@ import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
 import { rootStore } from "../stores/mainStore";
 
+import "../App.css";
+
 import Container from '@material-ui/core/Container';
 
 import TrackerPopup from "../dashboard/trackerPopup";
 
 import TableCell from '@material-ui/core/TableCell';
+import { withStyles } from '@material-ui/core/styles';
 
 import { trackerColumnDataTypes } from "../common/constants";
+
+
+const styles = theme => ({
+	readOnlyColumn: {
+	  backgroundColor: "#eee",
+	  color: "#ddd",
+	}
+});
 
 class TrackerTableData extends React.Component{
 	state = { 
@@ -59,28 +70,14 @@ class TrackerTableData extends React.Component{
 			if (userPermission) {
 				let columnValue = this.props.ticketsData[column.name];
 
-				if (undefined === columnValue && userPermission.read){ // to check undefined values
-					returnArr.push(
-						<TrackerPopup
-							key={ column.name }
-							ticketId={ this.props.ticketsData.ticket_id }
-							columnName={ column.name }
-							value={ "--" }
-							trackerId={ this.props.trackerId }
-							elementType={ this.columnDataTypes[column.type] }
-						>
-							--
-						</TrackerPopup>
-					)
-				}
-				else if (userPermission.read && userPermission.write) {
+				if (userPermission.read && userPermission.write) {
 					// read & write
 					returnArr.push( 
 						<TrackerPopup
 							key={ column.name }
 							ticketId={ this.props.ticketsData.ticket_id }
 							columnName={ column.name }
-							value={ columnValue }
+							value={ (columnValue)?columnValue:"--" }
 							trackerId={ this.props.trackerId }
 							elementType={ this.columnDataTypes[column.type] }
 						>
@@ -92,7 +89,13 @@ class TrackerTableData extends React.Component{
 					// read only permission
 					returnArr.push(
 						<TableCell key={column.name}>
-							{ columnValue } (r/o)
+							<span 
+								className={ this.props.classes.readOnlyColumn }
+								//className="read-only-input"
+								//classes="read-only-input"
+							>
+								{ (columnValue)?columnValue:"--" }
+							</span>
 						</TableCell>
 					)
 				}
@@ -131,5 +134,5 @@ const mapStateToProps = (state, props) => {
 	};
 }
 
-export default connect(mapStateToProps)(TrackerTableData);
+export default connect(mapStateToProps)(withStyles(styles)(TrackerTableData));
 

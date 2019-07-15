@@ -8,7 +8,7 @@ import rootReducer from "../reducers/index";
 const trackersConfig=[
     {
         "trackerId" : 1,
-        "name": "initIndependent",
+        "name": "Trackres Loading...",
         "columns": [
             {
                 "id": 1,
