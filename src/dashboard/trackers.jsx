@@ -88,9 +88,7 @@ class Trackers extends React.Component{
                         textColor="primary"
                         variant="scrollable"
                         scrollButtons="auto"
-                    >
-                        <Tab label="staticTab" /*onClick={ () => this.handleChange(null,1)}*/ />
-                        
+                    >                        
                         {
                             this.props.configData.map( tracker => (
                                 <Tab key={ tracker.tracker_id } label={ tracker.name } />
@@ -102,10 +100,10 @@ class Trackers extends React.Component{
                 {
                     this.props.configData.map( tracker => (
 
-                        this.state.tabValue === tracker.tracker_id && 
+                        (this.state.tabValue+1) === tracker.tracker_id && 
                         <React.Fragment key={ tracker.tracker_id } >
                             <h3>Tracker Name: { tracker.name } </h3>
-                            <p>Tracker ID: {tracker.tracker_id} </p>
+                            <small>Tracker ID: {tracker.tracker_id} </small>
 
                             <Paper style={ {} }>
 					            <Table size={'small'}>
