@@ -59,9 +59,18 @@ class TrackerTableData extends React.Component{
 			if (userPermission) {
 				let columnValue = this.props.ticketsData[column.name];
 
-				if (undefined == columnValue){ // to check undefined values
+				if (undefined === columnValue && userPermission.read){ // to check undefined values
 					returnArr.push(
-					 	<TableCell>-</TableCell>
+						<TrackerPopup
+							key={ column.name }
+							ticketId={ this.props.ticketsData.ticket_id }
+							columnName={ column.name }
+							value={ "--" }
+							trackerId={ this.props.trackerId }
+							elementType={ this.columnDataTypes[column.type] }
+						>
+							--
+						</TrackerPopup>
 					)
 				}
 				else if (userPermission.read && userPermission.write) {

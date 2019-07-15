@@ -66,8 +66,8 @@ class InstantPopup extends React.Component{
         return(
             <React.Fragment>
                 <Popup 
-                    trigger={ <span style={ {width: "100%" } }> T{
-                        String( this.props.popValue )
+                    trigger={ <span style={ {width: "100%" } }> {
+                        String( (this.props.popValue)?(this.props.popValue):"--" )
                         }  </span>  } 
                     position="bottom right"
                 >

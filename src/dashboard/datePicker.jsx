@@ -59,7 +59,7 @@ class CustomDatePicker extends React.Component{
                         this.setState({ isOpen: true })
                         ) } 
                 >
-                    { String(this.props.dateValue) }
+                    { String( (this.props.dateValue)?(this.props.dateValue):"--" ) }
                 </div>
 
                 {/* popup modal UI */}
