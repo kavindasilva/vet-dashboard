@@ -61,7 +61,7 @@ class InstantPopup extends React.Component{
     }
 
     render(){
-        console.log('instantPopup: Rendering cell content');
+        //console.log('instantPopup: Rendering cell content');
 
         return(
             <React.Fragment>

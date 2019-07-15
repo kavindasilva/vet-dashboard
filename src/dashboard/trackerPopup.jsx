@@ -83,7 +83,7 @@ class TrackerPopup extends Component {
 	}	
 
   	render() {
-		console.log('trackerPopup: Rendering cell content');
+		//console.log('trackerPopup: Rendering cell content');
 		return (
 			<React.Fragment>
 				<TableCell 
