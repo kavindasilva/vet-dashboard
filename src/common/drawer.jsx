@@ -95,10 +95,6 @@ const useStyles = theme => ({
 });
 
 class MiniDrawer extends React.Component {
-    //const classes = useStyles();
-    //const theme = useTheme();
-    //[open, setOpen] = React.useState(false);
-    
     classes=this.props.classes;   
 
     menuItemData=[
@@ -299,7 +295,8 @@ class MiniDrawer extends React.Component {
 
 const mapStateToProps = ( state, props ) => {
     return{
-		metaData: state.MetaReducer.metaData,
+        metaData: state.MetaReducer.metaData,
+        //open: false,
     }
 }
 

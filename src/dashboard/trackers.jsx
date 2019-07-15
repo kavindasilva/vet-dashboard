@@ -48,7 +48,7 @@ class Trackers extends React.Component{
 	state = { 
         ...this.props.metaData, 
 
-        tabValue:1,
+        tabValue:0,
 
     }
 
@@ -82,6 +82,7 @@ class Trackers extends React.Component{
 			<div>
 				<AppBar position="static" color="default">
                     <Tabs
+                        key={this.state.tabValue}
                         value={this.state.tabValue}
                         onChange={ this.handleChange }
                         indicatorColor="primary"
@@ -91,7 +92,10 @@ class Trackers extends React.Component{
                     >                        
                         {
                             this.props.configData.map( tracker => (
-                                <Tab key={ tracker.tracker_id } label={ tracker.name } />
+                                <Tab 
+                                    key={ tracker.tracker_id } 
+                                    label={ tracker.name } 
+                                />
                             ))
                         }
                     </Tabs>
@@ -101,9 +105,12 @@ class Trackers extends React.Component{
                     this.props.configData.map( tracker => (
 
                         (this.state.tabValue+1) === tracker.tracker_id && 
-                        <React.Fragment key={ tracker.tracker_id } >
+                        <div 
+                            key={ tracker.tracker_id } 
+                        >
                             <h3>Tracker Name: { tracker.name } </h3>
                             <small>Tracker ID: {tracker.tracker_id} </small>
+                            <small> | Pipeline: {tracker.pipeline_label} </small>
 
                             <Paper style={ {} }>
 					            <Table size={'small'}>
@@ -123,7 +130,7 @@ class Trackers extends React.Component{
                                 </Table>
                             </Paper>
 
-                        </React.Fragment>
+                        </div>
                     ))
                 }
 
