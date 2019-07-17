@@ -96,10 +96,7 @@ class TrackerTableData extends React.Component{
 							}}
 						>
 							<span 
-							className="read-only-input"
-								//className={ this.props.classes.readOnlyColumn }
-								//className="read-only-input"
-								//classes="read-only-input"
+								className="read-only-input"	
 							>
 								{ (columnValue)?columnValue:"--" }
 							</span>

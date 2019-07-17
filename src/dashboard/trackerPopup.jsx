@@ -92,7 +92,8 @@ class TrackerPopup extends Component {
 					align={ isNaN(this.props.ticketProperty.value) ? 'left' : 'right' }
 					//style={ { backgroundColor: this.evaluateExpr( this.props.configData.rules)} }
 					style={{
-						...globalStyles["cell-borders"]
+						...globalStyles["cell-borders"],
+						width: "100%"
 					}}
 				>
 					{ this.showPop() }
