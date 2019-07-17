@@ -161,15 +161,13 @@ class TrackersConfig extends React.Component{
                             
                             <TableCell>
                             {
-                                //column.permissions.map( permit => (
-                                    <TrackerUserConfig
-                                        tracker_id={ tracker.tracker_id }
-                                        columnName={ column.name }
-                                        //user_id ={permit.userId}
-                                        //user_read={permit.read.toString() }
-                                        //user_write={permit.write.toString() }
-                                    />
-                                //) )
+                                <TrackerUserConfig
+                                    tracker_id={ tracker.tracker_id }
+                                    columnName={ column.name }
+                                    //user_id ={permit.userId}
+                                    //user_read={permit.read.toString() }
+                                    //user_write={permit.write.toString() }
+                                />
                             }
                             </TableCell>
 
@@ -178,8 +176,8 @@ class TrackersConfig extends React.Component{
                                 column.rules.map( rule => (
                                     <li>
                                         {
-                                            //JSON.stringify(rule)
-                                            rule.toString()
+                                            JSON.stringify(rule).substr(0,40)
+                                            //rule.toString()
                                         }
                                     </li>
                                 ) )

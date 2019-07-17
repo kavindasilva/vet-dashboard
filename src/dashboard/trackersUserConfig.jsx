@@ -62,7 +62,7 @@ class TrackersUserConfig extends React.Component{
                 >
                     { String(
 						(this.props.columnPermissions)?
-						( JSON.stringify(this.props.columnPermissions) )
+						( JSON.stringify(this.props.columnPermissions).substr(0,40) )
 						:"--" 
 					) }
                 </div>
