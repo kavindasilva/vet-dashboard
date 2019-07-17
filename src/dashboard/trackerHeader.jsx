@@ -68,8 +68,8 @@ class TrackerHeader extends React.Component{
 							width: "200px", 
 							color:"#1122ee", 
 							padding: "2px 10px 2px 12px",
-							//backgroundColor: "#11cc22",
-							backgroundColor: "transparent",
+							backgroundColor: "#e3d3cc",
+							//backgroundColor: "transparent",
 							borderColor: "#00ee00"
 						} }
 					>

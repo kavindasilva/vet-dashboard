@@ -20,8 +20,10 @@ const render = () => {
   console.log('index.js-rendering');
   ReactDOM.render(
     //<Menu />,
+
     <App />,
     //<StaticFixedTable />,
+    
     //<Login />,
     //<Records  />,
     

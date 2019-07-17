@@ -164,7 +164,7 @@ const initialState = {
 
     ticketsDataReducer:{
         ticketsData: initialTicket,
-        hubspotTickets: null,
+        //hubspotTickets: null,
     },
 
     UserConfigReducer:{

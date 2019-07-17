@@ -25,6 +25,9 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 //import { styles } from '@material-ui/pickers/DatePicker/components/Calendar';
 
+import trackersAPI from "../apicalls/trackersAPI";
+
+const trackersAPIobj = new trackersAPI();
 
 const useStyles = theme => ({
 	'@global': {
@@ -51,42 +54,40 @@ const useStyles = theme => ({
 
 class TrackersConfig extends React.Component{
     classes=this.props.classes;
-    //tabValue=3;
-
 	state = { 
-        ...this.props.metaData, 
+        ...this.props.metaData,
+        ...this.props.trackers,
 
         tabValue:2,
-        trackers: false,
     }
-	//state = { Meta }
 
 	componentDidMount(){
-		console.log("TrackersConfig - mount. json:", this.state.trackers); //ok
-		console.log("TrackersConfig - mount. props.metaData:", this.props.metaData); 
+		//console.log("TrackersConfig - mount. json:", this.state.trackers); 
+        //console.log("TrackersConfig - mount. props.metaData:", this.props.metaData); 
+        this.getTrackersConfig();
 	}
 
 	render(){
-		//this.viewForm() 
 		return(
-			<React.Fragment>
+			<React.Fragment>config ui
 				{ 
-                    //this.viewTabs() 
+                    this.viewTabs() 
                 }
 			</React.Fragment>
 		)
     }
     
     handleChange = (event, newValue) => {
-        //this.tabValue=2;
         this.setState({tabValue: newValue});
     }
 
 	/** 
-     * View Tabs layout of trackers
-     * Display columns : all
+     * View Tabs layout of all trackers
      */
 	viewTabs(){
+		console.log("TrackersConfig - props:", this.props); 
+		//console.log("TrackersConfig - viewTabs:", this.state.trackers); 
+
 		return(
 			<div>
 				<AppBar position="static" color="default">
@@ -101,7 +102,7 @@ class TrackersConfig extends React.Component{
                         <Tab label="staticTab" /*onClick={ () => this.handleChange(null,1)}*/ />
                         
                         {
-                            this.state.trackers.map( tracker => (
+                            this.props.trackers.map( tracker => (
                                 <Tab label={ tracker.name } />
                             ))
                         }
@@ -109,11 +110,11 @@ class TrackersConfig extends React.Component{
                 </AppBar>
 
                 {
-                    this.state.trackers.map( tracker => (
-                        this.state.tabValue === tracker.id && 
+                    this.props.trackers.map( tracker => (
+                        this.state.tabValue === tracker.tracker_id && 
                         <React.Fragment>
                             <h3> { tracker.name } </h3>
-                            <p>X {tracker.id} </p>
+                            <p>X {tracker.tracker_id} </p>
                             
                             {
                                 //this.showColumns(tracker)
@@ -158,26 +159,33 @@ class TrackersConfig extends React.Component{
         );
     }
 
-    /**
-     * Merges two arrays, and return new array
-     * source: https://plainjs.com/javascript/utilities/merge-two-javascript-objects-19/
-     */
-    objectMerge(obj, src) {
-	    Object.keys(src).forEach(function(key) { obj[key] = src[key]; });
-	    return obj;
-	}
+    getTrackersConfig(){
+        trackersAPIobj.getTrackerConfig()
+        .then(
+            res => {
+                console.log("trackers config res:", res.data);
+                this.setState({ trackersConfigData: res.data }, function(){
+                    rootStore.dispatch({
+                        type: 'GET_CONFIG_FROM_DB',
+                        payload: {
+                            data: this.state.trackersConfigData
+                        }
+                    });
+                });
+            }
+        )
+    }
+
 
 }
 
 const mapStateToProps = state => {
 	console.log('trackers.jsx-mapStateToProps', state);
 	return {
-		//metaData: state.metaData,
-		metaData: state.MetaReducer.metaData,
+        metaData: state.MetaReducer.metaData,
+        trackers: state.TrackConfigReducer.configData,
 	};
 }
 
-//export default TrackersConfig;
-//export default connect(mapStateToProps)(TrackersConfig);
 export default connect(mapStateToProps)(withStyles(useStyles)(TrackersConfig));
 
