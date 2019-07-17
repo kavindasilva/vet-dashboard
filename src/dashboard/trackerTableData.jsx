@@ -92,7 +92,10 @@ class TrackerTableData extends React.Component{
 					returnArr.push(
 						<Cell 
 							key={column.name} 
-							style={{backgroundColor:"#ffffff"}}
+							style={{
+								backgroundColor:"#ffffff",
+								borderColor: "#00ee00"
+							}}
 						>
 							<span 
 								className={ this.props.classes.readOnlyColumn }

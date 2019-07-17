@@ -18,13 +18,13 @@ export default class StaticFixedTable extends React.Component{
                         stickyColumnCount={1}
                     >
                         <Row>
-                            <Cell>Header 1</Cell>
-                            <Cell>Header 2</Cell>
-                            <Cell>Header 3</Cell>
-                            <Cell>Header 4</Cell>
-                            <Cell>Header 5</Cell>
-                            <Cell>Header 6</Cell>
-                            <Cell>Header 7</Cell>
+                            <Cell style={{ backgroundColor: "#ccddcc", borderColor: "#ee0000" }}>Header 1</Cell>
+                            <Cell style={{ backgroundColor: "#ccddcc", borderColor: "#ee0000" }}>Header 2</Cell>
+                            <Cell style={{ backgroundColor: "#ccddcc", borderColor: "#ee0000" }}>Header 3</Cell>
+                            <Cell style={{ backgroundColor: "#ccddcc", borderColor: "#ee0000" }}>Header 4</Cell>
+                            <Cell style={{ backgroundColor: "#ccddcc", borderColor: "#ee0000" }}>Header 5</Cell>
+                            <Cell style={{ backgroundColor: "#ccddcc", borderColor: "#ee0000" }}>Header 6</Cell>
+                            <Cell style={{ backgroundColor: "#ccddcc", borderColor: "#ee0000" }}>Header 7</Cell>
                             <Cell>Header 8</Cell>
                             <Cell>Header 9</Cell>
                             <Cell>Header 10</Cell>
@@ -53,7 +53,7 @@ export default class StaticFixedTable extends React.Component{
                         </Row>
 
                         <Row>
-                            <Cell>cell long long content 1</Cell>
+                            <Cell style={{ backgroundColor: "#ccccdd", borderColor: "#ee0000" }}>cell long long content 1</Cell>
                             <Cell>cell long long content 1 2</Cell>
                             <Cell>cell long long content 1 3</Cell>
                             <Cell>cell long long content 1 4</Cell>

@@ -11,11 +11,15 @@ import App from "../components/app";
 import Records from "../phoenix/records";
 import Pets from "../components/pets";
 
+import Trackers from "../dashboard/trackers";
+import Users from "../users/users";
+import TrackerConfig from "../components/pets";
+
 import Button from '@material-ui/core/Button';
 
 import MiniDrawer from "../common/drawer";
 
-import Tracker from "../dashboard/trackers"
+//import Phoenix from "../phoenix/records"
 
 class Menu extends Component {
 	state={
@@ -31,12 +35,12 @@ class Menu extends Component {
 		return (
 			<React.Fragment>
 				{ 
-					//this.viewMenuBar() 
+					this.viewMenuBar() 
 				}
 				{ 
-					//this.componentToShow() 
+					this.componentToShow() 
 				}
-				<Tracker />
+				
 			</React.Fragment>
 		);
 	}
@@ -44,9 +48,9 @@ class Menu extends Component {
 	viewMenuBar(){
 		return(
 			<React.Fragment>
-				<MiniDrawer />
+				{/* <MiniDrawer /> */}
 				
-				{ /** temporary menu bar * }
+				{ /** temporary menu bar */ }
 				<div>
 					<div>
 						<Button style={{cursor:'pointer',float:'right',align:'right'}}
@@ -57,8 +61,9 @@ class Menu extends Component {
 					</div>
 
 					Temporary menu bar: 
-					<Button onClick={ ()=>{ this.switchComponents('app') } } >Ticket</Button>
-					<Button onClick={ ()=>{ this.switchComponents('records') } } >Phoenix</Button>
+					<Button onClick={ ()=>{ this.setState({ componentToShow:'tickets'}) } } >Tickets</Button>
+					<Button onClick={ ()=>{ this.setState({ componentToShow:'config'}) } } >TrackerConfig</Button>
+					<Button onClick={ ()=>{ this.setState({ componentToShow:'users'}) } } >UserMgt</Button>
 				</div>
 				{/*  */}
 				
@@ -73,11 +78,12 @@ class Menu extends Component {
 	/** determine which compoenent to be rendered */
 	componentToShow(){
 		let componentToShow = this.state.componentToShow;
-		if( componentToShow=="app" )
-			//return <App />
-			return <Pets />
-		else if( componentToShow=="records" )
-			return <Records />
+		if( componentToShow=="tickets" )
+			return <Trackers />
+		if( componentToShow=="config" )
+			return <TrackerConfig />
+		else if( componentToShow=="users" )
+			return <Users />
 		else
 			return "no app";
 
@@ -91,7 +97,18 @@ class Menu extends Component {
 
 	/** logout user */
 	logOutUser = () => {
-		this.dispatchLogout()
+		let loggedData = {
+			account_id:  localStorage.getItem("accountId") ,
+			type: parseInt( localStorage.getItem("userType") ),
+			user_id: parseInt( localStorage.getItem("userId") ),
+		}
+		this.setState({serverData: loggedData});
+
+		localStorage.setItem("accountId", 0);
+		localStorage.setItem("userType", 0);
+		localStorage.setItem("userId", 0);
+
+		this.dispatchLogOut();
 	}
 
 	dispatchLogout = () => {
