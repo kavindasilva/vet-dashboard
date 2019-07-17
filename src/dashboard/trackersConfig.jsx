@@ -110,12 +110,16 @@ class TrackersConfig extends React.Component{
                     this.props.trackers.map( tracker => (
                         (this.state.tabValue+1) === tracker.tracker_id && 
                         <React.Fragment>
-                            <h3> { tracker.name } </h3>
-                            <p>X {tracker.tracker_id} </p>
+                            <small> 
+                                ID: {tracker.tracker_id} ,
+                                Name: { tracker.name } 
+                            </small>
                             
+                            <div>
                             {
-                                //this.showColumns(tracker)
+                                this.showColumns(tracker.columns)
                             }
+                            </div>
                         </React.Fragment>
                     ))
                 }
@@ -125,10 +129,24 @@ class TrackersConfig extends React.Component{
     }
     
 
-    printCheckBox(){
-        return(
-            <Button>sample</Button>
-        );
+    showColumns = (columns) => {
+        return columns.map( column =>(
+            <div>
+                Name: { column.name } -->
+                Label: { column.label }
+                <ul>
+                    {
+                        column.permissions.map( permit => (
+                            <li>
+                                {permit.userId}: 
+                                {permit.read.toString() }, 
+                                {permit.write.toString() }
+                            </li>
+                        ) )
+                    }
+                </ul>
+            </div> 
+        ) )
     }
 
     getTrackersConfig(){
