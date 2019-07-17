@@ -60,89 +60,49 @@ class TrackersUserConfig extends React.Component{
                         this.setState({ isOpen: true })
                         ) } 
                 >
-                    { String(
-						(this.props.columnPermissions)?
-						( JSON.stringify(this.props.columnPermissions).substr(0,40) )
-						:"--" 
-					) }
-                </div>
+                    <Table size="small">
+                        <TableBody>
+                        {
+                            this.props.columnPermissions.map( user => (
+                                <TableRow >
+                                    
+                                    
+                                    <TableCell size="small">
+                                    { user.userId } . 
+                                    { 
+                                        this.props.allUsers.find( allUser => (
+                                            allUser.user_id === user.userId
+                                            //5 == parseInt(user.userId)
+                                        ) ).email.toString()
+                                    }
+                                    </TableCell>
+                                    
+                                    <TableCell size="small">
+                                        <Checkbox
+                                            size="small"
+                                            key={ user.userId }
+                                            checked={ user.read }
+                                            value="read"
+                                            label="Read"
+                                        />R
+                                    </TableCell>
 
-                {/* popup modal UI */}
-                <Dialog
-                    open={this.state.isOpen} 
-                    onClose={this.closePopUp}
-                    aria-labelledby="draggable-dialog-title"
-                >
-                    <DialogTitle id="draggable-dialog-title" 
-						style={
-							{ ...this.styleMatUI.titleBarPrimary,  padding: "18px 24px 16px 24px" }
-						}
-                    >
-
-                        Change { this.state.attributeName }
-                    </DialogTitle>
-
-                    <DialogContent>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>User</TableCell>
-                                    <TableCell>Read</TableCell>
-                                    <TableCell>Write</TableCell>
+                                    <TableCell size="small">
+                                        <Checkbox
+                                            size="small"
+                                            key={ user.userId }
+                                            checked={ user.write }
+                                            value="write"
+                                            label="Write"
+                                        />W
+                                    </TableCell>
                                 </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {
-                                    this.props.columnPermissions.map( user => (
-                                        <TableRow>
-                                            <TableCell>{ user.userId }</TableCell>
-                                            
-                                            <TableCell>
-                                                <Checkbox
-                                                    key={ user.userId }
-                                                    checked={ user.read }
-                                                    value="read"
-                                                    label="Read"
-                                                />
-                                            </TableCell>
-
-                                            <TableCell>
-                                                <Checkbox
-                                                    key={ user.userId }
-                                                    checked={ user.write }
-                                                    value="write"
-                                                    label="Write"
-                                                />
-                                            </TableCell>
-                                        </TableRow>
-                                    ) )
-                                
-                                }
-                            </TableBody>
-                        </Table>
-                    </DialogContent>
-
-                    <DialogActions>
-                        <Button onClick={ ()=>{
-                                this.setState({ attributeValue: this.props.value });
-                                this.closePopUp() 
-                            } }
-                            style={ this.styleMatUI.closeButton }	
-                            variant="text"
-                            color="primary"
-                        >
-                            Cancel
-                        </Button>
-                                            
-                        <Button onClick={ () => { 
-                                this.dispatchUpdate()
-                                this.closePopUp(); 
-                            } } 
-                            variant="text" color="primary"
-                            style={this.styleMatUI.closeButton} >OK
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                            ) )
+                        
+                        }
+                        </TableBody>
+                    </Table>
+                </div>
             
             </React.Fragment>
   
@@ -158,7 +118,8 @@ class TrackersUserConfig extends React.Component{
 	};
     
     componentDidMount(){
-        //console.log("custom datepicker mount: props:", this.props, "state:", this.state);
+        console.log("trackerUserConfig arr: :", this.props.allUsers );
+        //console.log("trackerUserConfig mount: props:", this.props, "state:", this.state);
     }
 }
 
@@ -177,7 +138,10 @@ const mapStateToProps = (state, props) => {
 		) )
 		.permissions,
 		
-		users: state.UserConfigReducer.userData,
+        // allUsers: { ...state.UserConfigReducer.userData, 
+        //     ...state.UserConfigReducer.partnerData 
+        // },
+        allUsers: [ ...state.UserConfigReducer.userData]
     };
 }
 

@@ -123,6 +123,15 @@ class TrackersConfig extends React.Component{
                                 ID: {tracker.tracker_id} ,
                                 Name: { tracker.name } 
                             </small>
+
+                            <Button 
+                                style={{
+                                    float: "right",
+                                    align: "right",
+                                }}
+                            >
+                                Add Column
+                            </Button>
                             
                             <div>
                             {
@@ -140,7 +149,7 @@ class TrackersConfig extends React.Component{
     showColumns = (tracker) => {
         let columns = tracker.columns;
         return(
-            <Table>
+            <Table size="small">
                 <TableHead>
                     <TableCell>Label</TableCell>
                     <TableCell>Type</TableCell>
@@ -152,14 +161,14 @@ class TrackersConfig extends React.Component{
                 {
                     columns.map( column =>(
                         <TableRow>
-                            <TableCell> {column.label} </TableCell>
-                            <TableCell> 
+                            <TableCell size="small"> {column.label} </TableCell>
+                            <TableCell size="small"> 
                             {
                                 trackerColumnDataTypes[column.type]
                             }
                             </TableCell>
                             
-                            <TableCell>
+                            <TableCell size="small">
                             {
                                 <TrackerUserConfig
                                     tracker_id={ tracker.tracker_id }
@@ -171,7 +180,7 @@ class TrackersConfig extends React.Component{
                             }
                             </TableCell>
 
-                            <TableCell>
+                            <TableCell size="small">
                             {
                                 column.rules.map( rule => (
                                     <li>
