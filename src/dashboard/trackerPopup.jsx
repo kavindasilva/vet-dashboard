@@ -34,7 +34,7 @@ import {format} from "date-fns";
 
 import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
 
-import { trackerPopupDefaultValues } from "../common/constants";
+import { trackerPopupDefaultValues, globalStyles } from "../common/constants";
 
 import Moment from 'react-moment';
 import moment from "moment";
@@ -91,6 +91,9 @@ class TrackerPopup extends Component {
 				<Cell 
 					align={ isNaN(this.props.ticketProperty.value) ? 'left' : 'right' }
 					//style={ { backgroundColor: this.evaluateExpr( this.props.configData.rules)} }
+					style={{
+						...globalStyles["cell-borders"]
+					}}
 				>
 					{ this.showPop() }
 				</Cell>

@@ -1,39 +1,32 @@
 
-
-import React, { Component } from 'react';
-
-import { connect } from "react-redux";
-import { rootStore } from "../stores/mainStore"
-
-import Button from '@material-ui/core/Button';
-
-import Trackers from "../dashboard/trackers";
-import Phoenix from "../phoenix/records";
-
-
-
 export default function Records(){
     const sample1="sample text 1";
 }
-
 
 /**
  * tracker data columns related dataTypes
  * data type id: data type
  * these types are defined in the column configuration
  */
-export const trackerColumnDataTypes={
+export const trackerColumnDataTypes = {
     1: 'text',
     2: 'number',
     3: 'radio',
     4: 'date'
 };
 
+export const globalStyles = {
+    "cell-borders":{
+        border: "1px solid #cdcdcd",
+    }
+}
+
 /**
+ *  NEEDS REFACTORING DEFAULT VALUES
  * tracker popup data related default values
  * columnName: default value
-*
-/*export const trackerPopupDefaultValues={
+ *
+ /*export const trackerPopupDefaultValues={
     1: null,				// clinic name
 
     4: 0,					// RF sent date
@@ -77,15 +70,4 @@ export const userTypeArray=[
     "USER_ANY",
 ]
 
-/**
- * table headers for hubspot data
- */
-export const hubspotColumnData=[
-	{ name:"clinicName", label:"Clinic name" },
-	{ name:"ticketId", label:"Ticket ID" },
-	{ name:"ticketName", label:"Ticket Name" },
-	{ name:"ticketStatus", label:"Ticket Status" },
-	{ name:"pipelineId", label:"Pipeline Id" },
-	{ name:"pipelineStatusId", label:"Pipeline Status ID" },
-]
 

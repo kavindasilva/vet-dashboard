@@ -15,12 +15,10 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import TableCell from '@material-ui/core/TableCell';
 
-import { hubspotColumnData } from "../common/constants"
+import { globalStyles } from "../common/constants"
 
 import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
-
-const hubspotcolumns=hubspotColumnData;
 
 class TrackerHeader extends React.Component{
 	state = { 
@@ -70,8 +68,12 @@ class TrackerHeader extends React.Component{
 							padding: "2px 10px 2px 12px",
 							backgroundColor: "#e3d3cc",
 							//backgroundColor: "transparent",
-							borderColor: "#00ee00"
-						} }
+							//border: "0.5pt solid #888888",
+
+							...globalStyles["cell-borders"]
+						}
+						
+						}
 					>
 						{ column.label }
 					</Cell> 

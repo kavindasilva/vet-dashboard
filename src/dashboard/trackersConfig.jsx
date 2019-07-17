@@ -58,7 +58,7 @@ class TrackersConfig extends React.Component{
         ...this.props.metaData,
         ...this.props.trackers,
 
-        tabValue:2,
+        tabValue:0,
     }
 
 	componentDidMount(){
@@ -85,7 +85,6 @@ class TrackersConfig extends React.Component{
      * View Tabs layout of all trackers
      */
 	viewTabs(){
-		console.log("TrackersConfig - props:", this.props); 
 		//console.log("TrackersConfig - viewTabs:", this.state.trackers); 
 
 		return(
@@ -98,9 +97,7 @@ class TrackersConfig extends React.Component{
                         textColor="primary"
                         variant="scrollable"
                         scrollButtons="auto"
-                    >
-                        <Tab label="staticTab" /*onClick={ () => this.handleChange(null,1)}*/ />
-                        
+                    >    
                         {
                             this.props.trackers.map( tracker => (
                                 <Tab label={ tracker.name } />
@@ -111,7 +108,7 @@ class TrackersConfig extends React.Component{
 
                 {
                     this.props.trackers.map( tracker => (
-                        this.state.tabValue === tracker.tracker_id && 
+                        (this.state.tabValue+1) === tracker.tracker_id && 
                         <React.Fragment>
                             <h3> { tracker.name } </h3>
                             <p>X {tracker.tracker_id} </p>
@@ -127,31 +124,6 @@ class TrackersConfig extends React.Component{
 		);
     }
     
-    /** 
-     * Show the columns based on user permissions after calling printColumn()
-     * This function is called by viewTabs()
-     * */
-    showColumns( trackerInfo ){
-        let usersVisibleColumns=[];
-        return( 
-            trackerInfo.columns.map( column => (
-                console.log("col:", column),
-                usersVisibleColumns=[],
-                //console.log("test")
-
-                usersVisibleColumns=(column.permissions.find( (userPermission, i, arr) => 
-                    userPermission.id==this.props.metaData.userId,
-                    
-                )),
-                //usersVisibleColumns.push(column),
-
-                console.log("showCols currentCols", usersVisibleColumns),
-                this.printColumn(column, usersVisibleColumns, trackerInfo.id)
-
-            ) ) 
-        );
-
-    }
 
     printCheckBox(){
         return(

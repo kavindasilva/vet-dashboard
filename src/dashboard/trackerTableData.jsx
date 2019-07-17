@@ -5,8 +5,6 @@ import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
 import { rootStore } from "../stores/mainStore";
 
-import "../App.css";
-
 import Container from '@material-ui/core/Container';
 
 import TrackerPopup from "../dashboard/trackerPopup";
@@ -14,7 +12,7 @@ import TrackerPopup from "../dashboard/trackerPopup";
 import TableCell from '@material-ui/core/TableCell';
 import { withStyles } from '@material-ui/core/styles';
 
-import { trackerColumnDataTypes } from "../common/constants";
+import { trackerColumnDataTypes, globalStyles } from "../common/constants";
 
 import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
@@ -93,12 +91,13 @@ class TrackerTableData extends React.Component{
 						<Cell 
 							key={column.name} 
 							style={{
-								backgroundColor:"#ffffff",
-								borderColor: "#00ee00"
+								//backgroundColor:"#ffffff",
+								...globalStyles["cell-borders"]								
 							}}
 						>
 							<span 
-								className={ this.props.classes.readOnlyColumn }
+							className="read-only-input"
+								//className={ this.props.classes.readOnlyColumn }
 								//className="read-only-input"
 								//classes="read-only-input"
 							>
