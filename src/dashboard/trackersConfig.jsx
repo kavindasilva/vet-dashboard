@@ -15,7 +15,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 //import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import Container from '@material-ui/core/Container'
 
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -25,7 +25,16 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 //import { styles } from '@material-ui/pickers/DatePicker/components/Calendar';
 
+import Tree from "material-ui-tree";
+import getNodeDataByPath from "material-ui-tree/lib/util";
+import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
+
+import TrackerUserConfig from "../dashboard/trackersUserConfig"
+
+import { trackerColumnDataTypes } from "../common/constants"
+
 import trackersAPI from "../apicalls/trackersAPI";
+import { Table, TableHead, TableCell, TableBody, TableRow } from '@material-ui/core';
 
 const trackersAPIobj = new trackersAPI();
 
@@ -117,7 +126,7 @@ class TrackersConfig extends React.Component{
                             
                             <div>
                             {
-                                this.showColumns(tracker.columns)
+                                this.showColumns(tracker)
                             }
                             </div>
                         </React.Fragment>
@@ -128,26 +137,94 @@ class TrackersConfig extends React.Component{
 		);
     }
     
+    showColumns = (tracker) => {
+        let columns = tracker.columns;
+        return(
+            <Table>
+                <TableHead>
+                    <TableCell>Label</TableCell>
+                    <TableCell>Type</TableCell>
+                    <TableCell>Users</TableCell>
+                    <TableCell>Rules</TableCell>
+                </TableHead>
+                
+                <TableBody>
+                {
+                    columns.map( column =>(
+                        <TableRow>
+                            <TableCell> {column.label} </TableCell>
+                            <TableCell> 
+                            {
+                                trackerColumnDataTypes[column.type]
+                            }
+                            </TableCell>
+                            
+                            <TableCell>
+                            {
+                                //column.permissions.map( permit => (
+                                    <TrackerUserConfig
+                                        tracker_id={ tracker.tracker_id }
+                                        columnName={ column.name }
+                                        //user_id ={permit.userId}
+                                        //user_read={permit.read.toString() }
+                                        //user_write={permit.write.toString() }
+                                    />
+                                //) )
+                            }
+                            </TableCell>
 
-    showColumns = (columns) => {
+                            <TableCell>
+                            {
+                                column.rules.map( rule => (
+                                    <li>
+                                        {
+                                            //JSON.stringify(rule)
+                                            rule.toString()
+                                        }
+                                    </li>
+                                ) )
+                            }
+                            </TableCell>
+
+                        </TableRow>                
+                    ) )
+                }
+                </TableBody>
+            </Table>
+        );
+    }
+
+    
+    showColumns2 = (columns) => {
         return columns.map( column =>(
             <div>
                 Name: { column.name } -->
                 Label: { column.label }
-                <ul>
-                    {
-                        column.permissions.map( permit => (
-                            <li>
-                                {permit.userId}: 
-                                {permit.read.toString() }, 
-                                {permit.write.toString() }
-                            </li>
-                        ) )
+                
+                <Tree
+                    title="Material UI Tree"
+                    data={ column.permissions }
+                    labelKey="path"
+                    valueKey="sha"
+                    childrenKey="tree"
+                    foldIcon={<ArrowDropUpIcon />}
+                    unfoldIcon={<ArrowDropUpIcon />}
+                    loadMoreIcon={<ArrowDropUpIcon />}
+                    //renderLabel={renderLabel}
+                    renderLoadMoreText={(page, pageSize, total) =>
+                        `Loaded: ${(page + 1) *
+                        pageSize} / Total: ${total}. Click here to load more...`
                     }
-                </ul>
+                    pageSize={10}
+                    actionsAlignRight={false}
+                    // getActionsData={getActionsData}
+                    // requestChildrenData={requestChildrenData}
+                />
             </div> 
         ) )
     }
+
+    
 
     getTrackersConfig(){
         trackersAPIobj.getTrackerConfig()
