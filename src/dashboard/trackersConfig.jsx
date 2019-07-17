@@ -25,12 +25,6 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 //import { styles } from '@material-ui/pickers/DatePicker/components/Calendar';
 
-import Menu from "../common/menu";
-
-import trackersConfig from "../config-data/trackersConfig";
-import trackerInstances from "../config-data/trackerInstance";
-
-
 
 const useStyles = theme => ({
 	'@global': {
@@ -54,14 +48,6 @@ const useStyles = theme => ({
 	},
 });
 
-function TabContainer(props) {
-    return (
-      <Typography component="div" style={{ padding: 8 * 3 }}>
-        {props.children}
-        Test Para
-      </Typography>
-    );
-}
 
 class TrackersConfig extends React.Component{
     classes=this.props.classes;
@@ -71,7 +57,7 @@ class TrackersConfig extends React.Component{
         ...this.props.metaData, 
 
         tabValue:2,
-        trackers: trackersConfig,
+        trackers: false,
     }
 	//state = { Meta }
 
@@ -84,7 +70,9 @@ class TrackersConfig extends React.Component{
 		//this.viewForm() 
 		return(
 			<React.Fragment>
-				{ this.viewTabs() }
+				{ 
+                    //this.viewTabs() 
+                }
 			</React.Fragment>
 		)
     }
@@ -126,20 +114,9 @@ class TrackersConfig extends React.Component{
                         <React.Fragment>
                             <h3> { tracker.name } </h3>
                             <p>X {tracker.id} </p>
-                            <table>
-                                <thead>
-                                    <TrackerTableHeader trackerId={tracker.id}>
-                                    </TrackerTableHeader>
-                                </thead>
-                                <tbody>
-                                    <TrackerTableBody trackerId={tracker.id}>
-                                        <TrackerTableRow trackerId={tracker.id} trackerRecordId={null}>
-                                        </TrackerTableRow>
-                                    </TrackerTableBody>
-                                </tbody>
-                            </table>
+                            
                             {
-                                this.showColumns(tracker)
+                                //this.showColumns(tracker)
                             }
                         </React.Fragment>
                     ))
@@ -175,30 +152,6 @@ class TrackersConfig extends React.Component{
 
     }
 
-    /**
-     * Print the columns where user is authorized
-     */
-    printColumn = (columnData, userPermission, trackerToGet) => {
-        //console.log("trackers printCol: colData",columnData, "\npermission:", userPermission);
-        //console.log("trackers id:", trackerToGet);
-
-        /** column: colId, id(user),  read, write, type  */
-        let column = this.objectMerge(columnData,userPermission);
-        console.log("trackers printCol: merged", column);
-
-        return(
-            trackerInstances.map( tracker =>{
-                //console.log("trackersConfig tracker:", tracker)
-                if( tracker.id == trackerToGet )
-                    return(
-                        tracker.data.column
-                    )
-            } )
-        )
-
-        //return this.printCheckBox()  
-    }
-
     printCheckBox(){
         return(
             <Button>sample</Button>
@@ -225,6 +178,6 @@ const mapStateToProps = state => {
 }
 
 //export default TrackersConfig;
-export default connect(mapStateToProps)(TrackersConfig);
-//export default connect(mapStateToProps)(withStyles(useStyles)(TrackersConfig));
+//export default connect(mapStateToProps)(TrackersConfig);
+export default connect(mapStateToProps)(withStyles(useStyles)(TrackersConfig));
 

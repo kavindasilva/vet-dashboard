@@ -13,7 +13,7 @@ import Pets from "../components/pets";
 
 import Trackers from "../dashboard/trackers";
 import Users from "../users/users";
-import TrackerConfig from "../components/pets";
+import TrackerConfig from "../dashboard/trackersConfig";
 
 import Button from '@material-ui/core/Button';
 
@@ -53,6 +53,7 @@ class Menu extends Component {
 				{ /** temporary menu bar */ }
 				<div>
 					<div>
+					Hi user ID: ... { this.props.metaData.userId } ...
 						<Button style={{cursor:'pointer',float:'right',align:'right'}}
 							onClick={ () => { this.logOutUser() } }
 						>
@@ -111,7 +112,7 @@ class Menu extends Component {
 		this.dispatchLogOut();
 	}
 
-	dispatchLogout = () => {
+	dispatchLogOut = () => {
 		rootStore.dispatch({
 			type: 'UPDATE_META_DETAIL',
 			payload: {

@@ -76,12 +76,11 @@ class Login extends React.Component{
 	}
 
 	render(){
-		//this.handleForm() 
 		return(
 			<React.Fragment>
 				{ 
 					//this.viewMenu()
-					this.handleForm()	
+					this.handleLoginStatus()	
 				}
 
 				
@@ -111,7 +110,6 @@ class Login extends React.Component{
 	 * if credentials wrong : data: "Bad Request"
 	 * if credentials validated: data: {type: 3, account_id: "1", user_id: 2}
 	*/
-	//validateCredentials( userInput, serverData)
 	validateCredentials( serverData){
 		if( serverData.data.type !=="" && serverData.data.type!==null && serverData.data!=="Bad Request" ){
 			console.log("credentials validated. serverData:", serverData);
@@ -139,13 +137,12 @@ class Login extends React.Component{
 	 * Display login if user not logged in.
 	 * Display Menu bar if user logged in.
 	 */
-	handleForm(){
-		//console.log('login.jsx - handleForm', localStorage.getItem("logged")==='true', localStorage.getItem("userId"));
+	handleLoginStatus(){
+		//console.log('login.jsx - handleLoginStatus', localStorage.getItem("logged")==='true', localStorage.getItem("userId"));
 		if(this.props.metaData.isLoggedIn===true){
 			return this.viewMenu();
 		}
 		else if( localStorage.getItem("logged")==="true" && localStorage.getItem("userId")!=="0" ){
-			//console.log("LOGGED");
 			let loggedData = {
 				account_id:  localStorage.getItem("accountId") ,
 				type: parseInt( localStorage.getItem("userType") ),
@@ -157,11 +154,6 @@ class Login extends React.Component{
 				console.log('login.jsx - handleForm2', this.state.serverData );
 				this.dispatchLogin();
 			});
-			//console.log('login.jsx - handleForm2', this.state.serverData );
-			//console.log('login.jsx - handleForm', this.state );
-
-			//this.dispatchLogin();
-			//return this.viewMenu();
 
 		}
 		else{
