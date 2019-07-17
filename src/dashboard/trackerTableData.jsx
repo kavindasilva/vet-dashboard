@@ -50,7 +50,6 @@ class TrackerTableData extends React.Component{
 	render(){
 		return(
 			this.showTableData()
-			//<tr> <td>00</td> <td>00</td> <td>00</td> </tr>
 		)
     }
 

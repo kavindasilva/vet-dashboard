@@ -93,7 +93,6 @@ class TrackerPopup extends Component {
 					//style={ { backgroundColor: this.evaluateExpr( this.props.configData.rules)} }
 					style={{
 						...globalStyles["cell-borders"],
-						width: "100%"
 					}}
 				>
 					{ this.showPop() }

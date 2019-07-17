@@ -63,7 +63,7 @@ class TrackerHeader extends React.Component{
 					<Cell 
 						key={ column.id }
 						style={ { 
-							width: "200px", 
+							//width: "200px", 
 							color:"#1122ee", 
 							padding: "2px 10px 2px 12px",
 							backgroundColor: "#e3d3cc",
