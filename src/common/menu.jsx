@@ -15,7 +15,7 @@ import Button from '@material-ui/core/Button';
 
 import MiniDrawer from "../common/drawer";
 
-
+import Tracker from "../dashboard/trackers"
 
 class Menu extends Component {
 	state={
@@ -31,11 +31,12 @@ class Menu extends Component {
 		return (
 			<React.Fragment>
 				{ 
-					this.viewMenuBar() 
+					//this.viewMenuBar() 
 				}
 				{ 
-					this.componentToShow() 
+					//this.componentToShow() 
 				}
+				<Tracker />
 			</React.Fragment>
 		);
 	}

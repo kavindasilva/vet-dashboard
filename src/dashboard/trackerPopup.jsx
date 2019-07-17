@@ -34,11 +34,13 @@ import {format} from "date-fns";
 
 import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
 
-
 import { trackerPopupDefaultValues } from "../common/constants";
 
 import Moment from 'react-moment';
 import moment from "moment";
+
+import { StickyTable, Row, Cell } from 'react-sticky-table';
+import 'react-sticky-table/dist/react-sticky-table.css';
 
 //export default class TrackerPopup extends Component {
 class TrackerPopup extends Component {
@@ -86,12 +88,12 @@ class TrackerPopup extends Component {
 		//console.log('trackerPopup: Rendering cell content');
 		return (
 			<React.Fragment>
-				<TableCell 
+				<Cell 
 					align={ isNaN(this.props.ticketProperty.value) ? 'left' : 'right' }
 					//style={ { backgroundColor: this.evaluateExpr( this.props.configData.rules)} }
 				>
 					{ this.showPop() }
-				</TableCell>
+				</Cell>
 			</React.Fragment>
 		)
 	}

@@ -18,6 +18,8 @@ import TableCell from '@material-ui/core/TableCell';
 
 import TrackerTableData from "../dashboard/trackerTableData";
 
+import { StickyTable, Row, Cell } from 'react-sticky-table';
+import 'react-sticky-table/dist/react-sticky-table.css';
 
 class TrackerTableRow extends React.Component{
 	state = { 
@@ -45,13 +47,13 @@ class TrackerTableRow extends React.Component{
 	
 			if( 1 ){ // kept to add user permissions row-wise later
 				returnArr.push(
-					<tr key={record.ticket_id} >
+					<Row key={record.ticket_id} >
 						<TrackerTableData 
 							key={record.ticket_id} 
 							ticketId={ record.ticket_id }
 							trackerId = { record.tracker_id }
 						/>
-					</tr>
+					</Row>
 				)
 			}
 			

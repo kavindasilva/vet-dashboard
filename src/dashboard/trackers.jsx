@@ -28,6 +28,11 @@ import trackersAPI from "../apicalls/trackersAPI";
 import TrackerTableHeader from "../dashboard/trackerHeader";
 import TrackerTableRow from "../dashboard/trackerTableRow";
 
+import { StickyTable, Row, Cell } from 'react-sticky-table';
+import 'react-sticky-table/dist/react-sticky-table.css';
+
+//import StaticFixedTable from "../dashboard/staticFixedTable"
+
 const ticketAPIobj = new ticketAPI();
 const trackersAPIobj = new trackersAPI();
 
@@ -63,7 +68,10 @@ class Trackers extends React.Component{
 	render(){
 		return(
 			<React.Fragment>
-                { this.viewTabs() }
+                { 
+                    this.viewTabs() 
+                }
+                
 			</React.Fragment>
 		)
     }
@@ -112,23 +120,25 @@ class Trackers extends React.Component{
                             <small>Tracker ID: {tracker.tracker_id} </small>
                             <small> | Pipeline: {tracker.pipeline_label} </small>
 
-                            <Paper style={ {} }>
-					            <Table size={'small'}>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TrackerTableHeader trackerId={tracker.tracker_id}>
-                                            </TrackerTableHeader>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody >
-                                        <TrackerTableRow 
-                                            trackerId={tracker.tracker_id} 
-                                            tracker={ tracker }
-                                            trackerRecordId={null}>
-                                        </TrackerTableRow>
-                                    </TableBody>
-                                </Table>
-                            </Paper>
+                            <div 
+                                //style={{width: '100%', height: '100%'}}
+                                style={{width: '100%', height: '200px'}}
+                            >
+                                <StickyTable 
+                                    stickyHeaderCount={1}
+                                    stickyColumnCount={1}
+                                >
+                                    <Row>
+                                        <TrackerTableHeader trackerId={tracker.tracker_id}>
+                                        </TrackerTableHeader>
+                                    </Row>
+                                    <TrackerTableRow 
+                                        trackerId={tracker.tracker_id} 
+                                        tracker={ tracker }
+                                        trackerRecordId={null}>
+                                    </TrackerTableRow>
+                                </StickyTable>
+                            </div>
 
                         </div>
                     ))

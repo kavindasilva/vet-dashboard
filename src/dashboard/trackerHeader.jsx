@@ -17,6 +17,9 @@ import TableCell from '@material-ui/core/TableCell';
 
 import { hubspotColumnData } from "../common/constants"
 
+import { StickyTable, Row, Cell } from 'react-sticky-table';
+import 'react-sticky-table/dist/react-sticky-table.css';
+
 const hubspotcolumns=hubspotColumnData;
 
 class TrackerHeader extends React.Component{
@@ -59,11 +62,17 @@ class TrackerHeader extends React.Component{
 			if( usersVisibleColumns!==undefined && usersVisibleColumns.read ){
 
 				returnArr.push( 
-					<TableCell 
+					<Cell 
 						key={ column.id }
+						style={ { 
+							width: "200px", 
+							color:"#1122ee", 
+							padding: "2px 10px 2px 12px",
+							backgroundColor: "#11cc22"
+						} }
 					>
 						{ column.label }
-					</TableCell> 
+					</Cell> 
 				)
 
 			}

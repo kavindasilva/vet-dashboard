@@ -16,6 +16,8 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { trackerColumnDataTypes } from "../common/constants";
 
+import { StickyTable, Row, Cell } from 'react-sticky-table';
+import 'react-sticky-table/dist/react-sticky-table.css';
 
 const styles = theme => ({
 	readOnlyColumn: {
@@ -88,7 +90,10 @@ class TrackerTableData extends React.Component{
 				else if (userPermission.read) {
 					// read only permission
 					returnArr.push(
-						<TableCell key={column.name}>
+						<Cell 
+							key={column.name} 
+							style={{backgroundColor:"#ffffff"}}
+						>
 							<span 
 								className={ this.props.classes.readOnlyColumn }
 								//className="read-only-input"
@@ -96,7 +101,7 @@ class TrackerTableData extends React.Component{
 							>
 								{ (columnValue)?columnValue:"--" }
 							</span>
-						</TableCell>
+						</Cell>
 					)
 				}
 			}			
