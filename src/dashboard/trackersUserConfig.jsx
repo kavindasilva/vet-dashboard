@@ -16,7 +16,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead } from "@material-ui/core";
+import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead, FormControlLabel } from "@material-ui/core";
+
+import { spacing } from '@material-ui/system';
 
 class TrackersUserConfig extends React.Component{
 
@@ -67,7 +69,7 @@ class TrackersUserConfig extends React.Component{
                                 <TableRow >
                                     
                                     
-                                    <TableCell size="small">
+                                    <TableCell m={0} p={0} size="small">
                                     { user.userId } . 
                                     { 
                                         Object.values(this.props.allUsers).find( allUser => (
@@ -77,24 +79,40 @@ class TrackersUserConfig extends React.Component{
                                     }
                                     </TableCell>
                                     
-                                    <TableCell size="small">
-                                        <Checkbox
-                                            size="small"
-                                            key={ user.userId }
-                                            checked={ user.read }
-                                            value="read"
-                                            label="Read"
-                                        />R
+                                    <TableCell m={0} p={0} size="small">
+                                        <FormControlLabel
+                                            value="end"
+                                            control={
+                                                <Checkbox
+                                                    size="small"
+                                                    key={ user.userId }
+                                                    checked={ user.read }
+                                                    value="read"
+                                                    label="Read"
+                                                    labelpl
+                                                />  
+                                            }
+                                            label="R"
+                                            labelPlacement="top"
+                                        />
                                     </TableCell>
 
-                                    <TableCell size="small">
-                                        <Checkbox
-                                            size="small"
-                                            key={ user.userId }
-                                            checked={ user.write }
-                                            value="write"
-                                            label="Write"
-                                        />W
+                                    <TableCell m={0} p={0} size="small">
+                                        <FormControlLabel
+                                            value="end"
+                                            control={
+                                                <Checkbox
+                                                    size="small"
+                                                    key={ user.userId }
+                                                    checked={ user.write }
+                                                    value="write"
+                                                    label="Write"
+                                                    labelpl
+                                                />  
+                                            }
+                                            label="W"
+                                            labelPlacement="top"
+                                        />
                                     </TableCell>
                                 </TableRow>
                             ) )

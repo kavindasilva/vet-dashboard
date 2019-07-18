@@ -16,7 +16,19 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead, TextField } from "@material-ui/core";
+import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead, TextField, IconButton, MenuItem, Select } from "@material-ui/core";
+
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+
+/** to be imported from costants */
+const colouringRuleColors = [
+    { value: "green", label: "Green" },
+    { value: "amber", label: "Amber" },
+    { value: "red", label: "Red" },
+    { value: "blue", label: "Blue" },
+    { value: "grey", label: "Grey" },
+]
 
 class TrackersRulesConfig extends React.Component{
 
@@ -64,20 +76,37 @@ class TrackersRulesConfig extends React.Component{
                                     <TableRow >
                                         
                                         {/* buttons */}
-                                        <TableCell size="small">
+                                        <TableCell m={0} p={0} size="small">
+                                            <IconButton aria-label="Delete" size="small">
+                                                <ArrowUpwardIcon fontSize="inherit" />
+                                            </IconButton>
+                                            <IconButton aria-label="Delete" size="small">
+                                                <ArrowDownwardIcon fontSize="inherit" />
+                                            </IconButton>
                                         </TableCell>
 
                                         {/* color */}
-                                        <TableCell size="small">
+                                        <TableCell m={0} p={0} size="small">
                                         { 
-                                            rule.precedence +
-                                            rule.bgcolor
+                                            "p-"+rule.precedence
+                                        }
+                                        {
+                                            <Select value={ rule.bgcolor } 
+                                                //onChange={ e => this.setState({ attributeValue: e.target.value }) }
+                                                fullWidth={true}
+                                            >
+                                                {
+                                                    colouringRuleColors.map( item =>
+                                                            <MenuItem key={ item.value } value={ item.value } >{ item.label }</MenuItem>
+                                                        )
+                                                }
+                                            </Select>
                                         }
                                         
-                                        </TableCell>
+                                        </TableCell >
                                         
                                         {/* conditions */}
-                                        <TableCell size="small">
+                                        <TableCell m={0} p={0} size="small">
                                             <TextField
                                                 value={ rule.conditions }
                                             />

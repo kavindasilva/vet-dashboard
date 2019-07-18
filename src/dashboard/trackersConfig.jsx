@@ -99,6 +99,14 @@ class TrackersConfig extends React.Component{
 
 		return(
 			<div>
+                <Button 
+                    style={{
+                        float: "right",
+                        align: "right",
+                    }}
+                >
+                    Add New Tracker
+                </Button>
 				<AppBar position="static" color="default">
                     <Tabs
                         value={this.state.tabValue}
@@ -162,14 +170,14 @@ class TrackersConfig extends React.Component{
                 {
                     columns.map( column =>(
                         <TableRow>
-                            <TableCell size="small"> {column.label} </TableCell>
-                            <TableCell size="small"> 
+                            <TableCell m={0} p={0} size="small"> {column.label} </TableCell>
+                            <TableCell m={0} p={0} size="small"> 
                             {
                                 trackerColumnDataTypes[column.type]
                             }
                             </TableCell>
                             
-                            <TableCell size="small">
+                            <TableCell m={0} p={0} size="small">
                             {
                                 <TrackerUserConfig
                                     tracker_id={ tracker.tracker_id }
@@ -181,7 +189,7 @@ class TrackersConfig extends React.Component{
                             }
                             </TableCell>
 
-                            <TableCell size="small">
+                            <TableCell m={0} p={0} size="small">
                                 <TrackerRulesConfig
                                     tracker_id={ tracker.tracker_id }
                                     column_name={ column.name }
