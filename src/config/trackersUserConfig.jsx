@@ -16,7 +16,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead, FormControlLabel } from "@material-ui/core";
+import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead, FormControlLabel, IconButton } from "@material-ui/core";
 
 import { spacing } from '@material-ui/system';
 
@@ -51,89 +51,51 @@ class TrackersUserConfig extends React.Component{
         isOpen: this.props.show,
         attributeValue: this.props.value,
 
-        read: false,
-        write: false,
+        read: true,
+        write: true,
     }
 
     render(){
         //console.log('TrackersUserConfig: Rendering cell content');
-        //return(<React.Fragment></React.Fragment>);
+        //return(<React.Fragment>x</React.Fragment>);
         return(
             <React.Fragment>
-                <div style={this.styleTD}
-                    onClick={ ()=>(
-                        this.setState({ isOpen: true })
-                        ) } 
+                <span >
+                { this.props.columnPermissions.userId } . 
+                { 
+                    Object.values(this.props.allUsers).find( allUser => (
+                        allUser.user_id === this.props.columnPermissions.userId
+                    ) ).email.toString()
+                }
+                </span>
+                    
+                <IconButton
+                    size="small"
+                    style={
+                        (this.state.read)?
+                            { "color":"green" }
+                            :{ "text-decoration": "line-through", "color":"red" }
+                    }
+                    onClick = { () => { 
+                        this.setState({read: !this.state.read});
+                    } }
                 >
-                    <Table size="small">
-                        <TableBody>
-                        {
-                            this.props.columnPermissions.map( user => (
-                                <TableRow >
-                                    
-                                    {/* to get user email */}
-                                    <TableCell m={0} p={0} size="small">
-                                    { user.userId } . 
-                                    { 
-                                        Object.values(this.props.allUsers).find( allUser => (
-                                            allUser.user_id === user.userId
-                                            //5 == parseInt(user.userId)
-                                        ) ).email.toString()
-                                    }
-                                    </TableCell>
-                                    
-                                    <TableCell m={0} p={0} size="small">
-                                        <span
-                                            style={ 
-                                                (this.state.read)?
-                                                    { "text-decoration": "line-through" }
-                                                    :{}
-                                            }
-                                        >
-                                            R
-                                        </span>
-                                        <FormControlLabel
-                                            value="end"
-                                            control={
-                                                <Checkbox
-                                                    size="small"
-                                                    key={ user.userId }
-                                                    checked={ user.read }
-                                                    value="read"
-                                                    label="Read"
-                                                    labelpl
-                                                />  
-                                            }
-                                            label="R"
-                                            labelPlacement="top"
-                                        />
-                                    </TableCell>
+                    R
+                </IconButton>
 
-                                    <TableCell m={0} p={0} size="small">
-                                        <FormControlLabel
-                                            value="end"
-                                            control={
-                                                <Checkbox
-                                                    size="small"
-                                                    key={ user.userId }
-                                                    checked={ user.write }
-                                                    value="write"
-                                                    label="Write"
-                                                    labelpl
-                                                />  
-                                            }
-                                            label="W"
-                                            labelPlacement="top"
-                                        />
-                                    </TableCell>
-                                </TableRow>
-                            ) )
-                        
-                        }
-                        </TableBody>
-                    </Table>
-                </div>
-            
+                <IconButton
+                    size="small"
+                    style={ 
+                        (this.state.write)?
+                            { "color":"green" }
+                            :{ "text-decoration": "line-through", "color":"red" }
+                    }
+                    onClick = { () => { 
+                        this.setState({write: !this.state.write});
+                    } }
+                >
+                    W
+                </IconButton>
             </React.Fragment>
   
         )
@@ -151,9 +113,10 @@ class TrackersUserConfig extends React.Component{
         //console.log("trackerUserConfig arr: :", this.props.allUsers );
         //console.log("trackerUserConfig mount: props:", this.props, "state:", this.state);
         
-        // this.setState({ 
-        //     read: user.read,
-        // })
+        this.setState({ 
+            read: this.props.columnPermissions.read,
+            write: this.props.columnPermissions.write,
+        })
     
     }
 }
@@ -171,7 +134,9 @@ const mapStateToProps = (state, props) => {
 		.columns.find( column => (
 			column.name === props.column_name
 		) )
-		.permissions,
+		.permissions.find( user => (
+            user.userId === props.user_id
+        ) ),
 		
         allUsers: { ...state.UserConfigReducer.userData, 
             ...state.UserConfigReducer.partnerData 

@@ -179,13 +179,19 @@ class TrackersConfig extends React.Component{
                             
                             <TableCell m={0} p={0} size="small">
                             {
-                                <TrackerUserConfig
-                                    tracker_id={ tracker.tracker_id }
-                                    column_name={ column.name }
-                                    //user_id ={permit.userId}
-                                    //user_read={permit.read.toString() }
-                                    //user_write={permit.write.toString() }
-                                />
+                                column.permissions.map( user => (
+                                    <React.Fragment>
+                                        <TrackerUserConfig
+                                            tracker_id={ tracker.tracker_id }
+                                            column_name={ column.name }
+                                            user_id ={user.userId}
+                                            //user_read={permit.read.toString() }
+                                            //user_write={permit.write.toString() }
+                                        />
+                                        <br/>
+                                    </React.Fragment>
+                                ) )
+                                
                             }
                             </TableCell>
 
