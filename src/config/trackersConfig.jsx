@@ -29,13 +29,13 @@ import Tree from "material-ui-tree";
 import getNodeDataByPath from "material-ui-tree/lib/util";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 
-import TrackerUserConfig from "../config/trackersUserConfig"
+import TrackersPemissionsConfig from "../config/trackersPermissionsConfig"
 import TrackerRulesConfig from "../config/trackersRulesConfig"
 
 import { trackerColumnDataTypes } from "../common/constants"
 
 import trackersAPI from "../apicalls/trackersAPI";
-import { Table, TableHead, TableCell, TableBody, TableRow } from '@material-ui/core';
+import { Table, TableHead, TableCell, TableBody, TableRow, MenuItem, Select } from '@material-ui/core';
 
 const trackersAPIobj = new trackersAPI();
 
@@ -173,7 +173,18 @@ class TrackersConfig extends React.Component{
                             <TableCell m={0} p={0} size="small"> {column.label} </TableCell>
                             <TableCell m={0} p={0} size="small"> 
                             {
-                                trackerColumnDataTypes[column.type]
+                                //trackerColumnDataTypes[column.type]
+                                <Select
+                                    value={ column.type } 
+									//onChange={ e => this.setState({ attributeValue: e.target.value }) }
+									fullWidth={false}
+								>
+									{
+										Object.keys(trackerColumnDataTypes).map( item =>
+												<MenuItem key={ item } value={ item } >{ trackerColumnDataTypes[item] }</MenuItem>
+											)
+									}
+								</Select>
                             }
                             </TableCell>
                             
@@ -181,7 +192,7 @@ class TrackersConfig extends React.Component{
                             {
                                 column.permissions.map( user => (
                                     <React.Fragment>
-                                        <TrackerUserConfig
+                                        <TrackersPemissionsConfig
                                             tracker_id={ tracker.tracker_id }
                                             column_name={ column.name }
                                             user_id ={user.userId}

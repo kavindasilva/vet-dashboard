@@ -20,7 +20,7 @@ import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead, FormControl
 
 import { spacing } from '@material-ui/system';
 
-class TrackersUserConfig extends React.Component{
+class TrackersPemissionsConfig extends React.Component{
 
     styleMatUI={
 		closeButton: {
@@ -56,7 +56,7 @@ class TrackersUserConfig extends React.Component{
     }
 
     render(){
-        //console.log('TrackersUserConfig: Rendering cell content');
+        //console.log('TrackersPemissionsConfig: Rendering cell content');
         //return(<React.Fragment>x</React.Fragment>);
         return(
             <React.Fragment>
@@ -146,6 +146,6 @@ const mapStateToProps = (state, props) => {
 }
 
 
-export default connect(mapStateToProps)(TrackersUserConfig);
+export default connect(mapStateToProps)(TrackersPemissionsConfig);
 
 

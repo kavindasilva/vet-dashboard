@@ -1,10 +1,10 @@
 [
     {
         "user_id": 5,
-        "name": "config user21 adm",
+        "name": "jsonConfig user21 adm",
         "first_name": "fn5",
         "last_name": "5last",
-        "email": "hc.user21@gmail.com",
+        "email": "hc.user21@jsonHC.com",
         "user_type_id": 3,
         "user_type": "admin",
         "telephone": "+21000000",
@@ -18,10 +18,10 @@
 
     {
         "user_id": 22,
-        "name": "config 22user std",
+        "name": "jsonConfig 22user std",
         "first_name": "22fn",
         "last_name": "las22t",
-        "email": "hc.user22@gmail.com",
+        "email": "hc.user22@jsonHC.com",
         "user_type_id": 6,
         "user_type": "partner",
         "telephone": "00220000",
@@ -34,10 +34,10 @@
 
     {
         "user_id": 6,
-        "name": "config user23 adm",
+        "name": "jsonConfig user23 adm",
         "first_name": "fn6",
         "last_name": "la6st",
-        "email": "hc.user23@gmail.com",
+        "email": "hc.user23@jsonHC.com",
         "user_type_id": 3,
         "user_type": "admin",
         "telephone": "+2300023",
