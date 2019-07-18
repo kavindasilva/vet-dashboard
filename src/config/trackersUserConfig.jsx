@@ -50,6 +50,9 @@ class TrackersUserConfig extends React.Component{
         columnName: this.props.columnName,
         isOpen: this.props.show,
         attributeValue: this.props.value,
+
+        read: false,
+        write: false,
     }
 
     render(){
@@ -68,7 +71,7 @@ class TrackersUserConfig extends React.Component{
                             this.props.columnPermissions.map( user => (
                                 <TableRow >
                                     
-                                    
+                                    {/* to get user email */}
                                     <TableCell m={0} p={0} size="small">
                                     { user.userId } . 
                                     { 
@@ -80,6 +83,15 @@ class TrackersUserConfig extends React.Component{
                                     </TableCell>
                                     
                                     <TableCell m={0} p={0} size="small">
+                                        <span
+                                            style={ 
+                                                (this.state.read)?
+                                                    { "text-decoration": "line-through" }
+                                                    :{}
+                                            }
+                                        >
+                                            R
+                                        </span>
                                         <FormControlLabel
                                             value="end"
                                             control={
@@ -138,6 +150,11 @@ class TrackersUserConfig extends React.Component{
     componentDidMount(){
         //console.log("trackerUserConfig arr: :", this.props.allUsers );
         //console.log("trackerUserConfig mount: props:", this.props, "state:", this.state);
+        
+        // this.setState({ 
+        //     read: user.read,
+        // })
+    
     }
 }
 

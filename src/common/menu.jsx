@@ -13,7 +13,7 @@ import Pets from "../components/pets";
 
 import Trackers from "../dashboard/trackers";
 import Users from "../users/users";
-import TrackerConfig from "../dashboard/trackersConfig";
+import TrackerConfig from "../config/trackersConfig";
 
 import Button from '@material-ui/core/Button';
 

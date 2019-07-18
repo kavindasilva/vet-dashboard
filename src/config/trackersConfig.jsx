@@ -29,8 +29,8 @@ import Tree from "material-ui-tree";
 import getNodeDataByPath from "material-ui-tree/lib/util";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 
-import TrackerUserConfig from "../dashboard/trackersUserConfig"
-import TrackerRulesConfig from "../dashboard/trackersRulesConfig"
+import TrackerUserConfig from "../config/trackersUserConfig"
+import TrackerRulesConfig from "../config/trackersRulesConfig"
 
 import { trackerColumnDataTypes } from "../common/constants"
 
