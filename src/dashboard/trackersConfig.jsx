@@ -30,6 +30,7 @@ import getNodeDataByPath from "material-ui-tree/lib/util";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 
 import TrackerUserConfig from "../dashboard/trackersUserConfig"
+import TrackerRulesConfig from "../dashboard/trackersRulesConfig"
 
 import { trackerColumnDataTypes } from "../common/constants"
 
@@ -172,7 +173,7 @@ class TrackersConfig extends React.Component{
                             {
                                 <TrackerUserConfig
                                     tracker_id={ tracker.tracker_id }
-                                    columnName={ column.name }
+                                    column_name={ column.name }
                                     //user_id ={permit.userId}
                                     //user_read={permit.read.toString() }
                                     //user_write={permit.write.toString() }
@@ -181,16 +182,12 @@ class TrackersConfig extends React.Component{
                             </TableCell>
 
                             <TableCell size="small">
-                            {
-                                column.rules.map( rule => (
-                                    <li>
-                                        {
-                                            JSON.stringify(rule).substr(0,40)
-                                            //rule.toString()
-                                        }
-                                    </li>
-                                ) )
-                            }
+                                <TrackerRulesConfig
+                                    tracker_id={ tracker.tracker_id }
+                                    column_name={ column.name }
+                                >
+                                </TrackerRulesConfig>
+                            
                             </TableCell>
 
                         </TableRow>                

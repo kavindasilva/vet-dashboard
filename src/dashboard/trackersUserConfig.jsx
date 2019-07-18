@@ -70,7 +70,7 @@ class TrackersUserConfig extends React.Component{
                                     <TableCell size="small">
                                     { user.userId } . 
                                     { 
-                                        this.props.allUsers.find( allUser => (
+                                        Object.values(this.props.allUsers).find( allUser => (
                                             allUser.user_id === user.userId
                                             //5 == parseInt(user.userId)
                                         ) ).email.toString()
@@ -118,7 +118,7 @@ class TrackersUserConfig extends React.Component{
 	};
     
     componentDidMount(){
-        console.log("trackerUserConfig arr: :", this.props.allUsers );
+        //console.log("trackerUserConfig arr: :", this.props.allUsers );
         //console.log("trackerUserConfig mount: props:", this.props, "state:", this.state);
     }
 }
@@ -134,14 +134,14 @@ const mapStateToProps = (state, props) => {
 			tracker.tracker_id === parseInt( props.tracker_id )
 		) )
 		.columns.find( column => (
-			column.name === props.columnName
+			column.name === props.column_name
 		) )
 		.permissions,
 		
-        // allUsers: { ...state.UserConfigReducer.userData, 
-        //     ...state.UserConfigReducer.partnerData 
-        // },
-        allUsers: [ ...state.UserConfigReducer.userData]
+        allUsers: { ...state.UserConfigReducer.userData, 
+            ...state.UserConfigReducer.partnerData 
+        },
+        //allUsers: [ ...state.UserConfigReducer.userData]
     };
 }
 
