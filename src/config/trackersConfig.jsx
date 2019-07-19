@@ -31,6 +31,7 @@ import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 
 import TrackersPemissionsConfig from "../config/trackersPermissionsConfig"
 import TrackerRulesConfig from "../config/trackersRulesConfig"
+import NewTracker from "../config/newTracker"
 
 import { trackerColumnDataTypes } from "../common/constants"
 
@@ -68,7 +69,11 @@ class TrackersConfig extends React.Component{
         ...this.props.metaData,
         ...this.props.trackers,
 
-        tabValue:0,
+        /** current viewing tracker */      tabValue:0,
+        /** component to show */            componentToShow:"allTrackers",
+
+        //columnName: this.props.
+        rowEdited:[],
     }
 
 	componentDidMount(){
@@ -81,12 +86,38 @@ class TrackersConfig extends React.Component{
 		return(
 			<React.Fragment>config ui
 				{ 
-                    this.viewTabs() 
+                    //this.viewAllTrackers() 
+                    this.showComponent() 
                 }
 			</React.Fragment>
 		)
     }
+
+    showComponent = () => {
+        switch(this.state.componentToShow){
+            case "allTrackers":
+                return this.viewAllTrackers();
+
+            case "newTracker":
+                return(
+                    <React.Fragment>
+                        <NewTracker />
+                        <Button
+                            onClick={ () => {
+                                this.setState({componentToShow: "allTrackers"})
+                            } }
+                        >
+                            Cancel
+                        </Button>
+                    </React.Fragment>
+                );
+
+            default:
+                return <div>default component</div>
+        }
+    }
     
+    /** handles tab change */
     handleChange = (event, newValue) => {
         this.setState({tabValue: newValue});
     }
@@ -94,8 +125,8 @@ class TrackersConfig extends React.Component{
 	/** 
      * View Tabs layout of all trackers
      */
-	viewTabs(){
-		//console.log("TrackersConfig - viewTabs:", this.state.trackers); 
+	viewAllTrackers(){
+		//console.log("TrackersConfig - viewAllTrackers:", this.state.trackers); 
 
 		return(
 			<div>
@@ -104,6 +135,9 @@ class TrackersConfig extends React.Component{
                         float: "right",
                         align: "right",
                     }}
+                    onClick={ ()=>{
+                        this.setState({componentToShow: "newTracker"})
+                    } }
                 >
                     Add New Tracker
                 </Button>
@@ -148,7 +182,7 @@ class TrackersConfig extends React.Component{
                             }
                             </div>
                         </React.Fragment>
-                    ))
+                    ) )
                 }
 
 			</div>
@@ -176,7 +210,7 @@ class TrackersConfig extends React.Component{
                                 //trackerColumnDataTypes[column.type]
                                 <Select
                                     value={ column.type } 
-									//onChange={ e => this.setState({ attributeValue: e.target.value }) }
+									onChange={ e => this.setState({ attributeValue: e.target.value }) }
 									fullWidth={false}
 								>
 									{
@@ -215,12 +249,29 @@ class TrackersConfig extends React.Component{
                             
                             </TableCell>
 
+                            {/* <TableCell>
+                                <Button
+                                    disabled={ 
+                                        (this.state.rowEdited[column.name]) ?
+                                        false : true
+                                    }
+                                >
+                                    Save
+                                </Button>
+                            </TableCell> */}
+
                         </TableRow>                
                     ) )
                 }
                 </TableBody>
             </Table>
         );
+    }
+
+    markRowEdited = (columnName) => {
+        let rowEditedData = { ...this.state.rowEdited };
+        rowEditedData[columnName] = true
+        this.setState({ rowEdited: rowEditedData });
     }
 
     
