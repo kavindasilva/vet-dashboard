@@ -15,6 +15,8 @@ const TrackConfigReducer = (state, action) => {
     
     let trackerIndex=null
     let columnIndex=null
+    let ruleArr=null
+    let ruleIndex=null;
     let temp=null
 
     switch (action.type) {
@@ -26,6 +28,43 @@ const TrackConfigReducer = (state, action) => {
             console.log("TrackConfigReducer GET_CONFIG_FROM_DB: ", newState);
 
             return newState;
+
+        
+        case "UPDATE_CONFIG_RULE_UP":
+            //return newState;
+            trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;
+            temp=(trackerIndex<0)?( console.log("trackerConfig trackerIndex err") ):"";
+
+            columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
+            temp=(columnIndex<0)?( console.log("trackerConfig columnIndex err") ):"";
+
+            //  [arr[0], arr[1]] = [arr[1], arr[0]];
+            ruleArr = newState.configData[trackerIndex].columns[columnIndex].rules;
+            ruleIndex = action.payload.ruleIndex;
+
+            [ruleArr[ruleIndex-1], ruleArr[ruleIndex]] = [ruleArr[ruleIndex], ruleArr[ruleIndex-1]];
+
+            newState.configData[trackerIndex].columns[columnIndex].rules = ruleArr;
+            return newState;
+
+
+        case "UPDATE_CONFIG_RULE_DOWN":
+            //return newState;
+            trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;
+            temp=(trackerIndex<0)?( console.log("trackerConfig trackerIndex err") ):"";
+
+            columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
+            temp=(columnIndex<0)?( console.log("trackerConfig columnIndex err") ):"";
+
+            //  [arr[0], arr[1]] = [arr[1], arr[0]];
+            ruleArr = newState.configData[trackerIndex].columns[columnIndex].rules;
+            ruleIndex = action.payload.ruleIndex;
+
+            [ruleArr[ruleIndex+1], ruleArr[ruleIndex]] = [ruleArr[ruleIndex], ruleArr[ruleIndex+1]];
+
+            newState.configData[trackerIndex].columns[columnIndex].rules = ruleArr;
+            return newState;
+
 
         case "UPDATE_CONFIG_ATTR":
             //return;
@@ -101,6 +140,19 @@ function getColumnIndex(stt, columnName){
  * userId: user id to find index
  */
 function getUserPermissionIndex(stt, userId){
+    return stt.permissions.findIndex( user => (
+        user.userId === userId
+    ) );
+}
+
+/**
+ * //returns particular tracker's rule's, user index of the permissions
+ * 
+ * stt: tracker column object
+ * 
+ * userId: user id to find index
+ */
+function getRulesIndex(stt, userId){
     return stt.permissions.findIndex( user => (
         user.userId === userId
     ) );

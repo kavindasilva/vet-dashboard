@@ -32,32 +32,9 @@ const colouringRuleColors = [
 
 class TrackersRulesConfig extends React.Component{
 
-    styleMatUI={
-		closeButton: {
-			cursor:'pointer', 
-			float:'right', 
-			marginTop: '5px', 
-			width: '20px',
-			align: 'right'
-		},
-
-		titleBarThin:{
-			padding: "0 24 0 24"
-		},
-
-		titleBarPrimary:{
-			color:"white", "backgroundColor":"#3c4fb0"
-		}
-    }
-    styleTD={
-		width: "100%" ,
-		minHeight: "18px",
-		color: "#111111"
-	}
-    
     state ={
-        ticketId: this.props.ticketId,
-        columnName: this.props.columnName,
+        trackerId: this.props.tracker_id,
+        columnName: this.props.column_name,
         isOpen: this.props.show,
         attributeValue: this.props.value,
     }
@@ -72,16 +49,20 @@ class TrackersRulesConfig extends React.Component{
                     {
                         ( this.props.columnRules.length > 0 )?
                             (
-                                this.props.columnRules.map( rule => (
+                                this.props.columnRules.map( (rule, i) => (
                                     <TableRow >
                                         
                                         {/* buttons */}
                                         <TableCell m={0} p={0} size="small">
                                             <IconButton aria-label="Delete" size="small">
-                                                <ArrowUpwardIcon fontSize="inherit" />
+                                                <ArrowUpwardIcon fontSize="inherit"
+                                                    onClick={ () => this.swapRulePosition("up", i) }
+                                                />
                                             </IconButton>
                                             <IconButton aria-label="Delete" size="small">
-                                                <ArrowDownwardIcon fontSize="inherit" />
+                                                <ArrowDownwardIcon fontSize="inherit" 
+                                                    onClick={ () => this.swapRulePosition("down", i) }
+                                                />
                                             </IconButton>
                                         </TableCell>
 
@@ -124,6 +105,40 @@ class TrackersRulesConfig extends React.Component{
             </React.Fragment>
   
         )
+    }
+
+    swapRulePosition = ( direction, index ) => {
+        if(direction==="up"){
+            if(index===0)
+                return null;
+
+            console.log("going up");
+            rootStore.dispatch({
+                type: 'UPDATE_CONFIG_RULE_UP',
+                payload: {
+                    trackerId: this.state.trackerId,
+                    columnName: this.state.columnName,
+                    
+                    ruleIndex: index,
+                }
+            });
+        }
+        else if(direction==="down"){
+            if(index === this.props.columnRules.length-1)
+                return null;
+            
+            console.log("going down");
+            rootStore.dispatch({
+                type: 'UPDATE_CONFIG_RULE_DOWN',
+                payload: {
+                    trackerId: this.state.trackerId,
+                    columnName: this.state.columnName,
+                    
+                    ruleIndex: index,
+                }
+            });
+
+        }
     }
 
     openPopUp = () => {
