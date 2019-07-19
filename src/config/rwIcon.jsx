@@ -21,8 +21,8 @@ class RWIcon extends React.Component{
                 size="small"
                 style={
                     (this.state.rwValue)?
-                        { "color":"green" }
-                        :{ "text-decoration": "line-through", "color":"red" }
+                        { "backgroundColor":"green" }
+                        :{ "text-decoration": "line-through", "backgroundColor":"red" }
                 }
                 onClick = { () => { 
                     this.setState({rwValue: !this.state.rwValue}, function(){
@@ -45,8 +45,6 @@ class RWIcon extends React.Component{
                 
                 userId: this.state.userId,
                 
-                // readValue: this.state.read,
-                // writeValue: this.state.write,
                 rwType: this.state.rwType,
                 rwValue: this.state.rwValue,
 			}

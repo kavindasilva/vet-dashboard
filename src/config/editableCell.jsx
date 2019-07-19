@@ -63,19 +63,9 @@ class EditableCell extends React.Component{
      */
     sendTextBox(){
         return(
-            // <input type="text" value={this.state.value} 
-            //     onChange={ (e)=>{ this.setState({value: e.target.value}) } }
-            //     onBlur={ ()=>{ this.handleAccept() } }
-            //     ></input>
             <TextField
                 value={ this.state.value }
                 onChange={ (e)=>{ this.setState({value: e.target.value}) } }
-                // onKeyDown={ (e)=>{
-                //     if(e.keyCode===27)
-                //         this.handleReject();
-                //     else if(e.keyCode===13)
-                //         this.handleAccept();
-                // } }
                 onBlur={ ()=>{ this.handleAccept() } }
             />
         )

@@ -53,31 +53,6 @@ class ColumnDataCell extends React.Component{
         )
     }
 
-    viewCell(){
-        switch(this.state.componentState){
-            case "read":
-                return this.sendReadOnly();
-            case "edit":
-                return this.sendTextBox();
-
-            default:
-                return this.sendTextBox();
-        }
-    }
-
-    /** on Enter is pressed */
-    handleAccept = () => {
-        this.dispatchColumnNameUpdate();
-        this.setState({componentState:"read"})
-    }
-
-    handleReject= () => {
-        this.setState({
-            value: this.props.value,
-            componentState:"read"
-        })
-    }
-
     dispatchColumnNameUpdate = ( ) => {
         //return;
         rootStore.dispatch({
@@ -92,44 +67,6 @@ class ColumnDataCell extends React.Component{
 		});
     }
 
-    /**
-     * return editable table cell
-     */
-    sendTextBox(){
-        return(
-            <TableCell style={{color:"red"}}
-                //onBlur={ ()=>{console.log("blur")} }
-                //on ={ ()=>{console.log("blur")} }
-                //onClick={ ()=> { this.setState({componentState: ""}) } }
-            >
-                <TextField
-                    value={ this.state.value }
-                    onChange={ (e)=>{ this.setState({value: e.target.value}) } }
-                    onKeyDown={ (e)=>{
-                        if(e.keyCode===27)
-                            this.handleReject();
-                        else if(e.keyCode===13)
-                            this.handleAccept();
-                    } }
-                />           
-            </TableCell>
-        )
-    }
-
-    /**
-     * print read only table cell
-     */
-    sendReadOnly(){
-        return(
-            <TableCell style={{color:"green"}}
-                onClick={ ()=> { this.setState({componentState: ""}) } }            
-            >
-            {
-                this.state.value
-            }
-            </TableCell>
-        )
-    }
 }
 
 

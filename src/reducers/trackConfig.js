@@ -17,6 +17,7 @@ const TrackConfigReducer = (state, action) => {
     let columnIndex=null
     let ruleArr=null
     let ruleIndex=null;
+    let precedenceIndex=null;
     let temp=null;
 
     switch (action.type) {
@@ -27,6 +28,34 @@ const TrackConfigReducer = (state, action) => {
             }
             console.log("TrackConfigReducer GET_CONFIG_FROM_DB: ", newState);
 
+            return newState;
+
+        
+        case "UPDATE_CONFIG_RULE_CONDITION":
+                trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;
+                temp=(trackerIndex<0)?( console.log("trackerConfig trackerIndex err") ):"";
+    
+                columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
+                temp=(columnIndex<0)?( console.log("trackerConfig columnIndex err") ):"";
+    
+                precedenceIndex  =  getRulesIndex( newState.configData[trackerIndex].columns[columnIndex], action.payload.precedenceId); //precedenceIndex=-1;
+                temp=(precedenceIndex<0)?( console.log("trackerConfig precedenceIndex err") ):"";
+    
+                newState.configData[trackerIndex].columns[columnIndex].rules[precedenceIndex]["conditions"] = action.payload.precedenceConditions;
+                return newState;
+
+
+        case "UPDATE_CONFIG_RULE_COLOR":
+            trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;
+            temp=(trackerIndex<0)?( console.log("trackerConfig trackerIndex err") ):"";
+
+            columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
+            temp=(columnIndex<0)?( console.log("trackerConfig columnIndex err") ):"";
+
+            precedenceIndex  =  getRulesIndex( newState.configData[trackerIndex].columns[columnIndex], action.payload.precedenceId); //precedenceIndex=-1;
+            temp=(precedenceIndex<0)?( console.log("trackerConfig precedenceIndex err") ):"";
+
+            newState.configData[trackerIndex].columns[columnIndex].rules[precedenceIndex]["bgcolor"] = action.payload.precedenceColor;
             return newState;
 
         
@@ -148,15 +177,15 @@ function getUserPermissionIndex(stt, userId){
 }
 
 /**
- * //returns particular tracker's rule's, user index of the permissions
+ * //returns particular tracker's rule's, precedence index of the permissions
  * 
  * stt: tracker column object
  * 
  * userId: user id to find index
  */
-function getRulesIndex(stt, userId){
-    return stt.permissions.findIndex( user => (
-        user.userId === userId
+function getRulesIndex(stt, precedenceId){
+    return stt.rules.findIndex( prec => (
+        prec.precedence === precedenceId
     ) );
 }
 

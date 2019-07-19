@@ -25,11 +25,11 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
 /** to be imported from costants */
 const colouringRuleColors = {
-    "green":  "Green",
+    "green": "Green",
     "amber": "Amber",
     "red": "Red",
-    "blue":  "Blue",
-    "grey":  "Grey",
+    "blue": "Blue",
+    "grey": "Grey",
 }
 
 class TrackersRulesConfig extends React.Component{
@@ -76,30 +76,15 @@ class TrackersRulesConfig extends React.Component{
                                             "p-"+rule.precedence
                                         }
                                         {
-                                            //trackerColumnDataTypes[column.type]
                                             <ColumnDataCell
                                                 tracker_id={ this.state.trackerId }
                                                 column_name={ this.state.columnName }
 
-                                                //value={ rule.bgcolor }
+                                                value={ rule.bgcolor }
                                                 attribute="type"
                                                 predefinedData={ colouringRuleColors }
                                             />
                                         }
-
-                                        {/* {
-                                            <Select value={ rule.bgcolor } 
-                                                //onChange={ e => this.setState({ attributeValue: e.target.value }) }
-                                                fullWidth={true}
-                                            >
-                                                {
-                                                    colouringRuleColors.map( item =>
-                                                            <MenuItem key={ item.value } value={ item.value } >{ item.label }</MenuItem>
-                                                        )
-                                                }
-                                            </Select>
-                                        } */}
-                                        
                                         </TableCell >
                                         
                                         {/* conditions */}
