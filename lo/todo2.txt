@@ -34,6 +34,7 @@ https://stackoverflow.com/questions/41486296/convert-object-to-array-in-javascri
 
 --jul 19
 https://stackoverflow.com/questions/29303456/reactjs-onclick-change-element
+https://stackoverflow.com/questions/37440408/how-to-detect-esc-key-press-in-react-and-how-to-handle-it
 
 
 
