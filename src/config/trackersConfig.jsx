@@ -33,6 +33,7 @@ import EditableCell from "../config/editableCell"
 import TrackersPemissionsConfig from "../config/trackersPermissionsConfig"
 import TrackerRulesConfig from "../config/trackersRulesConfig"
 import NewTracker from "../config/newTracker"
+import ColumnDataCell from "../config/columnDataCell"
 
 import { trackerColumnDataTypes } from "../common/constants"
 
@@ -70,8 +71,13 @@ class TrackersConfig extends React.Component{
         ...this.props.metaData,
         ...this.props.trackers,
 
-        /** current viewing tracker */      tabValue:0,
-        /** component to show */            componentToShow:"allTrackers",
+        /** current viewing tracker */      
+        tabValue:0,
+
+        /** component to show */            
+        componentToShow:"allTrackers",
+
+        attributeValue: "",
 
         //columnName: this.props.
         rowEdited:[],
@@ -210,7 +216,8 @@ class TrackersConfig extends React.Component{
 
                                 tracker_id={ tracker.tracker_id }
                                 column_name={ column.name }
-                                label={column.label+"L"}
+                                value={column.label+"L"}
+                                attribute="label"
                             > 
                                 {column.label}
                             </EditableCell>
@@ -218,17 +225,13 @@ class TrackersConfig extends React.Component{
                             <TableCell m={0} p={0} size="small"> 
                             {
                                 //trackerColumnDataTypes[column.type]
-                                <Select
-                                    value={ column.type } 
-									onChange={ e => this.setState({ attributeValue: e.target.value }) }
-									fullWidth={false}
-								>
-									{
-										Object.keys(trackerColumnDataTypes).map( item =>
-												<MenuItem key={ item } value={ item } >{ trackerColumnDataTypes[item] }</MenuItem>
-											)
-									}
-								</Select>
+                                <ColumnDataCell
+                                    tracker_id={ tracker.tracker_id }
+                                    column_name={ column.name }
+
+                                    value={column.type}
+                                    attribute="type"
+                                />
                             }
                             </TableCell>
                             

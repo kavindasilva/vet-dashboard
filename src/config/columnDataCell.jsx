@@ -3,20 +3,51 @@ import React, { Component } from "react";
 
 import { connect } from "react-redux";
 import { rootStore } from "../stores/mainStore";
-import { TableCell, TextField } from "@material-ui/core";
+import { TableCell, TextField, Select, MenuItem } from "@material-ui/core";
 
-class EditableCell extends React.Component{
+import { trackerColumnDataTypes } from "../common/constants"
+
+
+class ColumnDataCell extends React.Component{
     state= {
         componentState: "read",
 
-        value: this.props.value,
+        attributeValue: this.props.value,
+        attributeName: this.props.attribute,
 
         trackerId: this.props.tracker_id,
         columnName: this.props.column_name,
     }
 
     render(){
-        return this.viewCell();
+        return(
+            <Select
+                value={ this.state.attributeValue } 
+                onChange={
+                    e => {
+                        this.setState({attributeValue: e.target.value}, function(){
+                            rootStore.dispatch({
+                                type: 'UPDATE_CONFIG_ATTR',
+                                payload: {
+                                    trackerId: this.state.trackerId,
+                                    columnName: this.state.columnName,
+                                    
+                                    value: parseInt(this.state.attributeValue),
+                                    attribute: this.state.attributeName,
+                                }
+                            })
+                        })
+                    }
+                }
+                fullWidth={false}
+            >
+                {
+                    Object.keys(trackerColumnDataTypes).map( item =>
+                            <MenuItem key={ item } value={ item } >{ trackerColumnDataTypes[item] }</MenuItem>
+                        )
+                }
+            </Select>
+        )
     }
 
     viewCell(){
@@ -104,7 +135,7 @@ const mapStateToProps = (state, props) => {
     return {};
 }
 
-export default connect(mapStateToProps)(EditableCell);
+export default connect(mapStateToProps)(ColumnDataCell);
 
 /**
  * js onKeyDown codes

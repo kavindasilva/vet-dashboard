@@ -27,7 +27,7 @@ const TrackConfigReducer = (state, action) => {
 
             return newState;
 
-        case "UPDATE_CONFIG_LABEL":
+        case "UPDATE_CONFIG_ATTR":
             //return;
             trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;
             temp=(trackerIndex<0)?( console.log("trackerConfig trackerIndex err") ):"";
@@ -35,9 +35,9 @@ const TrackConfigReducer = (state, action) => {
             columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
             temp=(columnIndex<0)?( console.log("trackerConfig columnIndex err") ):"";
 
-            newState.configData[trackerIndex].columns[columnIndex]["label"] = action.payload.value;
+            newState.configData[trackerIndex].columns[columnIndex][action.payload.attribute] = action.payload.value;
             
-            console.log("TrackConfigReducer UPDATE_CONFIG_LABEL: ", newState);
+            console.log("TrackConfigReducer UPDATE_CONFIG_ATTR: ", newState);
             return newState;
         
 
