@@ -28,6 +28,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Tree from "material-ui-tree";
 import getNodeDataByPath from "material-ui-tree/lib/util";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
+import EditableCell from "../config/editableCell"
 
 import TrackersPemissionsConfig from "../config/trackersPermissionsConfig"
 import TrackerRulesConfig from "../config/trackersRulesConfig"
@@ -205,6 +206,7 @@ class TrackersConfig extends React.Component{
                     columns.map( column =>(
                         <TableRow>
                             <TableCell m={0} p={0} size="small"> {column.label} </TableCell>
+                            
                             <TableCell m={0} p={0} size="small"> 
                             {
                                 //trackerColumnDataTypes[column.type]

@@ -55,7 +55,9 @@ class TrackersPemissionsConfig extends React.Component{
                             :{ "text-decoration": "line-through", "color":"red" }
                     }
                     onClick = { () => { 
-                        this.setState({read: !this.state.read});
+                        this.setState({read: !this.state.read}, function(){
+                            this.dispatchPermissionsUpdate()
+                        });
                     } }
                 >
                     R
@@ -83,6 +85,7 @@ class TrackersPemissionsConfig extends React.Component{
     }
 
     dispatchPermissionsUpdate = ( ) => {
+        //return;
         rootStore.dispatch({
 			type: 'UPDATE_CONFIG_USER_PERMISSIONS',
 			payload: {

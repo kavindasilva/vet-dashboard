@@ -32,4 +32,8 @@ https://stackoverflow.com/questions/22197678/how-to-connect-multiple-database-in
 https://stackoverflow.com/questions/17575239/is-it-allowed-to-set-return-to-json-in-documentation
 https://stackoverflow.com/questions/41486296/convert-object-to-array-in-javascript-react?rq=1
 
+--jul 19
+https://stackoverflow.com/questions/29303456/reactjs-onclick-change-element
+
+
 
