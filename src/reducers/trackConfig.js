@@ -17,7 +17,7 @@ const TrackConfigReducer = (state, action) => {
     let columnIndex=null
     let ruleArr=null
     let ruleIndex=null;
-    let temp=null
+    let temp=null;
 
     switch (action.type) {
         case 'GET_CONFIG_FROM_DB':
@@ -30,7 +30,7 @@ const TrackConfigReducer = (state, action) => {
             return newState;
 
         
-        case "UPDATE_CONFIG_RULE_UP":
+        case "UPDATE_CONFIG_RULE_UP": //could be combined with rule-down
             //return newState;
             trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;
             temp=(trackerIndex<0)?( console.log("trackerConfig trackerIndex err") ):"";

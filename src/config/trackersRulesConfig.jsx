@@ -54,15 +54,17 @@ class TrackersRulesConfig extends React.Component{
                                         
                                         {/* buttons */}
                                         <TableCell m={0} p={0} size="small">
-                                            <IconButton aria-label="Delete" size="small">
-                                                <ArrowUpwardIcon fontSize="inherit"
-                                                    onClick={ () => this.swapRulePosition("up", i) }
-                                                />
+                                            <IconButton 
+                                                aria-label="Delete" size="small"
+                                                onClick={ () => this.swapRulePosition("up", i) }
+                                            >
+                                                <ArrowUpwardIcon fontSize="inherit" />
                                             </IconButton>
-                                            <IconButton aria-label="Delete" size="small">
-                                                <ArrowDownwardIcon fontSize="inherit" 
-                                                    onClick={ () => this.swapRulePosition("down", i) }
-                                                />
+                                            <IconButton 
+                                                aria-label="Delete" size="small"
+                                                onClick={ () => this.swapRulePosition("down", i) }
+                                            >
+                                                <ArrowDownwardIcon fontSize="inherit"  />
                                             </IconButton>
                                         </TableCell>
 

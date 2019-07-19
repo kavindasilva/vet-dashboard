@@ -100,6 +100,7 @@ class TrackersConfig extends React.Component{
 		)
     }
 
+    /** renders the desired component */
     showComponent = () => {
         switch(this.state.componentToShow){
             case "allTrackers":
@@ -137,17 +138,49 @@ class TrackersConfig extends React.Component{
 
 		return(
 			<div>
-                <Button 
-                    style={{
-                        float: "right",
-                        align: "right",
-                    }}
-                    onClick={ ()=>{
-                        this.setState({componentToShow: "newTracker"})
-                    } }
-                >
-                    Add New Tracker
-                </Button>
+                <div>
+                    <Button 
+                        style={{
+                            float: "right",
+                            align: "right",
+                        }}
+                        onClick={ ()=>{
+                            this.setState({componentToShow: "newTracker"})
+                        } }
+                    >
+                        Add New Tracker
+                    </Button>
+                <hr/>
+
+                    <Button 
+                        style={{
+                            float: "right",
+                            align: "right",
+                        }}
+                        onClick={ ()=>{
+                            this.setState({componentToShow: "newTracker"})
+                        } }
+                    >
+                        Save Trackers
+                    </Button>
+                    <Button 
+                        style={{
+                            float: "right",
+                            align: "right",
+                        }}
+                        onClick={ ()=>{
+                            this.setState({ trackersConfigData: null }, ()=>{
+                                this.getTrackersConfig();
+                            })
+                            
+                        } }
+                    >
+                        Cancel
+                    </Button>
+                </div>
+                
+
+
 				<AppBar position="static" color="default">
                     <Tabs
                         value={this.state.tabValue}
@@ -286,37 +319,6 @@ class TrackersConfig extends React.Component{
         rowEditedData[columnName] = true
         this.setState({ rowEdited: rowEditedData });
     }
-
-    
-    showColumns2 = (columns) => {
-        return columns.map( column =>(
-            <div>
-                Name: { column.name } -->
-                Label: { column.label }
-                
-                <Tree
-                    title="Material UI Tree"
-                    data={ column.permissions }
-                    labelKey="path"
-                    valueKey="sha"
-                    childrenKey="tree"
-                    foldIcon={<ArrowDropUpIcon />}
-                    unfoldIcon={<ArrowDropUpIcon />}
-                    loadMoreIcon={<ArrowDropUpIcon />}
-                    //renderLabel={renderLabel}
-                    renderLoadMoreText={(page, pageSize, total) =>
-                        `Loaded: ${(page + 1) *
-                        pageSize} / Total: ${total}. Click here to load more...`
-                    }
-                    pageSize={10}
-                    actionsAlignRight={false}
-                    // getActionsData={getActionsData}
-                    // requestChildrenData={requestChildrenData}
-                />
-            </div> 
-        ) )
-    }
-
     
 
     getTrackersConfig(){
@@ -332,7 +334,11 @@ class TrackersConfig extends React.Component{
                         }
                     });
                 });
+                //this.setState({trackersConfigData:null});
             }
+        )
+        .then(
+            this.setState({trackersConfigData:null})
         )
     }
 
@@ -340,7 +346,7 @@ class TrackersConfig extends React.Component{
 }
 
 const mapStateToProps = state => {
-	console.log('trackers.jsx-mapStateToProps', state);
+	console.log('trackerConfig.jsx-mapStateToProps', state);
 	return {
         metaData: state.MetaReducer.metaData,
         trackers: state.TrackConfigReducer.configData,
