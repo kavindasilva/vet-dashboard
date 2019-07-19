@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import rootReducer from "../reducers/index";
+import { rootStore } from "../stores/mainStore";
 import { TableCell, TextField } from "@material-ui/core";
 
 class EditableCell extends React.Component{
@@ -42,6 +42,21 @@ class EditableCell extends React.Component{
             label: this.props.label,
             componentState:"read"
         })
+    }
+
+    dispatchColumnNameUpdate = ( ) => {
+        //return;
+        rootStore.dispatch({
+			type: 'UPDATE_CONFIG_USER_PERMISSIONS',
+			payload: {
+				trackerId: this.state.trackerId,
+                columnName: this.state.columnName,
+                
+                userId: this.state.userId,
+				readValue: this.state.read,
+				writeValue: this.state.write,
+			}
+		});
     }
 
     /**
