@@ -244,7 +244,16 @@ class TrackersConfig extends React.Component{
                 {
                     columns.map( column =>(
                         <TableRow>
-                            <EditableCell 
+                            <TableCell m={0} p={0} size="small">
+                                <EditableCell 
+                                    tracker_id={ tracker.tracker_id }
+                                    column_name={ column.name }
+                                    value={column.label}
+                                    attribute="label"
+                                >
+                                </EditableCell>
+                            </TableCell>
+                            {/* <EditableCell 
                                 m={0} p={0} size="small"
 
                                 tracker_id={ tracker.tracker_id }
@@ -253,7 +262,7 @@ class TrackersConfig extends React.Component{
                                 attribute="label"
                             > 
                                 {column.label}
-                            </EditableCell>
+                            </EditableCell> */}
                             
                             <TableCell m={0} p={0} size="small"> 
                             {
@@ -264,6 +273,8 @@ class TrackersConfig extends React.Component{
 
                                     value={column.type}
                                     attribute="type"
+                                    predefinedData={ trackerColumnDataTypes }
+
                                 />
                             }
                             </TableCell>

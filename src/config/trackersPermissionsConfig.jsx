@@ -19,6 +19,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead, FormControlLabel, IconButton } from "@material-ui/core";
 
+import RwIcon from "../config/rwIcon"
+
 import { spacing } from '@material-ui/system';
 
 //class TrackersPemissionsConfig extends TrackerConfigCell{    
@@ -28,7 +30,7 @@ class TrackersPemissionsConfig extends React.Component{
         userId: this.props.user_id,
         columnName: this.props.column_name,
 
-        read: true,
+        read: false,
         write: true,
     }
 
@@ -47,56 +49,31 @@ class TrackersPemissionsConfig extends React.Component{
                 }
                 </span>
                     
-                <IconButton
-                    size="small"
-                    style={
-                        (this.state.read)?
-                            { "color":"green" }
-                            :{ "text-decoration": "line-through", "color":"red" }
-                    }
-                    onClick = { () => { 
-                        this.setState({read: !this.state.read}, function(){
-                            this.dispatchPermissionsUpdate()
-                        });
-                    } }
-                >
-                    R
-                </IconButton>
+                <RwIcon
+                    trackerId={ this.state.trackerId }
+                    columnName={ this.state.columnName }
 
-                <IconButton
-                    size="small"
-                    style={ 
-                        (this.state.write)?
-                            { "color":"green" }
-                            :{ "text-decoration": "line-through", "color":"red" }
-                    }
-                    onClick = { () => { 
-                        this.setState({write: !this.state.write}, function(){
-                            this.dispatchPermissionsUpdate()
-                        });
-                        ;
-                    } }
+                    userId={ this.state.userId }
+                    rwType={ "read" }
+                    rwValue={ this.props.columnPermissions.read }
+                    label={"R"}
                 >
-                    W
-                </IconButton>
+                </RwIcon>
+
+                <RwIcon
+                    trackerId={ this.state.trackerId }
+                    columnName={ this.state.columnName }
+
+                    userId={ this.state.userId }
+                    rwType={ "write" }
+                    rwValue={ this.props.columnPermissions.write }
+                    label={"W"}
+                >
+                </RwIcon>
+
             </React.Fragment>
   
         )
-    }
-
-    dispatchPermissionsUpdate = ( ) => {
-        //return;
-        rootStore.dispatch({
-			type: 'UPDATE_CONFIG_USER_PERMISSIONS',
-			payload: {
-				trackerId: this.state.trackerId,
-                columnName: this.state.columnName,
-                
-                userId: this.state.userId,
-				readValue: this.state.read,
-				writeValue: this.state.write,
-			}
-		});
     }
 
     componentDidMount(){

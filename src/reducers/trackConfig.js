@@ -92,8 +92,10 @@ const TrackConfigReducer = (state, action) => {
             let userPermitIndex  = getUserPermissionIndex( newState.configData[trackerIndex].columns[columnIndex], action.payload.userId); //userPermitIndex=-1;
             temp=(userPermitIndex<0)?( console.log("trackerConfig userPermitIndex err") ):"";
 
-            newState.configData[trackerIndex].columns[columnIndex].permissions[userPermitIndex]["read"]=action.payload.readValue;
-            newState.configData[trackerIndex].columns[columnIndex].permissions[userPermitIndex]["write"]=action.payload.writeValue;
+            if(action.payload.rwType==="read")
+                newState.configData[trackerIndex].columns[columnIndex].permissions[userPermitIndex]["read"]=action.payload.rwValue;
+            else if(action.payload.rwType==="write")
+                newState.configData[trackerIndex].columns[columnIndex].permissions[userPermitIndex]["write"]=action.payload.rwValue;
 
 
             console.log("TrackConfigReducer UPDATE_CONFIG_USER_PERMISSIONS: ", newState);

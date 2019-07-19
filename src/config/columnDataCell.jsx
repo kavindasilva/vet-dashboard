@@ -17,6 +17,9 @@ class ColumnDataCell extends React.Component{
 
         trackerId: this.props.tracker_id,
         columnName: this.props.column_name,
+
+        //selectListData: trackerColumnDataTypes,
+        selectListData: this.props.predefinedData,
     }
 
     render(){
@@ -42,8 +45,8 @@ class ColumnDataCell extends React.Component{
                 fullWidth={false}
             >
                 {
-                    Object.keys(trackerColumnDataTypes).map( item =>
-                            <MenuItem key={ item } value={ item } >{ trackerColumnDataTypes[item] }</MenuItem>
+                    Object.keys(this.state.selectListData).map( item =>
+                            <MenuItem key={ item } value={ item } >{ this.state.selectListData[item] }</MenuItem>
                         )
                 }
             </Select>

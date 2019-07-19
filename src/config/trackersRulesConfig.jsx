@@ -18,17 +18,19 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead, TextField, IconButton, MenuItem, Select } from "@material-ui/core";
 
+import ColumnDataCell from "../config/columnDataCell"
+
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
 /** to be imported from costants */
-const colouringRuleColors = [
-    { value: "green", label: "Green" },
-    { value: "amber", label: "Amber" },
-    { value: "red", label: "Red" },
-    { value: "blue", label: "Blue" },
-    { value: "grey", label: "Grey" },
-]
+const colouringRuleColors = {
+    "green":  "Green",
+    "amber": "Amber",
+    "red": "Red",
+    "blue":  "Blue",
+    "grey":  "Grey",
+}
 
 class TrackersRulesConfig extends React.Component{
 
@@ -74,6 +76,18 @@ class TrackersRulesConfig extends React.Component{
                                             "p-"+rule.precedence
                                         }
                                         {
+                                            //trackerColumnDataTypes[column.type]
+                                            <ColumnDataCell
+                                                tracker_id={ this.state.trackerId }
+                                                column_name={ this.state.columnName }
+
+                                                //value={ rule.bgcolor }
+                                                attribute="type"
+                                                predefinedData={ colouringRuleColors }
+                                            />
+                                        }
+
+                                        {/* {
                                             <Select value={ rule.bgcolor } 
                                                 //onChange={ e => this.setState({ attributeValue: e.target.value }) }
                                                 fullWidth={true}
@@ -84,7 +98,7 @@ class TrackersRulesConfig extends React.Component{
                                                         )
                                                 }
                                             </Select>
-                                        }
+                                        } */}
                                         
                                         </TableCell >
                                         
