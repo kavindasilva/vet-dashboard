@@ -8,11 +8,11 @@ import { TableCell, TextField } from "@material-ui/core";
 class EditableCell extends React.Component{
     state= {
         componentState: "read",
-        //value: this.props
 
         label: this.props.label,
-        tracker_id: this.props.tracker_id,
-        column_name: this.props.column_name,
+
+        trackerId: this.props.tracker_id,
+        columnName: this.props.column_name,
     }
 
     render(){
@@ -33,7 +33,7 @@ class EditableCell extends React.Component{
 
     /** on Enter is pressed */
     handleAccept = () => {
-        //update store
+        this.dispatchColumnNameUpdate();
         this.setState({componentState:"read"})
     }
 
@@ -47,14 +47,12 @@ class EditableCell extends React.Component{
     dispatchColumnNameUpdate = ( ) => {
         //return;
         rootStore.dispatch({
-			type: 'UPDATE_CONFIG_USER_PERMISSIONS',
+			type: 'UPDATE_CONFIG_LABEL',
 			payload: {
 				trackerId: this.state.trackerId,
                 columnName: this.state.columnName,
                 
-                userId: this.state.userId,
-				readValue: this.state.read,
-				writeValue: this.state.write,
+				value: this.state.label,
 			}
 		});
     }

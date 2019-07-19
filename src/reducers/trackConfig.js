@@ -13,6 +13,9 @@ const TrackConfigReducer = (state, action) => {
         state=null;
     newState = { ...state }
     
+    let trackerIndex=null
+    let columnIndex=null
+    let temp=null
 
     switch (action.type) {
         case 'GET_CONFIG_FROM_DB':
@@ -23,16 +26,28 @@ const TrackConfigReducer = (state, action) => {
             console.log("TrackConfigReducer GET_CONFIG_FROM_DB: ", newState);
 
             return newState;
+
+        case "UPDATE_CONFIG_LABEL":
+            //return;
+            trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;
+            temp=(trackerIndex<0)?( console.log("trackerConfig trackerIndex err") ):"";
+
+            columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
+            temp=(columnIndex<0)?( console.log("trackerConfig columnIndex err") ):"";
+
+            newState.configData[trackerIndex].columns[columnIndex]["label"] = action.payload.value;
+            
+            console.log("TrackConfigReducer UPDATE_CONFIG_LABEL: ", newState);
+            return newState;
         
 
         case "UPDATE_CONFIG_USER_PERMISSIONS":
-            newState = { ...state };
             //return state; // to check whether not working update
 
-            let trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;
-            let temp=(trackerIndex<0)?( console.log("trackerConfig trackerIndex err") ):"";
+            trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;
+            temp=(trackerIndex<0)?( console.log("trackerConfig trackerIndex err") ):"";
 
-            let columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
+            columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
             temp=(columnIndex<0)?( console.log("trackerConfig columnIndex err") ):"";
 
             let userPermitIndex  = getUserPermissionIndex( newState.configData[trackerIndex].columns[columnIndex], action.payload.userId); //userPermitIndex=-1;
