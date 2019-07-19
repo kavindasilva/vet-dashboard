@@ -316,23 +316,6 @@ class PopDialog extends Component {
 
 }
 
-function PaperComponent(props) {
-  return (
-    <Draggable>
-      <Paper {...props} />
-    </Draggable>
-  );
-}
-
-function PaperComponent0(props) {
-  return (
-    <Draggable>
-      <Paper {...props} />
-    </Draggable>
-  );
-}
-
-
 export default PopDialog;
 //export default withStyles(styles)(PopDialog);
 //export default withStyles()(PopDialog);

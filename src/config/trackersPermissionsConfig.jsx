@@ -1,5 +1,6 @@
 
 import React, { Component } from "react";
+import TrackerConfigCell from "../config/abstractTrackerConfigCell"
 
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
@@ -20,36 +21,12 @@ import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead, FormControl
 
 import { spacing } from '@material-ui/system';
 
-class TrackersPemissionsConfig extends React.Component{
-
-    styleMatUI={
-		closeButton: {
-			cursor:'pointer', 
-			float:'right', 
-			marginTop: '5px', 
-			width: '20px',
-			align: 'right'
-		},
-
-		titleBarThin:{
-			padding: "0 24 0 24"
-		},
-
-		titleBarPrimary:{
-			color:"white", "backgroundColor":"#3c4fb0"
-		}
-    }
-    styleTD={
-		width: "100%" ,
-		minHeight: "18px",
-		color: "#111111"
-	}
-    
+//class TrackersPemissionsConfig extends TrackerConfigCell{    
+class TrackersPemissionsConfig extends React.Component{    
     state ={
-        ticketId: this.props.ticketId,
-        columnName: this.props.columnName,
-        isOpen: this.props.show,
-        attributeValue: this.props.value,
+        trackerId: this.props.tracker_id,
+        userId: this.props.user_id,
+        columnName: this.props.column_name,
 
         read: true,
         write: true,
@@ -63,6 +40,7 @@ class TrackersPemissionsConfig extends React.Component{
                 <span >
                 { this.props.columnPermissions.userId } . 
                 { 
+                    /** match current user with all_user_data */
                     Object.values(this.props.allUsers).find( allUser => (
                         allUser.user_id === this.props.columnPermissions.userId
                     ) ).email.toString()
@@ -91,7 +69,10 @@ class TrackersPemissionsConfig extends React.Component{
                             :{ "text-decoration": "line-through", "color":"red" }
                     }
                     onClick = { () => { 
-                        this.setState({write: !this.state.write});
+                        this.setState({write: !this.state.write}, function(){
+                            this.dispatchPermissionsUpdate()
+                        });
+                        ;
                     } }
                 >
                     W
@@ -101,14 +82,20 @@ class TrackersPemissionsConfig extends React.Component{
         )
     }
 
-    openPopUp = () => {
-		this.setState({ isOpen: true });
-	};
+    dispatchPermissionsUpdate = ( ) => {
+        rootStore.dispatch({
+			type: 'UPDATE_CONFIG_USER_PERMISSIONS',
+			payload: {
+				trackerId: this.state.trackerId,
+                columnName: this.state.columnName,
+                
+                userId: this.state.userId,
+				readValue: this.state.read,
+				writeValue: this.state.write,
+			}
+		});
+    }
 
-	closePopUp = () => {
-		this.setState({ isOpen: false });
-	};
-    
     componentDidMount(){
         //console.log("trackerUserConfig arr: :", this.props.allUsers );
         //console.log("trackerUserConfig mount: props:", this.props, "state:", this.state);
