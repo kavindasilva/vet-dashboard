@@ -55,7 +55,8 @@ const TrackConfigReducer = (state, action) => {
             precedenceIndex  =  getRulesIndex( newState.configData[trackerIndex].columns[columnIndex], action.payload.precedenceId); //precedenceIndex=-1;
             temp=(precedenceIndex<0)?( console.log("trackerConfig precedenceIndex err") ):"";
 
-            newState.configData[trackerIndex].columns[columnIndex].rules[precedenceIndex]["bgcolor"] = action.payload.precedenceColor;
+            //newState.configData[trackerIndex].columns[columnIndex].rules[precedenceIndex]["bgcolor"] = action.payload.precedenceColor;
+            newState.configData[trackerIndex].columns[columnIndex].rules[precedenceIndex][action.payload.attribute] = action.payload.precedenceColor;
             return newState;
 
         

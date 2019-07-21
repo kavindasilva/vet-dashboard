@@ -19,6 +19,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead, TextField, IconButton, MenuItem, Select } from "@material-ui/core";
 
 import ColumnDataCell from "../config/columnDataCell"
+import TrackerRulesColor from "../config/trackerRulesColor"
+import TrackerRulesCondition from "../config/TrackerRulesCondition"
+
 
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
@@ -76,12 +79,13 @@ class TrackersRulesConfig extends React.Component{
                                             "p-"+rule.precedence
                                         }
                                         {
-                                            <ColumnDataCell
+                                            <TrackerRulesColor
                                                 tracker_id={ this.state.trackerId }
                                                 column_name={ this.state.columnName }
+                                                precedence_id={ rule.precedence }
 
                                                 value={ rule.bgcolor }
-                                                attribute="type"
+                                                attribute="bgcolor"
                                                 predefinedData={ colouringRuleColors }
                                             />
                                         }
@@ -89,8 +93,13 @@ class TrackersRulesConfig extends React.Component{
                                         
                                         {/* conditions */}
                                         <TableCell m={0} p={0} size="small">
-                                            <TextField
-                                                value={ rule.conditions }
+                                            <TrackerRulesCondition
+                                                tracker_id={ this.state.trackerId }
+                                                column_name={ this.state.columnName }
+                                                precedence_id={ rule.precedence }
+
+                                                value={ rule.bgcolor }
+                                                attribute="conditions"
                                             />
                                         </TableCell>
                                     </TableRow>
