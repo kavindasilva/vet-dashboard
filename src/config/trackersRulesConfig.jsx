@@ -16,7 +16,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead, TextField, IconButton, MenuItem, Select } from "@material-ui/core";
+import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead, TextField, IconButton, MenuItem, Select, Collapse } from "@material-ui/core";
 
 import TrackerRulesColor from "../config/trackerRulesColor"
 import TrackerRulesCondition from "../config/TrackerRulesCondition"
@@ -43,6 +43,8 @@ class TrackersRulesConfig extends React.Component{
         attributeValue: this.props.value,
 
         columnRules: this.props.columnRules,
+
+        open: false,
     }
 
     render(){
@@ -50,70 +52,75 @@ class TrackersRulesConfig extends React.Component{
         //return(<div></div>);
         return(
             <React.Fragment>
-                <Table size="small">
-                    <TableBody>
-                    {
-                        ( this.props.columnRules.length > 0 )?
-                            (
-                                this.props.columnRules.map( (rule, i) => (
-                                    <TableRow >
-                                        
-                                        {/* buttons */}
-                                        <TableCell m={0} p={0} size="small">
-                                            <IconButton 
-                                                aria-label="Delete" size="small"
-                                                onClick={ () => this.swapRulePosition("up", i) }
-                                            >
-                                                <ArrowUpwardIcon fontSize="inherit" />
-                                            </IconButton>
-                                            <IconButton 
-                                                aria-label="Delete" size="small"
-                                                onClick={ () => this.swapRulePosition("down", i) }
-                                            >
-                                                <ArrowDownwardIcon fontSize="inherit"  />
-                                            </IconButton>
-                                        </TableCell>
+                <p onClick={ () => this.setState({open: !this.state.open}) } >
+                    { (this.state.open)? "Collapse":"Expand" }
+                </p>
+                <Collapse hidden={!this.state.open} in={this.state.open}>
+                    <Table size="small">
+                        <TableBody>
+                        {
+                            ( this.props.columnRules.length > 0 )?
+                                (
+                                    this.props.columnRules.map( (rule, i) => (
+                                        <TableRow >
+                                            
+                                            {/* buttons */}
+                                            <TableCell m={0} p={0} size="small">
+                                                <IconButton 
+                                                    aria-label="Delete" size="small"
+                                                    onClick={ () => this.swapRulePosition("up", i) }
+                                                >
+                                                    <ArrowUpwardIcon fontSize="inherit" />
+                                                </IconButton>
+                                                <IconButton 
+                                                    aria-label="Delete" size="small"
+                                                    onClick={ () => this.swapRulePosition("down", i) }
+                                                >
+                                                    <ArrowDownwardIcon fontSize="inherit"  />
+                                                </IconButton>
+                                            </TableCell>
 
 
-                                        {/* color */}
-                                        <TableCell m={0} p={0} size="small">
-                                        { 
-                                            "p-"+rule.precedence+"-"+rule.bgcolor
-                                        }
-                                        
-                                        <TrackerRulesColor
-                                            tracker_id={ this.state.trackerId }
-                                            column_name={ this.state.columnName }
-                                            precedence_id={ rule.precedence }
-
-                                            value={ rule.bgcolor }
-                                            attribute="bgcolor"
-                                            predefinedData={ colouringRuleColors }
-                                        />
-                                        
-                                        </TableCell >
-
-                                        
-                                        {/* conditions */}
-                                        <TableCell m={0} p={0} size="small">
-                                            <TrackerRulesCondition
+                                            {/* color */}
+                                            <TableCell m={0} p={0} size="small">
+                                            { 
+                                                "p-"+rule.precedence+"-"+rule.bgcolor
+                                            }
+                                            
+                                            <TrackerRulesColor
                                                 tracker_id={ this.state.trackerId }
                                                 column_name={ this.state.columnName }
                                                 precedence_id={ rule.precedence }
 
-                                                value={ rule.conditions }
-                                                attribute="conditions"
+                                                value={ rule.bgcolor }
+                                                attribute="bgcolor"
+                                                predefinedData={ colouringRuleColors }
                                             />
-                                        </TableCell>
-                                    </TableRow>
-                                ) )
-                            )
-                            :"no rules"
+                                            
+                                            </TableCell >
+
+                                            
+                                            {/* conditions */}
+                                            <TableCell m={0} p={0} size="small">
+                                                <TrackerRulesCondition
+                                                    tracker_id={ this.state.trackerId }
+                                                    column_name={ this.state.columnName }
+                                                    precedence_id={ rule.precedence }
+
+                                                    value={ rule.conditions }
+                                                    attribute="conditions"
+                                                />
+                                            </TableCell>
+                                        </TableRow>
+                                    ) )
+                                )
+                                :"no rules"
+                        
+                        }
+                        </TableBody>
+                    </Table>
                     
-                    }
-                    </TableBody>
-                </Table>
-                
+                </Collapse>
             
             </React.Fragment>
   

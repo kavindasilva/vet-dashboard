@@ -39,6 +39,7 @@ https://stackoverflow.com/questions/872310/javascript-swap-array-elements
 
 --jul 22
 https://stackoverflow.com/questions/32414308/updating-state-on-props-change-in-react-form
+https://stackoverflow.com/questions/49382004/expandable-table-in-react-material-ui
 
 
 

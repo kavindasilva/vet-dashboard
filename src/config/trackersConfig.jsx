@@ -38,7 +38,7 @@ import ColumnDataType from "../config/columnDataType"
 import { trackerColumnDataTypes } from "../common/constants"
 
 import trackersAPI from "../apicalls/trackersAPI";
-import { Table, TableHead, TableCell, TableBody, TableRow, MenuItem, Select } from '@material-ui/core';
+import { Table, TableHead, TableCell, TableBody, TableRow, MenuItem, Select, Collapse } from '@material-ui/core';
 
 const trackersAPIobj = new trackersAPI();
 
@@ -81,6 +81,7 @@ class TrackersConfig extends React.Component{
 
         //columnName: this.props.
         rowEdited:[],
+        rowCollapsed:[],
     }
 
 	componentDidMount(){
@@ -244,6 +245,7 @@ class TrackersConfig extends React.Component{
                 {
                     columns.map( column =>(
                         <TableRow>
+                            {/* label */}
                             <TableCell m={0} p={0} size="small">
                                 <EditableCell 
                                     tracker_id={ tracker.tracker_id }
@@ -253,17 +255,8 @@ class TrackersConfig extends React.Component{
                                 >
                                 </EditableCell>
                             </TableCell>
-                            {/* <EditableCell 
-                                m={0} p={0} size="small"
 
-                                tracker_id={ tracker.tracker_id }
-                                column_name={ column.name }
-                                value={column.label+"L"}
-                                attribute="label"
-                            > 
-                                {column.label}
-                            </EditableCell> */}
-                            
+                            {/* data type */}
                             <TableCell m={0} p={0} size="small"> 
                             {
                                 //trackerColumnDataTypes[column.type]
@@ -278,22 +271,38 @@ class TrackersConfig extends React.Component{
                                 />
                             }
                             </TableCell>
-                            
+
+                            {/* user persmissions */}                            
                             <TableCell m={0} p={0} size="small">
-                            {
-                                column.permissions.map( user => (
-                                    <React.Fragment>
-                                        <TrackersPemissionsConfig
-                                            tracker_id={ tracker.tracker_id }
-                                            column_name={ column.name }
-                                            user_id ={user.userId}
-                                        />
-                                        <br/>
-                                    </React.Fragment>
-                                ) )
-                                
-                            }
+                                <p onClick={ () => 
+                                    this.markRowCollapsed(
+                                        column.name,
+                                        this.state.rowCollapsed[column.name]
+                                    )
+                                } >
+                                    { 
+                                        (this.state.rowCollapsed[column.name])
+                                        ?"Collapse"
+                                        :"Expand"
+                                    }
+                                </p>
+                                <Collapse hidden={!this.state.rowCollapsed[column.name]} in={this.state.rowCollapsed[column.name]}>
+                                {
+                                    column.permissions.map( user => (
+                                        <React.Fragment>
+                                            <TrackersPemissionsConfig
+                                                tracker_id={ tracker.tracker_id }
+                                                column_name={ column.name }
+                                                user_id ={user.userId}
+                                            />
+                                            <br/>
+                                        </React.Fragment>
+                                    ) )
+                                    
+                                }
+                                </Collapse>
                             </TableCell>
+
 
                             <TableCell m={0} p={0} size="small">
                                 <TrackerRulesConfig
@@ -304,17 +313,6 @@ class TrackersConfig extends React.Component{
                             
                             </TableCell>
 
-                            {/* <TableCell>
-                                <Button
-                                    disabled={ 
-                                        (this.state.rowEdited[column.name]) ?
-                                        false : true
-                                    }
-                                >
-                                    Save
-                                </Button>
-                            </TableCell> */}
-
                         </TableRow>                
                     ) )
                 }
@@ -323,6 +321,18 @@ class TrackersConfig extends React.Component{
         );
     }
 
+    /**
+     * to check single row is collapsed/expaned.
+     */
+    markRowCollapsed = (columnName, collapsed) => {
+        let rowCollapsedData = { ...this.state.rowCollapsed };
+        rowCollapsedData[columnName] = !collapsed
+        this.setState({ rowCollapsed: rowCollapsedData });
+    }
+
+    /**
+     * to check single row is edited. // not used
+     */
     markRowEdited = (columnName) => {
         let rowEditedData = { ...this.state.rowEdited };
         rowEditedData[columnName] = true
@@ -330,6 +340,11 @@ class TrackersConfig extends React.Component{
     }
     
 
+    /**
+     * Retrieve tracker configuration information from API
+     * 
+     * Update store with new data
+     */
     getTrackersConfig(){
         trackersAPIobj.getTrackerConfig()
         .then(
