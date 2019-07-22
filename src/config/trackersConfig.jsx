@@ -4,18 +4,17 @@ import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
 import { rootStore } from "../stores/mainStore";
 
-import Avatar from '@material-ui/core/Avatar';
+import DateFnsUtils from "@date-io/date-fns";
+import {format} from "date-fns";
+
+import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
+
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-//import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container'
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -23,7 +22,6 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
 import { withStyles } from '@material-ui/core/styles';
-//import { styles } from '@material-ui/pickers/DatePicker/components/Calendar';
 
 import Tree from "material-ui-tree";
 import getNodeDataByPath from "material-ui-tree/lib/util";
@@ -34,6 +32,8 @@ import TrackersPemissionsConfig from "../config/trackersPermissionsConfig"
 import TrackerRulesConfig from "../config/trackersRulesConfig"
 import NewTracker from "../config/newTracker"
 import ColumnDataType from "../config/columnDataType"
+import NewColumn from "../config/newColumn"
+import NewRule from "../config/newRule"
 
 import { trackerColumnDataTypes } from "../common/constants"
 
@@ -101,7 +101,8 @@ class TrackersConfig extends React.Component{
 
 	render(){
 		return(
-			<React.Fragment>config ui
+			<React.Fragment>
+                <small>config ui</small>
 				{ 
                     //this.viewAllTrackers() 
                     this.showComponent() 
@@ -207,7 +208,6 @@ class TrackersConfig extends React.Component{
                         }
                     </Tabs>
                 </AppBar>
-
                 {
                     this.props.trackers.map( tracker => (
                         (this.state.tabValue+1) === tracker.tracker_id && 
@@ -225,12 +225,25 @@ class TrackersConfig extends React.Component{
                             >
                                 Add Column
                             </Button>
-                            
+
+                                <NewColumn 
+                                    tracker_id={ tracker.tracker_id }
+                                />
+
                             <div>
                             {
                                 this.showColumns(tracker)
                             }
                             </div>
+
+                            <Button 
+                                style={{
+                                    float: "right",
+                                    align: "right",
+                                }}
+                            >
+                                Add Column
+                            </Button>
                         </React.Fragment>
                     ) )
                 }
@@ -311,7 +324,11 @@ class TrackersConfig extends React.Component{
                                 m={0} p={0} size="small"
                                 className={ this.props.classes.configTopAlignedCell }
                             >
-                                <Collapse hidden={!this.state.rowCollapsed[column.name]} in={this.state.rowCollapsed[column.name]}>
+                                <Collapse 
+                                    hidden={!this.state.rowCollapsed[column.name]} 
+                                    in={this.state.rowCollapsed[column.name]}
+                                    //timeout={ { enter:10, exit:10 } }
+                                >
                                 {
                                     column.permissions.map( user => (
                                         <React.Fragment>
@@ -333,13 +350,23 @@ class TrackersConfig extends React.Component{
                                 m={0} p={0} size="small"
                                 className={ this.props.classes.configTopAlignedCell }
                             >
-                                <Collapse hidden={!this.state.rowCollapsed[column.name]} in={this.state.rowCollapsed[column.name]}>
+                                <Collapse 
+                                    //hidden={!this.state.rowCollapsed[column.name]} 
+                                    hidden={ false } 
+                                    //in={this.state.rowCollapsed[column.name]}
+                                    in={ true }
+                                >
 
                                     <TrackerRulesConfig
                                         tracker_id={ tracker.tracker_id }
                                         column_name={ column.name }
                                     >
                                     </TrackerRulesConfig>
+                                    <NewRule 
+                                        tracker_id={ tracker.tracker_id }
+                                        column_name={ column.name }
+                                    />
+                                    
                                 </Collapse>
                             
                             </TableCell>

@@ -21,6 +21,14 @@ export const globalStyles = {
     }
 }
 
+export const colouringRuleColors = {
+    "green": "Green",
+    "amber": "Amber",
+    "red": "Red",
+    "blue": "Blue",
+    "grey": "Grey",
+}
+
 /**
  *  NEEDS REFACTORING DEFAULT VALUES
  * tracker popup data related default values

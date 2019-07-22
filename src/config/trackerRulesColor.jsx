@@ -17,7 +17,7 @@ class TrackerRulesColor extends React.Component{
 
         trackerId: this.props.tracker_id,
         columnName: this.props.column_name,
-        precedence: this.props.columnRule.precedence,
+        precedence: (this.props.columnRule)?this.props.columnRule.precedence:this.props.precedence_id,
 
         selectListData: this.props.predefinedData,
     }
@@ -25,7 +25,7 @@ class TrackerRulesColor extends React.Component{
     render(){
         return(
             <Select
-                value={ this.props.columnRule.bgcolor }
+                //value={ this.props.columnRule.bgcolor }
                 onChange={
                     e => {
                         this.setState({attributeValue: e.target.value}, function(){
@@ -53,6 +53,14 @@ class TrackerRulesColor extends React.Component{
             </Select>
         )
     }
+
+    openPopUp = () => {
+		this.setState({ isOpen: true });
+	};
+
+	closePopUp = () => {
+		this.setState({ isOpen: false });
+	};
 
 }
 

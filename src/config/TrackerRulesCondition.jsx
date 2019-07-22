@@ -10,7 +10,7 @@ import { trackerColumnDataTypes } from "../common/constants"
 
 class TrackerRulesCondition extends React.Component{
     state= {
-        attributeValue: this.props.columnRule.conditions,
+        attributeValue: (this.props.columnRule)?this.props.columnRule.conditions:this.props.precedence_id,
         attributeName: this.props.attribute,
 
         trackerId: this.props.tracker_id,

@@ -25,14 +25,15 @@ import TrackerRulesCondition from "../config/TrackerRulesCondition"
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
+import { colouringRuleColors } from "../common/constants"
 /** to be imported from costants */
-const colouringRuleColors = {
+/*const colouringRuleColors = {
     "green": "Green",
     "amber": "Amber",
     "red": "Red",
     "blue": "Blue",
     "grey": "Grey",
-}
+}*/
 
 class TrackersRulesConfig extends React.Component{
 
