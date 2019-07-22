@@ -362,10 +362,10 @@ class TrackersConfig extends React.Component{
                                         column_name={ column.name }
                                     >
                                     </TrackerRulesConfig>
-                                    <NewRule 
+                                    {/* <NewRule 
                                         tracker_id={ tracker.tracker_id }
                                         column_name={ column.name }
-                                    />
+                                    /> */}
                                     
                                 </Collapse>
                             

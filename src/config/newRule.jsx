@@ -25,9 +25,9 @@ class NewRule extends React.Component{
 
         isOpen: this.props.show,
 
-        condition: "",
+        conditions: "",
         bgcolor: "grey",
-        precedence: 4, //auto increment
+        precedence: this.props.nextPrecedence, //auto increment
 
         columnRules: this.props.columnRules,
 
@@ -66,38 +66,28 @@ class NewRule extends React.Component{
                             <TableBody>
                                 <TableRow >
                                     
-                                    {/* buttons */}
-                                    <TableCell m={0} p={0} size="small">
-                                        <IconButton 
-                                            aria-label="Delete" size="small"
-                                            onClick={ () => this.swapRulePosition("up", 1) }
-                                        >
-                                            <ArrowUpwardIcon fontSize="inherit" />
-                                        </IconButton>
-                                        <IconButton 
-                                            aria-label="Delete" size="small"
-                                            onClick={ () => this.swapRulePosition("down", 1) }
-                                        >
-                                            <ArrowDownwardIcon fontSize="inherit"  />
-                                        </IconButton>
-                                    </TableCell>
-
-
                                     {/* color */}
                                     <TableCell m={0} p={0} size="small">
                                     { 
                                         "p-"+this.state.precedence+"-"+this.state.bgcolor
                                     }
-                                    
-                                    <TrackerRulesColor
-                                        tracker_id={ this.state.trackerId }
-                                        column_name={ this.state.columnName }
-                                        precedence_id={ this.state.precedence }
-
-                                        value={ this.state.bgcolor }
-                                        attribute="bgcolor"
-                                        predefinedData={ colouringRuleColors }
-                                    />
+                                        <Select
+                                            value={ 
+                                                this.state.bgcolor
+                                            }
+                                            onChange={
+                                                e => {
+                                                    this.setState({bgcolor: e.target.value})
+                                                }
+                                            }
+                                            fullWidth={false}
+                                        >
+                                            {
+                                                Object.keys(colouringRuleColors).map( item =>
+                                                        <MenuItem key={ item } value={ item } >{ colouringRuleColors[item] }</MenuItem>
+                                                    )
+                                            }
+                                        </Select>
                                     
                                     </TableCell >
 
@@ -112,10 +102,9 @@ class NewRule extends React.Component{
                                             value={ this.state.conditions }
                                             attribute="conditions"
                                         />
+                                        
                                     </TableCell>
                                 </TableRow>
-                            
-                            }
                             </TableBody>
                         </Table>
                             
@@ -185,6 +174,14 @@ class NewRule extends React.Component{
         //console.log("trackerRulesConfig arr: :", this.props.allUsers );
         //console.log("trackerRulesConfig mount: props:", this.props, "state:", this.state);
     }
+
+    openPopUp = () => {
+		this.setState({ isOpen: true });
+	};
+
+	closePopUp = () => {
+		this.setState({ isOpen: false });
+	};
 }
 
 

@@ -20,6 +20,7 @@ import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead, TextField, 
 
 import TrackerRulesColor from "../config/trackerRulesColor"
 import TrackerRulesCondition from "../config/TrackerRulesCondition"
+import NewRule from "../config/newRule"
 
 
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
@@ -115,6 +116,18 @@ class TrackersRulesConfig extends React.Component{
                             :"no rules"
                     
                     }
+                    <TableRow>
+                        <NewRule 
+                            tracker_id={ this.props.tracker_id }
+                            column_name={ this.props.column_name }
+
+                            nextPrecedence={ 
+                                (this.props.columnRules.length>0)
+                                ?(this.props.columnRules.length + 1)
+                                :1
+                            }
+                        />
+                    </TableRow>
                     </TableBody>
                 </Table>
             </React.Fragment>

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { rootStore } from "../stores/mainStore";
 import { TableCell, TextField, Select, MenuItem } from "@material-ui/core";
 
-import { trackerColumnDataTypes } from "../common/constants"
+import { trackerColumnDataTypes, colouringRuleColors } from "../common/constants"
 
 
 class TrackerRulesColor extends React.Component{
@@ -19,13 +19,18 @@ class TrackerRulesColor extends React.Component{
         columnName: this.props.column_name,
         precedence: (this.props.columnRule)?this.props.columnRule.precedence:this.props.precedence_id,
 
-        selectListData: this.props.predefinedData,
+        //selectListData: this.props.predefinedData,
+        selectListData: colouringRuleColors,
     }
 
     render(){
         return(
             <Select
-                //value={ this.props.columnRule.bgcolor }
+                value={ 
+                    (this.props.columnRule) 
+                    ?this.props.columnRule.bgcolor
+                    :this.state.attributeValue
+                }
                 onChange={
                     e => {
                         this.setState({attributeValue: e.target.value}, function(){
