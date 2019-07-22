@@ -24,7 +24,8 @@ class TrackerRulesCondition extends React.Component{
     render(){
         return(
             <TextField
-                value={ this.state.attributeValue } 
+                //value={ this.state.attributeValue } 
+                value={ this.props.columnRuleConditions }
                 onChange={
                     e => {
                         this.setState({attributeValue: e.target.value}, function(){
@@ -42,23 +43,11 @@ class TrackerRulesCondition extends React.Component{
                         })
                     }
                 }
+                //onChange={ (e)=>{ this.setState({attributeValue: e.target.value}) } }
+                //onBlur={ ()=>{ this.handleAccept() } }
                 fullWidth={false}
             />
         )
-    }
-
-    dispatchColumnNameUpdate = ( ) => {
-        //return;
-        rootStore.dispatch({
-			type: 'UPDATE_CONFIG_ATTR',
-			payload: {
-				trackerId: this.state.trackerId,
-                columnName: this.state.columnName,
-                
-                value: this.state.value,
-                attribute: this.props.attribute,
-			}
-		});
     }
 
 }
@@ -66,7 +55,19 @@ class TrackerRulesCondition extends React.Component{
 
 
 const mapStateToProps = (state, props) => {
-    return {};
+    return {
+        columnRuleConditions: state.TrackConfigReducer.configData.find( tracker => (
+			tracker.tracker_id === parseInt( props.tracker_id )
+		) )
+		.columns.find( column => (
+			column.name === props.column_name
+		) )
+        .rules.find(rule => (
+            rule.precedence === props.precedence_id
+        ) )
+        .conditions,
+        
+    };
 }
 
 export default connect(mapStateToProps)(TrackerRulesCondition);

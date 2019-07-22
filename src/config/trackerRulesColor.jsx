@@ -54,20 +54,6 @@ class TrackerRulesColor extends React.Component{
         )
     }
 
-    dispatchColumnNameUpdate = ( ) => {
-        //return;
-        rootStore.dispatch({
-			type: 'UPDATE_CONFIG_ATTR',
-			payload: {
-				trackerId: this.state.trackerId,
-                columnName: this.state.columnName,
-                
-                value: this.state.value,
-                attribute: this.props.attribute,
-			}
-		});
-    }
-
 }
 
 

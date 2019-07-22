@@ -1,6 +1,6 @@
 
 import React, { Component } from "react";
-import TrackerConfigCell from "../config/abstractTrackerConfigCell"
+//import TrackerConfigCell from "../config/abstractTrackerConfigCell"
 
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
