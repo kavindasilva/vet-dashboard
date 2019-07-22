@@ -24,7 +24,8 @@ class TrackerRulesColor extends React.Component{
     render(){
         return(
             <Select
-                value={ this.state.attributeValue } 
+                //value={ this.state.attributeValue } 
+                value={ this.props.columnRuleColor }
                 onChange={
                     e => {
                         this.setState({attributeValue: e.target.value}, function(){
@@ -72,7 +73,19 @@ class TrackerRulesColor extends React.Component{
 
 
 const mapStateToProps = (state, props) => {
-    return {};
+    return {
+        columnRuleColor: state.TrackConfigReducer.configData.find( tracker => (
+			tracker.tracker_id === parseInt( props.tracker_id )
+		) )
+		.columns.find( column => (
+			column.name === props.column_name
+		) )
+        .rules.find(rule => (
+            rule.precedence === props.precedence_id
+        ) )
+        .bgcolor,
+        
+    };
 }
 
 export default connect(mapStateToProps)(TrackerRulesColor);

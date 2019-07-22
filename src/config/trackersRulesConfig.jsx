@@ -42,6 +42,8 @@ class TrackersRulesConfig extends React.Component{
         columnName: this.props.column_name,
         isOpen: this.props.show,
         attributeValue: this.props.value,
+
+        columnRules: this.props.columnRules,
     }
 
     render(){
@@ -73,6 +75,7 @@ class TrackersRulesConfig extends React.Component{
                                             </IconButton>
                                         </TableCell>
 
+
                                         {/* color */}
                                         <TableCell m={0} p={0} size="small">
                                         { 
@@ -90,6 +93,7 @@ class TrackersRulesConfig extends React.Component{
                                             />
                                         }
                                         </TableCell >
+
                                         
                                         {/* conditions */}
                                         <TableCell m={0} p={0} size="small">
@@ -98,7 +102,7 @@ class TrackersRulesConfig extends React.Component{
                                                 column_name={ this.state.columnName }
                                                 precedence_id={ rule.precedence }
 
-                                                value={ rule.bgcolor }
+                                                value={ rule.conditions }
                                                 attribute="conditions"
                                             />
                                         </TableCell>

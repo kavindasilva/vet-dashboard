@@ -287,8 +287,6 @@ class TrackersConfig extends React.Component{
                                             tracker_id={ tracker.tracker_id }
                                             column_name={ column.name }
                                             user_id ={user.userId}
-                                            //user_read={permit.read.toString() }
-                                            //user_write={permit.write.toString() }
                                         />
                                         <br/>
                                     </React.Fragment>
