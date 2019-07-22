@@ -40,6 +40,10 @@ import { trackerColumnDataTypes } from "../common/constants"
 import trackersAPI from "../apicalls/trackersAPI";
 import { Table, TableHead, TableCell, TableBody, TableRow, MenuItem, Select, Collapse } from '@material-ui/core';
 
+import ArrowRight from "@material-ui/icons/ArrowRight"
+import ArrowDown from "@material-ui/icons/ArrowDropDown"
+
+
 const trackersAPIobj = new trackersAPI();
 
 const useStyles = theme => ({
@@ -246,7 +250,26 @@ class TrackersConfig extends React.Component{
                     columns.map( column =>(
                         <TableRow>
                             {/* label */}
-                            <TableCell m={0} p={0} size="small">
+                            <TableCell 
+                                m={0} p={0} size="small"
+                                //align
+                                style={{ verticalAlign: 'top' }}
+                            >
+                                <span
+                                    onClick={ () => 
+                                        this.markRowCollapsed(
+                                            column.name,
+                                            this.state.rowCollapsed[column.name]
+                                        )
+                                    }
+                                >
+                                { 
+                                    (this.state.rowCollapsed[column.name])
+                                    ?<ArrowDown />
+                                    :<ArrowRight />
+                                }
+                                </span>
+
                                 <EditableCell 
                                     tracker_id={ tracker.tracker_id }
                                     column_name={ column.name }
@@ -274,7 +297,7 @@ class TrackersConfig extends React.Component{
 
                             {/* user persmissions */}                            
                             <TableCell m={0} p={0} size="small">
-                                <p onClick={ () => 
+                                {/* <p onClick={ () => 
                                     this.markRowCollapsed(
                                         column.name,
                                         this.state.rowCollapsed[column.name]
@@ -282,10 +305,10 @@ class TrackersConfig extends React.Component{
                                 } >
                                     { 
                                         (this.state.rowCollapsed[column.name])
-                                        ?"Collapse"
-                                        :"Expand"
+                                        ?"Collapse?"
+                                        :"Expand?"
                                     }
-                                </p>
+                                </p> */}
                                 <Collapse hidden={!this.state.rowCollapsed[column.name]} in={this.state.rowCollapsed[column.name]}>
                                 {
                                     column.permissions.map( user => (
@@ -305,11 +328,14 @@ class TrackersConfig extends React.Component{
 
 
                             <TableCell m={0} p={0} size="small">
+                            <Collapse hidden={!this.state.rowCollapsed[column.name]} in={this.state.rowCollapsed[column.name]}>
+
                                 <TrackerRulesConfig
                                     tracker_id={ tracker.tracker_id }
                                     column_name={ column.name }
                                 >
                                 </TrackerRulesConfig>
+                            </Collapse>
                             
                             </TableCell>
 
@@ -323,6 +349,10 @@ class TrackersConfig extends React.Component{
 
     /**
      * to check single row is collapsed/expaned.
+     * 
+     * columnName: column name
+     * 
+     * collapsed: current status of collapsed or not
      */
     markRowCollapsed = (columnName, collapsed) => {
         let rowCollapsedData = { ...this.state.rowCollapsed };

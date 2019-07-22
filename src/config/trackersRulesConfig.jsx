@@ -52,76 +52,70 @@ class TrackersRulesConfig extends React.Component{
         //return(<div></div>);
         return(
             <React.Fragment>
-                <p onClick={ () => this.setState({open: !this.state.open}) } >
-                    { (this.state.open)? "Collapse":"Expand" }
-                </p>
-                <Collapse hidden={!this.state.open} in={this.state.open}>
-                    <Table size="small">
-                        <TableBody>
-                        {
-                            ( this.props.columnRules.length > 0 )?
-                                (
-                                    this.props.columnRules.map( (rule, i) => (
-                                        <TableRow >
-                                            
-                                            {/* buttons */}
-                                            <TableCell m={0} p={0} size="small">
-                                                <IconButton 
-                                                    aria-label="Delete" size="small"
-                                                    onClick={ () => this.swapRulePosition("up", i) }
-                                                >
-                                                    <ArrowUpwardIcon fontSize="inherit" />
-                                                </IconButton>
-                                                <IconButton 
-                                                    aria-label="Delete" size="small"
-                                                    onClick={ () => this.swapRulePosition("down", i) }
-                                                >
-                                                    <ArrowDownwardIcon fontSize="inherit"  />
-                                                </IconButton>
-                                            </TableCell>
+                
+                <Table size="small">
+                    <TableBody>
+                    {
+                        ( this.props.columnRules.length > 0 )?
+                            (
+                                this.props.columnRules.map( (rule, i) => (
+                                    <TableRow >
+                                        
+                                        {/* buttons */}
+                                        <TableCell m={0} p={0} size="small">
+                                            <IconButton 
+                                                aria-label="Delete" size="small"
+                                                onClick={ () => this.swapRulePosition("up", i) }
+                                            >
+                                                <ArrowUpwardIcon fontSize="inherit" />
+                                            </IconButton>
+                                            <IconButton 
+                                                aria-label="Delete" size="small"
+                                                onClick={ () => this.swapRulePosition("down", i) }
+                                            >
+                                                <ArrowDownwardIcon fontSize="inherit"  />
+                                            </IconButton>
+                                        </TableCell>
 
 
-                                            {/* color */}
-                                            <TableCell m={0} p={0} size="small">
-                                            { 
-                                                "p-"+rule.precedence+"-"+rule.bgcolor
-                                            }
-                                            
-                                            <TrackerRulesColor
+                                        {/* color */}
+                                        <TableCell m={0} p={0} size="small">
+                                        { 
+                                            "p-"+rule.precedence+"-"+rule.bgcolor
+                                        }
+                                        
+                                        <TrackerRulesColor
+                                            tracker_id={ this.state.trackerId }
+                                            column_name={ this.state.columnName }
+                                            precedence_id={ rule.precedence }
+
+                                            value={ rule.bgcolor }
+                                            attribute="bgcolor"
+                                            predefinedData={ colouringRuleColors }
+                                        />
+                                        
+                                        </TableCell >
+
+                                        
+                                        {/* conditions */}
+                                        <TableCell m={0} p={0} size="small">
+                                            <TrackerRulesCondition
                                                 tracker_id={ this.state.trackerId }
                                                 column_name={ this.state.columnName }
                                                 precedence_id={ rule.precedence }
 
-                                                value={ rule.bgcolor }
-                                                attribute="bgcolor"
-                                                predefinedData={ colouringRuleColors }
+                                                value={ rule.conditions }
+                                                attribute="conditions"
                                             />
-                                            
-                                            </TableCell >
-
-                                            
-                                            {/* conditions */}
-                                            <TableCell m={0} p={0} size="small">
-                                                <TrackerRulesCondition
-                                                    tracker_id={ this.state.trackerId }
-                                                    column_name={ this.state.columnName }
-                                                    precedence_id={ rule.precedence }
-
-                                                    value={ rule.conditions }
-                                                    attribute="conditions"
-                                                />
-                                            </TableCell>
-                                        </TableRow>
-                                    ) )
-                                )
-                                :"no rules"
-                        
-                        }
-                        </TableBody>
-                    </Table>
+                                        </TableCell>
+                                    </TableRow>
+                                ) )
+                            )
+                            :"no rules"
                     
-                </Collapse>
-            
+                    }
+                    </TableBody>
+                </Table>
             </React.Fragment>
   
         )
