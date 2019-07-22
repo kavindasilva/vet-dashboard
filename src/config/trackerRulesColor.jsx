@@ -13,7 +13,6 @@ class TrackerRulesColor extends React.Component{
         valueInStore: this.props.value,
 
         attributeValue: this.props.value,
-        //attributeValue: this.props.columnRuleColor,
         attributeName: this.props.attribute,
 
         trackerId: this.props.tracker_id,
@@ -26,7 +25,6 @@ class TrackerRulesColor extends React.Component{
     render(){
         return(
             <Select
-                //value={ this.state.attributeValue } 
                 value={ this.props.columnRule.bgcolor }
                 onChange={
                     e => {

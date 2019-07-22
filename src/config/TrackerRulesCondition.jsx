@@ -11,7 +11,6 @@ import { trackerColumnDataTypes } from "../common/constants"
 class TrackerRulesCondition extends React.Component{
     state= {
         attributeValue: this.props.columnRule.conditions,
-        //attributeValue: this.props.value,
         attributeName: this.props.attribute,
 
         trackerId: this.props.tracker_id,
@@ -22,28 +21,18 @@ class TrackerRulesCondition extends React.Component{
         selectListData: this.props.predefinedData,
     }
 
+    componentWillReceiveProps( newProps ){
+        console.log("TrackerRulesCondition willrecieve props", this.props.columnRule.conditions);
+        if( newProps.columnRule.conditions !== this.state.attributeValue ){
+            this.setState({attributeValue: newProps.columnRule.conditions});
+        }
+
+    }
+
     render(){
         return(
             <TextField
-                value={ this.props.columnRule.conditions } 
-                // /    value={ this.state.attributeValue }
-                /*onChange={
-                    e => {
-                        this.setState({attributeValue: e.target.value}, function(){
-                            rootStore.dispatch({
-                                type: 'UPDATE_CONFIG_RULE_CONDITION',
-                                payload: {
-                                    trackerId: this.state.trackerId,
-                                    columnName: this.state.columnName,
-                                    
-                                    precedenceConditions: this.state.attributeValue,
-                                    attribute: this.state.attributeName,
-                                    precedenceId: this.state.precedence,
-                                }
-                            })
-                        })
-                    }
-                }*/
+                value={ this.state.attributeValue }
                 onChange={ (e)=>{ this.setState({attributeValue: e.target.value}) } }
                 onBlur={ ()=>{ 
                     rootStore.dispatch({
