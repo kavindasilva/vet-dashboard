@@ -79,19 +79,19 @@ class TrackersRulesConfig extends React.Component{
                                         {/* color */}
                                         <TableCell m={0} p={0} size="small">
                                         { 
-                                            "p-"+rule.precedence
+                                            "p-"+rule.precedence+"-"+rule.bgcolor
                                         }
-                                        {
-                                            <TrackerRulesColor
-                                                tracker_id={ this.state.trackerId }
-                                                column_name={ this.state.columnName }
-                                                precedence_id={ rule.precedence }
+                                        
+                                        <TrackerRulesColor
+                                            tracker_id={ this.state.trackerId }
+                                            column_name={ this.state.columnName }
+                                            precedence_id={ rule.precedence }
 
-                                                value={ rule.bgcolor }
-                                                attribute="bgcolor"
-                                                predefinedData={ colouringRuleColors }
-                                            />
-                                        }
+                                            value={ rule.bgcolor }
+                                            attribute="bgcolor"
+                                            predefinedData={ colouringRuleColors }
+                                        />
+                                        
                                         </TableCell >
 
                                         
@@ -154,14 +154,6 @@ class TrackersRulesConfig extends React.Component{
 
         }
     }
-
-    openPopUp = () => {
-		this.setState({ isOpen: true });
-	};
-
-	closePopUp = () => {
-		this.setState({ isOpen: false });
-	};
     
     componentDidMount(){
         //console.log("trackerRulesConfig arr: :", this.props.allUsers );

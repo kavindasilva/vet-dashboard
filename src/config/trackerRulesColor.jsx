@@ -10,14 +10,16 @@ import { trackerColumnDataTypes } from "../common/constants"
 
 class TrackerRulesColor extends React.Component{
     state= {
+        valueInStore: this.props.value,
+
         attributeValue: this.props.value,
+        //attributeValue: this.props.columnRuleColor,
         attributeName: this.props.attribute,
 
         trackerId: this.props.tracker_id,
         columnName: this.props.column_name,
-        precedence: this.props.precedence_id,
+        precedence: this.props.columnRule.precedence,
 
-        //selectListData: trackerColumnDataTypes,
         selectListData: this.props.predefinedData,
     }
 
@@ -25,7 +27,7 @@ class TrackerRulesColor extends React.Component{
         return(
             <Select
                 //value={ this.state.attributeValue } 
-                value={ this.props.columnRuleColor }
+                value={ this.props.columnRule.bgcolor }
                 onChange={
                     e => {
                         this.setState({attributeValue: e.target.value}, function(){
@@ -37,7 +39,7 @@ class TrackerRulesColor extends React.Component{
                                     
                                     precedenceColor: this.state.attributeValue,
                                     attribute: this.state.attributeName,
-                                    precedenceId: this.state.precedence,
+                                    precedenceId: this.props.columnRule.precedence,
                                 }
                             })
                         })
@@ -60,7 +62,7 @@ class TrackerRulesColor extends React.Component{
 
 const mapStateToProps = (state, props) => {
     return {
-        columnRuleColor: state.TrackConfigReducer.configData.find( tracker => (
+        columnRule: state.TrackConfigReducer.configData.find( tracker => (
 			tracker.tracker_id === parseInt( props.tracker_id )
 		) )
 		.columns.find( column => (
@@ -68,8 +70,8 @@ const mapStateToProps = (state, props) => {
 		) )
         .rules.find(rule => (
             rule.precedence === props.precedence_id
-        ) )
-        .bgcolor,
+        ) ),
+        //.bgcolor,
         
     };
 }
