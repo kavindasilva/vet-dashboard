@@ -45,6 +45,7 @@ class EditableCell extends React.Component{
         this.setState({componentState:"read"})
     }
 
+    /** when Esc pressed in editable mood */
     handleReject= () => {
         this.setState({
             value: this.props.value,

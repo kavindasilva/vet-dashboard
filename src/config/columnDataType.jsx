@@ -7,7 +7,11 @@ import { TableCell, TextField, Select, MenuItem } from "@material-ui/core";
 
 import { trackerColumnDataTypes } from "../common/constants"
 
-
+/**
+ * displays the data type of a selected tracker-config's column
+ * 
+ * redux store updating function included
+ */
 class ColumnDataCell extends React.Component{
     state= {
         componentState: "read",
@@ -60,7 +64,7 @@ class ColumnDataCell extends React.Component{
         }
     }
 
-    dispatchColumnNameUpdate = ( ) => {
+    /*dispatchColumnNameUpdate = ( ) => {
         //return;
         rootStore.dispatch({
 			type: 'UPDATE_CONFIG_ATTR',
@@ -72,7 +76,7 @@ class ColumnDataCell extends React.Component{
                 attribute: this.props.attribute,
 			}
 		});
-    }
+    }*/
 
 }
 

@@ -47,6 +47,9 @@ import ArrowDown from "@material-ui/icons/ArrowDropDown"
 const trackersAPIobj = new trackersAPI();
 
 const useStyles = theme => ({
+    configTopAlignedCell: {
+        verticalAlign: 'top'
+    },
 	'@global': {
 		body: {
 			backgroundColor: theme.palette.common.white,
@@ -68,7 +71,9 @@ const useStyles = theme => ({
 	},
 });
 
-
+/**
+ * Main component for the all trackers config data viewing
+ */
 class TrackersConfig extends React.Component{
     classes=this.props.classes;
 	state = { 
@@ -234,6 +239,9 @@ class TrackersConfig extends React.Component{
 		);
     }
     
+    /**
+     * show the tracker-config columns of a provided tracker
+     */
     showColumns = (tracker) => {
         let columns = tracker.columns;
         return(
@@ -252,8 +260,8 @@ class TrackersConfig extends React.Component{
                             {/* label */}
                             <TableCell 
                                 m={0} p={0} size="small"
-                                //align
-                                style={{ verticalAlign: 'top' }}
+                                className={ this.props.classes.configTopAlignedCell }
+                                //style={{ verticalAlign: 'top' }}
                             >
                                 <span
                                     onClick={ () => 
@@ -280,7 +288,10 @@ class TrackersConfig extends React.Component{
                             </TableCell>
 
                             {/* data type */}
-                            <TableCell m={0} p={0} size="small"> 
+                            <TableCell 
+                                m={0} p={0} size="small"
+                                className={ this.props.classes.configTopAlignedCell }
+                            > 
                             {
                                 //trackerColumnDataTypes[column.type]
                                 <ColumnDataType
@@ -296,19 +307,10 @@ class TrackersConfig extends React.Component{
                             </TableCell>
 
                             {/* user persmissions */}                            
-                            <TableCell m={0} p={0} size="small">
-                                {/* <p onClick={ () => 
-                                    this.markRowCollapsed(
-                                        column.name,
-                                        this.state.rowCollapsed[column.name]
-                                    )
-                                } >
-                                    { 
-                                        (this.state.rowCollapsed[column.name])
-                                        ?"Collapse?"
-                                        :"Expand?"
-                                    }
-                                </p> */}
+                            <TableCell 
+                                m={0} p={0} size="small"
+                                className={ this.props.classes.configTopAlignedCell }
+                            >
                                 <Collapse hidden={!this.state.rowCollapsed[column.name]} in={this.state.rowCollapsed[column.name]}>
                                 {
                                     column.permissions.map( user => (
@@ -327,15 +329,18 @@ class TrackersConfig extends React.Component{
                             </TableCell>
 
 
-                            <TableCell m={0} p={0} size="small">
-                            <Collapse hidden={!this.state.rowCollapsed[column.name]} in={this.state.rowCollapsed[column.name]}>
+                            <TableCell 
+                                m={0} p={0} size="small"
+                                className={ this.props.classes.configTopAlignedCell }
+                            >
+                                <Collapse hidden={!this.state.rowCollapsed[column.name]} in={this.state.rowCollapsed[column.name]}>
 
-                                <TrackerRulesConfig
-                                    tracker_id={ tracker.tracker_id }
-                                    column_name={ column.name }
-                                >
-                                </TrackerRulesConfig>
-                            </Collapse>
+                                    <TrackerRulesConfig
+                                        tracker_id={ tracker.tracker_id }
+                                        column_name={ column.name }
+                                    >
+                                    </TrackerRulesConfig>
+                                </Collapse>
                             
                             </TableCell>
 
@@ -353,6 +358,12 @@ class TrackersConfig extends React.Component{
      * columnName: column name
      * 
      * collapsed: current status of collapsed or not
+     * 
+     * state ={
+     *  rowCollapsedData:[
+     *      "column_name": <bool>
+     *  ]
+     * }
      */
     markRowCollapsed = (columnName, collapsed) => {
         let rowCollapsedData = { ...this.state.rowCollapsed };

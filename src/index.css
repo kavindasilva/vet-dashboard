@@ -55,3 +55,7 @@ ol, ul {
   color: #7e7e7e;
 }
 
+.config-top-aligned-cell{
+  vertical-align: 'top'
+}
+
