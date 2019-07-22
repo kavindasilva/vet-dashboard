@@ -19,6 +19,14 @@ class EditableCell extends React.Component{
         return this.viewCell();
     }
 
+    componentWillReceiveProps( newProps ){
+        //console.log("TrackerRulesCondition willrecieve props", this.props.columnRule.conditions);
+        if( newProps.value !== this.state.value ){
+            this.setState({value: newProps.value});
+        }
+
+    }
+
     viewCell(){
         switch(this.state.componentState){
             case "read":

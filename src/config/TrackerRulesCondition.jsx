@@ -22,11 +22,9 @@ class TrackerRulesCondition extends React.Component{
     }
 
     componentWillReceiveProps( newProps ){
-        console.log("TrackerRulesCondition willrecieve props", this.props.columnRule.conditions);
         if( newProps.columnRule.conditions !== this.state.attributeValue ){
             this.setState({attributeValue: newProps.columnRule.conditions});
         }
-
     }
 
     render(){

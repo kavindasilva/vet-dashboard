@@ -33,7 +33,7 @@ import EditableCell from "../config/editableCell"
 import TrackersPemissionsConfig from "../config/trackersPermissionsConfig"
 import TrackerRulesConfig from "../config/trackersRulesConfig"
 import NewTracker from "../config/newTracker"
-import ColumnDataCell from "../config/columnDataCell"
+import ColumnDataType from "../config/columnDataType"
 
 import { trackerColumnDataTypes } from "../common/constants"
 
@@ -267,7 +267,7 @@ class TrackersConfig extends React.Component{
                             <TableCell m={0} p={0} size="small"> 
                             {
                                 //trackerColumnDataTypes[column.type]
-                                <ColumnDataCell
+                                <ColumnDataType
                                     tracker_id={ tracker.tracker_id }
                                     column_name={ column.name }
 

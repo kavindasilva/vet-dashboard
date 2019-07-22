@@ -37,5 +37,8 @@ https://stackoverflow.com/questions/29303456/reactjs-onclick-change-element
 https://stackoverflow.com/questions/37440408/how-to-detect-esc-key-press-in-react-and-how-to-handle-it
 https://stackoverflow.com/questions/872310/javascript-swap-array-elements
 
+--jul 22
+https://stackoverflow.com/questions/32414308/updating-state-on-props-change-in-react-form
+
 
 

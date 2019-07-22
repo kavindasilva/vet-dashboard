@@ -36,6 +36,12 @@ class RWIcon extends React.Component{
             
     }
 
+    componentWillReceiveProps( newProps ){
+        if( newProps.rwValue !== this.state.rwValue ){
+            this.setState({rwValue: newProps.rwValue});
+        }
+    }
+
     dispatchPermissionsUpdate = ( ) => {
         rootStore.dispatch({
 			type: 'UPDATE_CONFIG_USER_PERMISSIONS',

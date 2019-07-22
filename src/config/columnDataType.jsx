@@ -53,6 +53,12 @@ class ColumnDataCell extends React.Component{
         )
     }
 
+    componentWillReceiveProps( newProps ){
+        if( newProps.value !== this.state.attributeValue ){
+            this.setState({attributeValue: newProps.value});
+        }
+    }
+
     dispatchColumnNameUpdate = ( ) => {
         //return;
         rootStore.dispatch({

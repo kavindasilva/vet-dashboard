@@ -18,7 +18,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead, TextField, IconButton, MenuItem, Select } from "@material-ui/core";
 
-import ColumnDataCell from "../config/columnDataCell"
 import TrackerRulesColor from "../config/trackerRulesColor"
 import TrackerRulesCondition from "../config/TrackerRulesCondition"
 
