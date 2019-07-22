@@ -53,6 +53,7 @@ class ColumnDataCell extends React.Component{
         )
     }
 
+    //getDerivedStateFromProps
     componentWillReceiveProps( newProps ){
         if( newProps.value !== this.state.attributeValue ){
             this.setState({attributeValue: newProps.value});
