@@ -117,6 +117,7 @@ class TrackersRulesConfig extends React.Component{
                     
                     }
                     <TableRow>
+                        {/* new rule adding button */}
                         <NewRule 
                             tracker_id={ this.props.tracker_id }
                             column_name={ this.props.column_name }

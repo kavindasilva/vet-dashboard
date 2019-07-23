@@ -16,7 +16,11 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
 import { colouringRuleColors } from "../common/constants"
 
-
+/**
+ * adding a new conditon
+ * 
+ * adds a whole rule at once
+ */
 class NewRule extends React.Component{
 
     state ={
@@ -29,7 +33,7 @@ class NewRule extends React.Component{
         bgcolor: "grey",
         precedence: this.props.nextPrecedence, //auto increment
 
-        columnRules: this.props.columnRules,
+        //columnRules: this.props.columnRules,
 
         isOpen: false,
     }
@@ -94,13 +98,11 @@ class NewRule extends React.Component{
                                     
                                     {/* conditions */}
                                     <TableCell m={0} p={0} size="small">
-                                        <TrackerRulesCondition
-                                            tracker_id={ this.state.trackerId }
-                                            column_name={ this.state.columnName }
-                                            precedence_id={ this.state.precedence }
-
+                                        <TextField
                                             value={ this.state.conditions }
-                                            attribute="conditions"
+                                            onChange={ (e)=>{ this.setState({conditions: e.target.value}) } }
+                                            
+                                            fullWidth={false}
                                         />
                                         
                                     </TableCell>
@@ -112,7 +114,7 @@ class NewRule extends React.Component{
 
                     <DialogActions>
                         <Button onClick={ ()=>{
-                                this.setState({ attributeValue: this.props.value });
+                                //this.setState({ attributeValue: this.props.value });
                                 this.closePopUp() 
                             } }
                             variant="text"
@@ -122,7 +124,7 @@ class NewRule extends React.Component{
                         </Button>
                                             
                         <Button onClick={ () => { 
-                                this.dispatchUpdate()
+                                this.saveNewCondition();
                                 this.closePopUp(); 
                             } } 
                             variant="text" color="primary"
@@ -136,37 +138,20 @@ class NewRule extends React.Component{
         )
     }
 
-    swapRulePosition = ( direction, index ) => {
-        if(direction==="up"){
-            if(index===0)
-                return null;
-
-            console.log("going up");
+    saveNewCondition = (  ) => {
+        if(1){
             rootStore.dispatch({
-                type: 'UPDATE_CONFIG_RULE_UP',
+                type: 'ADD_CONFIG_RULE_NEW',
                 payload: {
                     trackerId: this.state.trackerId,
                     columnName: this.state.columnName,
-                    
-                    ruleIndex: index,
-                }
-            });
-        }
-        else if(direction==="down"){
-            if(index === this.props.columnRules.length-1)
-                return null;
-            
-            console.log("going down");
-            rootStore.dispatch({
-                type: 'UPDATE_CONFIG_RULE_DOWN',
-                payload: {
-                    trackerId: this.state.trackerId,
-                    columnName: this.state.columnName,
-                    
-                    ruleIndex: index,
-                }
-            });
 
+                    precedenceId: this.state.precedence,
+                    bgcolor: this.state.bgcolor,
+                    conditions: this.state.conditions,
+                    //ruleIndex: index,
+                }
+            });
         }
     }
     
