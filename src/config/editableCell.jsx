@@ -85,13 +85,13 @@ class EditableCell extends React.Component{
      */
     sendReadOnly(){
         return(
-            <TableCell style={{color:"green"}}
+            <span style={{color:"green"}}
                 onClick={ ()=> { this.setState({componentState: ""}) } }            
             >
             {
                 this.state.value
             }
-            </TableCell>
+            </span>
         )
     }
 }

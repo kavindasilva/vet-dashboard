@@ -22,7 +22,7 @@ class RWIcon extends React.Component{
                 style={
                     (this.state.rwValue)?
                         { "backgroundColor":"green" }
-                        :{ "text-decoration": "line-through", "backgroundColor":"red" }
+                        :{ "textDecoration": "line-through", "backgroundColor":"red" }
                 }
                 onClick = { () => { 
                     this.setState({rwValue: !this.state.rwValue}, function(){

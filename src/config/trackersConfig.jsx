@@ -210,7 +210,10 @@ class TrackersConfig extends React.Component{
                     >    
                         {
                             this.props.trackers.map( tracker => (
-                                <Tab label={ tracker.name } />
+                                <Tab 
+                                    label={ tracker.name } 
+                                    key={ tracker.name } 
+                                />
                             ))
                         }
                     </Tabs>
@@ -218,7 +221,7 @@ class TrackersConfig extends React.Component{
                 {
                     this.props.trackers.map( tracker => (
                         (this.state.tabValue+1) === tracker.tracker_id && 
-                        <React.Fragment>
+                        <React.Fragment key ={tracker.tracker_id}>
                             <small> 
                                 ID: {tracker.tracker_id} ,
                                 Name: { tracker.name } 
@@ -255,17 +258,19 @@ class TrackersConfig extends React.Component{
         return(
             <Table size="small">
                 <TableHead>
-                    <TableCell></TableCell>
-                    <TableCell>Label</TableCell>
-                    <TableCell>Type</TableCell>
-                    <TableCell>Users</TableCell>
-                    <TableCell>Rules</TableCell>
+                    <TableRow>
+                        <TableCell></TableCell>
+                        <TableCell>Label</TableCell>
+                        <TableCell>Type</TableCell>
+                        <TableCell>Users</TableCell>
+                        <TableCell>Rules</TableCell>
+                    </TableRow>
                 </TableHead>
                 
                 <TableBody>
                 {
                     columns.map( column =>(
-                        <TableRow>
+                        <TableRow key={ column.name }>
                             {/* collapse/extend arrow */}
                             <TableCell 
                                 m={0} p={0} size="small"
@@ -333,11 +338,12 @@ class TrackersConfig extends React.Component{
                                 >
                                 {
                                     column.permissions.map( user => (
-                                        <React.Fragment>
+                                        <React.Fragment key ={user.userId}>
                                             <TrackersPemissionsConfig
                                                 tracker_id={ tracker.tracker_id }
                                                 column_name={ column.name }
                                                 user_id ={user.userId}
+                                                key ={user.userId}
                                             />
                                             <br/>
                                         </React.Fragment>

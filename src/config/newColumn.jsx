@@ -88,18 +88,16 @@ class NewColumn extends React.Component{
     render(){
         return(
             <React.Fragment>
-                <Button 
+                <Fab 
+                    size="small" variant="extended" aria-label="Add"
                     style={{ float: "right", align: "right",}}
                     onClick={ ()=>(
                         this.setState({ isOpen: true })
                     ) } 
                 >
-                    <Fab size="small" variant="extended" aria-label="Add">
-                        <AddIcon /> Column
-                    </Fab>
+                    <AddIcon /> Column
+                </Fab>
                        
-                </Button>
-
                 {/* popup modal UI */}
                 <Dialog
                     open={this.state.isOpen} 

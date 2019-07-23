@@ -22,13 +22,12 @@ const TrackConfigReducer = (state, action) => {
 
     switch (action.type) {
         case 'GET_CONFIG_FROM_DB':
-            newState = {
-                configData: action.payload.data,
-                
-            }
+            newState = { configData: action.payload.data }
             console.log("TrackConfigReducer GET_CONFIG_FROM_DB: ", newState);
-
             return newState;
+
+        case 'SAVE_CONFIG_TO_DB':
+            return state;
 
         case "ADD_CONFIG_COLUMN_NEW":
             trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;
