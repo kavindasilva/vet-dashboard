@@ -55,10 +55,9 @@ const TrackConfigReducer = (state, action) => {
                     "conditions": action.payload.conditions
                 }
             );
-
             return newState;
         
-        case "UPDATE_CONFIG_RULE_CONDITION":
+        case "UPDATE_CONFIG_RULE_CONDITION": // can be generalized with RULE_COLOR
             trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;
             columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
             precedenceIndex  =  getRulesIndex( newState.configData[trackerIndex].columns[columnIndex], action.payload.precedenceId); //precedenceIndex=-1;

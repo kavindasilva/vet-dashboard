@@ -178,10 +178,7 @@ class TrackersRulesConfig extends React.Component{
 
 
 const mapStateToProps = (state, props) => {
-	//state.TrackConfigReducer.configData;
-	let configValue = state.TrackConfigReducer.configData.find( tracker => (
-		tracker.tracker_id === parseInt( props.tracker_id )
-	) );
+
     return {
         columnRules: state.TrackConfigReducer.configData.find( tracker => (
 			tracker.tracker_id === parseInt( props.tracker_id )
@@ -194,7 +191,6 @@ const mapStateToProps = (state, props) => {
         allUsers: { ...state.UserConfigReducer.userData, 
             ...state.UserConfigReducer.partnerData 
         },
-        //allUsers: [ ...state.UserConfigReducer.userData]
     };
 }
 

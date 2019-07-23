@@ -25,6 +25,8 @@ class trackersAPI extends React.Component{
       });
   }
 
+  saveTrackerConfig( configJson ){}
+
 
 
 }

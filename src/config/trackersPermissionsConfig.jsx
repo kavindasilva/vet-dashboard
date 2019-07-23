@@ -91,9 +91,9 @@ class TrackersPemissionsConfig extends React.Component{
 
 const mapStateToProps = (state, props) => {
 	//state.TrackConfigReducer.configData;
-	let configValue = state.TrackConfigReducer.configData.find( tracker => (
-		tracker.tracker_id === parseInt( props.tracker_id )
-	) );
+	// let configValue = state.TrackConfigReducer.configData.find( tracker => (
+	// 	tracker.tracker_id === parseInt( props.tracker_id )
+	// ) );
     return {
         columnPermissions: state.TrackConfigReducer.configData.find( tracker => (
 			tracker.tracker_id === parseInt( props.tracker_id )

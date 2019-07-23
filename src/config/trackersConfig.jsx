@@ -260,6 +260,7 @@ class TrackersConfig extends React.Component{
                 <TableHead>
                     <TableRow>
                         <TableCell></TableCell>
+                        <TableCell>Name(API)</TableCell>
                         <TableCell>Label</TableCell>
                         <TableCell>Type</TableCell>
                         <TableCell>Users</TableCell>
@@ -292,11 +293,24 @@ class TrackersConfig extends React.Component{
                                 </span>
                             </TableCell>
 
+                            {/* name */}
+                            <TableCell 
+                                m={0} p={0} size="small"
+                                className={ this.props.classes.configTopAlignedCell }
+                            >
+                                <EditableCell 
+                                    tracker_id={ tracker.tracker_id }
+                                    column_name={ column.name }
+                                    value={column.name}
+                                    attribute="name"
+                                >
+                                </EditableCell>
+                            </TableCell>
+
                             {/* label */}
                             <TableCell 
                                 m={0} p={0} size="small"
                                 className={ this.props.classes.configTopAlignedCell }
-                                //style={{ verticalAlign: 'top' }}
                             >
                                 <EditableCell 
                                     tracker_id={ tracker.tracker_id }
