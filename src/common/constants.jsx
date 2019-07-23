@@ -22,11 +22,11 @@ export const globalStyles = {
 }
 
 export const colouringRuleColors = {
-    "green": "Green",
-    "amber": "Amber",
-    "red": "Red",
-    "blue": "Blue",
-    "grey": "Grey",
+    "green": { label:"Green", colorCode:"#5aed58"},
+    "amber": { label:"Amber", colorCode:"#fcba03"},
+    "red": { label:"Red", colorCode:"#fc1c1c"},
+    "blue": { label:"Blue", colorCode:"#4a90ed"},
+    "grey": { label:"Grey", colorCode:"#5e6875"},
 }
 
 /**

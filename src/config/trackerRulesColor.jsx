@@ -7,6 +7,7 @@ import { TableCell, TextField, Select, MenuItem } from "@material-ui/core";
 
 import { trackerColumnDataTypes, colouringRuleColors } from "../common/constants"
 
+import StopIcon from "@material-ui/icons/Stop"
 
 class TrackerRulesColor extends React.Component{
     state= {
@@ -52,8 +53,21 @@ class TrackerRulesColor extends React.Component{
             >
                 {
                     Object.keys(this.state.selectListData).map( item =>
-                            <MenuItem key={ item } value={ item } >{ this.state.selectListData[item] }</MenuItem>
-                        )
+                        <MenuItem 
+                            key={ item } 
+                            value={ item } 
+                        >
+                            <StopIcon
+                                style={ {
+                                    color:this.state.selectListData[item].colorCode.toString(), 
+                                    //backgroundColor:"green"
+                                } }
+                            />
+                        { 
+                            this.state.selectListData[item].label.toString() 
+                        }
+                        </MenuItem>
+                    )
                 }
             </Select>
         )

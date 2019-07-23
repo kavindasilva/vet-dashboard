@@ -13,6 +13,7 @@ import TrackerRulesCondition from "../config/TrackerRulesCondition"
 
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import StopIcon from "@material-ui/icons/Stop"
 
 import { colouringRuleColors } from "../common/constants"
 
@@ -82,8 +83,21 @@ class NewRule extends React.Component{
                                         >
                                             {
                                                 Object.keys(colouringRuleColors).map( item =>
-                                                        <MenuItem key={ item } value={ item } >{ colouringRuleColors[item] }</MenuItem>
-                                                    )
+                                                    <MenuItem 
+                                                        key={ item } 
+                                                        value={ item } 
+                                                    >
+                                                        <StopIcon
+                                                            style={ {
+                                                                color: colouringRuleColors[item].colorCode.toString(), 
+                                                                //backgroundColor:"green"
+                                                            } }
+                                                        />
+                                                    { 
+                                                        colouringRuleColors[item].label.toString()
+                                                    }
+                                                    </MenuItem>
+                                                )
                                             }
                                         </Select>
                                     
