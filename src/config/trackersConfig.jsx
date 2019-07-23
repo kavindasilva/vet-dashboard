@@ -223,18 +223,10 @@ class TrackersConfig extends React.Component{
                                 Name: { tracker.name } 
                             </small>
 
-                            <Button 
-                                style={{
-                                    float: "right",
-                                    align: "right",
-                                }}
-                            >
-                                Add Column
-                            </Button>
 
-                                <NewColumn 
-                                    tracker_id={ tracker.tracker_id }
-                                />
+                            <NewColumn 
+                                tracker_id={ tracker.tracker_id }
+                            />
 
                             <div>
                             {
@@ -242,14 +234,10 @@ class TrackersConfig extends React.Component{
                             }
                             </div>
 
-                            <Button 
-                                style={{
-                                    float: "right",
-                                    align: "right",
-                                }}
-                            >
-                                Add Column
-                            </Button>
+                            <NewColumn 
+                                tracker_id={ tracker.tracker_id }
+                            />
+                            
                         </React.Fragment>
                     ) )
                 }

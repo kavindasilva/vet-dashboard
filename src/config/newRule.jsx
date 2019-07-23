@@ -76,14 +76,8 @@ class NewRule extends React.Component{
                                         "p-"+this.state.precedence+"-"+this.state.bgcolor
                                     }
                                         <Select
-                                            value={ 
-                                                this.state.bgcolor
-                                            }
-                                            onChange={
-                                                e => {
-                                                    this.setState({bgcolor: e.target.value})
-                                                }
-                                            }
+                                            value={ this.state.bgcolor }
+                                            onChange={ e => this.setState({bgcolor: e.target.value}) }
                                             fullWidth={false}
                                         >
                                             {

@@ -7,6 +7,7 @@ import { rootStore } from "../stores/mainStore";
 import { withStyles } from '@material-ui/core/styles';
 //import { styles } from '@material-ui/pickers/DatePicker/components/Calendar';
 
+import AddIcon from '@material-ui/icons/Add'
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import EditableCell from "../config/editableCell"
 
@@ -18,7 +19,7 @@ import ColumnDataType from "../config/columnDataType"
 import { trackerColumnDataTypes } from "../common/constants"
 
 import trackersAPI from "../apicalls/trackersAPI";
-import { Table, TableHead, TableCell, TableBody, TableRow, MenuItem, Select, Collapse, Button, Dialog, DialogTitle, DialogContent, DialogActions, Stepper, Typography, Step, StepLabel, TextField } from '@material-ui/core';
+import { Table, TableHead, TableCell, TableBody, TableRow, MenuItem, Select, Collapse, Button, Dialog, DialogTitle, DialogContent, DialogActions, Stepper, Typography, Step, StepLabel, TextField, Fab } from '@material-ui/core';
 
 import ArrowRight from "@material-ui/icons/ArrowRight"
 import ArrowDown from "@material-ui/icons/ArrowDropDown"
@@ -58,7 +59,6 @@ const useStyles = theme => ({
  */
 class NewColumn extends React.Component{
     classes=this.props.classes;
-    steps = this.getSteps();
 
 	state ={
         trackerId: this.props.tracker_id,
@@ -90,7 +90,10 @@ class NewColumn extends React.Component{
                         this.setState({ isOpen: true })
                     ) } 
                 >
-                    Add
+                    <Fab size="small" variant="extended" aria-label="Add">
+                        <AddIcon /> Column
+                    </Fab>
+                       
                 </Button>
 
                 {/* popup modal UI */}
@@ -100,96 +103,83 @@ class NewColumn extends React.Component{
                     aria-labelledby="draggable-dialog-title"
                 >
                     <DialogContent>
-                        { this.viewSteps() }
+                        { this.columnDataCaptureForm() }
                     </DialogContent>
+
+                    <DialogActions>
+                        <Button 
+                            onClick={ ()=> this.closePopUp() }
+                            variant="text"
+                            color="primary"
+                        >
+                            Cancel
+                        </Button>
+
+                        
+                        <Button
+                            variant="text"
+                            color="primary"
+                            onClick={ ()=>{
+                                this.saveNewColumn();
+                                this.closePopUp();
+                            } } 
+                        >
+                            OK
+                        </Button>
+                    </DialogActions>
                 </Dialog>
             
             </React.Fragment>
         );
     }
 
-    viewSteps = () =>{
+    columnDataCaptureForm = () =>{
         return (
-            <div >
-                <Stepper activeStep={this.state.activeStep}>
-                {
-                    this.steps.map((label, index) => {
-                        const stepProps = {};
-                        const labelProps = {};
+            <Table size="small">
+                <TableBody>
+                    <TableRow >
+                        
+                        {/* columnName  - should be equal to API json key */}
+                        <TableCell m={0} p={0} size="small">
+                            <TextField
+                                value={ this.state.columnName }
+                                onChange={ (e)=> this.setState({columnName: e.target.value}) }
+                                attribute="label"
+                                label={ "columnName" }
+                            />
+                        </TableCell>
+                        
+                        {/* column label */}
+                        <TableCell m={0} p={0} size="small">
+                            <TextField
+                                value={ this.state.columnLabel }
+                                onChange={ (e)=> this.setState({columnLabel: e.target.value}) }
+                                attribute="label"
+                                label={ "columnLabel" }
+                            />
+                        </TableCell>
 
-                        return (
-                            <Step key={label} {...stepProps}>
-                                <StepLabel {...labelProps}>{label}</StepLabel>
-                            </Step>
-                        );
-                    })
-                }
-                </Stepper>
-                <div>
-                {
-                    this.state.activeStep === this.steps.length 
-                    ?( // contradiction
-                        <div>
-                            <Typography >
-                                All steps completed - you&apos;re finished
-                            </Typography>
-                        </div>
-                    ) 
-                    :(
-                        <div>
-                            <Typography >
+                        {/* column data type */}
+                        <TableCell m={0} p={0} size="small">
+                            <Select
+                                value={ this.state.columnDataType }
+                                onChange={ e => this.setState({columnDataType: e.target.value}) }
+                                fullWidth={false}
+                            >
                             {
-                                this.getStepContent(this.state.activeStep)
+                                Object.keys(trackerColumnDataTypes).map( item =>
+                                    <MenuItem key={ item } value={ item } >
+                                    { 
+                                        trackerColumnDataTypes[item] 
+                                    }
+                                    </MenuItem>
+                                )
                             }
-                            </Typography>
-
-                            <div>
-                                <Button 
-                                    onClick={ ()=> this.closePopUp() }
-                                    variant="text"
-                                    color="primary"
-                                >
-                                    Cancel
-                                </Button>
-
-                                <Button 
-                                    disabled={this.state.activeStep === 0} 
-                                    onClick={ ()=>{
-                                        let prevStep= this.state.activeStep - 1;
-                                        this.setState({activeStep: prevStep})
-                                    } } 
-                                >
-                                    Back
-                                </Button>
-
-                                {
-                                    this.state.activeStep === this.steps.length - 1 
-                                    ?<Button 
-                                        onClick={ () => { 
-                                            this.saveNewColumn()
-                                            this.closePopUp(); 
-                                        } } 
-                                        variant="text" color="primary"
-                                    >
-                                        OK
-                                    </Button> 
-                                    :<Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={ ()=>{
-                                            let nextStep= this.state.activeStep + 1;
-                                            this.setState({activeStep: nextStep})
-                                        } } 
-                                    >
-                                        Next
-                                    </Button>
-                                }
-                            </div>
-                        </div>
-                    )
-                }
-                </div>
-            </div>
+                            </Select>
+                        </TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
         );
     }
 
@@ -206,64 +196,6 @@ class NewColumn extends React.Component{
 
             }
         });
-    }
-
-    /** step labels */
-    getSteps(){
-        return [
-            'Column name from API', 
-            'Label to display', 
-            'Data type'
-        ];
-    }
-    
-    /** step content related body and input elements */
-    getStepContent(step){
-        switch(step){
-            case 0:
-                return(
-                    <TextField
-                        value={ this.state.columnName }
-                        onChange={ (e)=> this.setState({columnName: e.target.value}) }
-                        attribute="label"
-                        label={ "columnName" }
-                    >
-                    </TextField>
-                );
-
-            case 1:
-                return(
-                    <TextField
-                        value={ this.state.columnLabel }
-                        onChange={ (e)=> this.setState({columnLabel: e.target.value}) }
-                        attribute="label"
-                        label={ "columnLabel" }
-                    >
-                    </TextField>
-                );
-            
-            case 2:
-                return(
-                    <Select
-                        value={ this.state.columnDataType }
-                        onChange={ e => this.setState({columnDataType: e.target.value}) }
-                        fullWidth={false}
-                    >
-                    {
-                        Object.keys(trackerColumnDataTypes).map( item =>
-                            <MenuItem key={ item } value={ item } >
-                            { 
-                                trackerColumnDataTypes[item] 
-                            }
-                            </MenuItem>
-                        )
-                    }
-                    </Select>
-                );
-
-            default:
-                return "def step";
-        }
     }
 
     openPopUp = () => {
