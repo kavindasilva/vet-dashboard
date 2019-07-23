@@ -237,7 +237,7 @@ class TrackersConfig extends React.Component{
                                     this.saveTrackerToDB(tracker.tracker_id)
                                 } }
                             >
-                                Save Trackers
+                                Save Tracker Config
                             </Button>
                             <Button 
                                 style={{

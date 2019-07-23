@@ -20,14 +20,17 @@ import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead, FormControl
 
 import { spacing } from '@material-ui/system';
 
+import trackerAPI from "../apicalls/trackersAPI"
+const trackerAPIObj = new trackerAPI();
+
 class NewTracker extends React.Component{
     state ={
-        
+        trackerName:"",
+        trackerPipeline: "",
+        HSPipelines: [{"id": "679579", "label": "Potential Onboarding Pipeline"}],
     }
 
     render(){
-        //console.log('NewTracker: Rendering cell content');
-        //return(<React.Fragment>x</React.Fragment>);
         return(
             <React.Fragment>
             {
@@ -46,22 +49,47 @@ class NewTracker extends React.Component{
                     <TextField
                         id="trackerName"
                         name="trackerName"
+                        value={ this.state.trackerName }
+                        onChange={ e => this.setState({trackerName: e.target.value}) }
                         label="Tracker Name"
                         fullWidth
                     />
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
-                    <Select value={ this.state.attributeValue } 
-                        //onChange={ e => this.setState({ attributeValue: e.target.value }) }
+                    <Select value={ this.state.trackerPipeline } 
+                        onChange={ e => this.setState({ trackerPipeline: e.target.value }) }
                         fullWidth={true}
                     >
                         {
-                            ["pipeline","data","from","hubspot"].map( item =>
-                                    <MenuItem key={ item } value={ item } >{ item }</MenuItem>
-                                )
+                            this.state.HSPipelines.map( item =>
+                                <MenuItem 
+                                    key={ item.id.toString() } 
+                                    value={ item.id.toString() } 
+                                >
+                                { item.id.toString() + " - " + item.label.toString() }
+                                </MenuItem>
+                            )
                         }
                     </Select>
+                </Grid>
+
+                <Grid item xs={12} sm={12}>
+                    <Button
+                        label="Save Button"
+                        fullWidth
+                        onClick={ ()=>{
+                            trackerAPIObj.saveNewTracker(
+                                {
+                                    name: this.state.trackerName,
+                                    pipeline_id: this.state.trackerPipeline,
+                                    columns: [],
+                                }
+                            )
+                        } }
+                    >
+                        Save
+                    </Button>
                 </Grid>
 
             </Grid>
@@ -78,7 +106,13 @@ class NewTracker extends React.Component{
 	};
     
     componentDidMount(){
-    
+        trackerAPIObj.getAvailablePipelines()
+        .then(
+            res => {
+                console.log("newTracker pipelines res:", res.data);
+                this.setState({HSPipelines: res.data });
+            }
+        )
     }
 }
 
