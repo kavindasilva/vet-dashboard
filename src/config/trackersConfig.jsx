@@ -266,6 +266,7 @@ class TrackersConfig extends React.Component{
         return(
             <Table size="small">
                 <TableHead>
+                    <TableCell></TableCell>
                     <TableCell>Label</TableCell>
                     <TableCell>Type</TableCell>
                     <TableCell>Users</TableCell>
@@ -276,11 +277,10 @@ class TrackersConfig extends React.Component{
                 {
                     columns.map( column =>(
                         <TableRow>
-                            {/* label */}
+                            {/* collapse/extend arrow */}
                             <TableCell 
                                 m={0} p={0} size="small"
                                 className={ this.props.classes.configTopAlignedCell }
-                                //style={{ verticalAlign: 'top' }}
                             >
                                 <span
                                     onClick={ () => 
@@ -296,7 +296,14 @@ class TrackersConfig extends React.Component{
                                     :<ArrowRight />
                                 }
                                 </span>
+                            </TableCell>
 
+                            {/* label */}
+                            <TableCell 
+                                m={0} p={0} size="small"
+                                className={ this.props.classes.configTopAlignedCell }
+                                //style={{ verticalAlign: 'top' }}
+                            >
                                 <EditableCell 
                                     tracker_id={ tracker.tracker_id }
                                     column_name={ column.name }

@@ -117,17 +117,19 @@ class TrackersRulesConfig extends React.Component{
                     
                     }
                     <TableRow>
-                        {/* new rule adding button */}
-                        <NewRule 
-                            tracker_id={ this.props.tracker_id }
-                            column_name={ this.props.column_name }
+                        <TableCell colSpan={3}>
+                            {/* new rule adding button */}
+                            <NewRule 
+                                tracker_id={ this.props.tracker_id }
+                                column_name={ this.props.column_name }
 
-                            nextPrecedence={ 
-                                (this.props.columnRules.length>0)
-                                ?(this.props.columnRules.length + 1)
-                                :1
-                            }
-                        />
+                                nextPrecedence={ 
+                                    (this.props.columnRules.length>0)
+                                    ?(this.props.columnRules.length + 1)
+                                    :1
+                                }
+                            />
+                        </TableCell>
                     </TableRow>
                     </TableBody>
                 </Table>
