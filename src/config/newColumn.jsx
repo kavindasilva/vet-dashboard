@@ -18,7 +18,7 @@ import ColumnDataType from "../config/columnDataType"
 import { trackerColumnDataTypes } from "../common/constants"
 
 import trackersAPI from "../apicalls/trackersAPI";
-import { Table, TableHead, TableCell, TableBody, TableRow, MenuItem, Select, Collapse, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
+import { Table, TableHead, TableCell, TableBody, TableRow, MenuItem, Select, Collapse, Button, Dialog, DialogTitle, DialogContent, DialogActions, Stepper, Typography, Step, StepLabel } from '@material-ui/core';
 
 import ArrowRight from "@material-ui/icons/ArrowRight"
 import ArrowDown from "@material-ui/icons/ArrowDropDown"
@@ -51,26 +51,37 @@ const useStyles = theme => ({
 	},
 });
 
+function getSteps(){
+    return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+}
+
+function getStepContent(step){
+    switch(step){
+        case 1:
+            return "step 1";
+        default:
+            return "def step";
+    }
+}
+
 /**
  * New column is added for a tracker
  */
 class NewColumn extends React.Component{
     classes=this.props.classes;
-	state = { 
-        ...this.props.metaData,
-        ...this.props.trackers,
+    steps = getSteps();
 
-        /** current viewing tracker */      
-        tabValue:0,
+	state ={
+        trackerId: this.props.tracker_id,
+        columnName: this.props.column_name,
 
-        /** component to show */            
-        componentToShow:"allTrackers",
+        isOpen: false,
 
-        attributeValue: "",
+        conditions: "",
+        bgcolor: "grey",
+        precedence: this.props.nextPrecedence, //auto increment
 
-        //columnName: this.props.
-        rowEdited:[],
-        rowCollapsed:[],
+        activeStep: 1,
     }
 
 	componentDidMount(){
@@ -96,18 +107,8 @@ class NewColumn extends React.Component{
                     onClose={this.closePopUp}
                     aria-labelledby="draggable-dialog-title"
                 >
-                    <DialogTitle id="draggable-dialog-title" 
-                    // style={
-                    //     { ...this.styleMatUI.titleBarPrimary,  padding: "18px 24px 16px 24px" }
-                    // }
-                    >
-
-                        Change { this.state.attributeName }
-
-                    </DialogTitle>
-
                     <DialogContent>
-                        gj
+                        { this.step1() }
                     </DialogContent>
 
                     <DialogActions>
@@ -135,6 +136,86 @@ class NewColumn extends React.Component{
                 </Dialog>
             
             </React.Fragment>
+        );
+    }
+
+    step1 = () =>{
+        return (
+            <div >
+                <Stepper activeStep={this.state.activeStep}>
+                {
+                    this.steps.map((label, index) => {
+                        const stepProps = {};
+                        const labelProps = {};
+                        // if (isStepOptional(index)) {
+                        // labelProps.optional = <Typography variant="caption">Optional</Typography>;
+                        // }
+                        // if (isStepSkipped(index)) {
+                        // stepProps.completed = false;
+                        // }
+                        return (
+                            <Step key={label} {...stepProps}>
+                                <StepLabel {...labelProps}>{label}</StepLabel>
+                            </Step>
+                        );
+                    })
+                }
+                </Stepper>
+                <div>
+                {
+                    this.state.activeStep === this.steps.length 
+                    ?(
+                        <div>
+                        <Typography >
+                            All steps completed - you&apos;re finished
+                        </Typography>
+                        {/* <Button onClick={handleReset} >
+                            Reset
+                        </Button> */}
+                        </div>
+                    ) 
+                    :(
+                        <div>
+                            <Typography >
+                            {
+                                getStepContent(this.state.activeStep)
+                            }
+                            </Typography>
+
+                            <div>
+                                <Button 
+                                    disabled={this.state.activeStep === 0} 
+                                    //onClick={handleBack} 
+                                >
+                                    Back
+                                </Button>
+                                {(
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    //onClick={handleSkip}
+                                >
+                                    Skip
+                                </Button>
+                                )}
+
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    //onClick={handleNext}
+                                >
+                                {
+                                    this.state.activeStep === this.steps.length - 1 
+                                    ?'Finish' 
+                                    :'Next'
+                                }
+                                </Button>
+                            </div>
+                        </div>
+                    )
+                }
+                </div>
+            </div>
         );
     }
 
