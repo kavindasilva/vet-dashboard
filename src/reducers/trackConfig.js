@@ -30,10 +30,24 @@ const TrackConfigReducer = (state, action) => {
 
             return newState;
 
+        case "ADD_CONFIG_COLUMN_NEW":
+            trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;
+
+            newState.configData[trackerIndex].columns.push(
+                {
+                    "name": action.payload.columnName,
+                    "label": action.payload.columnLabel,
+                    "type": action.payload.columnDataType,
+
+                    "permissions":[],
+                    "rules":[]
+                }
+            );
+            return newState;
+
         case "ADD_CONFIG_RULE_NEW":
             trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;
             columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
-            //precedenceIndex  =  getRulesIndex( newState.configData[trackerIndex].columns[columnIndex], action.payload.precedenceId); //precedenceIndex=-1;
 
             newState.configData[trackerIndex].columns[columnIndex].rules.push(
                 {

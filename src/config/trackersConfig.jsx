@@ -78,7 +78,7 @@ class TrackersConfig extends React.Component{
     classes=this.props.classes;
 	state = { 
         ...this.props.metaData,
-        ...this.props.trackers,
+        trackerConfigData: this.props.trackers,
 
         /** current viewing tracker */      
         tabValue:0,
@@ -97,7 +97,13 @@ class TrackersConfig extends React.Component{
 		//console.log("TrackersConfig - mount. json:", this.state.trackers); 
         //console.log("TrackersConfig - mount. props.metaData:", this.props.metaData); 
         this.getTrackersConfig();
-	}
+    }
+    
+    componentWillReceiveProps( newProps ){
+        if( newProps.trackers !== this.state.trackerConfigData ){
+            this.setState({trackerConfigData: newProps.trackers});
+        }
+    }
 
 	render(){
 		return(
@@ -351,10 +357,10 @@ class TrackersConfig extends React.Component{
                                 className={ this.props.classes.configTopAlignedCell }
                             >
                                 <Collapse 
-                                    //hidden={!this.state.rowCollapsed[column.name]} 
-                                    hidden={ false } 
-                                    //in={this.state.rowCollapsed[column.name]}
-                                    in={ true }
+                                    hidden={!this.state.rowCollapsed[column.name]} 
+                                    //hidden={ false } 
+                                    in={this.state.rowCollapsed[column.name]}
+                                    //in={ true }
                                 >
 
                                     <TrackerRulesConfig
