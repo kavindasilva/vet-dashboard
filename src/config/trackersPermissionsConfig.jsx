@@ -37,15 +37,18 @@ class TrackersPemissionsConfig extends React.Component{
     render(){
         //console.log('TrackersPemissionsConfig: Rendering cell content');
         //return(<React.Fragment>x</React.Fragment>);
+        let user = Object.values(this.props.allUsers).find( allUser => (
+            allUser.user_id === this.props.columnPermissions.userId
+        ) );
         return(
             <React.Fragment>
                 <span >
                 { this.props.columnPermissions.userId } . 
                 { 
                     /** match current user with all_user_data */
-                    Object.values(this.props.allUsers).find( allUser => (
-                        allUser.user_id === this.props.columnPermissions.userId
-                    ) ).email.toString()
+                    (user)
+                    ?user.email.toString()
+                    :"none"
                 }
                 </span>
                     
