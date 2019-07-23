@@ -55,7 +55,11 @@ const useStyles = theme => ({
 
 
 /**
- * New column is added for a tracker
+ * New column adding component for a tracker
+ * 
+ * Renders dialog viewing button
+ * 
+ * Dialog box is hidden default
  */
 class NewColumn extends React.Component{
     classes=this.props.classes;
@@ -209,11 +213,13 @@ class NewColumn extends React.Component{
 
 }
 
-const mapStateToProps = state => {
-	console.log('NewColumn.jsx-mapStateToProps', state);
+const mapStateToProps = (state, props) => {
+	//console.log('NewColumn.jsx-mapStateToProps', state);
 	return {
-        metaData: state.MetaReducer.metaData,
-        trackers: state.TrackConfigReducer.configData,
+        columnData: state.TrackConfigReducer.configData.find( tracker => (
+			tracker.tracker_id === parseInt( props.tracker_id )
+		) )
+		.columns,
 	};
 }
 

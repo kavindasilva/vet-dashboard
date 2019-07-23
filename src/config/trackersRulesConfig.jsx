@@ -93,7 +93,7 @@ class TrackersRulesConfig extends React.Component{
 
                                             value={ rule.bgcolor }
                                             attribute="bgcolor"
-                                            predefinedData={ colouringRuleColors }
+                                            //predefinedData={ colouringRuleColors }
                                         />
                                         
                                         </TableCell >

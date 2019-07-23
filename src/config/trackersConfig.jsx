@@ -77,7 +77,7 @@ const useStyles = theme => ({
 class TrackersConfig extends React.Component{
     classes=this.props.classes;
 	state = { 
-        ...this.props.metaData,
+        metaData: this.props.metaData,
         trackerConfigData: this.props.trackers,
 
         /** current viewing tracker */      
@@ -100,6 +100,7 @@ class TrackersConfig extends React.Component{
     }
     
     componentWillReceiveProps( newProps ){
+		console.log("TrackersConfig - receiveNewProps:", newProps); 
         if( newProps.trackers !== this.state.trackerConfigData ){
             this.setState({trackerConfigData: newProps.trackers});
         }
