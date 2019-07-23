@@ -34,6 +34,7 @@ import NewTracker from "../config/newTracker"
 import ColumnDataType from "../config/columnDataType"
 import NewColumn from "../config/newColumn"
 import NewRule from "../config/newRule"
+import TrackersConfigColumns from "../config/trackersConfigColumns"
 
 import { trackerColumnDataTypes } from "../common/constants"
 
@@ -168,33 +169,8 @@ class TrackersConfig extends React.Component{
                     >
                         Add New Tracker
                     </Button>
-                <hr/>
+                
 
-                    {/* <Button 
-                        style={{
-                            float: "right",
-                            align: "right",
-                        }}
-                        onClick={ ()=>{
-                            this.setState({componentToShow: "newTracker"})
-                        } }
-                    >
-                        Save Trackers
-                    </Button>
-                    <Button 
-                        style={{
-                            float: "right",
-                            align: "right",
-                        }}
-                        onClick={ ()=>{
-                            this.setState({ trackersConfigData: null }, ()=>{
-                                this.getTrackersConfig();
-                            })
-                            
-                        } }
-                    >
-                        Cancel
-                    </Button> */}
                 </div>
                 
 
@@ -259,11 +235,36 @@ class TrackersConfig extends React.Component{
 
 
                             <div>
-                            {
-                                this.showColumns(tracker)
-                            }
+                                <TrackersConfigColumns 
+                                    tracker_id={ tracker.tracker_id }
+                                />
                             </div>
 
+                            <Button 
+                                style={{
+                                    float: "right",
+                                    align: "right",
+                                }}
+                                onClick={ ()=>{
+                                    this.saveTrackerToDB(tracker.tracker_id)
+                                } }
+                            >
+                                Save Tracker Config
+                            </Button>
+                            <Button 
+                                style={{
+                                    float: "right",
+                                    align: "right",
+                                }}
+                                onClick={ ()=>{
+                                    this.setState({ trackersConfigData: null }, ()=>{
+                                        this.getTrackersConfig();
+                                    })
+                                    
+                                } }
+                            >
+                                Cancel
+                            </Button>
                             <NewColumn 
                                 tracker_id={ tracker.tracker_id }
                             />
@@ -275,186 +276,8 @@ class TrackersConfig extends React.Component{
 			</div>
 		);
     }
-    
-    /**
-     * show the tracker-config columns of a provided tracker
-     */
-    showColumns = (tracker) => {
-        let columns = tracker.columns;
-        return(
-            <Table size="small">
-                <TableHead>
-                    <TableRow>
-                        <TableCell></TableCell>
-                        <TableCell>Name(API)</TableCell>
-                        <TableCell>Label</TableCell>
-                        <TableCell>Type</TableCell>
-                        <TableCell>Users</TableCell>
-                        <TableCell>Rules</TableCell>
-                    </TableRow>
-                </TableHead>
-                
-                <TableBody>
-                {
-                    columns.map( column =>(
-                        <TableRow key={ column.name }>
-                            {/* collapse/extend arrow */}
-                            <TableCell 
-                                m={0} p={0} size="small"
-                                className={ this.props.classes.configTopAlignedCell }
-                            >
-                                <span
-                                    onClick={ () => 
-                                        this.markRowCollapsed(
-                                            column.name,
-                                            this.state.rowCollapsed[column.name]
-                                        )
-                                    }
-                                >
-                                { 
-                                    (this.state.rowCollapsed[column.name])
-                                    ?<ArrowDown />
-                                    :<ArrowRight />
-                                }
-                                </span>
-                            </TableCell>
 
-                            {/* name */}
-                            <TableCell 
-                                m={0} p={0} size="small"
-                                className={ this.props.classes.configTopAlignedCell }
-                            >
-                                <EditableCell 
-                                    tracker_id={ tracker.tracker_id }
-                                    column_name={ column.name }
-                                    value={column.name}
-                                    attribute="name"
-                                >
-                                </EditableCell>
-                            </TableCell>
-
-                            {/* label */}
-                            <TableCell 
-                                m={0} p={0} size="small"
-                                className={ this.props.classes.configTopAlignedCell }
-                            >
-                                <EditableCell 
-                                    tracker_id={ tracker.tracker_id }
-                                    column_name={ column.name }
-                                    value={column.label}
-                                    attribute="label"
-                                >
-                                </EditableCell>
-                            </TableCell>
-
-                            {/* data type */}
-                            <TableCell 
-                                m={0} p={0} size="small"
-                                className={ this.props.classes.configTopAlignedCell }
-                            > 
-                            {
-                                //trackerColumnDataTypes[column.type]
-                                <ColumnDataType
-                                    tracker_id={ tracker.tracker_id }
-                                    column_name={ column.name }
-
-                                    value={column.type}
-                                    attribute="type"
-                                    predefinedData={ trackerColumnDataTypes }
-
-                                />
-                            }
-                            </TableCell>
-
-                            {/* user persmissions */}                            
-                            <TableCell 
-                                m={0} p={0} size="small"
-                                className={ this.props.classes.configTopAlignedCell }
-                            >
-                                <Collapse 
-                                    hidden={!this.state.rowCollapsed[column.name]} 
-                                    in={this.state.rowCollapsed[column.name]}
-                                    //timeout={ { enter:10, exit:10 } }
-                                >
-                                {
-                                    column.permissions.map( user => (
-                                        <React.Fragment key ={user.userId}>
-                                            <TrackersPemissionsConfig
-                                                tracker_id={ tracker.tracker_id }
-                                                column_name={ column.name }
-                                                user_id ={user.userId}
-                                                key ={user.userId}
-                                            />
-                                            <br/>
-                                        </React.Fragment>
-                                    ) )
-                                    
-                                }
-                                </Collapse>
-                            </TableCell>
-
-
-                            <TableCell 
-                                m={0} p={0} size="small"
-                                className={ this.props.classes.configTopAlignedCell }
-                            >
-                                <Collapse 
-                                    hidden={!this.state.rowCollapsed[column.name]} 
-                                    //hidden={ false } 
-                                    in={this.state.rowCollapsed[column.name]}
-                                    //in={ true }
-                                >
-
-                                    <TrackerRulesConfig
-                                        tracker_id={ tracker.tracker_id }
-                                        column_name={ column.name }
-                                    >
-                                    </TrackerRulesConfig>
-                                    {/* <NewRule 
-                                        tracker_id={ tracker.tracker_id }
-                                        column_name={ column.name }
-                                    /> */}
-                                    
-                                </Collapse>
-                            
-                            </TableCell>
-
-                        </TableRow>                
-                    ) )
-                }
-                </TableBody>
-            </Table>
-        );
-    }
-
-    /**
-     * to check single row is collapsed/expaned.
-     * 
-     * columnName: column name
-     * 
-     * collapsed: current status of collapsed or not
-     * 
-     * state ={
-     *  rowCollapsedData:[
-     *      "column_name": <bool>
-     *  ]
-     * }
-     */
-    markRowCollapsed = (columnName, collapsed) => {
-        let rowCollapsedData = { ...this.state.rowCollapsed };
-        rowCollapsedData[columnName] = !collapsed
-        this.setState({ rowCollapsed: rowCollapsedData });
-    }
-
-    /**
-     * to check single row is edited. // not used
-     */
-    markRowEdited = (columnName) => {
-        let rowEditedData = { ...this.state.rowEdited };
-        rowEditedData[columnName] = true
-        this.setState({ rowEdited: rowEditedData });
-    }
-    
+   
 
     /**
      * Retrieve tracker configuration information from API
