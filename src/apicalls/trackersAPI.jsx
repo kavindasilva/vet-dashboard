@@ -25,7 +25,20 @@ class trackersAPI extends React.Component{
       });
   }
 
-  saveTrackerConfig( configJson ){}
+  saveTrackerConfig( configJson, trackerId ){ // http://ontrack.dev.io/rest/trackers/4
+    var patchUri = uriGetConfigData + trackerId;
+    console.log("trackersAPI-saveTrackerConfig uri:", patchUri, configJson); //return;
+
+    return axios.patch( patchUri, configJson )
+      .then(result => {
+        console.log("trackersAPI-saveTrackerConfig - getTrackerConfig",result);
+        return result;
+      })
+      .catch(error => {
+        console.log("trackersAPI-saveTrackerConfig error", error);
+        return error;
+      });
+  }
 
 
 

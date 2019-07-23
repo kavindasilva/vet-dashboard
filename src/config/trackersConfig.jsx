@@ -170,7 +170,7 @@ class TrackersConfig extends React.Component{
                     </Button>
                 <hr/>
 
-                    <Button 
+                    {/* <Button 
                         style={{
                             float: "right",
                             align: "right",
@@ -194,7 +194,7 @@ class TrackersConfig extends React.Component{
                         } }
                     >
                         Cancel
-                    </Button>
+                    </Button> */}
                 </div>
                 
 
@@ -228,9 +228,35 @@ class TrackersConfig extends React.Component{
                             </small>
 
 
+                            <Button 
+                                style={{
+                                    float: "right",
+                                    align: "right",
+                                }}
+                                onClick={ ()=>{
+                                    this.saveTrackerToDB(tracker.tracker_id)
+                                } }
+                            >
+                                Save Trackers
+                            </Button>
+                            <Button 
+                                style={{
+                                    float: "right",
+                                    align: "right",
+                                }}
+                                onClick={ ()=>{
+                                    this.setState({ trackersConfigData: null }, ()=>{
+                                        this.getTrackersConfig();
+                                    })
+                                    
+                                } }
+                            >
+                                Cancel
+                            </Button>
                             <NewColumn 
                                 tracker_id={ tracker.tracker_id }
                             />
+
 
                             <div>
                             {
@@ -454,6 +480,16 @@ class TrackersConfig extends React.Component{
         .then(
             this.setState({trackersConfigData:null})
         )
+    }
+
+    saveTrackerToDB( trackerId ){
+        
+        rootStore.dispatch({
+            type: 'SAVE_CONFIG_TO_DB',
+            payload: {
+                trackerId: trackerId
+            }
+        });
     }
 
 

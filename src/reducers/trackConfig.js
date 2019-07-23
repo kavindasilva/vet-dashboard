@@ -1,5 +1,7 @@
 
 import { isUndefined } from "util";
+import trackerAPI from "../apicalls/trackersAPI"
+const trackerAPIObj = new trackerAPI();
 
 const TrackConfigReducer = (state, action) => {
     console.log("TrackConfigReducer: state: ", state, "\naction: ", action)
@@ -27,7 +29,12 @@ const TrackConfigReducer = (state, action) => {
             return newState;
 
         case 'SAVE_CONFIG_TO_DB':
-            return state;
+            trackerIndex  = getTrackerIndex(newState, action.payload.trackerId);
+            trackerAPIObj.saveTrackerConfig(
+                { columns: newState.configData[trackerIndex].columns},
+                action.payload.trackerId
+            );
+            return newState;
 
         case "ADD_CONFIG_COLUMN_NEW":
             trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;
