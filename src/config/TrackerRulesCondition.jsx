@@ -7,10 +7,13 @@ import { TableCell, TextField, Select, MenuItem } from "@material-ui/core";
 
 import { trackerColumnDataTypes } from "../common/constants"
 
+import Peg from "../parsers/conditionsParser";
+
 
 class TrackerRulesCondition extends React.Component{
     state= {
-        attributeValue: this.props.value,
+        //attributeValue: this.props.value,
+        attributeValue: (this.props.columnRule)?(this.props.columnRule.conditions):"",
         attributeName: this.props.attribute,
 
         trackerId: this.props.tracker_id,
@@ -21,17 +24,18 @@ class TrackerRulesCondition extends React.Component{
         selectListData: this.props.predefinedData,
     }
 
-    componentWillReceiveProps( newProps ){
-        // if( newProps.columnRule.conditions !== this.state.attributeValue ){
-        //     this.setState({attributeValue: newProps.columnRule.conditions});
-        // }
+    componentWillReceiveProps(newProps){
+        if(newProps.columnRule && newProps.columnRule.conditions !== this.state.attributeValue)
+            this.setState({attributeValue: newProps.columnRule.conditions})
     }
 
     render(){
         return(
             <TextField
-                value={ (this.props.columnRule)?(this.props.columnRule.conditions):this.state.attributeValue }
-                onChange={ (e)=>{ this.setState({attributeValue: e.target.value}) } }
+                //value={ (this.props.columnRule)?(this.props.columnRule.conditions):this.state.attributeValue }
+                //onChange={ (e)=>{ this.setState({attributeValue: e.target.value}) } }
+                value={ this.state.attributeValue }
+                onChange={ (e)=>{ this.validateExpr(e.target.value) } }
                 onBlur={ ()=>{ 
                     rootStore.dispatch({
                         type: 'UPDATE_CONFIG_RULE_CONDITION',
@@ -48,6 +52,10 @@ class TrackerRulesCondition extends React.Component{
                 fullWidth={false}
             />
         )
+    }
+
+    validateExpr = (val) => {
+        this.setState({attributeValue: val});
     }
 
 }
