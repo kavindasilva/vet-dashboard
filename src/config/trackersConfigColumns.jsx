@@ -78,7 +78,8 @@ class TrackersConfigColumns extends React.Component{
     classes=this.props.classes;
 	state = { 
         trackerColumnConfigData: this.props.tracker,
-        columnCount: this.props.trackerCols, // this is to fix bug: new column added not show immediately
+        columnCount0: this.props.trackerColsCount, // this is to fix bug: new column added not shown immediately
+        columnCount: JSON.stringify(this.props.tracker), 
 
         rowCollapsed:[],
     }
@@ -91,7 +92,7 @@ class TrackersConfigColumns extends React.Component{
     }
 
 	render(){
-        console.log("trackreConfigColumn col count:", this.state.columnCount);
+        //console.log("trackreConfigColumn col count:", this.state.columnCount);
 		return(
 			<React.Fragment>
 				{ 
@@ -122,7 +123,6 @@ class TrackersConfigColumns extends React.Component{
                 <TableBody>
                 {
                     this.props.tracker.columns.map( column =>(
-                    //this.state.trackerColumnConfigData.columns.map( column =>(
                         <TableRow key={ column.name }>
                             {/* collapse/extend arrow */}
                             <TableCell 
@@ -179,7 +179,6 @@ class TrackersConfigColumns extends React.Component{
                                 className={ this.props.classes.configTopAlignedCell }
                             > 
                             {
-                                //trackerColumnDataTypes[column.type]
                                 <ColumnDataType
                                     tracker_id={ this.props.tracker.tracker_id }
                                     column_name={ column.name }
@@ -280,9 +279,9 @@ const mapStateToProps = (state, props) => {
             tracker.tracker_id === props.tracker_id
         ) ),
 
-        trackerCols: state.TrackConfigReducer.configData.find( tracker => (
+        trackerColsCount: JSON.stringify(state.TrackConfigReducer.configData.find( tracker => (
             tracker.tracker_id === props.tracker_id
-        ) ).columns.length, // this is to fix bug: new column added not show immediately
+        ) ).columns.length), // this is to fix bug: new column added not shown immediately
 	};
 }
 

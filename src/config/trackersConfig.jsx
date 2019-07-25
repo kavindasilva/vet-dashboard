@@ -44,6 +44,17 @@ import { Table, TableHead, TableCell, TableBody, TableRow, MenuItem, Select, Col
 import ArrowRight from "@material-ui/icons/ArrowRight"
 import ArrowDown from "@material-ui/icons/ArrowDropDown"
 
+//import parser from './parser';
+
+//import x from "pegjs"
+//var peg = require("pegjs");
+//import {Peg} from "@types/pegjs"
+//import peg from "pegjs/bin/pegjs"
+//import { parser } from "pegjs/lib/peg"
+
+//var parser = peg.generate("start = ('a' / 'b')+");
+//var parser = Peg.buildParser('start = expression;expression = text + number;text = a: [a-z]+{return a.join("");};number = b:[0-9]+{return b.join("");}');
+//console.log(parser.parse("test123"));
 
 const trackersAPIobj = new trackersAPI();
 
