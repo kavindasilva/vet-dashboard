@@ -78,7 +78,7 @@ class TrackersConfigColumns extends React.Component{
     classes=this.props.classes;
 	state = { 
         trackerColumnConfigData: this.props.tracker,
-        columnCount: this.props.tracker.columns.length,
+        columnCount: this.props.trackerCols, // this is to fix bug: new column added not show immediately
 
         rowCollapsed:[],
     }
@@ -279,6 +279,10 @@ const mapStateToProps = (state, props) => {
         tracker: state.TrackConfigReducer.configData.find( tracker => (
             tracker.tracker_id === props.tracker_id
         ) ),
+
+        trackerCols: state.TrackConfigReducer.configData.find( tracker => (
+            tracker.tracker_id === props.tracker_id
+        ) ).columns.length, // this is to fix bug: new column added not show immediately
 	};
 }
 
