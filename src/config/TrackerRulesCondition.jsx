@@ -10,7 +10,7 @@ import { trackerColumnDataTypes } from "../common/constants"
 
 class TrackerRulesCondition extends React.Component{
     state= {
-        attributeValue: (this.props.columnRule)?this.props.columnRule.conditions:this.props.value,
+        attributeValue: this.props.value,
         attributeName: this.props.attribute,
 
         trackerId: this.props.tracker_id,
@@ -22,15 +22,15 @@ class TrackerRulesCondition extends React.Component{
     }
 
     componentWillReceiveProps( newProps ){
-        if( newProps.columnRule.conditions !== this.state.attributeValue ){
-            this.setState({attributeValue: newProps.columnRule.conditions});
-        }
+        // if( newProps.columnRule.conditions !== this.state.attributeValue ){
+        //     this.setState({attributeValue: newProps.columnRule.conditions});
+        // }
     }
 
     render(){
         return(
             <TextField
-                value={ this.state.attributeValue }
+                value={ (this.props.columnRule)?(this.props.columnRule.conditions):this.state.attributeValue }
                 onChange={ (e)=>{ this.setState({attributeValue: e.target.value}) } }
                 onBlur={ ()=>{ 
                     rootStore.dispatch({
