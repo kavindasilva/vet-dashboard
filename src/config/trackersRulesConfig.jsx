@@ -178,7 +178,7 @@ class TrackersRulesConfig extends React.Component{
 
 
 const mapStateToProps = (state, props) => {
-    console.log("trackerRulesConfig props", props)
+    //console.log("trackerRulesConfig props", props)
     let colrule= state.TrackConfigReducer.configData.find( tracker => (
         tracker.tracker_id === parseInt( props.tracker_id )
     ) )

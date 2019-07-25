@@ -56,6 +56,17 @@ class TrackerRulesCondition extends React.Component{
 
     validateExpr = (val) => {
         this.setState({attributeValue: val});
+
+        let ast = {}; let error = ''; 
+        let res=null;
+
+        try { 
+            res = Peg.parse(this.state.attributeValue);
+        } catch (ex) {
+            res = ex.message;
+        }
+
+        console.log("TrackerRulesCondition expr",  res);
     }
 
 }
