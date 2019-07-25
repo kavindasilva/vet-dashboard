@@ -90,8 +90,8 @@ class TrackersConfig extends React.Component{
         attributeValue: "",
 
         //columnName: this.props.
-        rowEdited:[],
-        rowCollapsed:[],
+        // rowEdited:[],
+        // rowCollapsed:[],
     }
 
 	componentDidMount(){
@@ -305,6 +305,9 @@ class TrackersConfig extends React.Component{
         )
     }
 
+    /**
+     * write columns config of single tracker to the DB
+     */
     saveTrackerToDB( trackerId ){
         
         rootStore.dispatch({

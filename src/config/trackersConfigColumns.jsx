@@ -77,21 +77,21 @@ const useStyles = theme => ({
 class TrackersConfigColumns extends React.Component{
     classes=this.props.classes;
 	state = { 
+        trackerColumnConfigData: this.props.tracker,
+        columnCount: this.props.tracker.columns.length,
 
-        attributeValue: "",
-
-        rowEdited:[],
         rowCollapsed:[],
     }
    
-    componentWillReceiveProps2( newProps ){
-		console.log("TrackersConfigColumns - receiveNewProps:", newProps); 
-        if( newProps.trackers !== this.state.trackerConfigData ){
-            this.setState({trackerConfigData: newProps.trackers});
-        }
+    componentWillReceiveProps( newProps ){
+		console.log("TrackersColumnsConfig - receiveNewProps:", newProps); 
+        // if( newProps.trackers !== this.state.trackerConfigData ){
+        //     this.setState({trackerConfigData: newProps.trackers});
+        // }
     }
 
 	render(){
+        console.log("trackreConfigColumn col count:", this.state.columnCount);
 		return(
 			<React.Fragment>
 				{ 
@@ -122,6 +122,7 @@ class TrackersConfigColumns extends React.Component{
                 <TableBody>
                 {
                     this.props.tracker.columns.map( column =>(
+                    //this.state.trackerColumnConfigData.columns.map( column =>(
                         <TableRow key={ column.name }>
                             {/* collapse/extend arrow */}
                             <TableCell 
@@ -272,7 +273,7 @@ class TrackersConfigColumns extends React.Component{
 }
 
 const mapStateToProps = (state, props) => {
-	console.log('trackerConfig.jsx-mapStateToProps', state);
+	console.log('trackerColumnConfig.jsx-mapStateToProps', state, props);
 	return {
         metaData: state.MetaReducer.metaData,
         tracker: state.TrackConfigReducer.configData.find( tracker => (
