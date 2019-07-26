@@ -20,8 +20,9 @@ class TrackerRulesCondition extends React.Component{
         columnName: this.props.column_name,
         precedence: this.props.precedence_id,
 
-        //selectListData: trackerColumnDataTypes,
-        selectListData: this.props.predefinedData,
+        statementError: false,
+        cellStyleNormal: { backgroundColor:"transparent" },
+        cellStyleError: { backgroundColor:"yellow" },
     }
 
     componentWillReceiveProps(newProps){
@@ -50,6 +51,7 @@ class TrackerRulesCondition extends React.Component{
                     })
                 } }
                 fullWidth={false}
+                style={ (this.state.statementError) ?this.state.cellStyleError :this.state.cellStyleNormal }
             />
         )
     }
@@ -61,12 +63,19 @@ class TrackerRulesCondition extends React.Component{
         let res=null;
 
         try { 
-            res = Peg.parse(this.state.attributeValue);
+            res = Peg.parse(val);
+            //res = Peg.parse(this.state.attributeValue);
+            this.setState({statementError: false});
         } catch (ex) {
             res = ex.message;
+            this.setState({statementError: true});
         }
 
         console.log("TrackerRulesCondition expr",  res);
+    }
+
+    componentDidMount(){
+        this.validateExpr(this.state.attributeValue);
     }
 
 }
