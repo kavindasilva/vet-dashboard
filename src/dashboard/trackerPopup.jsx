@@ -125,8 +125,9 @@ class TrackerPopup extends Component {
 
         try { 
             //res = Peg.parse(this.state.attributeValue);
-			res = Peg.parse(this.props.configData.rules[0].conditions); //map
-			//res = { type: "function", name:"tes", params:[] }
+			//res = Peg.parse(this.props.configData.rules[0].conditions); //map
+			res = { type: "function", name:"moment", params:[{ type:"string",value:"2012-06-20"}] }
+			//res = { type:"function",name:"moment",parameters:[ { type:"string",value:"20120620"},{type:"string",value:"YYYYMMDD"}]}
 			
 			//Rule.tes();
 			eRes = Rule.main( res );

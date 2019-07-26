@@ -72,11 +72,11 @@ function callFunction( funName, parameters=null ){
     }
     else{
         console.log("checkType callFunction else", funName, parameters);
-        parameters.map( para => {
+        parameters.forEach( para => {
             if(para.type === "function")
                 return callFunction( para.name, para.parameters );
             else // if(para.type === "number")
-                return para.value;
+                return para.value.toString();
             
         } )
     }
@@ -97,13 +97,15 @@ export function callDynamicFunction(funName){
 
 export function isBefore(params=null){
     //if(params===null)
+    return momentJS().isBefore(params);
     return 1;
 }
 
 export function moment(params=null){
-    return 2;
+    return momentJS(params);
 }
 
 export function addInterval(params=null){
+    return momentJS().add(params)
     return 3;
 }
