@@ -9,8 +9,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Paper from '@material-ui/core/Paper';
-import Draggable from 'react-draggable';
 import Select from '@material-ui/core/Select';
 import Radio from '@material-ui/core/Radio';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -25,9 +23,7 @@ import TableCell from '@material-ui/core/TableCell';
 
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
-
 import { rootStore } from "../stores/mainStore";
-import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/core";
 
 import DateFnsUtils from "@date-io/date-fns";
 import {format} from "date-fns";
@@ -41,6 +37,10 @@ import moment from "moment";
 
 import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
+
+//import Rule from "../dashboard/colouringFunctions"
+import  * as Rule from "../dashboard/colouringFunctions"
+import Peg from "../parsers/conditionsParser"
 
 //export default class TrackerPopup extends Component {
 class TrackerPopup extends Component {
@@ -65,24 +65,6 @@ class TrackerPopup extends Component {
 		minHeight: "18px",
 		color: "#111111"
 	}
-
-	styleMatUI={
-		closeButton: {
-			cursor:'pointer', 
-			float:'right', 
-			marginTop: '5px', 
-			width: '20px',
-			align: 'right'
-		},
-
-		titleBarThin:{
-			padding: "0 24 0 24"
-		},
-
-		titleBarPrimary:{
-			color:"white", "backgroundColor":"#3c4fb0"
-		}
-	}	
 
   	render() {
 		//console.log('trackerPopup: Rendering cell content');
@@ -135,21 +117,34 @@ class TrackerPopup extends Component {
 		
 	}
 
+	/** check rules available -> map rules -> if true stop */
+	validateExpr = () => {
+        //this.setState({attributeValue: val});
+        let res=null;
 
+        try { 
+            //res = Peg.parse(this.state.attributeValue);
+			res = Peg.parse(this.props.configData.rules[0].conditions); //map
+			
+			Rule.tes();
+
+            this.setState({statementError: false});
+        } catch (ex) {
+            res = ex.message;
+            this.setState({statementError: true});
+        }
+
+        console.log("TrackerRulesCondition expr",  res);
+    }
 	/** evaluates expressions and returns color */
 	evaluateExpr = (rules) => {
 		return "#eeeeee";
 	}
 
 	componentDidMount(){
-		//console.log("trackerPopup didmount props:", this.props);
-		//console.log("trackerPopup didmount moment:", moment().endOf('day').fromNow() ); // ok  in 8 hours
-		//console.log("trackerPopup didmount moment:", Moment.endOf('day').fromNow() );
-		//console.log("trackerPopup didmount propspart2:", {...this.props.configData.rules[0]}.bgcolor );
-		//console.log("trackerPopup didmount propspart2:", eval({...this.props.configData.rules[0]}.conditions) );
-		//console.log("trackerPopup didmount propspart2:", eval( 3+5 ) ); // ok 8
-		//console.log("trackerPopup didmount propspart2:", moment().isAfter(moment().valueOfColumn(4)).add('3 days') ); // 
+		console.log("trackerPopup didmount props:", this.props);
 
+		this.validateExpr();
 	}
 
 }

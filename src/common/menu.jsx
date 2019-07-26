@@ -27,7 +27,8 @@ class Menu extends Component {
 		showPh: false,
 
 		//componentToShow: 'def',
-		componentToShow: "config",
+		//componentToShow: "config",
+		componentToShow: "tickets",
 	}
 
 	render() {

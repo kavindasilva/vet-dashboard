@@ -112,7 +112,7 @@ class TrackerTableData extends React.Component{
 }
 
 const mapStateToProps = (state, props) => {
-	console.log("trackerTableData", props);
+	//console.log("trackerTableData", props);
 	let ticketsData = state.ticketsDataReducer.ticketsData.find(record => (
 		record.ticket_id === props.ticketId
 	));
