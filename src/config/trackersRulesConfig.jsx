@@ -179,23 +179,23 @@ class TrackersRulesConfig extends React.Component{
 
 const mapStateToProps = (state, props) => {
     //console.log("trackerRulesConfig props", props)
-    let colrule= state.TrackConfigReducer.configData.find( tracker => (
-        tracker.tracker_id === parseInt( props.tracker_id )
-    ) )
-    .columns.find( column => {
-        //console.log("trackerRulesConfig col", column.name, props) // state ok, props??
-        return (column.name === props.column_name)?column
-            :{id:0,label:"n",name:"n",permissions:[],rules:[],type:1}
-     } )
-    .rules;
-
-    // columnRules: state.TrackConfigReducer.configData.find( tracker => (
+    // let colrule= state.TrackConfigReducer.configData.find( tracker => (
     //     tracker.tracker_id === parseInt( props.tracker_id )
     // ) )
-    // .columns.find( column => (
-    //     column.name === props.column_name
-    // ) )
-    // .rules,  //previously worked code
+    // .columns.find( column => {
+    //     //console.log("trackerRulesConfig col", column.name, props) // state ok, props??
+    //     return (column.name === props.column_name)?column
+    //         :{id:0,label:"n",name:"n",permissions:[],rules:[],type:1}
+    //  } )
+    // .rules;
+
+    let colrule = state.TrackConfigReducer.configData.find( tracker => (
+        tracker.tracker_id === parseInt( props.tracker_id )
+    ) )
+    .columns.find( column => (
+        column.name === props.column_name
+    ) )
+    .rules; //previously worked code
 
     return {
         columnRules: colrule,
