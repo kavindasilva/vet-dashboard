@@ -42,5 +42,8 @@ https://stackoverflow.com/questions/32414308/updating-state-on-props-change-in-r
 https://stackoverflow.com/questions/49382004/expandable-table-in-react-material-ui
 https://stackoverflow.com/questions/55239101/material-ui-how-to-top-the-text-in-tablecell
 
+--jul 26
+https://stackoverflow.com/questions/35082047/call-external-javascript-function-from-react-components
+
 
 

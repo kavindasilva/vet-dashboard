@@ -120,13 +120,16 @@ class TrackerPopup extends Component {
 	/** check rules available -> map rules -> if true stop */
 	validateExpr = () => {
         //this.setState({attributeValue: val});
-        let res=null;
+		let res=null; // pegJS result: JSON
+		let eRes=null; // evaluated pegJS result: any
 
         try { 
             //res = Peg.parse(this.state.attributeValue);
 			res = Peg.parse(this.props.configData.rules[0].conditions); //map
+			//res = { type: "function", name:"tes", params:[] }
 			
-			Rule.tes();
+			//Rule.tes();
+			eRes = Rule.main( res );
 
             this.setState({statementError: false});
         } catch (ex) {
@@ -134,7 +137,8 @@ class TrackerPopup extends Component {
             this.setState({statementError: true});
         }
 
-        console.log("TrackerRulesCondition expr",  res);
+        console.log("TrackerPopup expr res",  res);
+        console.log("TrackerPopup expr eRes",  eRes);
     }
 	/** evaluates expressions and returns color */
 	evaluateExpr = (rules) => {

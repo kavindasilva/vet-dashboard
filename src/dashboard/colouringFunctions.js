@@ -1,23 +1,109 @@
-// module.exports = (
-//     function(){
-//         "use strict";
+/**
+ * isBefore( moment(), addInterval( moment({{1}}), 7, 'days' ) )
+ */
 
-//         console.log("colouringFunctions main");
+import Moment from 'react-moment';
+import momentJS from "moment";
 
-//         function tes(){
-//             console.log("colouringFunctions tes");
-//             return "colouringFunctions tes";
-//         }
-//     }
-// )();
-
+/**
+ * all kind of testing and researching done here
+ */
 export function tes(){
-    console.log("colouringFunctions tes");
-    return "colouringFunctions tes";
+    let str="colouringFunctions tes";
+
+    str = isBefore( moment(), addInterval( moment("2019-05-05"), 7, 'days' ) )
+    
+    //str = "Date";
+    //str = eval("momentJS()").toString(); // error  momentJS is not defined
+    //str = momentJS().toString(); // ok
+    //console.log(str);
+    return str;
+}
+
+/**
+ * stmt: JSON
+ */
+export function main(pegStmt){
+    //let stmt = JSON.parse(pegStmt)
+    let stmt = pegStmt;
+
+    //return "x"; //ok
+    //return checkType(stmt);
+    return callFunction(stmt.name, stmt.parameters)
+
+    return stmt;
+}
+
+/**
+ * check type: function, number, string
+ */
+function checkType(stmt){
+    if(stmt.type === "function"){
+        //console.log("checkType function");
+        return callFunction(stmt.name, stmt.parameters);
+    }
+
+    else if(stmt.type === "number"){
+        console.log("checkType number");
+        return stmt.value;
+    }
+
+    else if(stmt.type === "string"){
+        console.log("checkType string");
+        return stmt.value;
+        //return callFunction(stmt.name, stmt.parameters);
+    }
+
+    else
+        console.log("checkType default");
+}
+
+function callFunction( funName, parameters=null ){
+    if( parameters === null || parameters.length === 0 ){
+        console.log("checkType callFunction if", funName, parameters);
+        if(funName === "isBefore")
+            return isBefore();
+        
+        else if(funName === "addInterval")
+            return addInterval();
+
+        else if(funName === "moment")
+            return moment();
+    }
+    else{
+        console.log("checkType callFunction else", funName, parameters);
+        parameters.map( para => {
+            if(para.type === "function")
+                return callFunction( para.name, para.parameters );
+            else // if(para.type === "number")
+                return para.value;
+            
+        } )
+    }
+}
+
+/**
+ * trying to call a function by name dynamically
+ */
+export function callDynamicFunction(funName){
+    console.log("callDynamicFunction", funName)
+    //var codeToExecute = funName;
+    //var tmpFunc = new Function(codeToExecute);
+    
+    var tmpFunc = this[funName];
+    return tmpFunc();
 }
 
 
-export function before(){
-    console.log("colouringFunctions tes");
-    return "colouringFunctions tes";
+export function isBefore(params=null){
+    //if(params===null)
+    return 1;
+}
+
+export function moment(params=null){
+    return 2;
+}
+
+export function addInterval(params=null){
+    return 3;
 }
