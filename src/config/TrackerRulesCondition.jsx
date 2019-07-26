@@ -27,7 +27,9 @@ class TrackerRulesCondition extends React.Component{
 
     componentWillReceiveProps(newProps){
         if(newProps.columnRule && newProps.columnRule.conditions !== this.state.attributeValue)
-            this.setState({attributeValue: newProps.columnRule.conditions})
+            this.setState({attributeValue: newProps.columnRule.conditions}, ()=>
+                this.validateExpr(this.state.attributeValue)
+            )
     }
 
     render(){
