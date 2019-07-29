@@ -8,6 +8,7 @@ import { TableCell, TextField, Select, MenuItem } from "@material-ui/core";
 import { trackerColumnDataTypes } from "../common/constants"
 
 import Peg from "../parsers/conditionsParser";
+import * as validateRules from "../common/validateRule"
 
 
 class TrackerRulesCondition extends React.Component{
@@ -60,20 +61,16 @@ class TrackerRulesCondition extends React.Component{
 
     validateExpr = (val) => {
         this.setState({attributeValue: val});
+        let evalResult=null;
 
-        let ast = {}; let error = ''; 
-        let res=null;
+        evalResult = validateRules.validateExpression(val);
 
-        try { 
-            res = Peg.parse(val);
-            //res = Peg.parse(this.state.attributeValue);
-            this.setState({statementError: false});
-        } catch (ex) {
-            res = ex.message;
-            this.setState({statementError: true});
-        }
+        if(evalResult.error === false)
+            this.setState({statementError: false})
+        else
+            this.setState({statementError: true})
 
-        console.log("TrackerRulesCondition expr",  res);
+        console.log("TrackerRulesCondition expr",  evalResult);
     }
 
     componentDidMount(){
