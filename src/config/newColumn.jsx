@@ -212,12 +212,16 @@ class NewColumn extends React.Component{
 }
 
 const mapStateToProps = (state, props) => {
-	//console.log('NewColumn.jsx-mapStateToProps', state);
+    //console.log('NewColumn.jsx-mapStateToProps', state);
+    let trackerRes = state.TrackConfigReducer.configData.find( tracker => (
+        tracker.tracker_id === parseInt( props.tracker_id )
+    ) );
+    if(!trackerRes){
+        console.log("newColumn tracker not found");
+    }
+
 	return {
-        columnData: state.TrackConfigReducer.configData.find( tracker => (
-			tracker.tracker_id === parseInt( props.tracker_id )
-		) )
-		.columns,
+        columnData: trackerRes.columns,
 	};
 }
 
