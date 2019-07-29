@@ -48,3 +48,14 @@ ol, ul {
 .game-info {
   margin-left: 20px;
 }
+
+/** custom styles */
+
+.read-only-input{
+  color: #7e7e7e;
+}
+
+.config-top-aligned-cell{
+  vertical-align: 'top'
+}
+

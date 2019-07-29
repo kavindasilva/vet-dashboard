@@ -16,5 +16,34 @@ https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/
 https://stackoverflow.com/questions/43572436/sort-an-array-of-objects-in-react-and-render-them
 https://stackoverflow.com/questions/40560660/es6-how-to-import-const-after-export
 
+--jul 03
+https://stackoverflow.com/questions/20385664/php-stdclass-check-for-property-exist/20386054
+
+--jul 04
+https://stackoverflow.com/questions/30782948/why-calling-react-setstate-method-doesnt-mutate-the-state-immediately
+
+--jul 05
+https://stackoverflow.com/questions/36741581/fetch-api-unable-to-get-session-from-php-server
+
+--jul 08
+https://stackoverflow.com/questions/22197678/how-to-connect-multiple-database-in-phalcon-framework
+
+--jul 09
+https://stackoverflow.com/questions/17575239/is-it-allowed-to-set-return-to-json-in-documentation
+https://stackoverflow.com/questions/41486296/convert-object-to-array-in-javascript-react?rq=1
+
+--jul 19
+https://stackoverflow.com/questions/29303456/reactjs-onclick-change-element
+https://stackoverflow.com/questions/37440408/how-to-detect-esc-key-press-in-react-and-how-to-handle-it
+https://stackoverflow.com/questions/872310/javascript-swap-array-elements
+
+--jul 22
+https://stackoverflow.com/questions/32414308/updating-state-on-props-change-in-react-form
+https://stackoverflow.com/questions/49382004/expandable-table-in-react-material-ui
+https://stackoverflow.com/questions/55239101/material-ui-how-to-top-the-text-in-tablecell
+
+--jul 26
+https://stackoverflow.com/questions/35082047/call-external-javascript-function-from-react-components
+
 
 

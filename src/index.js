@@ -11,6 +11,7 @@ import Login from "./common/login"
 //import 'bootstrap/dist/css/bootstrap.css'; // working
 //import Button from "@material-ui/core/Button";
 
+import StaticFixedTable from "./dashboard/staticFixedTable"
 
 //import { rootStore } from "./stores/rootStore";
 
@@ -19,7 +20,10 @@ const render = () => {
   console.log('index.js-rendering');
   ReactDOM.render(
     //<Menu />,
+
     <App />,
+    //<StaticFixedTable />,
+    
     //<Login />,
     //<Records  />,
     

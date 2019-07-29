@@ -30,3 +30,10 @@
     transform: rotate(360deg);
   }
 }
+
+
+/** 0715 */
+.read-only-input-q{
+  color: "#0000ee";
+}
+

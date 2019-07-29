@@ -27,7 +27,7 @@ import TextField from '@material-ui/core/TextField';
 
 import Login from "../common/login";
 
-import { rootStore } from "../stores/pets";
+import { rootStore } from "../stores/mainStore";
 
 import petAPI from "../apicalls/petAPI";
 import ticketAPI from "../apicalls/ticketAPI";

@@ -3,17 +3,26 @@
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
-import { rootStore } from "../stores/pets";
+import { rootStore } from "../stores/mainStore";
 
 import Container from '@material-ui/core/Container';
 
 import TrackerPopup from "../dashboard/trackerPopup";
-// import trackersConfig from "../config-data/trackersConfig";
-// import trackerInstances from "../config-data/trackerInstance";
 
 import TableCell from '@material-ui/core/TableCell';
+import { withStyles } from '@material-ui/core/styles';
 
-import { trackerColumnDataTypes } from "../common/constants";
+import { trackerColumnDataTypes, globalStyles } from "../common/constants";
+
+import { StickyTable, Row, Cell } from 'react-sticky-table';
+import 'react-sticky-table/dist/react-sticky-table.css';
+
+const styles = theme => ({
+	readOnlyColumn: {
+	  backgroundColor: "#eee",
+	  color: "#ddd",
+	}
+});
 
 class TrackerTableData extends React.Component{
 	state = { 
@@ -41,58 +50,56 @@ class TrackerTableData extends React.Component{
 	render(){
 		return(
 			this.showTableData()
-			//<tr> <td>00</td> <td>00</td> <td>00</td> </tr>
 		)
     }
 
 	showTableData(){
 		let returnArr=[]; 
 
-		this.props.configData.columns.forEach( trackerInfo => { //each column of trackerConfig
-			
+		console.log('this.props.configData', this.props.configData);
+
+		this.props.configData.columns.forEach( column => {
+			//each column of trackerConfig
+
 			/** store user permissions of CURRENT COLUMN of trackerConfig user  */
-			let userPermission = trackerInfo.permissions.find( user => (
+			let userPermission = column.permissions.find( user => (
 				user.userId === this.props.metaData.userId
 			));
 
-			//console.log("TrackerTableData permission", userPermission) 
-			// result: userId, read, write
-
-			//validate columnConfig is not empty
 			if (userPermission) {
-				/** get tracker's current column's instance COLUMN data */
-				let columnInfo = this.props.instanceData.data.find( column => (
-					column.columnId === trackerInfo.id
-				) )
+				let columnValue = this.props.ticketsData[column.name];
 
-				//console.log("TrackerTableData colInfo", columnInfo) 
-				// result: columnId, value
-
-				if ( userPermission.read && userPermission.write ) { // read & write
+				if (userPermission.read && userPermission.write) {
+					// read & write
 					returnArr.push( 
 						<TrackerPopup
-							key={trackerInfo.id}
-							trackerInstanceId={ this.props.instanceData.id }
-							columnId={ columnInfo.columnId }
-							value={ columnInfo.value }
-
-							//trackerId={ this.props.instanceData.trackerId }
+							key={ column.name }
+							ticketId={ this.props.ticketsData.ticket_id }
+							columnName={ column.name }
+							value={ (columnValue)?columnValue:"--" }
 							trackerId={ this.props.trackerId }
-							//property={  }
-
-							// map columnDataTypes with json columnType
-							elementType={ this.columnDataTypes[trackerInfo.type] }
-							//data={ { valueSet: this.columnPredefinedValues[6] } }
+							elementType={ this.columnDataTypes[column.type] }
 						>
-							{ columnInfo.value }
+							{ columnValue }
 						</TrackerPopup> 
 					)
 				}
-				else if( userPermission.read ){ // read only permission
+				else if (userPermission.read) {
+					// read only permission
 					returnArr.push(
-						<TableCell key={trackerInfo.id}>
-							{ columnInfo.value } ro
-						</TableCell>
+						<Cell 
+							key={column.name} 
+							style={{
+								//backgroundColor:"#ffffff",
+								...globalStyles["cell-borders"]								
+							}}
+						>
+							<span 
+								className="read-only-input"	
+							>
+								{ (columnValue)?columnValue:"--" }
+							</span>
+						</Cell>
 					)
 				}
 			}			
@@ -105,24 +112,30 @@ class TrackerTableData extends React.Component{
 }
 
 const mapStateToProps = (state, props) => {
-	console.log('TrackerTableData.jsx-mapStateToProps', state);
+	//console.log("trackerTableData", props);
+	let ticketsData = state.ticketsDataReducer.ticketsData.find(record => (
+		record.ticket_id === props.ticketId
+	));
+
+	// console.log("trackerTableData ticketData", ticketsData);
+	// console.log('TrackerTableData.jsx-mapStateToProps', state);
+
 	return {
 		//...props,
 		metaData: state.MetaReducer.metaData,
 
 		/** particular tracker related config data */
 		configData: state.TrackConfigReducer.configData.find(tracker => (
-			tracker.id === props.trackerId
+			tracker.tracker_id === props.trackerId
 		)),
 
-		/** particular tracker related instance data */
-		instanceData: state.TrackInstaReducer.instanceData.find(record => (
-			record.id === props.recordId
-		)),
+		/** particular tracker related instance data && hubspot data */
+		ticketsData: { ...ticketsData },
+
+
+		
 	};
 }
 
-//export default TrackerTableData;
-export default connect(mapStateToProps)(TrackerTableData);
-//export default connect(mapStateToProps)(withStyles(useStyles)(TrackerTableData));
+export default connect(mapStateToProps)(withStyles(styles)(TrackerTableData));
 

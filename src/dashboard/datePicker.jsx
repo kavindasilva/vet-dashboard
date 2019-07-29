@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
 
-import { rootStore } from "../stores/pets";
+import { rootStore } from "../stores/mainStore";
 import DateFnsUtils from "@date-io/date-fns";
 import {format} from "date-fns";
 
@@ -43,11 +43,10 @@ class CustomDatePicker extends React.Component{
 	}
     
     state ={
-        trackerInstanceId: this.props.trackerInstanceId,
-        columnId: this.props.columnId,
+        ticketId: this.props.ticketId,
+        columnName: this.props.columnName,
         isOpen: this.props.show,
-        attributeValue: this.props.dateValue.value,
-        //attributeValue: this.props.value,
+        attributeValue: this.props.value,
     }
 
     render(){
@@ -57,12 +56,10 @@ class CustomDatePicker extends React.Component{
             <React.Fragment>
                 <div style={this.styleTD}
                     onClick={ ()=>(
-                        //this.openPopUp()
                         this.setState({ isOpen: true })
-                        //console.log( "Popoup clicked: ",this ); 
                         ) } 
                 >
-                    { String(this.props.dateValue.value) }
+                    { String( (this.props.dateValue)?(this.props.dateValue):"--" ) }
                 </div>
 
                 {/* popup modal UI */}
@@ -107,7 +104,7 @@ class CustomDatePicker extends React.Component{
 
                     <DialogActions>
                         <Button onClick={ ()=>{
-                                this.setState({ attributeValue: this.props.dateValue.value });
+                                this.setState({ attributeValue: this.props.value });
                                 this.closePopUp() 
                             } }
                             style={ this.styleMatUI.closeButton }	
@@ -118,7 +115,6 @@ class CustomDatePicker extends React.Component{
                         </Button>
                                             
                         <Button onClick={ () => { 
-                                //this.setState({ attributeValue:this.state.attributeValue });
                                 this.dispatchUpdate()
                                 this.closePopUp(); 
                             } } 
@@ -137,9 +133,9 @@ class CustomDatePicker extends React.Component{
 		rootStore.dispatch({
 			type: 'UPDATE_CELL_VALUE',
 			payload: {
-				trackerInstanceId: this.state.trackerInstanceId,
-				columnId: this.state.columnId,
-				value: this.state.attributeValue
+				ticketId: this.state.ticketId,
+				property: this.state.columnName,
+                value: this.state.attributeValue,
 			}
 		});
 	}
@@ -168,24 +164,20 @@ class CustomDatePicker extends React.Component{
 	};
     
     componentDidMount(){
-        console.log("custom datepicker mount:", this.props);
+        //console.log("custom datepicker mount: props:", this.props, "state:", this.state);
     }
 }
 
 
 const mapStateToProps = (state, props) => {
     return {
-        dateData: props,
-        dateValue: state.TrackInstaReducer.instanceData.find( tracker => (
-            tracker.id === props.trackerInstanceId
-        ) ).data.find( col => (
-            col.columnId === props.columnId
-        ) )
+        dateValue: state.ticketsDataReducer.ticketsData.find(
+                        ticket => (ticket.ticket_id === props.ticketId)
+                    )[props.columnName]
     };
 }
 
 
-//export default CustomDatePicker;
 export default connect(mapStateToProps)(CustomDatePicker);
 
 

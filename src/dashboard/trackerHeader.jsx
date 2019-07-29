@@ -3,7 +3,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
-import { rootStore } from "../stores/pets";
+import { rootStore } from "../stores/mainStore";
 
 import Container from '@material-ui/core/Container';
 
@@ -15,8 +15,10 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import TableCell from '@material-ui/core/TableCell';
 
-// import trackersConfig from "../config-data/trackersConfig";
-// import trackerInstances from "../config-data/trackerInstance";
+import { globalStyles } from "../common/constants"
+
+import { StickyTable, Row, Cell } from 'react-sticky-table';
+import 'react-sticky-table/dist/react-sticky-table.css';
 
 class TrackerHeader extends React.Component{
 	state = { 
@@ -40,33 +42,46 @@ class TrackerHeader extends React.Component{
 
 	showTableHeaders(){
 		let returnArr=[ ];
-		//return( <tr></tr> );
+				
 		//console.log("trackerHeader trackerData:", this.props.trackerConfigData)
-
 		//console.log("matched trackerID:", this.props.trackerConfigData.id)
 
 		this.props.trackerConfigData.columns.forEach( column => { 
 
+			/**
+			 * current user's permitted columns & premission data
+			 */
 			let usersVisibleColumns=(column.permissions.find( (userPermission) => 
 				userPermission.userId===this.props.metaData.userId,	
 			))
 			//console.log("trackerHeader userVisible", usersVisibleColumns)
 
-			// if usersVisibleColumns empty
+			// if usersVisibleColumns not empty
 			if( usersVisibleColumns!==undefined && usersVisibleColumns.read ){
 
 				returnArr.push( 
-					<TableCell 
+					<Cell 
 						key={ column.id }
+						style={ { 
+							//width: "200px", 
+							color:"#1122ee", 
+							padding: "2px 10px 2px 12px",
+							backgroundColor: "#e3d3cc",
+							//backgroundColor: "transparent",
+							//border: "0.5pt solid #888888",
+
+							...globalStyles["cell-borders"]
+						}
+						
+						}
 					>
-						{ column.name }
-					</TableCell> 
+						{ column.label }
+					</Cell> 
 				)
 
 			}
 			
-		} )
-				
+		} );		
 
 		return returnArr;
 	}    
@@ -75,23 +90,22 @@ class TrackerHeader extends React.Component{
 
 const mapStateToProps = (state, props) => {
 	//console.log('TrackerHeader.jsx-mapStateToProps', state);
+	console.log('state.ticketsDataReducer', state.ticketsDataReducer);
 	return {
 		metaData: state.MetaReducer.metaData,
 
-		/** filter only the needed tracker instances */
-		instancesData: state.TrackInstaReducer.instanceData.filter( instances => (
-			instances.trackerId===props.trackerId
+		/** filter only the needed tracker tickets */
+		ticketsData: state.ticketsDataReducer.ticketsData.filter( tickets => (
+			tickets.tracker_id===props.trackerId
 		) ),
 
 		/** filter only the needed tracker's config */
 		trackerConfigData: state.TrackConfigReducer.configData.find( trackerConfigs => (
-			trackerConfigs.id===props.trackerId
+			trackerConfigs.tracker_id===props.trackerId
 		) ),
 
 	};
 }
 
-//export default TrackerHeader;
 export default connect(mapStateToProps)(TrackerHeader);
-//export default connect(mapStateToProps)(withStyles(useStyles)(TrackerHeader));
 

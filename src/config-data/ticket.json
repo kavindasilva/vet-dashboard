@@ -1,0 +1,92 @@
+[
+    {
+        "ticketId" : 11,
+        "tracker_id" : 1,
+        "clinicName": "dbSampleClinic1",
+        "clinicName2": "db-init",
+        "RFSentDate": "2019-01-01",
+        "RFCompletedDate": "2019-01-07",
+        "completed": "true",
+        "duration": 120,
+        "hub_ticket_id": "33843436"
+    },
+    {
+        "id" : 12,
+        "tracker_id" : 1,
+        "clinicName" : "Test Clinic2",
+        "clinicName2" : "My Vet Clinic12",
+        "RFSentDate" : "2019-01-02",
+        "RFCompletedDate" : "2019-01-21",
+        "completed" : "true",
+        "duration" : 103,
+        "hub_ticket_id" : "33820473"
+    },
+    {
+        "id" : 14,
+        "tracker_id" : 1,
+        "clinicName" : "Example2",
+        "clinicName2" : "My Vet Clinic14",
+        "RFSentDate" : "2019-01-01",
+        "RFCompletedDate" : "2019-01-03",
+        "completed" : "false",
+        "duration" : 131,
+        "hub_ticket_id" : "33843434"
+    },
+    {
+        "id" : 15,
+        "tracker_id" : 1,
+        "clinicName" : "Example3",
+        "clinicName2" : "My Vet Clinic15 (14 copy)",
+        "RFSentDate" : "2019-01-01",
+        "RFCompletedDate" : "2019-01-03",
+        "completed" : "false",
+        "duration" : 152,
+        "hub_ticket_id" : ""
+    },
+
+    {
+        "id" : 21,
+        "tracker_id" : 2,
+        "clinicName" : "My 21 Vet Clinic",
+        "clinicName2" : "My Vet Clinic21",
+        "RFSentDate" : "2019-02-22",
+        "RFCompletedDate" : "2019-02-28",
+        "hub_ticket_id" : ""
+    },
+    {
+        "id" : 22,
+        "tracker_id" : 2,
+        "clinicName" : "Clinic num22",
+        "clinicName2" : "My Vet Clinic22",
+        "RFSentDate" : "2019-02-02",
+        "RFCompletedDate" : "2019-02-08",
+        "hub_ticket_id" : ""
+    },
+    {
+        "id" : 23,
+        "tracker_id" : 2,
+        "clinicName" : "clininc 23",
+        "clinicName2" : "My Vet Clinic23",
+        "RFSentDate" : "2019-02-20",
+        "RFCompletedDate" : "2019-02-21",
+        "hub_ticket_id" : ""
+    },
+    {
+        "id" : 24,
+        "tracker_id" : 2,
+        "clinicName" : "My 24 Vet Clinic",
+        "clinicName2" : "My Vet Clinic24",
+        "RFSentDate" : "2019-02-02",
+        "RFCompletedDate" : "2019-02-11",
+        "hub_ticket_id" : ""
+    },
+    {
+        "id" : 31,
+        "tracker_id" : 3,
+        "clinicName" : "My Vet Clinic",
+        "clinicName2" : "My Vet Clinic31",
+        "RFSentDate" : "2019-03-03",
+        "RFCompletedDate" : "2019-03-30",
+        "hub_ticket_id" : ""
+    }
+]

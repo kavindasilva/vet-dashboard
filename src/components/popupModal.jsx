@@ -28,7 +28,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 
 
-import { rootStore } from "../stores/pets";
+import { rootStore } from "../stores/mainStore";
 import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/core";
 
 //import Checkbox from "./checkBoxComp";
@@ -315,23 +315,6 @@ class PopDialog extends Component {
 	}
 
 }
-
-function PaperComponent(props) {
-  return (
-    <Draggable>
-      <Paper {...props} />
-    </Draggable>
-  );
-}
-
-function PaperComponent0(props) {
-  return (
-    <Draggable>
-      <Paper {...props} />
-    </Draggable>
-  );
-}
-
 
 export default PopDialog;
 //export default withStyles(styles)(PopDialog);

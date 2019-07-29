@@ -1,7 +1,7 @@
 [
     {
         "id" : 1, //auto-generated
-        "trackerId" : 1,
+        "tracker_id" : 1,
         "data": [
             {
                 "columnId": 1,

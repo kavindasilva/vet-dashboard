@@ -1,0 +1,50 @@
+[
+    {
+        "user_id": 5,
+        "name": "jsonConfig user21 adm",
+        "first_name": "fn5",
+        "last_name": "5last",
+        "email": "hc.user21@jsonHC.com",
+        "user_type_id": 3,
+        "user_type": "admin",
+        "telephone": "+21000000",
+
+        "trackers":[
+            1,
+            2
+        ]
+    },
+
+
+    {
+        "user_id": 22,
+        "name": "jsonConfig 22user std",
+        "first_name": "22fn",
+        "last_name": "las22t",
+        "email": "hc.user22@jsonHC.com",
+        "user_type_id": 6,
+        "user_type": "partner",
+        "telephone": "00220000",
+
+        "trackers":[
+            1
+        ]
+    },
+
+
+    {
+        "user_id": 6,
+        "name": "jsonConfig user23 adm",
+        "first_name": "fn6",
+        "last_name": "la6st",
+        "email": "hc.user23@jsonHC.com",
+        "user_type_id": 3,
+        "user_type": "admin",
+        "telephone": "+2300023",
+
+        "trackers":[
+            1,
+            2
+        ]
+    }
+]

@@ -17,10 +17,17 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import Button from '@material-ui/core/Button';
 
 import Trackers from "../dashboard/trackers";
 import Phoenix from "../phoenix/records";
 import DrawerBody from "../common/drawerBody"
+import Hubspot1 from "../components/pets"
+import UserComponent from "../users/users"
+
+import { connect } from "react-redux";
+import rootReducer from "../reducers/index";
+import { rootStore } from "../stores/mainStore";
 
 import { withStyles } from '@material-ui/core/styles';
 const drawerWidth = 240;
@@ -88,21 +95,21 @@ const useStyles = theme => ({
 });
 
 class MiniDrawer extends React.Component {
-    //const classes = useStyles();
-    //const theme = useTheme();
-    //[open, setOpen] = React.useState(false);
-    
     classes=this.props.classes;   
 
     menuItemData=[
         { value:"All Trackers", icon:<InboxIcon />, name:'allTrackers' },
         { value:"API failures", icon:<InboxIcon />, name:'apiFailures' },
         { value:"Phoenix", icon:<InboxIcon />, name:'phoenix' },
+        { value:"Hubspot temp", icon:<InboxIcon />, name:'hubtemp' },
+
+        { value:"Users", icon:<InboxIcon />, name:'users' },
     ];
 
     state = {
         drawerOpened: false,
         selectedMenuItem: 'allTrackers',
+        //selectedMenuItem: 'users',
     }
 
     setOpen = (boolValue) =>{
@@ -119,10 +126,14 @@ class MiniDrawer extends React.Component {
 
     showBodyContent = () => {
         //console.log("showBodyContent selectedMenuItem:", this.state.selectedMenuItem);
-        if(this.state.selectedMenuItem=="allTrackers")
+        if(this.state.selectedMenuItem==="allTrackers")
             return( <Trackers /> );
-        else if(this.state.selectedMenuItem=="phoenix")
+        else if(this.state.selectedMenuItem==="phoenix")
             return( <Phoenix /> );
+        else if(this.state.selectedMenuItem==="hubtemp")
+            return( <Hubspot1 /> );
+        else if(this.state.selectedMenuItem==="users")
+            return( <UserComponent /> );
         else
             return( this.defaultView() );
     }
@@ -150,6 +161,31 @@ class MiniDrawer extends React.Component {
         );
     }
 
+    logOutUser=() => {
+        let loggedData = {
+            account_id:  localStorage.getItem("accountId") ,
+            type: parseInt( localStorage.getItem("userType") ),
+            user_id: parseInt( localStorage.getItem("userId") ),
+        }
+        this.setState({serverData: loggedData});
+
+        localStorage.setItem("accountId", 0);
+        localStorage.setItem("userType", 0);
+        localStorage.setItem("userId", 0);
+
+        this.dispatchLogOut();
+    }
+
+    /** update the redux store after logout */
+	dispatchLogOut = () => {
+		rootStore.dispatch({
+			type: 'UPDATE_META_DETAIL',
+			payload: {
+				loggedData: {...this.state.serverData, isLoggedIn: false }
+			}
+		});
+	}
+
     render(){
         return (
             <div className={this.classes.root}>
@@ -174,7 +210,18 @@ class MiniDrawer extends React.Component {
                         </IconButton>
                         <Typography variant="h6" noWrap>
                             Mini variant drawer
-            </Typography>
+                        </Typography>
+
+                        <Typography align="right" float="right">
+                            Hi user ID: ... { this.props.metaData.userId } ...
+                            <Button 
+                                style={ {align:"right", float:"right"} }
+                                onClick={ () => this.logOutUser() }
+                            >
+                                LogOut
+                            </Button>
+                        </Typography>
+                        
                     </Toolbar>
                 </AppBar>
                 <Drawer
@@ -194,10 +241,11 @@ class MiniDrawer extends React.Component {
                     <div className={this.classes.toolbar}>
                         <IconButton onClick={ () => { this.handleDrawerClose() } }>
                             Close Drawer
-                {/*theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />*/}
-                <ChevronLeftIcon />
+                            {/*theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />*/}
+                            <ChevronLeftIcon />
                         </IconButton>
                     </div>
+
                     <Divider />
                     <List>
                         { this.menuItemData.map((data, index) => (
@@ -245,7 +293,14 @@ class MiniDrawer extends React.Component {
     };
 }
 
+const mapStateToProps = ( state, props ) => {
+    return{
+        metaData: state.MetaReducer.metaData,
+        //open: false,
+    }
+}
+
 //export default MiniDrawer;
-export default withStyles(useStyles)(MiniDrawer);
-//export default connect(mapStateToProps)(withStyles(useStyles)(MiniDrawer));
+//export default withStyles(useStyles)(MiniDrawer);
+export default connect(mapStateToProps)(withStyles(useStyles)(MiniDrawer));
 

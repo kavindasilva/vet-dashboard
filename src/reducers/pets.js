@@ -3,15 +3,17 @@
 //import visibilityFilter from './visibilityFilter'
 
 import ticketAPI from "../apicalls/ticketAPI";
-import { rootStore } from "../stores/pets";
+import petAPI from "../apicalls/petAPI";
+import { rootStore } from "../stores/mainStore";
 import { stat } from "fs";
 import { isUndefined } from "util";
 
 
 const ticketAPIobj = new ticketAPI();
+const petAPIobj = new petAPI();
 
 const PetReducer = (state, action) => {
-    console.log("PetReducer: state: ", state, "\naction: ", action)
+    //console.log("PetReducer: state: ", state, "\naction: ", action)
     let newState = {};
 
     //if(state===null || state==="")
@@ -64,7 +66,7 @@ const PetReducer = (state, action) => {
 
             
         default:
-            console.log("petReducer_default: ", state);
+            //console.log("petReducer_default: ", state);
             return state;
     }
 

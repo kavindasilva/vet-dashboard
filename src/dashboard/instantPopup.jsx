@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import { rootStore } from "../stores/pets";
+import { rootStore } from "../stores/mainStore";
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -54,42 +54,21 @@ class InstantPopup extends React.Component{
     }	
     
     state ={
-        trackerInstanceId: this.props.trackerInstanceId,
-        columnId: this.props.columnId,
+        ticketId: this.props.ticketId,
+        columnName: this.props.columnName,
         isOpen: false,
-        attributeValue: this.props.popValue.value,
-        //attributeValue: null //this.props.popValue.value,
-    }
-
-    render2(){
-        return(
-            <React.Fragment>
-                <Button onClick={ (e) => { 
-						//e.preventDefault();
-						//this.setState({ attributeValue:this.state.attributeValue });
-						this.dispatchUpdate();
-						//close(); 
-					} } 
-					variant="text" color="primary"
-					style={this.styleMatUI.closeButton} 
-				>
-					OK
-				</Button>
-                <div>
-                    { this.props.popValue.value }
-                    { this.makeInputElements() }
-                </div>
-            </React.Fragment>
-        );
+        attributeValue: this.props.value,
     }
 
     render(){
+        //console.log('instantPopup: Rendering cell content');
+
         return(
             <React.Fragment>
                 <Popup 
-                    trigger={ <span style={ {width: "100%" } }> T{
-                        String( this.props.popValue.value )
-                        }  </span>  } 
+                    trigger={ <div style={ {width: "100%", height:"100%" } }> {
+                        String( (this.props.popValue)?(this.props.popValue):"--" )
+                        }  </div>  } 
                     position="bottom right"
                 >
                 { 
@@ -127,9 +106,9 @@ class InstantPopup extends React.Component{
 		rootStore.dispatch({
 			type: 'UPDATE_CELL_VALUE',
 			payload: {
-				trackerInstanceId: this.state.trackerInstanceId,
-				columnId: this.state.columnId,
-				value: this.state.attributeValue
+				ticketId: this.state.ticketId,
+				property: this.state.columnName,
+                value: this.state.attributeValue,
 			}
 		});
 	}
@@ -181,7 +160,7 @@ class InstantPopup extends React.Component{
                             }
                         }
                     >	
-                        { this.columnPredefinedValues[6].map( val => (
+                        { this.columnPredefinedValues["completedStatus"].map( val => (
                             <FormControlLabel
                                 key={ String(val.name) }
                                 value={ String(val.name) }
@@ -248,24 +227,20 @@ class InstantPopup extends React.Component{
     }
     
     componentDidMount(){
-        console.log("instant popup mount:", this.props);
+        //console.log("instant popup mount:", this.props);
     }
 }
 
 
 const mapStateToProps = (state, props) => {
+    //console.log("instant popup", props);
     return {
-        popData: props,
-        popValue: state.TrackInstaReducer.instanceData.find( tracker => (
-            tracker.id === props.trackerInstanceId
-        ) ).data.find( col => (
-            col.columnId === props.columnId
-        ) )
+        popValue: state.ticketsDataReducer.ticketsData.find(
+                tracker => (tracker.ticket_id === props.ticketId)
+            )[props.columnName]
     };
 }
 
-
-//export default InstantPopup;
 export default connect(mapStateToProps)(InstantPopup);
 
 

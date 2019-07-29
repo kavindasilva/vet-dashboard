@@ -2,12 +2,14 @@
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
-import { rootStore } from "../stores/pets";
+import { rootStore } from "../stores/mainStore";
 
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+
+
 
 import { withStyles } from '@material-ui/core/styles';
 //import { styles } from '@material-ui/pickers/DatePicker/components/Calendar';
@@ -20,8 +22,19 @@ import Paper from '@material-ui/core/Paper';
 
 import Menu from "../common/menu";
 
+import ticketAPI from "../apicalls/ticketAPI";
+import trackersAPI from "../apicalls/trackersAPI";
+
 import TrackerTableHeader from "../dashboard/trackerHeader";
 import TrackerTableRow from "../dashboard/trackerTableRow";
+
+import { StickyTable, Row, Cell } from 'react-sticky-table';
+import 'react-sticky-table/dist/react-sticky-table.css';
+
+//import StaticFixedTable from "../dashboard/staticFixedTable"
+
+const ticketAPIobj = new ticketAPI();
+const trackersAPIobj = new trackersAPI();
 
 const styles = theme => ({
 	root: {
@@ -40,21 +53,25 @@ class Trackers extends React.Component{
 	state = { 
         ...this.props.metaData, 
 
-        tabValue:1,
-        //trackers: trackersConfig,
+        tabValue:0,
+
     }
-	//state = { Meta }
 
 	componentDidMount(){
 		console.log("Trackers - mount. props:", this.props); //ok
-		//console.log("Trackers - mount. props.metaData:", this.props.metaData); 
+        //console.log("Trackers - mount. props.metaData:", this.props.metaData); 
+        
+        this.getTrackersConfig();
+        this.getTicketData();
 	}
 
 	render(){
-		//this.viewForm() 
 		return(
 			<React.Fragment>
-                { this.viewTabs() }
+                { 
+                    this.viewTabs() 
+                }
+                
 			</React.Fragment>
 		)
     }
@@ -73,18 +90,20 @@ class Trackers extends React.Component{
 			<div>
 				<AppBar position="static" color="default">
                     <Tabs
+                        key={this.state.tabValue}
                         value={this.state.tabValue}
                         onChange={ this.handleChange }
                         indicatorColor="primary"
                         textColor="primary"
                         variant="scrollable"
                         scrollButtons="auto"
-                    >
-                        <Tab label="staticTab" /*onClick={ () => this.handleChange(null,1)}*/ />
-                        
+                    >                        
                         {
                             this.props.configData.map( tracker => (
-                                <Tab key={ tracker.id } label={ tracker.name } />
+                                <Tab 
+                                    key={ tracker.tracker_id } 
+                                    label={ tracker.name } 
+                                />
                             ))
                         }
                     </Tabs>
@@ -92,65 +111,74 @@ class Trackers extends React.Component{
 
                 {
                     this.props.configData.map( tracker => (
-                        this.getUserPermittedColumns(tracker),
 
-                        this.state.tabValue === tracker.id && 
-                        <React.Fragment key={ tracker.id } >
+                        (this.state.tabValue+1) === tracker.tracker_id && 
+                        <div 
+                            key={ tracker.tracker_id } 
+                        >
                             <h3>Tracker Name: { tracker.name } </h3>
-                            <p>Tracker ID: {tracker.id} </p>
+                            <small>Tracker ID: {tracker.tracker_id} </small>
+                            <small> | Pipeline: {tracker.pipeline_label} </small>
 
-                            <Paper style={ {} }>
-					            <Table size={'small'}>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TrackerTableHeader trackerId={tracker.id}>
-                                            </TrackerTableHeader>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody >
-                                        <TrackerTableRow 
-                                            trackerId={tracker.id} 
-                                            tracker={ tracker }
-                                            trackerRecordId={null}>
-                                        </TrackerTableRow>
-                                    </TableBody>
-                                </Table>
-                            </Paper>
+                            <div 
+                                style={{width: '100%', height: '100%'}}
+                                //style={{width: '100%', height: '200px'}}
+                            >
+                                <StickyTable 
+                                    stickyHeaderCount={1}
+                                    stickyColumnCount={1}
+                                >
+                                    <Row>
+                                        <TrackerTableHeader trackerId={tracker.tracker_id}>
+                                        </TrackerTableHeader>
+                                    </Row>
+                                    <TrackerTableRow 
+                                        trackerId={tracker.tracker_id} 
+                                        tracker={ tracker }
+                                        trackerRecordId={null}>
+                                    </TrackerTableRow>
+                                </StickyTable>
+                            </div>
 
-                        </React.Fragment>
+                        </div>
                     ))
                 }
 
 			</div>
 		);
     }
-    
-    /** 
-     * Gets current user authorized column details
-     * */
-    getUserPermittedColumns( trackerInfo ){
-        let userTrackerPermissions=[];
-        let usersVisibleColumns=[];
 
-        trackerInfo.columns.map( column => (
-            //console.log("col:", column),
-            usersVisibleColumns=[],
-
-            usersVisibleColumns=(column.permissions.find( (userPermission, i, arr) => 
-                userPermission.id===this.props.metaData.userId,
-                
-            )),
-            
-            //console.log("showCols userVisibleCols", usersVisibleColumns),
-            //this.printColumn(column, usersVisibleColumns, trackerInfo.id)
-
-            userTrackerPermissions.push( usersVisibleColumns )
-
-        ) );
-        //console.log("showCols userPermissions", userTrackerPermissions)
-        //this.dispatchPermissions()
-
+    /**
+     * retrieve trackers configuration data from DB
+     */
+    getTrackersConfig(){
+        trackersAPIobj.getTrackerConfig()
+        .then(
+            res => {
+                console.log("trackers config res:", res.data);
+                //let m=Object.values(res.data);
+                this.setState({ trackersConfigData: res.data }, function(){
+                    this.dispatchTrackerConfigs();
+                });
+            }
+        )
     }
+
+    /**
+     * retrieve tracker instances data from DB
+     */
+    getTicketData(){
+        ticketAPIobj.getTicketsAndProperties()
+        .then(
+            res => {
+                console.log("trackers insta res:", res.data);
+                this.setState({ ticketsData: res.data }, function(){
+                    this.dispatchTicketInstances();
+                }); 
+            }
+        )
+    }
+    
 
     /**
      * Merges two arrays, and return new array.
@@ -161,16 +189,23 @@ class Trackers extends React.Component{
 	    return obj;
     }
     
-    dispatchPermissions = () => {
+    dispatchTrackerConfigs = () => {
 		rootStore.dispatch({
-			type: 'SET_USER_PERMISSIONS',
+			type: 'GET_CONFIG_FROM_DB',
 			payload: {
-				//isLoggedIn: false,
-				//userId: 250
-				permissions: {...this.state.serverData, isLoggedIn: true }
+				data: this.state.trackersConfigData
 			}
 		});
-	}
+    }
+
+    dispatchTicketInstances = () => {
+		rootStore.dispatch({
+			type: 'GET_TICKETS_FROM_DB',
+			payload: {
+				data: this.state.ticketsData
+			}
+		});
+    }
 
 }
 
@@ -180,14 +215,13 @@ const mapStateToProps = state => {
         metaData: state.MetaReducer.metaData,
         
         /** all the tracker instances related data */
-        instanceData: state.TrackInstaReducer.instanceData,
+        ticketsData: state.ticketsDataReducer.ticketsData,
         
         /** all the trackers configuration related data */
 		configData: state.TrackConfigReducer.configData,
 	};
 }
 
-//export default Trackers;
-//export default connect(mapStateToProps)(Trackers);
+
 export default connect(mapStateToProps)(withStyles(styles)(Trackers));
 

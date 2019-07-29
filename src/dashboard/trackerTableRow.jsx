@@ -3,7 +3,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
-import { rootStore } from "../stores/pets";
+import { rootStore } from "../stores/mainStore";
 
 import Container from '@material-ui/core/Container';
 
@@ -18,8 +18,8 @@ import TableCell from '@material-ui/core/TableCell';
 
 import TrackerTableData from "../dashboard/trackerTableData";
 
-// import trackersConfig from "../config-data/trackersConfig";
-// import trackerInstances from "../config-data/trackerInstance";
+import { StickyTable, Row, Cell } from 'react-sticky-table';
+import 'react-sticky-table/dist/react-sticky-table.css';
 
 class TrackerTableRow extends React.Component{
 	state = { 
@@ -30,7 +30,7 @@ class TrackerTableRow extends React.Component{
     }
 
 	componentDidMount(){
-		//console.log("TrackerTableRow - mount. props:", this.props); //ok
+		console.log("TrackerTableRow - mount. props:", this.props); //ok
 		//console.log("TrackerTableRow - mount. props.metaData:", this.props.metaData); 
 	}
 
@@ -43,17 +43,17 @@ class TrackerTableRow extends React.Component{
 	//TrackerTableRow
 	showTableRows(){
 		let returnArr=[];
-		this.props.instancesData.map( record => {
+		this.props.ticketsData.map( record => {
 	
 			if( 1 ){ // kept to add user permissions row-wise later
 				returnArr.push(
-					<tr key={record.id} >
+					<Row key={record.ticket_id} >
 						<TrackerTableData 
-							key={record.id} 
-							recordId={ record.id }
-							trackerId = { record.trackerId }
+							key={record.ticket_id} 
+							ticketId={ record.ticket_id }
+							trackerId = { record.tracker_id }
 						/>
-					</tr>
+					</Row>
 				)
 			}
 			
@@ -72,17 +72,16 @@ const mapStateToProps = (state, props) => {
 		//trackerConfigData: state.TrackConfigReducer.configData,
 		/** particular tracker related config data */
 		trackerConfigData: state.TrackConfigReducer.configData.find( trackerConfigs => (
-			trackerConfigs.id===props.trackerId
+			trackerConfigs.trackerId===props.trackerId
 		) ),
 
-		/** particular tracker instance related instance data */
-		instancesData: state.TrackInstaReducer.instanceData.filter(instance => (
-			instance.trackerId === props.trackerId
+		/** particular tracker ticket related ticket data */
+		ticketsData: state.ticketsDataReducer.ticketsData.filter(ticket => (
+			ticket.tracker_id === props.trackerId
 		)),
+
 	};
 }
 
-//export default TrackerTableRow;
 export default connect(mapStateToProps)(TrackerTableRow);
-//export default connect(mapStateToProps)(withStyles(useStyles)(TrackerTableRow));
 

@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
-import { rootStore } from "../stores/pets";
+import { rootStore } from "../stores/mainStore";
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -63,7 +63,12 @@ class Login extends React.Component{
 
 	classes=this.props.classes;
 
-	state = { ...this.props.metaData, otp:"qaauto" }
+	state = { 
+		otp:"qaauto", 
+		username:"info@vetstoria.com", 
+		password:"123",
+		serverData: { account_id:0, type:0, user_id:0},
+	}
 	//state = { Meta }
 
 	componentDidMount(){
@@ -71,12 +76,11 @@ class Login extends React.Component{
 	}
 
 	render(){
-		//this.viewForm() 
 		return(
 			<React.Fragment>
 				{ 
 					//this.viewMenu()
-					this.viewForm()	
+					this.handleLoginStatus()	
 				}
 
 				
@@ -106,13 +110,19 @@ class Login extends React.Component{
 	 * if credentials wrong : data: "Bad Request"
 	 * if credentials validated: data: {type: 3, account_id: "1", user_id: 2}
 	*/
-	//validateCredentials( userInput, serverData)
 	validateCredentials( serverData){
 		if( serverData.data.type !=="" && serverData.data.type!==null && serverData.data!=="Bad Request" ){
 			console.log("credentials validated. serverData:", serverData);
 			this.setState({serverData: serverData.data});
 
+			/** temporary. needs to add security token from backend */
+			localStorage.setItem( "logged", "true" );
+            localStorage.setItem( "userId", serverData.data.user_id );
+			localStorage.setItem( "userType", serverData.data.type );
+			localStorage.setItem( "accountId", serverData.data.account_id );
+
 			this.dispatchLogin();
+			
 			//this.setState({isLoggedIn: true});
 		}
 		else if( serverData.data =="Bad Request" ){
@@ -127,97 +137,27 @@ class Login extends React.Component{
 	 * Display login if user not logged in.
 	 * Display Menu bar if user logged in.
 	 */
-	viewForm(){
-		console.log('login.jsx - viewForm', this.props);
+	handleLoginStatus(){
+		//console.log('login.jsx - handleLoginStatus', localStorage.getItem("logged")==='true', localStorage.getItem("userId"));
 		if(this.props.metaData.isLoggedIn===true){
 			return this.viewMenu();
 		}
+		else if( localStorage.getItem("logged")==="true" && localStorage.getItem("userId")!=="0" ){
+			let loggedData = {
+				account_id:  localStorage.getItem("accountId") ,
+				type: parseInt( localStorage.getItem("userType") ),
+				user_id: parseInt( localStorage.getItem("userId") ),
+			}
+			console.log('login.jsx - handleForm1', loggedData );
+
+			this.setState({serverData: loggedData}, function(){
+				console.log('login.jsx - handleForm2', this.state.serverData );
+				this.dispatchLogin();
+			});
+
+		}
 		else{
-			return (
-				<Container component="main" maxWidth="xs">
-					<CssBaseline />
-					<div className={this.classes.paper}>
-						<Avatar className={this.classes.avatar}>
-							<LockOutlinedIcon />
-						</Avatar>
-						<Typography component="h1" variant="h5">
-							Sign in
-						</Typography>
-
-						<form className={this.classes.form} 
-							//noValidate={ true } 
-							onSubmit={ this.getFormData }
-						>
-							<TextField
-								variant="outlined"
-								margin="normal"
-								required
-								fullWidth
-								id="email"
-								label="Email Address"
-								name="email"
-								autoComplete="email"
-								onChange = { (e)=>{ this.setState({username: e.target.value}) } }
-								autoFocus
-							/>
-							<TextField
-								variant="outlined"
-								margin="normal"
-								required
-								fullWidth
-								name="password"
-								label="Password"
-								type="password"
-								id="password"
-								onChange = { (e)=>{ this.setState({password: e.target.value}) } }
-								//autoComplete="current-password"
-							/>
-
-							<TextField
-								variant="outlined"
-								margin="normal"
-								required
-								fullWidth
-								name="otp"
-								label="otp"
-								type="otp"
-								id="otp"
-								value={ this.state.otp }
-								onChange = { (e)=>{ this.setState({otp: e.target.value}) } }
-								//autoComplete=""
-							/>
-							
-							<Button
-								type="button"
-								fullWidth
-								variant="contained"
-								color="primary"
-								className={this.classes.submit}
-								//onClick={ this.getFormData }
-								onClick={ this.sendCredentials }
-							>
-								Sign In
-							</Button>
-
-							<Grid container>
-								<Grid item xs>
-									<Link href="#" variant="body2">
-										Forgot password?
-									</Link>
-								</Grid>
-								<Grid item>
-									<Link href="#" variant="body2">
-										{"Don't have an account? Sign Up"}
-									</Link>
-								</Grid>
-							</Grid>
-						</form>
-					</div>
-					<Box mt={5}>
-						
-					</Box>
-				</Container>
-			);
+			return this.viewLoginForm();
 		}
 	}
 
@@ -228,35 +168,103 @@ class Login extends React.Component{
 		)
 	}
 
-	/** This function is not used */
-	viewMenuBar0(){
-		return(
-			<div>
-				<div>
-					<Button style={{cursor:'pointer',float:'right',align:'right'}}
-						onClick={ () => { this.logOutUser() } }
-					>
-						LogOut
-					</Button> <hr />
-				</div>
-
-				Temporary menu bar: 
-				<Button onClick={ ()=>{ this.switchComponents('app') } } >Ticket</Button>
-				<Button onClick={ ()=>{ this.switchComponents('records') } } >Phoenix</Button>
-			</div>
-		);
-	}
-
-	/** update the reducx store after successful login */
+	/** update the redux store after successful login */
 	dispatchLogin = () => {
 		rootStore.dispatch({
 			type: 'UPDATE_META_DETAIL',
 			payload: {
-				//isLoggedIn: false,
-				//userId: 250
-				loggedData: {...this.state.serverData, isLoggedIn: true }
+				loggedData: { ...this.state.serverData, isLoggedIn: true }
 			}
 		});
+		console.log('login.jsx - dispatchLogin', { ...this.state.serverData, isLoggedIn: true } );
+	}
+
+	viewLoginForm(){
+		return (
+			<Container component="main" maxWidth="xs">
+				<CssBaseline />
+				<div className={this.classes.paper}>
+					<Avatar className={this.classes.avatar}>
+						<LockOutlinedIcon />
+					</Avatar>
+					<Typography component="h1" variant="h5">
+						Sign in
+					</Typography>
+
+					<form className={this.classes.form} 
+						//noValidate={ true } 
+						onSubmit={ this.getFormData }
+					>
+						<TextField
+							variant="outlined"
+							margin="normal"
+							required
+							fullWidth
+							id="email"
+							label="Email Address"
+							name="email"
+							autoComplete="email"
+							onChange = { (e)=>{ this.setState({username: e.target.value}) } }
+							autoFocus
+						/>
+						<TextField
+							variant="outlined"
+							margin="normal"
+							required
+							fullWidth
+							name="password"
+							label="Password"
+							type="password"
+							id="password"
+							onChange = { (e)=>{ this.setState({password: e.target.value}) } }
+							//autoComplete="current-password"
+						/>
+
+						<TextField
+							variant="outlined"
+							margin="normal"
+							required
+							fullWidth
+							name="otp"
+							label="otp"
+							type="otp"
+							id="otp"
+							value={ this.state.otp }
+							onChange = { (e)=>{ this.setState({otp: e.target.value}) } }
+							//autoComplete=""
+						/>
+						
+						<Button
+							type="button"
+							fullWidth
+							variant="contained"
+							color="primary"
+							className={this.classes.submit}
+							//onClick={ this.getFormData }
+							onClick={ this.sendCredentials }
+						>
+							Sign In
+						</Button>
+
+						<Grid container>
+							<Grid item xs>
+								<Link href="#" variant="body2">
+									Forgot password?
+								</Link>
+							</Grid>
+							<Grid item>
+								<Link href="#" variant="body2">
+									{"Don't have an account? Sign Up"}
+								</Link>
+							</Grid>
+						</Grid>
+					</form>
+				</div>
+				<Box mt={5}>
+					
+				</Box>
+			</Container>
+		);
 	}
 
 }
