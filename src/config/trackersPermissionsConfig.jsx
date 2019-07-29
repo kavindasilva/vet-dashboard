@@ -103,27 +103,27 @@ const mapStateToProps = (state, props) => {
     };
 
     function getColumnPermissions (configData) {
-        let tracker = configData.find(
+        let trackerRes = configData.find(
                 tracker => (
                     tracker.tracker_id === parseInt( props.tracker_id )
                 )
             )
-        if (!tracker) { 
+        if (!trackerRes) { 
             console.log("TrackersPermissionsConfig tracker not found");
             return {} 
         }
 
-        let column = tracker.columns.find(
+        let columnRes = trackerRes.columns.find(
                 column => (
                     column.name === props.column_name
                 )
             )
-        if (!column) { 
+        if (!columnRes) { 
             console.log("TrackersPermissionsConfig column not found");
             return {} 
         }
 
-        let permissions = column.permissions.find(
+        let permissions = columnRes.permissions.find(
                 user => (
                     user.userId === props.user_id
                 )

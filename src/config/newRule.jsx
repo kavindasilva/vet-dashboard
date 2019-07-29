@@ -16,6 +16,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import StopIcon from "@material-ui/icons/Stop"
 
 import { colouringRuleColors } from "../common/constants"
+import * as validateRules from "../common/validateRule"
 
 /**
  * adding a new conditon
