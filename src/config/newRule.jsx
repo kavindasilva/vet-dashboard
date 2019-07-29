@@ -180,26 +180,26 @@ class NewRule extends React.Component{
 
 
 const mapStateToProps = (state, props) => {
-    let trackerRes = state.TrackConfigReducer.configData.find( tracker => (
-        tracker.tracker_id === parseInt( props.tracker_id )
-    ) );
-    if(!trackerRes){
-        console.log("newRule tracker not found");
-    }
+    // let trackerRes = state.TrackConfigReducer.configData.find( tracker => (
+    //     tracker.tracker_id === parseInt( props.tracker_id )
+    // ) );
+    // if(!trackerRes){
+    //     console.log("newRule tracker not found");
+    // }
 
-    let columnRes = trackerRes.columns.find( column => (
-        column.name === props.column_name
-    ) )
-    if(!columnRes){
-        console.log("newRule column not found");
-    }
+    // let columnRes = trackerRes.columns.find( column => (
+    //     column.name === props.column_name
+    // ) )
+    // if(!columnRes){
+    //     console.log("newRule column not found");
+    // }
 
     return {
-        columnRules: columnRes.rules,
+        // columnRules: columnRes.rules,
 		
-        allUsers: { ...state.UserConfigReducer.userData, 
-            ...state.UserConfigReducer.partnerData 
-        },
+        // allUsers: { ...state.UserConfigReducer.userData, 
+        //     ...state.UserConfigReducer.partnerData 
+        // },
         //allUsers: [ ...state.UserConfigReducer.userData]
     };
 }

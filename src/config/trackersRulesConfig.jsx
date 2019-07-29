@@ -192,29 +192,36 @@ const mapStateToProps = (state, props) => {
     //  } )
     // .rules;
 
-    let trackerRes = state.TrackConfigReducer.configData.find( tracker => (
-        tracker.tracker_id === parseInt( props.tracker_id )
-    ) );
-    if(!trackerRes){
-        console.log("TrackersRulesConfig tracker not found");
-        return;
-    }
-
-    let columnRes = trackerRes.columns.find( column => (
-        column.name === props.column_name
-    ) );
-    if(!columnRes){
-        console.log("TrackersRulesConfig column not found");
-        return;
-    }
+    
 
     return {
-        columnRules: columnRes.rules,
+        columnRules: getColumnRules(state.TrackConfigReducer.configData),
 		
         allUsers: { ...state.UserConfigReducer.userData, 
             ...state.UserConfigReducer.partnerData 
         },
     };
+
+    function getColumnRules(stateConfigData){
+        let trackerRes = stateConfigData.find( tracker => (
+            tracker.tracker_id === parseInt( props.tracker_id )
+        ) );
+        if(!trackerRes){
+            console.log("TrackersRulesConfig tracker not found");
+            return {};
+        }
+    
+        let columnRes = trackerRes.columns.find( column => (
+            column.name === props.column_name
+        ) );
+        if(!columnRes){
+            console.log("TrackersRulesConfig column not found");
+            return { };
+        }
+
+        let RuleRes = columnRes.rules;
+        return RuleRes ? RuleRes : {}
+    }
 }
 
 

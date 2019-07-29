@@ -65,10 +65,7 @@ class TrackerRulesCondition extends React.Component{
 
         evalResult = validateRules.validateExpression(val);
 
-        if(evalResult.error === false)
-            this.setState({statementError: false})
-        else
-            this.setState({statementError: true})
+        this.setState({statementError: evalResult.error})
 
         console.log("TrackerRulesCondition expr",  evalResult);
     }

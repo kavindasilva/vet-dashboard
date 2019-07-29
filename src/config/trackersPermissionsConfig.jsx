@@ -102,8 +102,8 @@ const mapStateToProps = (state, props) => {
         },
     };
 
-    function getColumnPermissions (configData) {
-        let trackerRes = configData.find(
+    function getColumnPermissions (stateConfigData) {
+        let trackerRes = stateConfigData.find(
                 tracker => (
                     tracker.tracker_id === parseInt( props.tracker_id )
                 )
