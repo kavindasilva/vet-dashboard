@@ -68,7 +68,7 @@ function callFunction( funName, parameters=null ){
             return addInterval();
 
         else if(funName === "moment")
-            return moment();
+            return moment(parameters);
     }
     else{
         console.log("checkType callFunction else", funName, parameters);
@@ -81,19 +81,6 @@ function callFunction( funName, parameters=null ){
         } )
     }
 }
-
-/**
- * trying to call a function by name dynamically
- */
-export function callDynamicFunction(funName){
-    console.log("callDynamicFunction", funName)
-    //var codeToExecute = funName;
-    //var tmpFunc = new Function(codeToExecute);
-    
-    var tmpFunc = this[funName];
-    return tmpFunc();
-}
-
 
 export function isBefore(params=null){
     //if(params===null)
@@ -109,3 +96,18 @@ export function addInterval(params=null){
     return momentJS().add(params)
     return 3;
 }
+
+
+
+/**
+ * trying to call a function by name dynamically
+ */
+export function callDynamicFunction(funName){
+    console.log("callDynamicFunction", funName)
+    //var codeToExecute = funName;
+    //var tmpFunc = new Function(codeToExecute);
+    
+    var tmpFunc = this[funName];
+    return tmpFunc();
+}
+

@@ -37,9 +37,10 @@ class TrackersPemissionsConfig extends React.Component{
     render(){
         //console.log('TrackersPemissionsConfig: Rendering cell content');
         //return(<React.Fragment>x</React.Fragment>);
-        let user = Object.values(this.props.allUsers).find( allUser => (
-            allUser.user_id === this.props.columnPermissions.userId
-        ) );
+        let user = Object.values(this.props.allUsers).find( allUser => {
+            console.log('this.props.columnPermissions.userId', allUser, this.props, this.props.columnPermissions);
+            return allUser.user_id === this.props.columnPermissions.userId;
+         } );
         return(
             <React.Fragment>
                 <span >
@@ -93,26 +94,42 @@ class TrackersPemissionsConfig extends React.Component{
 
 
 const mapStateToProps = (state, props) => {
-	//state.TrackConfigReducer.configData;
-	// let configValue = state.TrackConfigReducer.configData.find( tracker => (
-	// 	tracker.tracker_id === parseInt( props.tracker_id )
-	// ) );
     return {
-        columnPermissions: state.TrackConfigReducer.configData.find( tracker => (
-			tracker.tracker_id === parseInt( props.tracker_id )
-		) )
-		.columns.find( column => (
-			column.name === props.column_name
-		) )
-		.permissions.find( user => (
-            user.userId === props.user_id
-        ) ),
+        columnPermissions: getColumnPermissions(state.TrackConfigReducer.configData),
 		
         allUsers: { ...state.UserConfigReducer.userData, 
             ...state.UserConfigReducer.partnerData 
         },
-        //allUsers: [ ...state.UserConfigReducer.userData]
     };
+
+    function getColumnPermissions (configData) {
+        let tracker = configData.find(
+                tracker => (
+                    tracker.tracker_id === parseInt( props.tracker_id )
+                )
+            )
+        if (!tracker) { 
+            console.log("TrackersPermissionsConfig tracker not found");
+            return {} 
+        }
+
+        let column = tracker.columns.find(
+                column => (
+                    column.name === props.column_name
+                )
+            )
+        if (!column) { 
+            console.log("TrackersPermissionsConfig column not found");
+            return {} 
+        }
+
+        let permissions = column.permissions.find(
+                user => (
+                    user.userId === props.user_id
+                )
+            )
+        return !permissions ? {} : permissions
+    }
 }
 
 

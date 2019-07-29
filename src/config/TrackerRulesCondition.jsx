@@ -85,18 +85,26 @@ class TrackerRulesCondition extends React.Component{
 
 
 const mapStateToProps = (state, props) => {
+    let trackerRes = state.TrackConfigReducer.configData.find( tracker => (
+        tracker.tracker_id === parseInt( props.tracker_id )
+    ) );
+    if(!trackerRes){
+        console.log("TrackersRulesCondition tracker not found");
+        return;
+    }
+
+    let columnRes = trackerRes.columns.find( column => (
+        column.name === props.column_name
+    ) );
+    if(!columnRes){
+        console.log("TrackersRulesCondition column not found");
+        return;
+    }
+
     return {
-        columnRule: state.TrackConfigReducer.configData.find( tracker => (
-			tracker.tracker_id === parseInt( props.tracker_id )
-		) )
-		.columns.find( column => (
-			column.name === props.column_name
-		) )
-        .rules.find(rule => (
+        columnRule: columnRes.rules.find(rule => (
             rule.precedence === props.precedence_id
         ) ),
-        //.conditions,
-        
     };
 }
 

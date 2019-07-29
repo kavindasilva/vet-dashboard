@@ -178,7 +178,10 @@ class TrackersRulesConfig extends React.Component{
 
 
 const mapStateToProps = (state, props) => {
-    //console.log("trackerRulesConfig props", props)
+    let findResult = state.TrackConfigReducer.configData.find( tracker => (
+        tracker.tracker_id === parseInt( props.tracker_id )
+    ) );
+    console.log("trackerRulesConfig props", props, findResult)
     // let colrule= state.TrackConfigReducer.configData.find( tracker => (
     //     tracker.tracker_id === parseInt( props.tracker_id )
     // ) )
@@ -189,16 +192,24 @@ const mapStateToProps = (state, props) => {
     //  } )
     // .rules;
 
-    let colrule = state.TrackConfigReducer.configData.find( tracker => (
+    let trackerRes = state.TrackConfigReducer.configData.find( tracker => (
         tracker.tracker_id === parseInt( props.tracker_id )
-    ) )
-    .columns.find( column => (
+    ) );
+    if(!trackerRes){
+        console.log("TrackersRulesConfig tracker not found");
+        return;
+    }
+
+    let columnRes = trackerRes.columns.find( column => (
         column.name === props.column_name
-    ) )
-    .rules; //previously worked code
+    ) );
+    if(!columnRes){
+        console.log("TrackersRulesConfig column not found");
+        return;
+    }
 
     return {
-        columnRules: colrule,
+        columnRules: columnRes.rules,
 		
         allUsers: { ...state.UserConfigReducer.userData, 
             ...state.UserConfigReducer.partnerData 

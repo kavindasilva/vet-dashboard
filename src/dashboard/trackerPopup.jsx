@@ -59,13 +59,6 @@ class TrackerPopup extends Component {
 
 	}
 
-	/** style for the table's div content */
-	styleTD={
-		width: "100%" ,
-		minHeight: "18px",
-		color: "#111111"
-	}
-
   	render() {
 		//console.log('trackerPopup: Rendering cell content');
 		return (
@@ -100,7 +93,7 @@ class TrackerPopup extends Component {
 		}
 		else{
 			return(
-				<div style={this.styleTD}>
+				<div style={ { width: "100%", minHeight: "18px", color: "#111111"} }>
 					{/* test{ String(this.props.ticketProperty.value) } */}
 					
 						<InstantPopup
@@ -126,7 +119,8 @@ class TrackerPopup extends Component {
         try { 
             //res = Peg.parse(this.state.attributeValue);
 			//res = Peg.parse(this.props.configData.rules[0].conditions); //map
-			res = { type: "function", name:"moment", params:[{ type:"string",value:"2012-06-20"}] }
+			//res = { type: "function", name:"moment", parameters:[] }
+			res = { type: "function", name:"moment", parameters:[{ type:"string",value:"2012-06-20"}] }
 			//res = { type:"function",name:"moment",parameters:[ { type:"string",value:"20120620"},{type:"string",value:"YYYYMMDD"}]}
 			
 			//Rule.tes();
@@ -139,7 +133,7 @@ class TrackerPopup extends Component {
         }
 
         console.log("TrackerPopup expr res",  res);
-        console.log("TrackerPopup expr eRes",  eRes);
+        //console.log("TrackerPopup expr evaluatedRes",  eRes.toString() );
     }
 	/** evaluates expressions and returns color */
 	evaluateExpr = (rules) => {
