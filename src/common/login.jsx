@@ -25,7 +25,7 @@ import Menu from "../common/menu";
 import loginAPI from "../apicalls/loginAPI";
 
 import Trackers from "../dashboard/trackers";
-import MiniDrawer from "../common/drawer";
+//import MiniDrawer from "../common/drawer";
 
 const loginAPIobj = new loginAPI();
 

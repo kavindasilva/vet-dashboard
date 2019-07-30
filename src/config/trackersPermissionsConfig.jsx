@@ -48,7 +48,7 @@ class TrackersPemissionsConfig extends React.Component{
                 { 
                     /** match current user with all_user_data */
                     (user)
-                    ?user.email.toString()
+                    ?user.account_email.toString()
                     :"none"
                 }
                 </span>
