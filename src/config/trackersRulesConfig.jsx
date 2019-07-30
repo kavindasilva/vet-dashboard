@@ -181,17 +181,7 @@ const mapStateToProps = (state, props) => {
     let findResult = state.TrackConfigReducer.configData.find( tracker => (
         tracker.tracker_id === parseInt( props.tracker_id )
     ) );
-    console.log("trackerRulesConfig props", props, findResult)
-    // let colrule= state.TrackConfigReducer.configData.find( tracker => (
-    //     tracker.tracker_id === parseInt( props.tracker_id )
-    // ) )
-    // .columns.find( column => {
-    //     //console.log("trackerRulesConfig col", column.name, props) // state ok, props??
-    //     return (column.name === props.column_name)?column
-    //         :{id:0,label:"n",name:"n",permissions:[],rules:[],type:1}
-    //  } )
-    // .rules;
-
+    //console.log("trackerRulesConfig props", props, findResult)
     
 
     return {

@@ -1,26 +1,53 @@
 
 import Peg from "../parsers/conditionsParser"
+import { throws } from "assert";
 
-export function validateExpression( expr ){
-    let res = null;
-    let error = false;
+const definedFunctions = [
+    "moment"
+];
+
+
+export const validateExpression = function ( expr ){
+    let parseTree = null;
 
     try { 
-        res = Peg.parse(expr);
-        error = false;
+        parseTree = Peg.parse(expr);
+        //console.log("Parse Tree", parseTree);
+    }
+    catch (ex) {
+        console.log("ex",  ex);
+        throw ex;
+        //return true;
+    }
+
+    try {
+        validateSubTree(parseTree);
     } catch (ex) {
-        res = ex.message;
-        error = true;
+        throw ex;
     }
 
-    console.log("validateRule expr",  res);
-    return {
-        "result": res,
-        "error": error,
+    return parseTree;
+}
+
+function validateFunctionSubTree(subTree) {
+    if ((subTree !== null) 
+        && (typeof subTree === 'object')
+        && (subTree.type == 'function')) {
+            if (-1 == definedFunctions.indexOf(subTree.name)) {
+                throw new Error(`Undefined Function '{subTree.name}'`);
+            }
     }
 }
 
-export function sum(a, b) {
-    return a + b;
+function validateSubTree(subTree) {
+    if (Array.isArray(subTree)) {
+        subTree.forEach(element => {
+            validateSubTree(element);
+        });
+    }
+
+    validateFunctionSubTree(subTree);
+    //validate string
+    //validate integer 
+    
 }
-//module.exports =sum;

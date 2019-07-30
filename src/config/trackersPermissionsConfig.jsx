@@ -38,7 +38,7 @@ class TrackersPemissionsConfig extends React.Component{
         //console.log('TrackersPemissionsConfig: Rendering cell content');
         //return(<React.Fragment>x</React.Fragment>);
         let user = Object.values(this.props.allUsers).find( allUser => {
-            console.log('this.props.columnPermissions.userId', allUser, this.props, this.props.columnPermissions);
+            //console.log('this.props.columnPermissions.userId', allUser, this.props, this.props.columnPermissions);
             return allUser.user_id === this.props.columnPermissions.userId;
          } );
         return(

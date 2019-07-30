@@ -61,11 +61,17 @@ class TrackerRulesCondition extends React.Component{
 
     validateExpr = (val) => {
         this.setState({attributeValue: val});
-        let evalResult=null;
+        let evalResult=null;  //true if error
 
-        evalResult = validateRules.validateExpression(val);
+        try {
+            evalResult = validateRules.validateExpression(val);
+            this.setState({statementError: false})
+        }
+        catch(e){
+            console.log("TrackerRulesCondition exception", e);
+            this.setState({statementError: true})
+        }
 
-        this.setState({statementError: evalResult.error})
 
         console.log("TrackerRulesCondition expr",  evalResult);
     }
