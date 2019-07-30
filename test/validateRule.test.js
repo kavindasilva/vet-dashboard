@@ -1,6 +1,7 @@
+import {validateExpression, evaluateSubTree, evaluateExpression} from "../src/common/validateRule"
+//import moment from "../node_modules/moment/moment"
 
-import {sum, validateExpression} from "../src/common/validateRule"
-
+import moment from "moment";
 let expressionToEvaluate = null
 /**
  * positive test cases
@@ -8,7 +9,7 @@ let expressionToEvaluate = null
  */
 
 /** moment() evaluation */
-test('expression "moment()" will give a valid parse tree', () => {
+test(`expression "moment()" will give a valid parse tree`, () => {
     expect( 
         validateExpression("moment()")
     )
@@ -20,101 +21,28 @@ test('expression "moment()" will give a valid parse tree', () => {
 });
 
 /** vaild function with parameter */
-test('expression "moment(a)" will give a valid parse tree', () => {
+test(`expression "moment('2011-10-21')" will give a valid parse tree`, () => {
     expect(
-        validateExpression("moment('a')")
-    )
-    .toMatchObject({
-        type        : 'function',
-        name        : 'moment',
-        parameters  : [
-            {
-                type: 'string',
-                value: 'a'
-            }
-        ]
-    });
+        evaluateExpression("moment('2011-10-21')")
+    )   
+    .toMatchObject(moment('2011-10-21'));
 });
 
-/** valid function with more than one string parameter */
-test('expression "moment(\'1\', \'b\', \'c\')" will give a valid parse tree', () => {
-    expect(
-        validateExpression("moment('1', 'b', 'cc')")
-    )
-    .toMatchObject({
-        type        : 'function',
-        name        : 'moment',
-        parameters  : [
-            {
-                type: 'string',
-                value: '1'
-            },
-            {
-                type: 'string',
-                value: 'b'
-            },
-            {
-                type: 'string',
-                value: 'cc'
-            }
-        ]
-    });
+/** isBefore true */
+test(`expression "isBefore('2010-01-01', '2010-01-02')" should return true`, () => {
+    expect( evaluateExpression("isBefore('2010-01-01', '2010-01-02')"))
+    .toBe(true);
+    //.toBeTruthy();
 });
 
-/** valid function with more than one integer parameter */
-test('expression "moment(1, 2, 3)" will give a valid parse tree', () => {
-    expect(
-        validateExpression("moment(1, 2, 3)")
-    )
-    .toMatchObject({
-        type        : 'function',
-        name        : 'moment',
-        parameters  : [
-            {
-                type: 'number',
-                value: 1
-            },
-            {
-                type: 'number',
-                value: 2
-            },
-            {
-                type: 'number',
-                value: 3
-            }
-        ]
-    });
+/** isBefore false */
+test(`expression "isBefore('2010-02-01', '2010-01-02')" should return false`, () => {
+    expect( evaluateExpression("isBefore('2010-02-01', '2010-01-02')") )
+    .not.toBe(true);
 });
 
 /** valid function with mixed parameters */
-test('expression "moment(1, isBefore(2))" will give a valid parse tree', () => {
-    expect(
-        validateExpression("moment(1, isBefore(2))")
-    )
-    .toMatchObject({
-        "type": "function",
-        "name": "moment",
-        "parameters": [
-            {
-                "type": "number",
-                "value": 1
-            },
-            {
-                "type": "function",
-                "name": "isBefore",
-                "parameters": [
-                    {
-                        "type": "number",
-                        "value": 2
-                    }
-                ]
-            }
-        ]
-    });
-});
-
-/** valid function with mixed parameters */
-test('expression "moment(1, "sample", isBefore(2))" will give a valid parse tree', () => {
+test(`expression "moment(1, "sample", isBefore(2))" will give a valid parse tree`, () => {
     expect(
         validateExpression("moment(1, 'sample', isBefore(2))")
     )
@@ -145,7 +73,7 @@ test('expression "moment(1, "sample", isBefore(2))" will give a valid parse tree
 });
 
 /** valid function with mixed parameters */
-test('expression "moment(1, isBefore(isTrue(5,5), 3))" will give a valid parse tree', () => {
+test(`expression "moment(1, isBefore(isTrue(5,5), 3))" will give a valid parse tree`, () => {
     expect(
         validateExpression("moment(1, isBefore(isTrue(5, '5'), 3))")
     )
@@ -158,9 +86,9 @@ test('expression "moment(1, isBefore(isTrue(5,5), 3))" will give a valid parse t
                 "value": 1
             },
             {
-                "type": "function",
-                "name": "isBefore",
-                "parameters": [
+                type: "function",
+                name: "isBefore",
+                parameters: [
                     {
                         "type": "function",
                         "name": "isTrue",
@@ -186,13 +114,52 @@ test('expression "moment(1, isBefore(isTrue(5,5), 3))" will give a valid parse t
 });
 
 
+test(`expression "moment('2019-01-01 10:31:59')" is evaluated correctly`, () => {
+    expect(evaluateExpression("moment('2019-01-01 10:31:59')"))
+        .toMatchObject(moment('2019-01-01 10:31:59')) ;
+});
+
+test(`string subtree is evaluated correctly`, () => {
+    let subTree = {
+        type: 'string',
+        value: 'aaaa'
+    }
+    expect(evaluateSubTree(subTree))
+        .toBe('aaaa') ;
+});
+
+test(`number subtree is evaluated correctly`, () => {
+    let subTree = {
+        type: 'number',
+        value: '1'
+    }
+    expect(evaluateSubTree(subTree))
+        .toBe('1') ;
+});
+
+test(`array subtree is evaluated correctly`, () => {
+    let subTree = [
+        {
+            type: 'number',
+            value: '1'
+        },
+        {
+            type: 'number',
+            value: '2'
+        },
+    ]
+    expect(evaluateSubTree(subTree))
+        .toEqual(expect.arrayContaining(['1','2']));
+});
+
+
 /**
  * negative test cases
  */
 
 
 /** passing empty input */
-test('empty expression should throw error', () => {
+test(`empty expression should throw error`, () => {
     expect( () =>
         validateExpression("")
     )
@@ -200,7 +167,7 @@ test('empty expression should throw error', () => {
 });
 
 /** passing a null input */
-test('null expression should throw error', () => {
+test(`null expression should throw error`, () => {
     expect( () =>
         validateExpression() // null gives -> Cannot read property 'charAt' of null
     )
@@ -209,14 +176,14 @@ test('null expression should throw error', () => {
 });
 
  /** pure string evaluation */
-test('a pure string expression will fail to parse', () => {
+test(`a pure string expression will fail to parse`, () => {
     expect(() => {
         validateExpression("blahblahblah");
-    }).toThrow();
+    }).toThrow(/^Expected function but/);
 });
 
 /** undefined function */
-test('expression "functionFour(a)" will throw an undefined', () => {
+test(`expression "functionFour(a)" will throw an undefined`, () => {
     expect( ()=>
         validateExpression("functionFour('a')")
     )
@@ -224,7 +191,7 @@ test('expression "functionFour(a)" will throw an undefined', () => {
 });
 
 /** invalid function with parameters as array */
-test('expression "moment(1, [2, 3])" will throw an error like "Expected function but..."', () => {
+test(`expression "moment(1, [2, 3])" will throw an error like "Expected function but..."`, () => {
     let err=null;
     expect( () =>
         validateExpression("moment(1, [2, 3])")
@@ -234,18 +201,24 @@ test('expression "moment(1, [2, 3])" will throw an error like "Expected function
 });
 
 /** passing just a value makes an error */
-test('expression "stringValue" will throw an error like "Expected function but..."', () => {
+test(`expression "stringValue" will throw an error like "Expected function but..."`, () => {
     let err=null;
     expect( () =>
         validateExpression("stringValue")
     )
-    .toThrow( /^Expected function but/) ;
+    .toThrow( ) ;
 });
 
 /** passing invalid string */
-test('expression "moment(1, invalidString)" will throw error', () => {
+test(`expression "moment(1, invalidString)" will throw error`, () => {
     expect( () =>
         validateExpression("moment(1, invalidString)")
     )
     .toThrow( /^Expected function but/) ;
+});
+
+/** isBefore 1 argument */
+test.only(`expression "isBefore('2010-02-01')" should throw args missing error`, () => {
+    expect( ()=> evaluateExpression("isBefore('2010-02-01')") )
+    .toThrow("isBefore requires 2 moment() objects as arguments.");
 });
