@@ -5,7 +5,7 @@
 */
 
 import React, { Component } from 'react';
-import Record from '../phoenix/record';
+import Record from '../oabpPhoenixFailures/record';
 
 import MaterialTable from 'material-table';
 import MUIDataTable from "mui-datatables";
