@@ -6,12 +6,51 @@ import { throws } from "assert";
 
 
 const executableFunctions = {
-    'moment' : moment,
-    'isBefore' : functionIsBefore,
-    'isAfter' : functionIsAfter
+    'moment'            : moment,
+    'isBefore'          : functionIsBefore,
+    'isAfter'           : functionIsAfter,
+    'addPeriod'         : functionAddPeriod,
+    'substractPeriod'   : functionSubstractPeriod,
     //'isAfter': 
 
 };
+
+const acceptableTimeUnits = [ 'd','days', 'w','weeks', 'M','months'];
+
+/** 
+ * adds a date period to a given date. returns a new date 
+ * 
+ * example: addPeriod(moment('2010-03-01'),5,'days') => return '2010-03-06'
+ * */
+function functionAddPeriod(){
+    try{
+        if( arguments.length === 3 
+            && moment(arguments[0]).isValid()
+            && !isNaN(arguments[1])
+            && (acceptableTimeUnits.indexOf(arguments[2]) > -1)
+        ){
+            return moment( arguments[0] ).add( arguments[1], arguments[2] );
+        }
+    }
+    catch(e){
+        throw new Error(e);
+    }
+}
+
+function functionSubstractPeriod(){
+    try{
+        if( arguments.length === 3 
+            && moment(arguments[0]).isValid()
+            && !isNaN(arguments[1])
+            && (acceptableTimeUnits.indexOf(arguments[2]) > -1)
+        ){
+            return moment( arguments[0] ).subtract( arguments[1], arguments[2] );
+        }
+    }
+    catch(e){
+        throw new Error(e);
+    }
+}
 
 /** checks param1 is after param2 */
 function functionIsAfter() {
@@ -26,7 +65,7 @@ function functionIsAfter() {
 
 /** checks param1 is before param2 */
 function functionIsBefore() {
-    if ((arguments.length != 2) 
+    if ((arguments.length !== 2) 
         || !moment(arguments[0]).isValid()
         || !moment(arguments[1]).isValid()
         ) {

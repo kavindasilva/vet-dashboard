@@ -48,5 +48,8 @@ https://stackoverflow.com/questions/35082047/call-external-javascript-function-f
 --jul 30
 https://stackoverflow.com/questions/28725955/how-do-i-test-a-single-file-using-jest
 
+--jul 31
+https://stackoverflow.com/questions/48125230/skip-one-test-in-test-file-jest
+
 
 

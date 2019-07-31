@@ -9,7 +9,7 @@ let expressionToEvaluate = null
  */
 
 /** moment() evaluation */
-test(`expression "moment()" will give a valid parse tree`, () => {
+test    (`expression "moment()" will give a valid parse tree`, () => {
     expect( 
         validateExpression("moment()")
     )
@@ -21,11 +21,37 @@ test(`expression "moment()" will give a valid parse tree`, () => {
 });
 
 /** vaild function with parameter */
-test(`expression "moment('2011-10-21')" will give a valid parse tree`, () => {
-    expect(
-        evaluateExpression("moment('2011-10-21')")
-    )   
+test.only(`expression "moment('2011-10-21')" will give a valid parse tree`, () => {
+    expect( evaluateExpression("moment('2011-10-21')") )   
     .toMatchObject(moment('2011-10-21'));
+});
+
+/** add a period should return new Date */
+test.skip(`expression "addPeriod(moment('2010-03-01'),5,'days')" will give a valid date`, () => {
+    expect( evaluateExpression("addPeriod(moment('2010-03-01'),5,'days')") )   
+    //expect( evaluateExpression("moment('2010-03-06')") )   
+    .toMatchObject(moment("2010-03-06"));
+});
+
+/** substract a period should return new Date */
+test.skip(`expression "substractPeriod(moment('2010-03-31'),3,'days')" will give a valid date`, () => {
+    expect( evaluateExpression("substractPeriod(moment('2010-03-31'),3,'days')") )   
+    .toMatchObject(moment("2010-03-06"));
+});
+
+test(`isBefore(addPeriod(moment('2010-03-01'),5,'days'), moment())`, () => {
+    expect(evaluateExpression("isBefore(addPeriod(moment('2010-03-01'),5,'days'), moment())"))
+    .toBe(true);
+});
+
+test(`isBefore(addPeriod(moment('2010-03-01'),5,'days'), moment('2010-03-10'))`, () => {
+    expect(evaluateExpression("isBefore(addPeriod(moment('2010-03-01'),5,'days'), moment('2010-03-10'))"))
+    .toBe(true);
+});
+
+test.only(`isAfter(addPeriod(moment('2010-03-01'),5,'days'), moment('2010-03-05'))`, () => {
+    expect(evaluateExpression("isAfter(addPeriod(moment('2010-03-01'),5,'days'), moment('2010-03-05'))"))
+    .toBe(true);
 });
 
 /** isBefore true */
@@ -38,6 +64,24 @@ test(`expression "isBefore('2010-01-01', '2010-01-02')" should return true`, () 
 /** isBefore false */
 test(`expression "isBefore('2010-02-01', '2010-01-02')" should return false`, () => {
     expect( evaluateExpression("isBefore('2010-02-01', '2010-01-02')") )
+    .not.toBe(true);
+});
+
+/** isAfter true */
+test(`expression "isAfter('2010-03-01', '2010-01-02')" should return true`, () => {
+    expect( evaluateExpression("isAfter('2010-03-01', '2010-01-02')"))
+    .toBe(true);
+});
+
+/** isAfter true */
+test.skip(`expression "isAfter([2010], '2010-01-02')" should return true`, () => {
+    expect( evaluateExpression("isAfter([2010], '2010-01-02')"))
+    .toBe(true);
+});
+
+/** isAfter false */
+test(`expression "isAfter('2010-01-01', '2010-01-02')" should return false`, () => {
+    expect( evaluateExpression("isAfter('2010-01-01', '2010-01-02')") )
     .not.toBe(true);
 });
 
@@ -118,6 +162,7 @@ test(`expression "moment('2019-01-01 10:31:59')" is evaluated correctly`, () => 
     expect(evaluateExpression("moment('2019-01-01 10:31:59')"))
         .toMatchObject(moment('2019-01-01 10:31:59')) ;
 });
+
 
 test(`string subtree is evaluated correctly`, () => {
     let subTree = {
@@ -222,3 +267,21 @@ test.only(`expression "isBefore('2010-02-01')" should throw args missing error`,
     expect( ()=> evaluateExpression("isBefore('2010-02-01')") )
     .toThrow("isBefore requires 2 moment() objects as arguments.");
 });
+
+/** isAfter 1 argument */
+test.only(`expression "isAfter('2010-03-01')" should throw args missing error`, () => {
+    expect( ()=> evaluateExpression("isAfter('2010-03-01')"))
+    .toThrow("isAfter requires 2 moment() objects as arguments.");
+});
+
+test.only(`isAfter(addPeriod(moment('2010-03-01'),5,'days'), moment())`, () => {
+    expect(evaluateExpression("isAfter(addPeriod(moment('2010-03-01'),5,'days'), moment())"))
+    .toBe(false);
+});
+//isAfter(addPeriod(moment('2010-03-01'),5,'days'), moment())
+
+test.only(`expression "substractPeriod(moment('2010-03-31'),3,'dayss')" should throw invalid arg error`, () => {
+    expect( evaluateExpression("substractPeriod(moment('2010-03-31'),3,'dayss')") )   
+    .toMatchObject(moment("2010-03-06"));
+});
+
