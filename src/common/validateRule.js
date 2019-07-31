@@ -25,14 +25,15 @@ const acceptableTimeUnits = [ 'd','days', 'w','weeks', 'M','months'];
 function functionAddPeriod(){
     try{
         if( arguments.length === 3 
-            && moment(arguments[0]).isValid()
-            && !isNaN(arguments[1])
-            && (acceptableTimeUnits.indexOf(arguments[2]) > -1)
-        ){
+            && isDateValid(arguments[0])
+            && isNumParameterValid(arguments[1])
+            && isTimeUnitValid(arguments[2])
+        )
+        {
             return moment( arguments[0] ).add( arguments[1], arguments[2] );
         }
     }
-    catch(e){
+    catch(e){ //
         throw new Error(e);
     }
 }
@@ -40,9 +41,9 @@ function functionAddPeriod(){
 function functionSubstractPeriod(){
     try{
         if( arguments.length === 3 
-            && moment(arguments[0]).isValid()
-            && !isNaN(arguments[1])
-            && (acceptableTimeUnits.indexOf(arguments[2]) > -1)
+            && isDateValid(arguments[0])
+            && isNumParameterValid(arguments[1])
+            && isTimeUnitValid(arguments[2])
         ){
             return moment( arguments[0] ).subtract( arguments[1], arguments[2] );
         }
@@ -138,6 +139,31 @@ function evaluateFunctionSubTree(commandStructure) {
     //console.log('result', result);
     return result;
 
+}
+
+/**
+ * checks date format
+ * 
+ * if invalid throws "Invalid date format" error
+ * 
+ * else returns true
+ */
+function isDateValid(date){
+    if( moment(date).isValid() )
+        return true;
+    throw new Error("Invalid date format")
+}
+
+function isNumParameterValid(param){
+    if(!isNaN(param))
+        return true;
+    throw new Error("Invalid parameter value to add/substract")
+}
+
+function isTimeUnitValid(unit){
+    if( acceptableTimeUnits.indexOf(unit) > -1 )
+        return true;
+    throw new Error(`Undefined time unit ${unit}`);
 }
 
 

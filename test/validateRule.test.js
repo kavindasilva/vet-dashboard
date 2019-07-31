@@ -21,13 +21,13 @@ test    (`expression "moment()" will give a valid parse tree`, () => {
 });
 
 /** vaild function with parameter */
-test.only(`expression "moment('2011-10-21')" will give a valid parse tree`, () => {
+test(`expression "moment('2011-10-21')" will give a valid parse tree`, () => {
     expect( evaluateExpression("moment('2011-10-21')") )   
     .toMatchObject(moment('2011-10-21'));
 });
 
 /** add a period should return new Date */
-test.skip(`expression "addPeriod(moment('2010-03-01'),5,'days')" will give a valid date`, () => {
+test.only(`expression "addPeriod(moment('2010-03-01'),5,'days')" will give a valid date`, () => {
     expect( evaluateExpression("addPeriod(moment('2010-03-01'),5,'days')") )   
     //expect( evaluateExpression("moment('2010-03-06')") )   
     .toMatchObject(moment("2010-03-06"));
@@ -49,7 +49,7 @@ test(`isBefore(addPeriod(moment('2010-03-01'),5,'days'), moment('2010-03-10'))`,
     .toBe(true);
 });
 
-test.only(`isAfter(addPeriod(moment('2010-03-01'),5,'days'), moment('2010-03-05'))`, () => {
+test(`isAfter(addPeriod(moment('2010-03-01'),5,'days'), moment('2010-03-05'))`, () => {
     expect(evaluateExpression("isAfter(addPeriod(moment('2010-03-01'),5,'days'), moment('2010-03-05'))"))
     .toBe(true);
 });
@@ -84,79 +84,6 @@ test(`expression "isAfter('2010-01-01', '2010-01-02')" should return false`, () 
     expect( evaluateExpression("isAfter('2010-01-01', '2010-01-02')") )
     .not.toBe(true);
 });
-
-/** valid function with mixed parameters */
-test(`expression "moment(1, "sample", isBefore(2))" will give a valid parse tree`, () => {
-    expect(
-        validateExpression("moment(1, 'sample', isBefore(2))")
-    )
-    .toMatchObject({
-        "type": "function",
-        "name": "moment",
-        "parameters": [
-            {
-                "type": "number",
-                "value": 1
-            },
-            {
-                "type": "string",
-                "value": "sample"
-            },
-            {
-                "type": "function",
-                "name": "isBefore",
-                "parameters": [
-                    {
-                        "type": "number",
-                        "value": 2
-                    }
-                ]
-            }
-        ]
-    });
-});
-
-/** valid function with mixed parameters */
-test(`expression "moment(1, isBefore(isTrue(5,5), 3))" will give a valid parse tree`, () => {
-    expect(
-        validateExpression("moment(1, isBefore(isTrue(5, '5'), 3))")
-    )
-    .toMatchObject({
-        "type": "function",
-        "name": "moment",
-        "parameters": [
-            {
-                "type": "number",
-                "value": 1
-            },
-            {
-                type: "function",
-                name: "isBefore",
-                parameters: [
-                    {
-                        "type": "function",
-                        "name": "isTrue",
-                        "parameters":[
-                            {
-                                "type": "number",
-                                "value": 5
-                            },
-                            {
-                                "type": "string",
-                                "value": "5"
-                            }
-                        ]
-                    },
-                    {
-                        "type": "number",
-                        "value": 3
-                    }
-                ]
-            }
-        ]
-    });
-});
-
 
 test(`expression "moment('2019-01-01 10:31:59')" is evaluated correctly`, () => {
     expect(evaluateExpression("moment('2019-01-01 10:31:59')"))
@@ -263,25 +190,43 @@ test(`expression "moment(1, invalidString)" will throw error`, () => {
 });
 
 /** isBefore 1 argument */
-test.only(`expression "isBefore('2010-02-01')" should throw args missing error`, () => {
+test(`expression "isBefore('2010-02-01')" should throw args missing error`, () => {
     expect( ()=> evaluateExpression("isBefore('2010-02-01')") )
     .toThrow("isBefore requires 2 moment() objects as arguments.");
 });
 
 /** isAfter 1 argument */
-test.only(`expression "isAfter('2010-03-01')" should throw args missing error`, () => {
+test(`expression "isAfter('2010-03-01')" should throw args missing error`, () => {
     expect( ()=> evaluateExpression("isAfter('2010-03-01')"))
     .toThrow("isAfter requires 2 moment() objects as arguments.");
 });
 
-test.only(`isAfter(addPeriod(moment('2010-03-01'),5,'days'), moment())`, () => {
+test(`isAfter(addPeriod(moment('2010-03-01'),5,'days'), moment())`, () => {
     expect(evaluateExpression("isAfter(addPeriod(moment('2010-03-01'),5,'days'), moment())"))
     .toBe(false);
 });
 //isAfter(addPeriod(moment('2010-03-01'),5,'days'), moment())
 
-test.only(`expression "substractPeriod(moment('2010-03-31'),3,'dayss')" should throw invalid arg error`, () => {
+test.skip(`expression "substractPeriod(moment('2010-03-31'),3,'dayss')" should throw invalid arg error`, () => {
     expect( evaluateExpression("substractPeriod(moment('2010-03-31'),3,'dayss')") )   
     .toMatchObject(moment("2010-03-06"));
+});
+
+/** invalid date format passed */
+test(`expression "isBefore(addPeriod(moment('201003xw31'),3,'days'), moment())" should throw invalid date format error`, () => {
+    expect( ()=> evaluateExpression("isBefore(addPeriod(moment('201003xw31'),3,'days'), moment())") )   
+    .toThrow(/Invalid date format/);
+});
+
+/** invalid date unit passed */
+test(`expression "isBefore(addPeriod(moment('2010-03-31'),3,'da'), moment())" should throw invalid date unit error(invalid unit)`, () => {
+    expect( ()=> evaluateExpression("isBefore(addPeriod(moment('2010-03-31'),3,'da'), moment())") )   
+    .toThrow(/Undefined time unit/);
+});
+
+/** invalid date unit passed, case sensitive */
+test(`expression "isBefore(addPeriod(moment('2010-03-31'),3,'D'), moment())" should throw invalid date unit error(case sensitive)`, () => {
+    expect( ()=> evaluateExpression("isBefore(addPeriod(moment('2010-03-31'),3,'D'), moment())") )   
+    .toThrow(/Undefined time unit/);
 });
 
