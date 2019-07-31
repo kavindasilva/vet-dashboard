@@ -31,9 +31,17 @@ function functionAddPeriod(){
         )
         {
             return moment( arguments[0] ).add( arguments[1], arguments[2] );
+            //return moment(moment( arguments[0] ).add( arguments[1], arguments[2] ));
         }
+
+        // else if( arguments.length === 2 
+        //     //&& isDateValid(arguments[0])
+        //     && isNumParameterValid(arguments[0])
+        //     && isTimeUnitValid(arguments[1])
+        // )
+        //     return moment().add( arguments[1], arguments[2] );
     }
-    catch(e){ //
+    catch(e){ // any kind of handled error
         throw new Error(e);
     }
 }
@@ -108,6 +116,7 @@ export const validateExpression = function (expression) {
     return parseTree;
 }
 
+/** evaluates a valid type PegJS result  */
 export function evaluateSubTree(subTree) {
     if (Array.isArray(subTree)) { 
         return subTree.map(element => {
@@ -127,6 +136,7 @@ export function evaluateSubTree(subTree) {
     
 }
 
+/** evaluates a function with/without paramters and returns result */
 function evaluateFunctionSubTree(commandStructure) {
     if (!executableFunctions.hasOwnProperty(commandStructure.name)) {
         throw new Error(`Undefined Function: ${commandStructure.name}`);
