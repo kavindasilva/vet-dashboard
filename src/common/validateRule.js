@@ -88,6 +88,9 @@ function functionIsBefore() {
 export const evaluateExpression = function (expression) {
     let parseTree = Peg.parse(expression);
     let evaluationResult = evaluateSubTree(parseTree);
+
+    if(typeof evaluationResult !== "boolean") //should return only bool
+        throw new Error ("Expression should return only boolean value");
     return evaluationResult;
 
 }

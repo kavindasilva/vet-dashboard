@@ -4,12 +4,12 @@ import {validateExpression, evaluateSubTree, evaluateExpression} from "../src/co
 import moment from "moment";
 let expressionToEvaluate = null
 /**
- * positive test cases
  * function to check: validateExpression
+ * function to check: evaluateExpression
  */
 
 /** moment() evaluation */
-test(`expression "moment()" will give a valid parse tree`, () => {
+test(`validateExpression "moment()" will give a valid parse tree`, () => {
     expect( 
         validateExpression("moment()")
     )
@@ -20,19 +20,20 @@ test(`expression "moment()" will give a valid parse tree`, () => {
     });
 });
 
-test(`expression "moment()" should return current time`, () => {
-    expect( evaluateExpression("moment()") )
-    .toMatchObject( moment() );
-});
+test(`"moment()" should throw Expression should return only boolean value`, () => {
+    expect( ()=> evaluateExpression("moment()") )
+    .toThrow(/Expression should return only boolean value/)
+}); 
 
 /** vaild function with parameter */
-test(`expression "moment('2011-10-21')" will give a valid parse tree`, () => {
-    expect( evaluateExpression("moment('2011-10-21')") )   
-    .toMatchObject(moment('2011-10-21'));
+test(`"moment('2011-10-21')" will throw Expression should return only boolean value`, () => {
+    expect( ()=> evaluateExpression("moment('2011-10-21')") )
+    .toThrow(/Expression should return only boolean value/)
+    //.toMatchObject(moment('2011-10-21'));
 });
 
 /** isAfter should return boolean on success */
-test(`isAfter(moment('2010-03-01'), moment() )`, () => {
+test(`typeof isAfter(moment('2010-03-01'), moment() )`, () => {
     //console.log(typeof  evaluateExpression("isAfter(moment('2010-03-01'), moment() )") )
     expect(typeof  evaluateExpression("isAfter(moment('2010-03-01'), moment() )") )
     .toEqual("boolean");
@@ -40,13 +41,13 @@ test(`isAfter(moment('2010-03-01'), moment() )`, () => {
 });
 
 /** isBefore should return boolean on success */
-test(`isBefore(moment('2010-03-01'), moment() )`, () => {
+test(`typeof isBefore(moment('2010-03-01'), moment() )`, () => {
     expect(typeof  evaluateExpression("isBefore(moment('2010-03-01'), moment() )") )
     .toEqual("boolean");
 });
 
 /** add a period should return new Date --not working */
-test.skip(`expression "addPeriod(moment('2010-03-01'),5,'days')" will give a valid date`, () => {
+test.skip(`"addPeriod(moment('2010-03-01'),5,'days')" will give a valid date`, () => {
     expect( evaluateExpression("addPeriod(moment('2010-03-01'),5,'days')") )
     //console.log("R",r)
     //.toMatchObject( moment('2010-03-01').add(5,'d') )  //ok
@@ -54,7 +55,7 @@ test.skip(`expression "addPeriod(moment('2010-03-01'),5,'days')" will give a val
 });
 
 /** substract a period should return new Date */
-test.skip(`expression "substractPeriod(moment('2010-03-31'),3,'days')" will give a valid date`, () => {
+test.skip(`"substractPeriod(moment('2010-03-31'),3,'days')" will give a valid date`, () => {
     expect( evaluateExpression("substractPeriod(moment('2010-03-31'),3,'days')") )   
     .toMatchObject(moment("2010-03-06"));
 });
@@ -86,39 +87,39 @@ test(`compare with current date: isBefore(substractPeriod(moment(),4,'days'), mo
 });
 
 /** isBefore true */
-test(`expression "isBefore('2010-01-01', '2010-01-02')" should return true`, () => {
+test(`"isBefore('2010-01-01', '2010-01-02')" should return true`, () => {
     expect( evaluateExpression("isBefore('2010-01-01', '2010-01-02')"))
     .toBe(true);
     //.toBeTruthy();
 });
 
 /** isBefore false */
-test(`expression "isBefore('2010-02-01', '2010-01-02')" should return false`, () => {
+test(`"isBefore('2010-02-01', '2010-01-02')" should return false`, () => {
     expect( evaluateExpression("isBefore('2010-02-01', '2010-01-02')") )
     .not.toBe(true);
 });
 
 /** isAfter true */
-test(`expression "isAfter('2010-03-01', '2010-01-02')" should return true`, () => {
+test(`"isAfter('2010-03-01', '2010-01-02')" should return true`, () => {
     expect( evaluateExpression("isAfter('2010-03-01', '2010-01-02')"))
     .toBe(true);
 });
 
 /** isAfter true */
-test.skip(`expression "isAfter([2010], '2010-01-02')" should return true`, () => {
+test.skip(`"isAfter([2010], '2010-01-02')" should return true`, () => {
     expect( evaluateExpression("isAfter([2010], '2010-01-02')"))
     .toBe(true);
 });
 
 /** isAfter false */
-test(`expression "isAfter('2010-01-01', '2010-01-02')" should return false`, () => {
+test(`"isAfter('2010-01-01', '2010-01-02')" should return false`, () => {
     expect( evaluateExpression("isAfter('2010-01-01', '2010-01-02')") )
     .not.toBe(true);
 });
 
-test(`expression "moment('2019-01-01 10:31:59')" is evaluated correctly`, () => {
-    expect(evaluateExpression("moment('2019-01-01 10:31:59')"))
-        .toMatchObject(moment('2019-01-01 10:31:59')) ;
+test(`"moment('2019-01-01 10:31:59')" throws Expression should return only boolean value`, () => {
+    expect( ()=> evaluateExpression("moment('2019-01-01 10:31:59')"))
+    .toThrow(/Expression should return only boolean value/)
 });
 
 
@@ -155,10 +156,6 @@ test(`array subtree is evaluated correctly`, () => {
         .toEqual(expect.arrayContaining(['1','2']));
 });
 
-
-/**
- * negative test cases
- */
 
 
 /** passing empty input */
@@ -263,8 +260,7 @@ test(`expression "isBefore(addPeriod(moment('2010-03-31'),3,'D'), moment())" sho
 
 /** every function should return boolean on success. on failure error may thrown */
 test(`addPeriod(moment('2010-03-31'),3,'d') should not return boolean`, () => {
-    expect(typeof  evaluateExpression("addPeriod(moment('2010-03-31'),3,'d')") )
-    .not.toEqual("boolean");
-    //.not.toEqual("object");
+    expect( ()=> evaluateExpression("addPeriod(moment('2010-03-31'),3,'d')") )
+    .toThrow();
 });
 
