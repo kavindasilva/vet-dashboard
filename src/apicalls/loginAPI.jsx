@@ -7,34 +7,23 @@ import axios from 'axios';
 const APIlistUrl = 'http://ontrack.dev.io/api/list/DB';
 const APIselectUrl = 'http://ontrack.dev.io/api/select/';
 
-
 const APIauthenticateUrl = "http://ontrack.dev.io/login/user/login";
 const altAPIauthenticateUrl = "http://ontrack.dev.io/api/signin";
+const APIlogoutUrl = "http://ontrack.dev.io/login/user/logout";
 
 
 class loginAPI extends React.Component{
-  
-  /** get data from api connected to DB */
-  callApiDb( ticketID ){
-    var getUri=APIlistUrl;
-    if( ticketID!="" && ticketID!=null )
-      getUri=APIselectUrl + ticketID
 
-    console.log("loginAPI call uri:", getUri);
-    //var retStr;
-    return axios.get( getUri )
-      .then(result => {
-        console.log("loginAPI.jsx - callAPIdb",result);
-        //retStr=result;
-        return result;
-      })
-      .catch(error => {
-        console.log("loginAPI error", error);
-        return error;
-      });
+  logout(){
+    return axios.get( APIlogoutUrl )
+      .then(
+        res => {
+          return res
+        }
+      )
   }
 
-  auth3( username, password, otp ){
+  authenticate( username, password, otp ){
     let data = {
       "account_email": "ks@vetstoria.com",
       "account_password": "123",
@@ -49,7 +38,7 @@ class loginAPI extends React.Component{
       "otp": otp
     } ;
 
-    console.log("loginAPI - auth3", data);
+    console.log("loginAPI - authenticate", data);
 
     return axios.post( 
       APIauthenticateUrl,

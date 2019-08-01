@@ -23,8 +23,7 @@ const MetaReducer = (state, action) => {
         state=null;
 
     switch (action.type) {
-        case 'UPDATE_META_DETAIL':
-            //let newState={}
+        case 'LOG_IN_USER':
             newState = {
                 ...state,
                 metaData: {
@@ -33,12 +32,23 @@ const MetaReducer = (state, action) => {
                     userType: action.payload.loggedData.userType,
                     username: action.payload.loggedData.username,
                 }
-                
             }
-            console.log("MetaReducer_UPDATE_META_DETAIL: ", newState);
 
-            //saveToDB();
+            console.log("MetaReducer UPDATE_META_DETAIL: ", newState);
+            return newState;
+        
+        case 'LOG_OUT_USER':
+            newState = {
+                ...state,
+                metaData: {
+                    isLoggedIn: action.payload.loggedData.isLoggedIn,
+                    userId: action.payload.loggedData.user_id,
+                    userType: action.payload.loggedData.userType,
+                    username: action.payload.loggedData.username,
+                }
+            }
 
+            console.log("MetaReducer LOG_OUT_USER: ", newState);
             return newState;
 
         default:
@@ -46,6 +56,10 @@ const MetaReducer = (state, action) => {
             return state;
     }
 
+}
+
+const endSession = () => {
+    //
 }
 
 const saveToDB = (allData) => {

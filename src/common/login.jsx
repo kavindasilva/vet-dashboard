@@ -97,7 +97,7 @@ class Login extends React.Component{
 		console.log("Login - credentials:", this.state.username, this.state.password );
 		
 		// call to API post
-		loginAPIobj.auth3(this.state.username, this.state.password, this.state.otp)
+		loginAPIobj.authenticate(this.state.username, this.state.password, this.state.otp)
 			.then( res => {
 				console.log("Login - authMsg:", res);
 				this.validateCredentials(res);
@@ -171,7 +171,7 @@ class Login extends React.Component{
 	/** update the redux store after successful login */
 	dispatchLogin = () => {
 		rootStore.dispatch({
-			type: 'UPDATE_META_DETAIL',
+			type: 'LOG_IN_USER',
 			payload: {
 				loggedData: { ...this.state.serverData, isLoggedIn: true }
 			}

@@ -18,6 +18,8 @@ import TrackerConfig from "../config/trackersConfig";
 import Button from '@material-ui/core/Button';
 
 //import MiniDrawer from "../common/drawer";
+import loginAPI from "../apicalls/loginAPI";
+const loginAPIobj = new loginAPI();
 
 //import Phoenix from "../oabpPhoenixFailures/records"
 
@@ -99,6 +101,12 @@ class Menu extends Component {
 
 	/** logout user */
 	logOutUser = () => {
+		loginAPIobj.logout().then(
+			res => {
+				console.log("menu logOutUser", res.data)
+			}
+		);
+		
 		let loggedData = {
 			account_id:  localStorage.getItem("accountId") ,
 			type: parseInt( localStorage.getItem("userType") ),
@@ -115,7 +123,7 @@ class Menu extends Component {
 
 	dispatchLogOut = () => {
 		rootStore.dispatch({
-			type: 'UPDATE_META_DETAIL',
+			type: 'LOG_OUT_USER',
 			payload: {
 				loggedData: {...this.state.serverData, isLoggedIn: false }
 			}
