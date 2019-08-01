@@ -25,6 +25,7 @@ import Menu from "../common/menu";
 import loginAPI from "../apicalls/loginAPI";
 
 import Trackers from "../dashboard/trackers";
+import { FormLabel, SnackbarContent, IconButton, Snackbar } from '@material-ui/core';
 //import MiniDrawer from "../common/drawer";
 
 const loginAPIobj = new loginAPI();
@@ -68,6 +69,8 @@ class Login extends React.Component{
 		username:"info@vetstoria.com", 
 		password:"123",
 		serverData: { account_id:0, type:0, user_id:0},
+
+		authFailed: false,
 	}
 	//state = { Meta }
 
@@ -111,7 +114,14 @@ class Login extends React.Component{
 	 * if credentials validated: data: {type: 3, account_id: "1", user_id: 2}
 	*/
 	validateCredentials( serverData){
-		if( serverData.data.type !=="" && serverData.data.type!==null && serverData.data!=="Bad Request" ){
+		if( serverData.data.type !=="" 
+			&& serverData.data.type!==null 
+			&& serverData.data!=="Bad Request" 
+
+			&& serverData.data.user_id
+			&& serverData.data.type
+			&& serverData.data.account_id
+		){
 			console.log("credentials validated. serverData:", serverData);
 			this.setState({serverData: serverData.data});
 
@@ -126,10 +136,11 @@ class Login extends React.Component{
 			//this.setState({isLoggedIn: true});
 		}
 		else if( serverData.data =="Bad Request" ){
-			console.log("credentials not validated");
+			this.setState({authFailed: true});
+			console.log("credentials not validated", serverData);
 		}
 		else{
-			console.log("credential validation error" );
+			console.log("credential validation error. unnknown condition" );
 		}
 	}
 
@@ -245,6 +256,29 @@ class Login extends React.Component{
 						>
 							Sign In
 						</Button>
+
+						<Snackbar
+							open={ this.state.authFailed }
+							//className={clsx(classes[variant], className)}
+							aria-describedby="client-snackbar"
+							// message={
+							// 	<span id="client-snackbar" className={classes.message}>
+							// 	<Icon className={clsx(classes.icon, classes.iconVariant)} />
+							// 	{message}
+							// 	</span>
+							// }
+							action={[
+								<IconButton 
+									key="close" 
+									aria-label="close" 
+									color="inherit" 
+									onClick={ ()=>this.setState({authFailed: false}) }
+								>
+									x
+								</IconButton>,
+							]}
+							
+						/>
 
 						<Grid container>
 							<Grid item xs>

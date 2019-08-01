@@ -99,11 +99,11 @@ class Menu extends Component {
 		this.setState( { componentToShow: clickedComponent } );
 	}
 
-	/** logout user */
+	/** logout user. not properly handled. should logout after receive OK from server */
 	logOutUser = () => {
 		loginAPIobj.logout().then(
 			res => {
-				console.log("menu logOutUser", res.data)
+				//console.log("menu logOutUser", res.data)
 			}
 		);
 		

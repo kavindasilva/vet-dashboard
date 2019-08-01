@@ -12,81 +12,74 @@ const altAPIauthenticateUrl = "http://ontrack.dev.io/api/signin";
 const APIlogoutUrl = "http://ontrack.dev.io/login/user/logout";
 
 
-class loginAPI extends React.Component{
+class loginAPI extends React.Component {
 
-  logout(){
-    return axios.get( APIlogoutUrl )
-      .then(
-        res => {
-          return res
-        }
-      )
-  }
+	logout() {
+		return axios.get(APIlogoutUrl)
+			.then(
+				res => {
+					return res
+				}
+			)
+	}
 
-  authenticate( username, password, otp ){
-    let data = {
-      "account_email": "ks@vetstoria.com",
-      "account_password": "123",
-      "is_otp_required": true,
-      "otp": "qaauto"
-    } ;/* */
+	authenticate(username, password, otp) {
+		let data = {};
+		data = {
+			"account_email": username,
+			"account_password": password,
+			"is_otp_required": true,
+			"otp": otp
+		};
 
-    /* */data = {
-      "account_email": username,
-      "account_password": password,
-      "is_otp_required": true,
-      "otp": otp
-    } ;
+		console.log("loginAPI - authenticate", data);
 
-    console.log("loginAPI - authenticate", data);
+		return axios.post(
+			APIauthenticateUrl,
+			//altAPIauthenticateUrl, 
 
-    return axios.post( 
-      APIauthenticateUrl,
-      //altAPIauthenticateUrl, 
+			data,
 
-       data ,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+				}
+			}
+		)
+			.then(res => {
+				console.log("loginAPI - axios reponse:", res);
+				console.log(res.data);
+				return res;
+			})
 
-      { headers: { 
-        'Content-Type': 'application/json' ,
-      } }
-      // { headers: { 'Content-Type': 'application/json' } }
-    )
-      .then(res => {
-        console.log("loginAPI - axios reponse:", res);
+		//sample response
+		//{"type":3,"account_id":"1","user_id":2}
 
-        //console.log(res);
-        console.log(res.data);
-        return res;
-      })
 
-    //sample response
-    //{"type":3,"account_id":"1","user_id":2}
+	}
 
-    
-  }
+	/** send authentication data to API. currently not initialized API */
+	authenticateAPI(data0) {
+		let data = {
+			"account_email": "ks@vetstoria.com",
+			"account_password": "123",
+			"is_otp_required": true,
+			"otp": "qaauto"
+		};
 
-  /** send authentication data to API. currently not initialized API */
-  authenticateAPI( data0 ){
-    let data = {
-      "account_email": "ks@vetstoria.com",
-      "account_password": "123",
-      "is_otp_required": true,
-      "otp": "qaauto"
-    };
+		data = JSON.parse(" { \"account_email\": \"ks@vetstoria.com\", \"account_password\": \"123\", \"is_otp_required\": true, \"otp\": \"qaauto\" } ");
+		console.log("loginAPI - authenticateAPI", data);
 
-    data = JSON.parse(" { \"account_email\": \"ks@vetstoria.com\", \"account_password\": \"123\", \"is_otp_required\": true, \"otp\": \"qaauto\" } ");
-    console.log("loginAPI - authenticateAPI", data);
-    
-     axios.post( APIauthenticateUrl, data, { method:'post' } )
-      .then((res) => {
-        console.log("loginAPI - axios reponse:", res);
-        console.log(res.data);
-        return res.data[0];
-      })
+		axios.post(APIauthenticateUrl, data, { method: 'post' })
+			.then((res) => {
+				console.log("loginAPI - axios reponse:", res);
+				console.log(res.data);
+				return res.data[0];
+			})
 
-    // sample response
-    // {"type":3,"account_id":"1","user_id":2}
-  }
+		// sample response
+		// {"type":3,"account_id":"1","user_id":2}
+	}
 
 }
 
