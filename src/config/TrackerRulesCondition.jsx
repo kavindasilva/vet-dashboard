@@ -78,7 +78,7 @@ class TrackerRulesCondition extends React.Component{
     }
 
     componentDidMount(){
-        this.validateExpr(this.state.attributeValue);
+        //this.validateExpr(this.state.attributeValue);
     }
 
 }

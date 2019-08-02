@@ -23,12 +23,14 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Menu from "../common/menu";
 import loginAPI from "../apicalls/loginAPI";
+import userAPI from "../apicalls/userAPI";
 
 import Trackers from "../dashboard/trackers";
 import { FormLabel, SnackbarContent, IconButton, Snackbar } from '@material-ui/core';
 //import MiniDrawer from "../common/drawer";
 
 const loginAPIobj = new loginAPI();
+const userAPIobj = new userAPI();
 
 
 
@@ -57,8 +59,6 @@ const useStyles = theme => ({
 	},
 });
 
-//const classes = useStyles();
-
 //export default class Login{
 class Login extends React.Component{
 
@@ -72,7 +72,6 @@ class Login extends React.Component{
 
 		authFailed: false,
 	}
-	//state = { Meta }
 
 	componentDidMount(){
 		//console.log("Login - mount. classes:", this.classes);
@@ -85,12 +84,9 @@ class Login extends React.Component{
 					//this.viewMenu()
 					this.handleLoginStatus()	
 				}
-
-				
 			</React.Fragment>
 		)
 	}
-	//const classes = useStyles();
 
 	getFormData = (event)=> {
 		console.log("Login - formData:",event);
@@ -131,7 +127,8 @@ class Login extends React.Component{
 			localStorage.setItem( "userType", serverData.data.type );
 			localStorage.setItem( "accountId", serverData.data.account_id );
 
-			this.dispatchLogin();
+			//this.dispatchLogin();
+			this.getLoggedUserData( serverData.data.user_id )
 			
 			//this.setState({isLoggedIn: true});
 		}
@@ -163,8 +160,9 @@ class Login extends React.Component{
 
 			this.setState({serverData: loggedData}, function(){
 				console.log('login.jsx - handleForm2', this.state.serverData );
-				this.dispatchLogin();
-			});
+				//this.dispatchLogin();
+				this.getLoggedUserData( this.state.serverData.user_id )
+		});
 
 		}
 		else{
@@ -180,16 +178,32 @@ class Login extends React.Component{
 	}
 
 	/** update the redux store after successful login */
-	dispatchLogin = () => {
+	dispatchLogin = ( userDbData=null ) => {
 		rootStore.dispatch({
 			type: 'LOG_IN_USER',
 			payload: {
-				loggedData: { ...this.state.serverData, isLoggedIn: true }
+				loggedData: { ...this.state.serverData, isLoggedIn: true },
+				dbData: userDbData
 			}
 		});
 		console.log('login.jsx - dispatchLogin', { ...this.state.serverData, isLoggedIn: true } );
 	}
 
+	/** get other user information like name,email,... from db, and update store */
+	getLoggedUserData( userId ){ 
+		this.dispatchLogin(null); //return; // without this this code infinite loop occurs
+		userAPIobj.getSingleUser(userId)
+		.then(
+			res => {
+				if( res && res.data){
+					console.log("login.jsx loggedUserDbInfo ", res)
+					this.dispatchLogin(res.data);
+				}
+			}
+		)
+	}
+
+	/** render the login form */
 	viewLoginForm(){
 		return (
 			<Container component="main" maxWidth="xs">

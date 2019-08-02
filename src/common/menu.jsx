@@ -36,7 +36,7 @@ class Menu extends Component {
 	render() {
 		//console.log('Menu.jsx-rendering' );
 		return (
-			<React.Fragment>
+			<React.Fragment >
 				{ 
 					this.viewMenuBar() 
 				}
@@ -54,7 +54,7 @@ class Menu extends Component {
 				{/* <MiniDrawer /> */}
 				
 				{ /** temporary menu bar */ }
-				<div>
+				<div style={{backgroundColor:"#f1f2f3"}}>
 					<div>
 					Hi user ID: ... { this.props.metaData.userId } ...
 						<Button style={{cursor:'pointer',float:'right',align:'right'}}

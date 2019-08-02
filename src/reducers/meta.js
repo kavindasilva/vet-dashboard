@@ -31,6 +31,8 @@ const MetaReducer = (state, action) => {
                     userId: action.payload.loggedData.user_id,
                     userType: action.payload.loggedData.userType,
                     username: action.payload.loggedData.username,
+
+                    userInfo: action.payload.dbData,
                 }
             }
 
@@ -45,6 +47,8 @@ const MetaReducer = (state, action) => {
                     userId: action.payload.loggedData.user_id,
                     userType: action.payload.loggedData.userType,
                     username: action.payload.loggedData.username,
+
+                    userInfo: null,
                 }
             }
 
