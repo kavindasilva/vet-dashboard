@@ -78,17 +78,20 @@ class TrackersConfigColumns extends React.Component{
     classes=this.props.classes;
 	state = { 
         trackerColumnConfigData: this.props.tracker,
-        columnCount0: this.props.trackerColsCount, // this is to fix bug: new column added not shown immediately
-        columnCount: JSON.stringify(this.props.tracker), 
+        trackersHash: this.props.trackerColsHash, // this is to fix bug: new column added not shown immediately
+        //trackersHash: JSON.stringify(this.props.tracker), 
 
         rowCollapsed:[],
     }
    
     componentWillReceiveProps( newProps ){
-		console.log("TrackersColumnsConfig - receiveNewProps:", newProps); 
-        // if( newProps.trackers !== this.state.trackerConfigData ){
-        //     this.setState({trackerConfigData: newProps.trackers});
-        // }
+        console.log("TrackersColumnsConfig - receiveNewProps:", newProps); 
+        // if( JSON.stringify(this.props.tracker) !== this.state.trackersHash ){
+        //     this.setState({trackersHash: JSON.stringify(this.props.tracker)});
+        // } //not working
+        if( newProps.trackerColsHash !== this.state.trackersHash ){
+            this.setState({trackersHash: newProps.trackerColsHash});
+        }
     }
 
 	render(){
@@ -279,9 +282,9 @@ const mapStateToProps = (state, props) => {
             tracker.tracker_id === props.tracker_id
         ) ),
 
-        trackerColsCount: JSON.stringify(state.TrackConfigReducer.configData.find( tracker => (
+        trackerColsHash: JSON.stringify(state.TrackConfigReducer.configData.find( tracker => (
             tracker.tracker_id === props.tracker_id
-        ) ).columns.length), // this is to fix bug: new column added not shown immediately
+        ) )), // this is to fix bug: new column added / cancel edits not shown immediately,
 	};
 }
 

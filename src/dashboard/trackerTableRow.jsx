@@ -30,7 +30,7 @@ class TrackerTableRow extends React.Component{
     }
 
 	componentDidMount(){
-		console.log("TrackerTableRow - mount. props:", this.props); //ok
+		//console.log("TrackerTableRow - mount. props:", this.props); //ok
 		//console.log("TrackerTableRow - mount. props.metaData:", this.props.metaData); 
 	}
 

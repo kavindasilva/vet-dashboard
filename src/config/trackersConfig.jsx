@@ -322,6 +322,8 @@ const mapStateToProps = state => {
 	return {
         metaData: state.MetaReducer.metaData,
         trackers: state.TrackConfigReducer.configData,
+
+        //trackersHash: JSON.stringify(state.TrackConfigReducer.configData),
 	};
 }
 
