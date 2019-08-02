@@ -71,6 +71,7 @@ class Login extends React.Component{
 		serverData: { account_id:0, type:0, user_id:0},
 
 		authFailed: false,
+		authFailedMsg: "",
 	}
 
 	componentDidMount(){
@@ -110,7 +111,8 @@ class Login extends React.Component{
 	 * if credentials validated: data: {type: 3, account_id: "1", user_id: 2}
 	*/
 	validateCredentials( serverData){
-		if( serverData.data.type !=="" 
+		if(  serverData.data
+			&& serverData.data.type !=="" 
 			&& serverData.data.type!==null 
 			&& serverData.data!=="Bad Request" 
 
@@ -132,8 +134,10 @@ class Login extends React.Component{
 			
 			//this.setState({isLoggedIn: true});
 		}
-		else if( serverData.data =="Bad Request" ){
+		else if( serverData.err || serverData.data =="Bad Request" ){
+			
 			this.setState({authFailed: true});
+			this.setState({authFailedMsg: serverData.errMsg.toString() });
 			console.log("credentials not validated", serverData);
 		}
 		else{
@@ -275,6 +279,11 @@ class Login extends React.Component{
 							open={ this.state.authFailed }
 							//className={clsx(classes[variant], className)}
 							aria-describedby="client-snackbar"
+							message={ 
+								<span style={{color:"red"}}>
+									{ this.state.authFailedMsg }
+								</span>
+							}
 							// message={
 							// 	<span id="client-snackbar" className={classes.message}>
 							// 	<Icon className={clsx(classes.icon, classes.iconVariant)} />

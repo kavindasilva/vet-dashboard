@@ -51,6 +51,10 @@ class loginAPI extends React.Component {
 				console.log(res.data);
 				return res;
 			})
+			.catch(error => {
+				console.log("loginAPI.jsx - axios-Err", error);
+				return { errMsg:error, err: true};
+			  });
 
 		//sample response
 		//{"type":3,"account_id":"1","user_id":2}
