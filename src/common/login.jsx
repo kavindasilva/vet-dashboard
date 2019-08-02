@@ -191,7 +191,7 @@ class Login extends React.Component{
 
 	/** get other user information like name,email,... from db, and update store */
 	getLoggedUserData( userId ){ 
-		this.dispatchLogin(null); //return; // without this this code infinite loop occurs
+		this.dispatchLogin(null); //return; // without this code infinite loop occurs
 		userAPIobj.getSingleUser(userId)
 		.then(
 			res => {

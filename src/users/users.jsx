@@ -120,8 +120,10 @@ class Users extends React.Component{
 		return(
 			<React.Fragment>
                 
-                { 
-                    this.renderUserView() 
+                {
+                    (this.props.metaData.userInfo && this.props.metaData.userInfo.user_type_id===3)
+                    ? this.renderUserView() 
+                    : <div>You are not authorixed to view this page</div>
                 }
 			</React.Fragment>
 		)
@@ -279,6 +281,7 @@ class Users extends React.Component{
 const mapStateToProps = state => {
 	console.log('users.jsx-mapStateToProps', state);
 	return {
+        metaData: state.MetaReducer.metaData,
         userData: state.UserConfigReducer.userData,
         partnerData: state.UserConfigReducer.partnerData,
 

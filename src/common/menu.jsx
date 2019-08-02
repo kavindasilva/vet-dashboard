@@ -15,6 +15,8 @@ import Trackers from "../dashboard/trackers";
 import Users from "../users/users";
 import TrackerConfig from "../config/trackersConfig";
 
+import { userTypeArray } from "../common/constants"
+
 import Button from '@material-ui/core/Button';
 
 //import MiniDrawer from "../common/drawer";
@@ -29,7 +31,7 @@ class Menu extends Component {
 		showPh: false,
 
 		//componentToShow: 'def',
-		componentToShow: "config",
+		componentToShow: "trackerConfig",
 		//componentToShow: "tickets",
 	}
 
@@ -48,6 +50,9 @@ class Menu extends Component {
 		);
 	}
 
+	/**
+	 * renders the menu bar (temporary menu bar)
+	 */
 	viewMenuBar(){
 		return(
 			<React.Fragment>
@@ -56,8 +61,10 @@ class Menu extends Component {
 				{ /** temporary menu bar */ }
 				<div style={{backgroundColor:"#f1f2f3"}}>
 					<div>
-					Hi user ID: ... { this.props.metaData.userId } ...
-						<Button style={{cursor:'pointer',float:'right',align:'right'}}
+					Hi user ID: ... { this.props.metaData.userId } ...  
+					{ (this.props.metaData.userInfo)? this.props.metaData.userInfo.email:"who you?" }
+						<Button 
+							style={{cursor:'pointer',float:'right',align:'right'}}
 							onClick={ () => { this.logOutUser() } }
 						>
 							LogOut
@@ -65,9 +72,46 @@ class Menu extends Component {
 					</div>
 
 					Temporary menu bar: 
-					<Button onClick={ ()=>{ this.setState({ componentToShow:'tickets'}) } } >Tickets</Button>
-					<Button onClick={ ()=>{ this.setState({ componentToShow:'config'}) } } >TrackerConfig</Button>
-					<Button onClick={ ()=>{ this.setState({ componentToShow:'users'}) } } >UserMgt</Button>
+					<Button 
+						onClick={ ()=>{ this.setState({ componentToShow:'tickets'}) } } 
+					>
+						Tickets
+					</Button>
+					
+					{
+						(
+							this.props.metaData.userInfo 
+							&& this.props.metaData.userInfo.user_type_id===3 //admin
+						) 
+						&&
+						<Button 
+							onClick={ ()=>{ this.setState({ componentToShow:'trackerConfig'}) } } 
+						>
+							TrackerConfig
+						</Button>
+					}
+
+					{
+						(
+							this.props.metaData.userInfo 
+							&& this.props.metaData.userInfo.user_type_id===3 //admin
+						) 
+						&&
+						<Button 
+							onClick={ ()=>{ this.setState({ componentToShow:'users'}) } } 
+							//disabled={true}
+							hidden={true}
+							//hidden={ (this.props.metaData.userInfo && this.props.metaData.userInfo.user_type_id!==3) }
+						>
+							UserMgt
+						</Button>
+					}
+
+					<Button 
+						onClick={ ()=>{ this.setState({ componentToShow:'users'}) } } 
+					>
+						My profile
+					</Button>
 				</div>
 				{/*  */}
 				
@@ -82,11 +126,13 @@ class Menu extends Component {
 	/** determine which compoenent to be rendered */
 	componentToShow(){
 		let componentToShow = this.state.componentToShow;
-		if( componentToShow=="tickets" )
+		if( componentToShow==="tickets" )
 			return <Trackers />
-		if( componentToShow=="config" )
+		else if( componentToShow==="trackerConfig" )
 			return <TrackerConfig />
-		else if( componentToShow=="users" )
+		else if( componentToShow==="users" )
+			return <Users />
+		else if( componentToShow==="currentUser" )
 			return <Users />
 		else
 			return "no app";
@@ -101,7 +147,8 @@ class Menu extends Component {
 
 	/** logout user. not properly handled. should logout after receive OK from server */
 	logOutUser = () => {
-		loginAPIobj.logout().then(
+		loginAPIobj.logout()
+		.then(
 			res => {
 				//console.log("menu logOutUser", res.data)
 			}
