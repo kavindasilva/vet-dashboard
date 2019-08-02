@@ -45,7 +45,7 @@ class CustomDatePicker extends React.Component{
     state ={
         ticketId: this.props.ticketId,
         columnName: this.props.columnName,
-        isOpen: this.props.show,
+        isOpen: false, //this.props.show,
         attributeValue: this.props.value,
     }
 

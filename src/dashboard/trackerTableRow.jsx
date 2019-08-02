@@ -35,10 +35,21 @@ class TrackerTableRow extends React.Component{
 	}
 
 	render(){
-		return(
-			this.showTableRows()
-			//<tr> <td>00</td> <td>00</td> <td>00</td> </tr>
-		)
+		if(this.props.ticketsData && this.props.ticketsData.length > 0)
+			return(
+				this.showTableRows()
+				//<tr> <td>00</td> <td>00</td> <td>00</td> </tr>
+			)
+		else
+			return(
+				<Row>
+					<Cell>
+						<small>No records available in this tracker</small>
+						this.props.ticketsData: <br/>
+						{this.props.ticketsData}
+					</Cell>
+				</Row>
+			);
     }
 	//TrackerTableRow
 	showTableRows(){

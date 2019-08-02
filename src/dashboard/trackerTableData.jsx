@@ -29,17 +29,6 @@ class TrackerTableData extends React.Component{
         ...this.props.metaData, 
 	}
 	
-	/** 
-	 * defined by column dataType
-	 * 
-	 * columnType: dataType
-	 * */
-	/*columnDataTypes = {
-		1: 'text',
-		2: 'number',
-		3: 'radio',
-		4: 'date'
-	}/* */
 	columnDataTypes = trackerColumnDataTypes;
 
 	componentDidMount(){
@@ -48,9 +37,28 @@ class TrackerTableData extends React.Component{
 	}
 
 	render(){
-		return(
-			this.showTableData()
-		)
+		if(
+			this.props.configData
+			&& this.props.configData.columns
+			&& this.props.configData.columns.length > 0
+		){
+			return(
+				this.showTableData()
+			)
+		}
+		else{
+			return(
+				<Cell>
+					<small>No columns available in the config</small>
+					this.props.configData : <br/>
+					{
+						(this.props.configData)
+						? JSON.stringify(this.props.configData)
+						: "unDefined"
+					}
+				</Cell>
+			)
+		}
     }
 
 	showTableData(){

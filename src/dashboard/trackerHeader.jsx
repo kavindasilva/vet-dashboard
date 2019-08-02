@@ -34,20 +34,45 @@ class TrackerHeader extends React.Component{
 	}
 
 	render(){
-		return(
-			this.showTableHeaders()
-		)
+		if(
+			this.props.trackerConfigData 
+			&& this.props.trackerConfigData.columns
+			&& this.props.trackerConfigData.columns.length > 0
+		){
+			return(
+				this.showTableHeaders()
+			)
+		}
+		else{
+			return( 
+				<Cell 
+					style={ { 
+						color:"#1122ee", 
+						padding: "2px 10px 2px 12px",
+						backgroundColor: "#e3d3cc",
+						...globalStyles["cell-borders"]
+					}}
+				>
+					<small>No Table columns available in the config</small>
+					this.props.trackerConfigData: <br/>
+					{
+						(this.props.trackerConfigData)
+						? JSON.stringify(this.props.trackerConfigData)
+						: "unDefined"
+					}
+				</Cell> 
+			);
+		}
+
     }
 
 
 	showTableHeaders(){
 		let returnArr=[ ];
-				
 		//console.log("trackerHeader trackerData:", this.props.trackerConfigData)
 		//console.log("matched trackerID:", this.props.trackerConfigData.id)
 
-		//(this.props.trackerConfigData && this.props.trackerConfigData.columns)
-		this.props.trackerConfigData.columns.forEach( column => { 
+		this.props.trackerConfigData.columns.forEach( (column, i) => { 
 
 			/**
 			 * current user's permitted columns & premission data
@@ -62,7 +87,7 @@ class TrackerHeader extends React.Component{
 
 				returnArr.push( 
 					<Cell 
-						key={ column.id }
+						key={ i /* perviously column id */}
 						style={ { 
 							//width: "200px", 
 							color:"#1122ee", 
@@ -81,10 +106,23 @@ class TrackerHeader extends React.Component{
 				)
 
 			}
+			else{
+				returnArr.push( 
+					<Cell 
+						key={ i }
+						style={ { 
+							color:"#1122ee", 
+							padding: "2px 10px 2px 12px",
+							backgroundColor: "#e3d3cc",
+							...globalStyles["cell-borders"]
+						}}
+					>
+						No Headers are visible to you
+					</Cell> 
+				)
+			}
 			
-		} )
-		//:"no headers"
-		;		
+		} );		
 
 		return returnArr;
 	}    

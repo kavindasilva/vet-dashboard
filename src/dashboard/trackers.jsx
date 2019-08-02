@@ -132,7 +132,7 @@ class Trackers extends React.Component{
                                     stickyColumnCount={1}
                                 >
                                     <Row>
-                                        <TrackerTableHeader trackerId={tracker.tracker_id}>
+                                        <TrackerTableHeader trackerId={tracker.tracker_id} key={tracker.tracker_id}>
                                         </TrackerTableHeader>
                                     </Row>
                                     <TrackerTableRow 
