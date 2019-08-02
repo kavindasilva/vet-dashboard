@@ -46,6 +46,7 @@ class TrackerHeader extends React.Component{
 		//console.log("trackerHeader trackerData:", this.props.trackerConfigData)
 		//console.log("matched trackerID:", this.props.trackerConfigData.id)
 
+		//(this.props.trackerConfigData && this.props.trackerConfigData.columns)
 		this.props.trackerConfigData.columns.forEach( column => { 
 
 			/**
@@ -81,7 +82,9 @@ class TrackerHeader extends React.Component{
 
 			}
 			
-		} );		
+		} )
+		//:"no headers"
+		;		
 
 		return returnArr;
 	}    

@@ -99,17 +99,20 @@ class Trackers extends React.Component{
                         scrollButtons="auto"
                     >                        
                         {
+                            (this.props.configData)?
                             this.props.configData.map( tracker => (
                                 <Tab 
                                     key={ tracker.tracker_id } 
                                     label={ tracker.name } 
                                 />
                             ))
+                            :"No Trackers"
                         }
                     </Tabs>
                 </AppBar>
 
                 {
+                    (this.props.configData)?
                     this.props.configData.map( tracker => (
 
                         (this.state.tabValue+1) === tracker.tracker_id && 
@@ -142,6 +145,7 @@ class Trackers extends React.Component{
 
                         </div>
                     ))
+                    :"No trackers"
                 }
 
 			</div>
