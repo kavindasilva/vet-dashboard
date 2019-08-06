@@ -181,17 +181,24 @@ class TrackersConfig extends React.Component{
                         scrollButtons="auto"
                     >    
                         {
-                            this.props.trackers.map( tracker => (
+                            (this.props.trackers)
+                            ? this.props.trackers.map( tracker => (
                                 <Tab 
                                     label={ tracker.name } 
                                     key={ tracker.name } 
                                 />
                             ))
+                            : <Tab
+                                label={"Loading..."}
+                                key={"Loading..."}
+                            />
+
                         }
                     </Tabs>
                 </AppBar>
                 {
-                    this.props.trackers.map( tracker => (
+                    (this.props.trackers)
+                    ? this.props.trackers.map( tracker => (
                         (this.state.tabValue+1) === tracker.tracker_id && 
                         <React.Fragment key ={tracker.tracker_id}>
                             <small> 
@@ -267,6 +274,7 @@ class TrackersConfig extends React.Component{
                             
                         </React.Fragment>
                     ) )
+                    : <React.Fragment>Loading...</React.Fragment>
                 }
 
 			</div>

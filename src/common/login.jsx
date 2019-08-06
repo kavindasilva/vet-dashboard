@@ -121,16 +121,17 @@ class Login extends React.Component{
 			&& serverData.data.account_id
 		){
 			console.log("credentials validated. serverData:", serverData);
-			this.setState({serverData: serverData.data});
+			this.setState({serverData: serverData.data}, () => {
 
-			/** temporary. needs to add security token from backend */
-			localStorage.setItem( "logged", "true" );
-            localStorage.setItem( "userId", serverData.data.user_id );
-			localStorage.setItem( "userType", serverData.data.type );
-			localStorage.setItem( "accountId", serverData.data.account_id );
+				/** temporary. needs to add security token from backend */
+				localStorage.setItem( "logged", "true" );
+				localStorage.setItem( "userId", serverData.data.user_id );
+				localStorage.setItem( "userType", serverData.data.type );
+				localStorage.setItem( "accountId", serverData.data.account_id );
 
-			//this.dispatchLogin();
-			this.getLoggedUserData( serverData.data.user_id )
+				//this.dispatchLogin();
+				this.getLoggedUserData( serverData.data.user_id )
+			});
 			
 			//this.setState({isLoggedIn: true});
 		}

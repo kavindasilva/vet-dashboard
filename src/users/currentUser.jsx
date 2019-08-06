@@ -55,40 +55,19 @@ class CurrentUser extends React.Component{
         ...this.props.metaData, 
     }
 
-	componentDidMount2(){
-        if(this.props.metaData.userInfo && this.props.metaData.userInfo.user_type_id!==3)
-            return;
+	componentDidMount(){
+        // if(this.props.metaData.userInfo && this.props.metaData.userInfo.user_type_id!==3)
+        //     return;
         //console.log("CurrentUser - mount. props:", this.props); //ok
-        let allUsers =userAPIObj.getUsers()
+        userAPIObj.getSingleUser(this.props.metaData.userId)
         .then(
             result => {
-                let resultArr=[];
-                for(var i in result.data){
-                    resultArr.push( result.data[i] );
-                }
-                console.log("users mount2 usersArr", resultArr); // type: arr
-                this.setState({allUsers: resultArr }, function(){
-                    this.dispatchUsers("users")
+                this.setState({currentUserData: result.data }, function(){
+                    //this.dispatchUsers("users")
                 });
                 //this.dispatchUsers()
             }
         );
-
-        let allPartners =userAPIObj.getPartners()
-        .then(
-            result => {
-                let resultArr=[];
-                for(var i in result.data){
-                    resultArr.push( result.data[i] );
-                }
-                console.log("users mount2 partnersArr", resultArr); // type: arr
-                this.setState({allPartners: resultArr }, function(){
-                    this.dispatchUsers("partners")
-                });
-            }
-        )
-        
-        
 		//console.log("CurrentUser - mount. props.metaData:", this.props.metaData); 
 	}
 
@@ -117,12 +96,12 @@ class CurrentUser extends React.Component{
 
                 <TableBody>
                     {
-                        (this.props.currentUserData)?
-                        Object.keys(this.props.currentUserData).map( key => (
+                        (this.state.currentUserData)?
+                        Object.keys(this.state.currentUserData).map( key => (
                             <TableRow>
                                 <TableCell></TableCell>
                                 <TableCell>{ key.toString() }</TableCell>
-                                <TableCell>{ this.props.currentUserData[key] }</TableCell>
+                                <TableCell>{ this.state.currentUserData[key] }</TableCell>
                             </TableRow>
                         ) )
                         :<TableRow>
@@ -147,11 +126,12 @@ class CurrentUser extends React.Component{
 
 const mapStateToProps = state => {
     console.log('currentUser.jsx-mapStateToProps', state);
-    let meta = state.MetaReducer.metaData;
+    //let meta = state.MetaReducer.metaData;
 	return {
-        metaData: meta,
+        metaData: state.MetaReducer.metaData,
         currentUserData: state.UserConfigReducer.userData.find( user => (
-            user.user_id === meta.userId
+            user.user_id == state.MetaReducer.metaData.userId
+            //user.user_id === 5
         ) ),
 	};
 }

@@ -81,8 +81,8 @@ class Users extends React.Component{
     }
 
 	componentDidMount(){
-        if(this.props.metaData.userInfo && this.props.metaData.userInfo.user_type_id!==3)
-            return;
+        // if(this.props.metaData.userInfo && this.props.metaData.userInfo.user_type_id!==3)
+        //     return;
         //console.log("Users - mount. props:", this.props); //ok
         let allUsers =userAPIObj.getUsers()
         .then(
@@ -223,7 +223,8 @@ class Users extends React.Component{
 
                         <TableBody>
                             {
-                                this.props.userData.map( user => (
+                                (this.props.userData)
+                                ? this.props.userData.map( user => (
                                     <TableRow>
                                         <TableCell>{ user.user_id }</TableCell>
                                         <TableCell>{ user.first_name+" "+user.last_name }</TableCell>
@@ -246,31 +247,15 @@ class Users extends React.Component{
                                         <TableCell>{ user.telephone }</TableCell>
                                     </TableRow>
                                 ) )
+                                : <TableRow>
+                                    <TableCell colSpan="4">Loading</TableCell>
+                                </TableRow>
                             }
                         </TableBody>
                     </Table>
 				</Paper>
 			</div>
         );
-    }
-
-    showCancelButton(){
-        // return(
-        //     <Button fullWidth>Cancel</Button>
-        // )
-    }
-    
-    showSaveButton(){
-        // return(
-        //     <Grid item xs={12}>
-        //         <Button
-        //             //onClick={}
-        //             fullWidth
-        //         >
-        //             Save
-        //         </Button>
-        //     </Grid>
-        // );
     }
 
     cancelForm = () => {
