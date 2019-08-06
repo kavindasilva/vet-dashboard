@@ -51,5 +51,8 @@ https://stackoverflow.com/questions/28725955/how-do-i-test-a-single-file-using-j
 --jul 31
 https://stackoverflow.com/questions/48125230/skip-one-test-in-test-file-jest
 
+--aug 06
+php session checking with js
+
 
 

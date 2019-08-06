@@ -137,6 +137,7 @@ class Login extends React.Component{
 		else if( serverData.err || serverData.data =="Bad Request" ){
 			
 			this.setState({authFailed: true});
+			//if(serverData.errMsg.status)
 			this.setState({authFailedMsg: serverData.errMsg.toString() });
 			console.log("credentials not validated", serverData);
 		}
@@ -277,19 +278,12 @@ class Login extends React.Component{
 
 						<Snackbar
 							open={ this.state.authFailed }
-							//className={clsx(classes[variant], className)}
 							aria-describedby="client-snackbar"
 							message={ 
 								<span style={{color:"red"}}>
 									{ this.state.authFailedMsg }
 								</span>
 							}
-							// message={
-							// 	<span id="client-snackbar" className={classes.message}>
-							// 	<Icon className={clsx(classes.icon, classes.iconVariant)} />
-							// 	{message}
-							// 	</span>
-							// }
 							action={[
 								<IconButton 
 									key="close" 

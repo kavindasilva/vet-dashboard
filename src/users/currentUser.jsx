@@ -104,31 +104,6 @@ class CurrentUser extends React.Component{
 		)
     }
 
-    dispatchUsers = ( type ) => {
-        switch(type){
-            case "users":
-                rootStore.dispatch({
-                    type: 'GET_SYSTEM_USERS',
-                    payload: {
-                        userData: this.state.allUsers
-                    }
-                });
-                break;
-
-            case "partners":
-                rootStore.dispatch({
-                    type: 'GET_SYSTEM_PARTNERS',
-                    payload: {
-                        partnerData: this.state.allPartners
-                    }
-                });
-                break;
-
-            default:
-                console.log("users dispatch unknown type: ", type);
-        }
-    }
-
     viewUserProfile(){ //return(<div></div>);
         return(
             <Table>
@@ -160,58 +135,12 @@ class CurrentUser extends React.Component{
 				
     }
 
-
-	viewUsers(){
-		return(
-			<div className="container">
-				<Paper >
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>User ID</TableCell>
-                                <TableCell>Name</TableCell>
-                                <TableCell>Email</TableCell>
-                                <TableCell>Type</TableCell>
-
-                                <TableCell></TableCell>
-                                <TableCell>Telephone</TableCell>
-                            </TableRow>
-                        </TableHead>
-
-                        <TableBody>
-                            {
-                                this.props.userData.map( user => (
-                                    <TableRow>
-                                        <TableCell>{ user.user_id }</TableCell>
-                                        <TableCell>{ user.first_name+" "+user.last_name }</TableCell>
-                                        <TableCell>{ user.email }</TableCell>
-                                        <TableCell>{ userTypeArray[user.user_type_id] }</TableCell>
-                                        
-                                        <TableCell>
-                                            <Button
-                                                onClick={ ()=>{
-                                                    this.setState({userIdToEdit: user.user_id}, function(){
-                                                        this.setState({componentToRender: "editUser"})
-                                                    });
-                                                    
-                                                } }
-                                            >
-                                                Edit
-                                            </Button>
-                                        </TableCell>
-
-                                        <TableCell>{ user.telephone }</TableCell>
-                                    </TableRow>
-                                ) )
-                            }
-                        </TableBody>
-                    </Table>
-				</Paper>
-			</div>
-        );
+    getLoggedUserData = ( userId ) => {
+        userAPIObj.getSingleUser(userId)
+        .then(
+            res =>{}
+        )
     }
-
-
     
 
 }
