@@ -106,21 +106,21 @@ class TrackerHeader extends React.Component{
 				)
 
 			}
-			else{
-				returnArr.push( 
-					<Cell 
-						key={ i }
-						style={ { 
-							color:"#1122ee", 
-							padding: "2px 10px 2px 12px",
-							backgroundColor: "#e3d3cc",
-							...globalStyles["cell-borders"]
-						}}
-					>
-						No Headers are visible to you
-					</Cell> 
-				)
-			}
+			// else{
+			// 	returnArr.push( 
+			// 		<Cell 
+			// 			key={ i }
+			// 			style={ { 
+			// 				color:"#1122ee", 
+			// 				padding: "2px 10px 2px 12px",
+			// 				backgroundColor: "#e3d3cc",
+			// 				...globalStyles["cell-borders"]
+			// 			}}
+			// 		>
+			// 			No Headers are visible to you
+			// 		</Cell> 
+			// 	)
+			// }
 			
 		} );		
 

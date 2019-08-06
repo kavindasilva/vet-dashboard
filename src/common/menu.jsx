@@ -21,6 +21,8 @@ import Button from '@material-ui/core/Button';
 
 //import MiniDrawer from "../common/drawer";
 import loginAPI from "../apicalls/loginAPI";
+import CurrentUser from '../users/currentUser';
+
 const loginAPIobj = new loginAPI();
 
 //import Phoenix from "../oabpPhoenixFailures/records"
@@ -31,7 +33,8 @@ class Menu extends Component {
 		showPh: false,
 
 		//componentToShow: 'def',
-		componentToShow: "trackerConfig",
+		//componentToShow: "trackerConfig",
+		componentToShow: "currentUserProfile",
 		//componentToShow: "tickets",
 	}
 
@@ -108,7 +111,7 @@ class Menu extends Component {
 					}
 
 					<Button 
-						onClick={ ()=>{ this.setState({ componentToShow:'users'}) } } 
+						onClick={ ()=>{ this.setState({ componentToShow:'currentUserProfile'}) } } 
 					>
 						My profile
 					</Button>
@@ -132,8 +135,8 @@ class Menu extends Component {
 			return <TrackerConfig />
 		else if( componentToShow==="users" )
 			return <Users />
-		else if( componentToShow==="currentUser" )
-			return <Users />
+		else if( componentToShow==="currentUserProfile" )
+			return <CurrentUser />
 		else
 			return "no app";
 

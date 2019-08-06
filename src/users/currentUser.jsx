@@ -49,41 +49,16 @@ const styles = theme => ({
 	}
 });
 
-/** to be imported from constants.js */
-const predefinedData=[
-    { name:"admin", value:"Adminn" },
-    { name:"standard", value:"STD" },
-    { name:"rest", value:"Restrict" },
-]
 
-class Users extends React.Component{
-    table1Columns = [
-		{ title:'ID', field:'id', type: 'numeric' },
-        { title:'User Name', field:'name' },
-        { title:'Type', field:'type' },
-
-        //{ title:'Type', field:'type', type:'list', render:<Table/> },
-        //{ title:'Type', field:'type', render: row => <InstantInput /> },
-        { title:'Type', field:'type', lookup: { admin:"Adminn", standard:"STD", rest:"Restrict" } },
-
-        { title:'Type', field:'type', 
-            editComponent: props => (
-                console.log("users.jsx column props", props),
-                <React.Fragment>
-                </React.Fragment>
-            )
-        },
-    ];
+class CurrentUser extends React.Component{
 	state = {
         ...this.props.metaData, 
-        componentToRender: "main",
-        userIdToEdit: 0,
     }
 
-	componentDidMount(){
+	componentDidMount2(){
         if(this.props.metaData.userInfo && this.props.metaData.userInfo.user_type_id!==3)
             return;
-        //console.log("Users - mount. props:", this.props); //ok
+        //console.log("CurrentUser - mount. props:", this.props); //ok
         let allUsers =userAPIObj.getUsers()
         .then(
             result => {
@@ -114,18 +89,16 @@ class Users extends React.Component{
         )
         
         
-		//console.log("Users - mount. props.metaData:", this.props.metaData); 
+		//console.log("CurrentUser - mount. props.metaData:", this.props.metaData); 
 	}
 
 	render(){
-		//this.viewForm() 
+        //if(this.props.currentUserData)console.log("currentUser render", this.props.currentUserData)
 		return(
 			<React.Fragment>
                 
                 {
-                    (this.props.metaData.userInfo && this.props.metaData.userInfo.user_type_id===3)
-                    ? this.renderUserView() 
-                    : <div>You are not authorixed to view this page</div>
+                    this.viewUserProfile() 
                 }
 			</React.Fragment>
 		)
@@ -156,53 +129,37 @@ class Users extends React.Component{
         }
     }
 
-    renderUserView(){
-        switch(this.state.componentToRender){
-            case "main":
-                return(
-                    <React.Fragment>
-                        { this.newUserButton() }
-                        { this.viewUsers() }
-                        
-                    </React.Fragment>
-                );
-            
-            case "newUserForm":
-                return(
-                    <React.Fragment>
-                        <NewUser cancelForm={ this.cancelForm } />
-                        { this.showSaveButton() }
-                        { this.showCancelButton() }
-                    </React.Fragment>
-                );
-            
-            case "editUser":
-                return(
-                    <React.Fragment>
-                        <EditUser 
-                            userId={ this.state.userIdToEdit } 
-                            cancelForm={ this.cancelForm }
-                        />
-                        { this.showSaveButton() }
-                        { this.showCancelButton() }
-                    </React.Fragment>
-                );
-
-            default:
-                console.log("users.jsx renderUserView default", this.state.componentToRender);
-        }
-    }
-
-    newUserButton(){
+    viewUserProfile(){ //return(<div></div>);
         return(
-            <Button  
-                style={ { width: "100%" } }
-                onClick={ () => this.setState({ componentToRender: "newUserForm" }) }
-            >
-                New User
-            </Button>
-        )
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell></TableCell>
+                        <TableCell>Property</TableCell>
+                        <TableCell>Value</TableCell>
+                    </TableRow>
+                </TableHead>
+
+                <TableBody>
+                    {
+                        (this.props.currentUserData)?
+                        Object.keys(this.props.currentUserData).map( key => (
+                            <TableRow>
+                                <TableCell></TableCell>
+                                <TableCell>{ key.toString() }</TableCell>
+                                <TableCell>{ this.props.currentUserData[key] }</TableCell>
+                            </TableRow>
+                        ) )
+                        :<TableRow>
+                            <TableCell colSpan={3}>Loading...</TableCell>
+                        </TableRow>
+                    }
+                </TableBody>
+            </Table>
+        );
+				
     }
+
 
 	viewUsers(){
 		return(
@@ -254,45 +211,25 @@ class Users extends React.Component{
         );
     }
 
-    showCancelButton(){
-        // return(
-        //     <Button fullWidth>Cancel</Button>
-        // )
-    }
-    
-    showSaveButton(){
-        // return(
-        //     <Grid item xs={12}>
-        //         <Button
-        //             //onClick={}
-        //             fullWidth
-        //         >
-        //             Save
-        //         </Button>
-        //     </Grid>
-        // );
-    }
 
-    cancelForm = () => {
-        this.setState({componentToRender: "main"});
-    }
     
 
 }
 
 const mapStateToProps = state => {
-	console.log('users.jsx-mapStateToProps', state);
+    console.log('currentUser.jsx-mapStateToProps', state);
+    let meta = state.MetaReducer.metaData;
 	return {
-        metaData: state.MetaReducer.metaData,
-        userData: state.UserConfigReducer.userData,
-        partnerData: state.UserConfigReducer.partnerData,
-
+        metaData: meta,
+        currentUserData: state.UserConfigReducer.userData.find( user => (
+            user.user_id === meta.userId
+        ) ),
 	};
 }
 
-//export default Users;
-//export default connect(mapStateToProps)(Users);
-export default connect(mapStateToProps)(withStyles(styles)(Users));
+//export default CurrentUser;
+//export default connect(mapStateToProps)(CurrentUser);
+export default connect(mapStateToProps)(withStyles(styles)(CurrentUser));
 
 /** sample json response */
 /*[
