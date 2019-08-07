@@ -42,13 +42,12 @@ class Menu extends Component {
 		//console.log('Menu.jsx-rendering' );
 		return (
 			<React.Fragment >
-				{ 
-					this.viewMenuBar() 
-				}
-				{ 
-					this.componentToShow() 
-				}
-				
+			{ 
+				this.viewMenuBar() 
+			}
+			{ 
+				this.componentToShow() 
+			}
 			</React.Fragment>
 		);
 	}

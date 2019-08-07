@@ -15,8 +15,26 @@ const APIisLoggedIn = "http://ontrack.dev.io/login/user/getcurrent";
 
 const APIrequestPasswordReset = "http://ontrack.dev.io/rest/user/requestpasswordreset"
 const APIPasswordReset = "http://ontrack.dev.io/rest/user/resetpassword"
+const APIforcePasswordReset = "http://ontrack.dev.io/rest/user/forceresetpassword"
 
 class loginAPI extends React.Component {
+
+	forceResetPassword(userEmail){
+		return axios.post(APIforcePasswordReset, {account_email: userEmail})
+			.then(
+				res => {
+					console.log("loginAPI.jsx - forcePasswordReset-Err", res);
+					if(res && res.status && res.status === 200)
+						return { err: false }
+					else
+						return { err: true, errMsg: res}
+				}
+			)
+			.catch(error => {
+				console.log("loginAPI.jsx - forcePasswordReset-Err", error);
+				return { errMsg:error, err: true};
+			});
+	}
 
 	/**
 	 * sends user email, new passwords to password reset uri

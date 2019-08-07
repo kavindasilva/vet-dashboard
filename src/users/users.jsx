@@ -34,7 +34,10 @@ import { Button } from '@material-ui/core';
 import { userTypeArray } from "../common/constants";
 
 import userAPI from "../apicalls/userAPI"
+import loginAPI from '../apicalls/loginAPI';
+
 const userAPIObj = new userAPI();
+const loginAPIObj = new loginAPI();
 
 const styles = theme => ({
 	root: {
@@ -79,6 +82,7 @@ class Users extends React.Component{
         componentToRender: "main",
         userIdToEdit: 0,
     }
+    propStyle = this.props.classes;
 
 	componentDidMount(){
         // if(this.props.metaData.userInfo && this.props.metaData.userInfo.user_type_id!==3)
@@ -211,13 +215,13 @@ class Users extends React.Component{
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>User ID</TableCell>
-                                <TableCell>Name</TableCell>
-                                <TableCell>Email</TableCell>
-                                <TableCell>Type</TableCell>
+                                <TableCell className={this.propStyle.head}>User ID</TableCell>
+                                <TableCell className={this.propStyle.head}>Name</TableCell>
+                                <TableCell className={this.propStyle.head}>Email</TableCell>
+                                <TableCell className={this.propStyle.head}>Type</TableCell>
 
-                                <TableCell></TableCell>
-                                <TableCell>Telephone</TableCell>
+                                <TableCell className={this.propStyle.head}></TableCell>
+                                <TableCell className={this.propStyle.head}>Telephone</TableCell>
                             </TableRow>
                         </TableHead>
 
@@ -242,6 +246,15 @@ class Users extends React.Component{
                                             >
                                                 Edit
                                             </Button>
+
+                                            <Button
+                                                onClick={ ()=>{
+                                                    this.forceResetPassword( user.email.toString() )
+                                                } }
+                                            >
+                                                ResetPass
+                                            </Button>
+
                                         </TableCell>
 
                                         <TableCell>{ user.telephone }</TableCell>
@@ -260,6 +273,23 @@ class Users extends React.Component{
 
     cancelForm = () => {
         this.setState({componentToRender: "main"});
+    }
+
+    /**
+     * call force password reset
+     * 
+     * works only for admins
+     */
+    forceResetPassword = ( email ) => {
+        loginAPIObj.forceResetPassword(email)
+        .then(
+			res => {
+                console.log("users.jsx forceResetPassword ", res)
+                if( res && res.data){
+                    // make a notification. need to re-fetch data??
+				}
+			}
+		)
     }
     
 

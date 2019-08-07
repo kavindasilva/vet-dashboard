@@ -105,9 +105,9 @@ class Login extends React.Component{
 	render(){
 		return(
 			<React.Fragment>
-				{ 
-					this.handleLoginStatus()	
-				}
+			{ 
+				this.handleLoginStatus()	
+			}
 			</React.Fragment>
 		)
 	}
