@@ -76,6 +76,22 @@ class Login extends React.Component{
 
 	componentDidMount(){
 		//console.log("Login - mount. classes:", this.classes);
+		loginAPIobj.isLoggedIn()
+		.then(
+			res => {
+				console.log("login - mount - isloggedIn", res);
+				if(!res.err && res.data && res.data.user_id){
+					let validatedServerResponse={
+						account_id: 99, 
+						type:res.data.user_type_id, 
+						user_id:res.data.user_id
+					}
+					this.setState({serverData: validatedServerResponse}, ()=>{
+						this.getLoggedUserData( this.state.serverData.user_id )
+					});
+				}
+			}
+		)
 	}
 
 	render(){
@@ -156,21 +172,23 @@ class Login extends React.Component{
 		if(this.props.metaData.isLoggedIn===true){
 			return this.viewMenu();
 		}
-		else if( localStorage.getItem("logged")==="true" && localStorage.getItem("userId")!=="0" ){
-			let loggedData = {
-				account_id:  localStorage.getItem("accountId") ,
-				type: parseInt( localStorage.getItem("userType") ),
-				user_id: parseInt( localStorage.getItem("userId") ),
-			}
-			console.log('login.jsx - handleForm1', loggedData );
+		// else if( localStorage.getItem("logged")==="true" && localStorage.getItem("userId")!=="0" ){
+		// 	let loggedData = {
+		// 		account_id:  localStorage.getItem("accountId") ,
+		// 		type: parseInt( localStorage.getItem("userType") ),
+		// 		user_id: parseInt( localStorage.getItem("userId") ),
+		// 	}
+		// 	console.log('login.jsx - handleForm1', loggedData );
 
-			this.setState({serverData: loggedData}, function(){
-				console.log('login.jsx - handleForm2', this.state.serverData );
-				//this.dispatchLogin();
-				this.getLoggedUserData( this.state.serverData.user_id )
-		});
+		// 	this.setState({serverData: loggedData}, function(){
+		// 		console.log('login.jsx - handleForm2', this.state.serverData );
+		// 		//this.dispatchLogin();
+		// 		this.getLoggedUserData( this.state.serverData.user_id )
+		// });
 
-		}
+		//else if(  )
+
+		// }
 		else{
 			return this.viewLoginForm();
 		}

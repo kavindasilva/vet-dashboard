@@ -11,6 +11,7 @@ const APIauthenticateUrl = "http://ontrack.dev.io/login/user/login";
 const altAPIauthenticateUrl = "http://ontrack.dev.io/api/signin";
 const APIlogoutUrl = "http://ontrack.dev.io/login/user/logout";
 
+const APIisLoggedIn = "http://ontrack.dev.io/login/user/getcurrent";
 
 class loginAPI extends React.Component {
 
@@ -21,6 +22,32 @@ class loginAPI extends React.Component {
 					return res
 				}
 			)
+			.catch(error => {
+				console.log("loginAPI.jsx - logout-Err", error);
+				return { errMsg:error, err: true};
+			});
+
+	}
+
+	/**
+	 * checks wheher a session is existing
+	 * 
+	 * if session exists: {"user_id":1,"name":"Admin","email":"info@vetstoria.com","user_type_id":3}
+	 * 
+	 * if not 404 status is returned
+	 */
+	isLoggedIn(){
+		return axios.get(APIisLoggedIn)
+			.then( res => {
+				// if(res && res.data && res.data.user_id)
+				// 	return res.data;
+				// else
+					return res;
+			} )
+			.catch(error => {
+				console.log("loginAPI.jsx - isLoggedIn-Err", error);
+				return { errMsg:error, err: true};
+			});
 	}
 
 	authenticate(username, password, otp) {
