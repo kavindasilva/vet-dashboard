@@ -167,6 +167,7 @@ class Menu extends Component {
 		localStorage.setItem("accountId", 0);
 		localStorage.setItem("userType", 0);
 		localStorage.setItem("userId", 0);
+		localStorage.setItem("logged", "false");
 
 		this.dispatchLogOut();
 	}

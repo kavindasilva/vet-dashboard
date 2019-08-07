@@ -97,11 +97,11 @@ class CurrentUser extends React.Component{
                 <TableBody>
                     {
                         (this.state.currentUserData)?
-                        Object.keys(this.state.currentUserData).map( key => (
-                            <TableRow>
+                        Object.keys(this.state.currentUserData).map( (key, i) => (
+                            <TableRow key={i}>
                                 <TableCell></TableCell>
                                 <TableCell>{ key.toString() }</TableCell>
-                                <TableCell>{ this.state.currentUserData[key] }</TableCell>
+                                <TableCell>{ JSON.stringify(this.state.currentUserData[key]) }</TableCell>
                             </TableRow>
                         ) )
                         :<TableRow>

@@ -22,6 +22,8 @@ import { withStyles } from '@material-ui/core/styles';
 //import { styles } from '@material-ui/pickers/DatePicker/components/Calendar';
 
 import Menu from "../common/menu";
+import PasswordResetRequestForm from "../common/passwordResetRequest"
+
 import loginAPI from "../apicalls/loginAPI";
 import userAPI from "../apicalls/userAPI";
 
@@ -70,11 +72,17 @@ class Login extends React.Component{
 		password:"123",
 		serverData: { account_id:0, type:0, user_id:0},
 
+		componentToShow:"", // except login form and menu bar
+
 		authFailed: false,
 		authFailedMsg: "",
 	}
 
-	componentDidMount(){
+	/**
+	 * handle php session checking and redirecting logged user in some events
+	 * ex: page refresh
+	 */
+	componentDidMount2(){
 		//console.log("Login - mount. classes:", this.classes);
 		loginAPIobj.isLoggedIn()
 		.then(
@@ -98,7 +106,6 @@ class Login extends React.Component{
 		return(
 			<React.Fragment>
 				{ 
-					//this.viewMenu()
 					this.handleLoginStatus()	
 				}
 			</React.Fragment>
@@ -172,23 +179,27 @@ class Login extends React.Component{
 		if(this.props.metaData.isLoggedIn===true){
 			return this.viewMenu();
 		}
-		// else if( localStorage.getItem("logged")==="true" && localStorage.getItem("userId")!=="0" ){
-		// 	let loggedData = {
-		// 		account_id:  localStorage.getItem("accountId") ,
-		// 		type: parseInt( localStorage.getItem("userType") ),
-		// 		user_id: parseInt( localStorage.getItem("userId") ),
-		// 	}
-		// 	console.log('login.jsx - handleForm1', loggedData );
+		else if( localStorage.getItem("logged")==="true" && localStorage.getItem("userId")!=="0" ){
+			let loggedData = {
+				account_id:  localStorage.getItem("accountId") ,
+				type: parseInt( localStorage.getItem("userType") ),
+				user_id: parseInt( localStorage.getItem("userId") ),
+			}
+			console.log('login.jsx - handleForm1', loggedData );
 
-		// 	this.setState({serverData: loggedData}, function(){
-		// 		console.log('login.jsx - handleForm2', this.state.serverData );
-		// 		//this.dispatchLogin();
-		// 		this.getLoggedUserData( this.state.serverData.user_id )
-		// });
-
-		//else if(  )
-
-		// }
+			this.setState({serverData: loggedData}, function(){
+				console.log('login.jsx - handleForm2', this.state.serverData );
+				//this.dispatchLogin();
+				this.getLoggedUserData( this.state.serverData.user_id )
+			});
+		}
+		else if(this.state.componentToShow === "requestReset"){
+			return(
+				<PasswordResetRequestForm 
+					goBack={ ()=>this.setState({componentToShow:"other"}) }
+				/>
+			);
+		}
 		else{
 			return this.viewLoginForm();
 		}
@@ -289,7 +300,6 @@ class Login extends React.Component{
 							variant="contained"
 							color="primary"
 							className={this.classes.submit}
-							//onClick={ this.getFormData }
 							onClick={ this.sendCredentials }
 						>
 							Sign In
@@ -318,12 +328,17 @@ class Login extends React.Component{
 
 						<Grid container>
 							<Grid item xs>
-								<Link href="#" variant="body2">
+								<Link 
+									href="#" variant="body2"
+									onClick={ ()=>this.setState({componentToShow:"requestReset"}) }
+								>
 									Forgot password?
 								</Link>
 							</Grid>
 							<Grid item>
-								<Link href="#" variant="body2">
+								<Link 
+									href="#" variant="body2"
+								>
 									{"Don't have an account? Sign Up"}
 								</Link>
 							</Grid>
