@@ -64,7 +64,11 @@ class PasswordResetRequestForm extends React.Component{
 
 	state = { 
 		componentToShow: "resetRequestForm",
+
 		userEmail: "",
+		password_1: "",
+		password_2: "",
+		otp: "",
 
 		serverMsg: "",
 		viewMsg: false,
@@ -88,13 +92,159 @@ class PasswordResetRequestForm extends React.Component{
 	}
 
 
+	sendResetData =() =>{
+		loginAPIobj.sendPasswordResetData({
+				account_email: this.state.userEmail,
+				reset_code: this.state.otp,
+				new_password_1: this.state.password_1,			
+				new_password_2: this.state.password_2,			
+			})
+			.then(
+				serverResponse => {
+					console.log("request pass", serverResponse);
+					if(serverResponse.err)
+						this.setState({serverMsg: serverResponse.errMsg.toString()})
+					else
+						this.setState({serverMsg: "Password reset successful"})
+
+					this.setState({viewMsg:true})
+				}
+			)
+	}
+
 	/** renders the password reset code entering form */
 	viewPasswordResetForm(){
 		return(
-			<React.Fragment></React.Fragment>
-		)
+			<Container component="main" maxWidth="xs">
+				<CssBaseline />
+				<div className={this.classes.paper}>
+					<Avatar className={this.classes.avatar}>
+						<LockOutlinedIcon />
+					</Avatar>
+					<Typography component="h1" variant="h5">
+						Reset Password
+					</Typography>
+
+					<form className={this.classes.form} 
+						//noValidate={ true } 
+					>
+						<TextField
+							variant="outlined"
+							margin="normal"
+							required
+							fullWidth
+							value={ this.state.userEmail }
+							label="Email Address"
+							onChange = { (e)=>{ this.setState({userEmail: e.target.value}) } }
+							autoFocus
+						/>
+
+						<TextField
+							variant="outlined"
+							margin="normal"
+							required
+							fullWidth
+							value={ this.state.password_1 }
+							label="New Password"
+							onChange = { (e)=>{ this.setState({password_1: e.target.value}) } }
+						/>
+
+						<TextField
+							variant="outlined"
+							margin="normal"
+							required
+							fullWidth
+							value={ this.state.password_2 }
+							label="Confirm Password"
+							name="email"
+							onChange = { (e)=>{ this.setState({password_2: e.target.value}) } }
+						/>
+
+						<TextField
+							variant="outlined"
+							margin="normal"
+							required
+							fullWidth
+							value={ this.state.otp }
+							label="Confirm Password"
+							name="email"
+							onChange = { (e)=>{ this.setState({otp: e.target.value}) } }
+						/>
+						
+						<Button
+							type="button"
+							fullWidth
+							variant="contained"
+							color="primary"
+							className={this.classes.submit}
+							onClick={ ()=>this.sendResetData() }
+						>
+							Reset Password
+						</Button>
+
+						<Snackbar
+							open={ this.state.viewMsg }
+							aria-describedby="client-snackbar"
+							message={ 
+								<span style={{color:"red"}}>
+									{ this.state.serverMsg }
+								</span>
+							}
+							action={[
+								<IconButton 
+									key="close" 
+									aria-label="close" 
+									color="inherit" 
+									onClick={ ()=>this.setState({viewMsg: false}) }
+								>
+									x
+								</IconButton>,
+							]}
+							
+						/>
+
+						<Grid container>
+							<Grid item xs>
+								<Link 
+									href="#" variant="body2"
+									onClick={ ()=>this.props.goBack() }
+								>
+									Go back to Login
+								</Link>
+							</Grid>
+							<Grid item>
+								<Link 
+									href="#" variant="body2" 
+									onClick={ ()=>this.setState({componentToShow:"enterResetCode"}) }
+								>
+									Enter R--- code
+								</Link>
+							</Grid>
+						</Grid>
+					</form>
+				</div>
+				<Box mt={5}>
+					
+				</Box>
+			</Container>
+		);
 	}
 
+
+	requestResetCode =() =>{
+		loginAPIobj.requestPasswordReset(this.state.userEmail)
+			.then(
+				serverResponse => {
+					console.log("request pass", serverResponse);
+					if(serverResponse.err)
+						this.setState({serverMsg: serverResponse.errMsg.toString()})
+					else
+						this.setState({serverMsg: "Code sent to your email"})
+
+					this.setState({viewMsg:true})
+				}
+			)
+	}
 
 	/** renders the password reset request form */
 	viewPasswordResetRequestForm(){
@@ -132,7 +282,7 @@ class PasswordResetRequestForm extends React.Component{
 							variant="contained"
 							color="primary"
 							className={this.classes.submit}
-							onClick={ this.sendCredentials }
+							onClick={ () => this.requestResetCode() }
 						>
 							Send Code
 						</Button>
