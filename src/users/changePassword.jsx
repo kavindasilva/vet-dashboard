@@ -15,11 +15,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, Snackbar, IconButton } from '@material-ui/core';
 import { userTypeArray } from "../common/constants";
 
 import userAPI from "../apicalls/userAPI"
 import loginAPI from '../apicalls/loginAPI';
+import { ServerResponse } from 'http';
 
 const userAPIObj = new userAPI();
 const loginAPIObj = new loginAPI();
@@ -45,7 +46,10 @@ class ChangePassword extends React.Component{
         current_password: "",
         new_password_1: "",
         new_password_2: "",
-        
+     
+        serverMsg: "",
+		viewMsg: false,
+		msgHasError: true,
     }
 
 	render(){
@@ -71,75 +75,111 @@ class ChangePassword extends React.Component{
 
         loginAPIObj.changePassword( data )
         .then(
-            res => {
-                console.log("changePassword - handlePasswordChaning", res)
+            serverResponse => {
+                if(serverResponse.err)
+                    this.setState({
+                        serverMsg: serverResponse.errMsg.toString(),
+                        msgHasError: true,
+                    })
+                else
+                    this.setState({
+                        serverMsg: "Password changed successfully",
+                        msgHasError: false,
+                    })
+                
+                this.setState({viewMsg: true})
+                console.log("changePassword - handlePasswordChaning", serverResponse)
             }
         )
     }
 
     viewPasswordChangeUI(){
         return(
-            <Table>
-                <TableHead>
-                </TableHead>
+            <React.Fragment>
+                <Table>
+                    <TableHead>
+                    </TableHead>
 
-                <TableBody>
-                    <TableRow>
-                        <TableCell></TableCell>
-                        <TableCell>Current Password</TableCell>
-                        <TableCell>
-                            <TextField
-                                //type={"password"}
-                                value={ this.state.current_password }
-                                onChange={ (e)=>this.setState({current_password: e.target.value}) }
-                            />
-                        </TableCell>
-                    </TableRow>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell></TableCell>
+                            <TableCell>Current Password</TableCell>
+                            <TableCell>
+                                <TextField
+                                    //type={"password"}
+                                    value={ this.state.current_password }
+                                    onChange={ (e)=>this.setState({current_password: e.target.value}) }
+                                />
+                            </TableCell>
+                        </TableRow>
 
-                    <TableRow>
-                        <TableCell></TableCell>
-                        <TableCell>New Password</TableCell>
-                        <TableCell>
-                            <TextField
-                                //type={"password"}
-                                value={ this.state.new_password_1 }
-                                onChange={ (e)=>this.setState({new_password_1: e.target.value}) }
-                            />
-                        </TableCell>
-                    </TableRow>
+                        <TableRow>
+                            <TableCell></TableCell>
+                            <TableCell>New Password</TableCell>
+                            <TableCell>
+                                <TextField
+                                    //type={"password"}
+                                    value={ this.state.new_password_1 }
+                                    onChange={ (e)=>this.setState({new_password_1: e.target.value}) }
+                                />
+                            </TableCell>
+                        </TableRow>
 
-                    <TableRow>
-                        <TableCell></TableCell>
-                        <TableCell>Confirm Password</TableCell>
-                        <TableCell>
-                            <TextField
-                                //type={"password"}
-                                value={ this.state.new_password_2 }
-                                onChange={ (e)=>this.setState({new_password_2: e.target.value}) }
-                            />
-                        </TableCell>
-                    </TableRow>
+                        <TableRow>
+                            <TableCell></TableCell>
+                            <TableCell>Confirm Password</TableCell>
+                            <TableCell>
+                                <TextField
+                                    //type={"password"}
+                                    value={ this.state.new_password_2 }
+                                    onChange={ (e)=>this.setState({new_password_2: e.target.value}) }
+                                />
+                            </TableCell>
+                        </TableRow>
 
-                    <TableRow>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
-                        <TableCell>
-                            <Button
-                                onClick={ ()=>this.props.goBack() }
-                            >
-                                Cancel
-                            </Button>
-                            <Button
-                                onClick={ ()=>this.handlePasswordChanging() }
-                            >
-                                Change Password
-                            </Button>
-                        </TableCell>
-                    </TableRow>
+                        <TableRow>
+                            <TableCell></TableCell>
+                            <TableCell></TableCell>
+                            <TableCell>
+                                <Button
+                                    onClick={ ()=>this.props.goBack() }
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    onClick={ ()=>this.handlePasswordChanging() }
+                                >
+                                    Change Password
+                                </Button>
+                            </TableCell>
+                        </TableRow>
 
-                </TableBody>
-                
-            </Table>
+                    </TableBody>
+                    
+                </Table>
+                <Snackbar
+                    open={ this.state.viewMsg }
+                    aria-describedby="client-snackbar"
+                    message={ 
+                        <span
+                            style={ (this.state.msgHasError)?{color:"red"}:{color:"green"}}
+                        >
+                            { this.state.serverMsg }
+                        </span>
+                    }
+                    action={[
+                        <IconButton
+                            key="close" 
+                            aria-label="close" 
+                            color="inherit" 
+                            onClick={ ()=>this.setState({viewMsg: false}) }
+                        >
+                            x
+                        </IconButton>,
+                    ]}
+                    
+                />
+            </React.Fragment>
         );
 				
     }

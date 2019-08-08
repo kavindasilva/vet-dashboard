@@ -77,6 +77,7 @@ class PasswordResetRequestForm extends React.Component{
 
 		serverMsg: "",
 		viewMsg: false,
+		msgHasError: true,
 	}
 
 	render(){
@@ -97,6 +98,11 @@ class PasswordResetRequestForm extends React.Component{
 	}
 
 
+	/**
+	 * sends password rest data to API
+	 * 
+	 * updates the state / shows error
+	 */
 	sendResetData =() =>{
 		loginAPIobj.sendPasswordResetData({
 				account_email: this.state.userEmail,
@@ -108,9 +114,15 @@ class PasswordResetRequestForm extends React.Component{
 				serverResponse => {
 					console.log("request pass", serverResponse);
 					if(serverResponse.err)
-						this.setState({serverMsg: serverResponse.errMsg.toString()})
+						this.setState({
+							serverMsg: serverResponse.errMsg.toString(),
+							msgHasError: true,
+						})
 					else
-						this.setState({serverMsg: "Password reset successful"})
+						this.setState({
+							serverMsg: "Password reset successful",
+							msgHasError: false,
+						})
 
 					this.setState({viewMsg:true})
 				}
@@ -189,7 +201,9 @@ class PasswordResetRequestForm extends React.Component{
 							open={ this.state.viewMsg }
 							aria-describedby="client-snackbar"
 							message={ 
-								<span style={{color:"red"}}>
+								<span 
+									style={ (this.state.msgHasError)?{color:"red"}:{color:"green"}}
+								>
 									{ this.state.serverMsg }
 								</span>
 							}
@@ -234,15 +248,26 @@ class PasswordResetRequestForm extends React.Component{
 	}
 
 
+	/**
+	 * sends reset code requesting data to API
+	 * 
+	 * shows request success / error
+	 */
 	requestResetCode =() =>{
 		loginAPIobj.requestPasswordReset(this.state.userEmail)
 			.then(
 				serverResponse => {
 					console.log("request pass", serverResponse);
 					if(serverResponse.err)
-						this.setState({serverMsg: serverResponse.errMsg.toString()})
+						this.setState({
+							serverMsg: serverResponse.errMsg.toString(),
+							msgHasError:true,
+						})
 					else
-						this.setState({serverMsg: "Code sent to your email"})
+						this.setState({
+							serverMsg: "Code sent to your email",
+							msgHasError: false,
+						})
 
 					this.setState({viewMsg:true})
 				}
@@ -294,7 +319,9 @@ class PasswordResetRequestForm extends React.Component{
 							open={ this.state.viewMsg }
 							aria-describedby="client-snackbar"
 							message={ 
-								<span style={{color:"red"}}>
+								<span
+									style={ (this.state.msgHasError)?{color:"red"}:{color:"green"}}
+								>
 									{ this.state.serverMsg }
 								</span>
 							}

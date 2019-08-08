@@ -159,9 +159,7 @@ class Login extends React.Component{
 			//this.setState({isLoggedIn: true});
 		}
 		else if( serverData.err || serverData.data =="Bad Request" ){
-			
 			this.setState({authFailed: true});
-			//if(serverData.errMsg.status)
 			this.setState({authFailedMsg: serverData.errMsg.toString() });
 			console.log("credentials not validated", serverData);
 		}

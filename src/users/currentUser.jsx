@@ -58,12 +58,10 @@ class CurrentUser extends React.Component{
     }
 
 	render(){
-        //if(this.props.currentUserData)console.log("currentUser render", this.props.currentUserData)
 		return(
 			<React.Fragment>    
             {
                 this.handleUserProfile() 
-                //this.viewProfile()
             }
 			</React.Fragment>
 		)
