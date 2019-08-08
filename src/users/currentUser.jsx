@@ -30,6 +30,7 @@ import TrackerTableRow from "../dashboard/trackerTableRow";
 import NewUser from "../users/newUser";
 import EditUser from "../users/editUser";
 import { Button } from '@material-ui/core';
+import ChangePassword from "../users/changePassword"
 
 import { userTypeArray } from "../common/constants";
 
@@ -53,37 +54,47 @@ const styles = theme => ({
 class CurrentUser extends React.Component{
 	state = {
         ...this.props.metaData, 
+        componentToShow: "profile",
     }
 
-	componentDidMount(){
-        // if(this.props.metaData.userInfo && this.props.metaData.userInfo.user_type_id!==3)
-        //     return;
-        //console.log("CurrentUser - mount. props:", this.props); //ok
+	render(){
+        //if(this.props.currentUserData)console.log("currentUser render", this.props.currentUserData)
+		return(
+			<React.Fragment>    
+            {
+                this.handleUserProfile() 
+                //this.viewProfile()
+            }
+			</React.Fragment>
+		)
+    }
+
+    handleUserProfile = () => {
+        if(this.state.componentToShow === "profile")
+            return this.viewProfile();
+        else if(this.state.componentToShow === "passwordChange")
+            return(
+                <ChangePassword
+                    goBack={ ()=>this.setState({componentToShow: "profile"}) }
+                />
+            );
+    }
+
+    /**
+     * function1: get current session's user details and update state
+     */
+    componentDidMount(){
         userAPIObj.getSingleUser(this.props.metaData.userId)
         .then(
             result => {
-                this.setState({currentUserData: result.data }, function(){
-                    //this.dispatchUsers("users")
-                });
-                //this.dispatchUsers()
+                this.setState({currentUserData: result.data });
             }
         );
 		//console.log("CurrentUser - mount. props.metaData:", this.props.metaData); 
 	}
 
-	render(){
-        //if(this.props.currentUserData)console.log("currentUser render", this.props.currentUserData)
-		return(
-			<React.Fragment>
-                
-                {
-                    this.viewUserProfile() 
-                }
-			</React.Fragment>
-		)
-    }
-
-    viewUserProfile(){ //return(<div></div>);
+    viewProfile(){ //return(<div></div>);
+        let userColumns = this.state.currentUserData;
         return(
             <Table>
                 <TableHead>
@@ -95,30 +106,92 @@ class CurrentUser extends React.Component{
                 </TableHead>
 
                 <TableBody>
-                    {
-                        (this.state.currentUserData)?
-                        Object.keys(this.state.currentUserData).map( (key, i) => (
-                            <TableRow key={i}>
-                                <TableCell></TableCell>
-                                <TableCell>{ key.toString() }</TableCell>
-                                <TableCell>{ JSON.stringify(this.state.currentUserData[key]) }</TableCell>
-                            </TableRow>
-                        ) )
-                        :<TableRow>
-                            <TableCell colSpan={3}>Loading...</TableCell>
+                {/* {
+                    (userColumns)?
+                    Object.keys(userColumns).map( (key, i) => (
+                        <TableRow key={i}>
+                            <TableCell></TableCell>
+                            <TableCell>{ key.toString() }</TableCell>
+                            <TableCell>{ JSON.stringify(userColumns[key]) }</TableCell>
                         </TableRow>
-                    }
+                    ) )
+                    :<TableRow>
+                        <TableCell colSpan={3}>Loading...</TableCell>
+                    </TableRow>
+                } */}
+
+                {
+                    (userColumns)?
+                    <React.Fragment>
+                    <TableRow>
+                        <TableCell></TableCell>
+                        <TableCell>User ID</TableCell>
+                        <TableCell>{ (userColumns["user_id"]) && userColumns["user_id"].toString() }</TableCell>
+                    </TableRow>
+
+                    <TableRow>
+                        <TableCell></TableCell>
+                        <TableCell>User Type</TableCell>
+                        <TableCell>{ (userTypeArray[userColumns["user_type_id"]]) && userTypeArray[userColumns["user_type_id"].toString()] }</TableCell>
+                    </TableRow>
+
+                    <TableRow>
+                        <TableCell></TableCell>
+                        <TableCell>Account</TableCell>
+                        <TableCell>{ (userColumns["account"]) && userColumns["account"].toString() }</TableCell>
+                    </TableRow>
+
+                    <TableRow>
+                        <TableCell></TableCell>
+                        <TableCell>Email</TableCell>
+                        <TableCell>{ (userColumns["email"]) && userColumns["email"].toString() }</TableCell>
+                    </TableRow>
+
+                    <TableRow>
+                        <TableCell></TableCell>
+                        <TableCell>Telephone</TableCell>
+                        <TableCell>{ (userColumns["telephone"]) && userColumns["telephone"].toString() }</TableCell>
+                    </TableRow>
+
+                    <TableRow>
+                        <TableCell></TableCell>
+                        <TableCell>First Name</TableCell>
+                        <TableCell>{ (userColumns["first_name"]) && userColumns["first_name"].toString() }</TableCell>
+                    </TableRow>
+
+                    <TableRow>
+                        <TableCell></TableCell>
+                        <TableCell>Last Name</TableCell>
+                        <TableCell>{ (userColumns["last_name"]) && userColumns["last_name"].toString() }</TableCell>
+                    </TableRow>
+
+                    <TableRow>
+                        <TableCell></TableCell>
+                        <TableCell>Password Expire Time</TableCell>
+                        <TableCell>{ (userColumns["password_expiry_time"]) && userColumns["password_expiry_time"].toString() }</TableCell>
+                    </TableRow>
+
+                    <TableRow>
+                        <TableCell></TableCell>
+                        <TableCell>Password</TableCell>
+                        <TableCell>
+                            <Button
+                                onClick={ ()=>this.setState({componentToShow: "passwordChange"}) }
+                            >
+                                Change password
+                            </Button>
+                        </TableCell>
+                    </TableRow>
+                    </React.Fragment>
+                    : <TableRow>
+                        <TableCell colSpan={3}>Loading...</TableCell>
+                    </TableRow>
+                }
                 </TableBody>
+                
             </Table>
         );
 				
-    }
-
-    getLoggedUserData = ( userId ) => {
-        userAPIObj.getSingleUser(userId)
-        .then(
-            res =>{}
-        )
     }
     
 

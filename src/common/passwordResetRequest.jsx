@@ -57,6 +57,11 @@ const useStyles = theme => ({
 	},
 });
 
+/**
+ * can simplify this class after confirming the functionality with the data flow
+ * 
+ * merge password request and reset elements
+ */
 //export default class PasswordResetRequestForm{
 class PasswordResetRequestForm extends React.Component{
 
@@ -78,13 +83,13 @@ class PasswordResetRequestForm extends React.Component{
 		return(
 			<React.Fragment>
 			{ 
-				this.handleLoginStatus()	
+				this.handlePasswordResetUI()	
 			}
 			</React.Fragment>
 		)
 	}
 
-	handleLoginStatus(){
+	handlePasswordResetUI(){
 		if(this.state.componentToShow === "resetRequestForm")
 			return this.viewPasswordResetRequestForm();
 		else if(this.state.componentToShow === "enterResetCode")
@@ -156,7 +161,6 @@ class PasswordResetRequestForm extends React.Component{
 							fullWidth
 							value={ this.state.password_2 }
 							label="Confirm Password"
-							name="email"
 							onChange = { (e)=>{ this.setState({password_2: e.target.value}) } }
 						/>
 
@@ -166,8 +170,7 @@ class PasswordResetRequestForm extends React.Component{
 							required
 							fullWidth
 							value={ this.state.otp }
-							label="Confirm Password"
-							name="email"
+							label="OTP"
 							onChange = { (e)=>{ this.setState({otp: e.target.value}) } }
 						/>
 						

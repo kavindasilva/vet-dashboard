@@ -16,14 +16,45 @@ const APIisLoggedIn = "http://ontrack.dev.io/login/user/getcurrent";
 const APIrequestPasswordReset = "http://ontrack.dev.io/rest/user/requestpasswordreset"
 const APIPasswordReset = "http://ontrack.dev.io/rest/user/resetpassword"
 const APIforcePasswordReset = "http://ontrack.dev.io/rest/user/forceresetpassword"
+const APIchangePassword = "http://ontrack.dev.io/login/user/changepassword"
 
 class loginAPI extends React.Component {
 
+	/**
+	 * self password change function
+	 * 
+	 * works only for current logged in user
+	 */
+	changePassword(userData){
+		return axios.post(APIchangePassword, userData)
+			.then(
+				res => {
+					console.log("loginAPI.jsx - changePassword", res);
+					if(res && res.status && res.status === 200)
+						return { err: false }
+					else
+						return { err: true, errMsg: res}
+				}
+			)
+			.catch(error => {
+				console.log("loginAPI.jsx - changePassword-Err", error);
+				return { errMsg:error, err: true};
+			});
+	}
+
+	/**
+	 * works only for admins
+	 * 
+	 * sample request:
+	 * 	{
+			"account_email":"partner0801-1131@gmail.com"
+		}
+	 */
 	forceResetPassword(userEmail){
 		return axios.post(APIforcePasswordReset, {account_email: userEmail})
 			.then(
 				res => {
-					console.log("loginAPI.jsx - forcePasswordReset-Err", res);
+					console.log("loginAPI.jsx - forcePasswordReset", res);
 					if(res && res.status && res.status === 200)
 						return { err: false }
 					else
@@ -45,7 +76,7 @@ class loginAPI extends React.Component {
 		return axios.post(APIPasswordReset, userData)
 			.then(
 				res => {
-					console.log("loginAPI.jsx - sendPasswordResetData-Err", res);
+					console.log("loginAPI.jsx - sendPasswordResetData", res);
 					if(res && res.status && res.status === 200)
 						return { err: false }
 					else
@@ -67,7 +98,7 @@ class loginAPI extends React.Component {
 		return axios.post(APIrequestPasswordReset, {account_email: userEmail})
 			.then(
 				res => {
-					console.log("loginAPI.jsx - requestPasswordReset-Err", res);
+					console.log("loginAPI.jsx - requestPasswordReset", res);
 					if(res && res.status && res.status === 200)
 						return { err: false }
 					else
