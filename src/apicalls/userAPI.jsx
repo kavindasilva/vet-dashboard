@@ -30,7 +30,8 @@ class userAPI extends React.Component{
       })
       .catch(error => {
         console.log("userAPI.jsx - getUsers-Err", error);
-        return error;
+        return {err:true, errMsg:error};
+        //throw new Error("userAPI getUsers, ",error);
       });
 
   }

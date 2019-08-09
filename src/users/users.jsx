@@ -81,16 +81,24 @@ class Users extends React.Component{
         ...this.props.metaData, 
         componentToRender: "main",
         userIdToEdit: 0,
+
+        errorGetUsers: false,
+        errorMsgGetUsers: false,
     }
     propStyle = this.props.classes;
 
 	componentDidMount(){
-        // if(this.props.metaData.userInfo && this.props.metaData.userInfo.user_type_id!==3)
-        //     return;
-        //console.log("Users - mount. props:", this.props); //ok
-        let allUsers =userAPIObj.getUsers()
+        userAPIObj.getUsers()
         .then(
             result => {
+                if(result && result.err){
+                    console.log("users - gettingUsers err", result);
+                    this.setState({
+                        errorGetUsers: true,
+                        errorMsgGetUsers: result.errMsg.toString()
+                    });
+                    return;
+                }
                 let resultArr=[];
                 for(var i in result.data){
                     resultArr.push( result.data[i] );
@@ -99,23 +107,41 @@ class Users extends React.Component{
                 this.setState({allUsers: resultArr }, function(){
                     this.dispatchUsers("users")
                 });
-                //this.dispatchUsers()
-            }
-        );
-
-        let allPartners =userAPIObj.getPartners()
-        .then(
-            result => {
-                let resultArr=[];
-                for(var i in result.data){
-                    resultArr.push( result.data[i] );
-                }
-                console.log("users mount2 partnersArr", resultArr); // type: arr
-                this.setState({allPartners: resultArr }, function(){
-                    this.dispatchUsers("partners")
-                });
             }
         )
+            
+        
+        // try{
+        //     userAPIObj.getUsers()
+        //     .then(
+        //         result => {
+        //             let resultArr=[];
+        //             for(var i in result.data){
+        //                 resultArr.push( result.data[i] );
+        //             }
+        //             console.log("users mount2 usersArr", resultArr); // type: arr
+        //             this.setState({allUsers: resultArr }, function(){
+        //                 this.dispatchUsers("users")
+        //             });
+        //         }
+        //     );
+        // }catch(e){
+        //     console.log("user getting failed.",e);
+        // }
+
+        // userAPIObj.getPartners()
+        // .then(
+        //     result => {
+        //         let resultArr=[];
+        //         for(var i in result.data){
+        //             resultArr.push( result.data[i] );
+        //         }
+        //         console.log("users mount2 partnersArr", resultArr); // type: arr
+        //         this.setState({allPartners: resultArr }, function(){
+        //             this.dispatchUsers("partners")
+        //         });
+        //     }
+        // )
         
         
 		//console.log("Users - mount. props.metaData:", this.props.metaData); 
@@ -211,7 +237,7 @@ class Users extends React.Component{
 	viewUsers(){
 		return(
 			<div className="container">
-				<Paper >
+				<Paper style={{overflowX: 'auto'}} >
                     <Table>
                         <TableHead>
                             <TableRow>
@@ -227,7 +253,7 @@ class Users extends React.Component{
 
                         <TableBody>
                             {
-                                (this.props.userData)
+                                (this.props.userData && !this.state.errorGetUsers)
                                 ? this.props.userData.map( user => (
                                     <TableRow>
                                         <TableCell>{ user.user_id }</TableCell>
@@ -260,9 +286,22 @@ class Users extends React.Component{
                                         <TableCell>{ user.telephone }</TableCell>
                                     </TableRow>
                                 ) )
-                                : <TableRow>
-                                    <TableCell colSpan="4">Loading</TableCell>
-                                </TableRow>
+                                : (
+                                    (this.state.errorGetUsers)
+                                    ? <React.Fragment>
+                                        <TableRow>
+                                            <TableCell colSpan="4">Data loading Error</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell colSpan="4">
+                                                { this.state.errorMsgGetUsers.toString() }
+                                            </TableCell>
+                                        </TableRow>
+                                    </React.Fragment>
+                                    : <TableRow>
+                                        <TableCell colSpan="4">Loading</TableCell>
+                                    </TableRow>
+                                )
                             }
                         </TableBody>
                     </Table>
