@@ -158,6 +158,15 @@ class Login extends React.Component{
 			
 			//this.setState({isLoggedIn: true});
 		}
+		else if(serverData.err && serverData.errMsg && serverData.errMsg.response
+			&& serverData.errMsg.response.headers 
+			&& serverData.errMsg.response.headers["x-status-reason"]
+		){
+			this.setState({
+				authFailedMsg: serverData.errMsg.response.headers["x-status-reason"].toString(),
+				authFailed: true,
+			});
+		}
 		else if( serverData.err || serverData.data =="Bad Request" ){
 			this.setState({authFailed: true});
 			this.setState({authFailedMsg: serverData.errMsg.toString() });

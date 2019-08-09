@@ -113,7 +113,16 @@ class PasswordResetRequestForm extends React.Component{
 			.then(
 				serverResponse => {
 					console.log("request pass", serverResponse);
-					if(serverResponse.err)
+					if(serverResponse.err && serverResponse.errMsg && serverResponse.errMsg.response
+						&& serverResponse.errMsg.response.headers 
+						&& serverResponse.errMsg.response.headers["x-status-reason"]
+					){
+						this.setState({
+							serverMsg: serverResponse.errMsg.response.headers["x-status-reason"].toString(),
+							msgHasError: true,
+						});
+					}
+					else if(serverResponse.err)
 						this.setState({
 							serverMsg: serverResponse.errMsg.toString(),
 							msgHasError: true,
@@ -258,7 +267,16 @@ class PasswordResetRequestForm extends React.Component{
 			.then(
 				serverResponse => {
 					console.log("request pass", serverResponse);
-					if(serverResponse.err)
+					if(serverResponse.err && serverResponse.errMsg && serverResponse.errMsg.response
+						&& serverResponse.errMsg.response.headers 
+						&& serverResponse.errMsg.response.headers["x-status-reason"]
+					){
+						this.setState({
+							serverMsg: serverResponse.errMsg.response.headers["x-status-reason"].toString(),
+							msgHasError: true,
+						});
+					}
+					else if(serverResponse.err)
 						this.setState({
 							serverMsg: serverResponse.errMsg.toString(),
 							msgHasError:true,

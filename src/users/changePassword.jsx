@@ -76,7 +76,17 @@ class ChangePassword extends React.Component{
         loginAPIObj.changePassword( data )
         .then(
             serverResponse => {
-                if(serverResponse.err)
+                if(serverResponse.err && serverResponse.errMsg && serverResponse.errMsg.response
+                    && serverResponse.errMsg.response.headers 
+                    && serverResponse.errMsg.response.headers["x-status-reason"]
+                ){
+                    this.setState({
+                        serverMsg: serverResponse.errMsg.response.headers["x-status-reason"].toString(),
+                        msgHasError: true,
+                    });
+                    console.log("changePassword - changePassword fail reason:", serverResponse.errMsg.response.headers["x-status-reason"])
+                }
+                else if(serverResponse.err)
                     this.setState({
                         serverMsg: serverResponse.errMsg.toString(),
                         msgHasError: true,
