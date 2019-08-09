@@ -46,7 +46,7 @@ class userAPI extends React.Component{
       })
       .catch(error => {
         console.log("userAPI.jsx - getPartners-Err", error);
-        return error;
+        return {err:true, errMsg:error};
       });
 
   }
@@ -60,7 +60,7 @@ class userAPI extends React.Component{
       })
       .catch(error => {
         console.log("userAPI.jsx - getSingleUser-Err", error);
-        return error;
+        return {err:true, errMsg:error};
       });
 
   }
@@ -75,7 +75,7 @@ class userAPI extends React.Component{
       })
       .catch(error => {
         console.log("userAPI.jsx - saveEditUser-Err", error);
-        return error;
+        return {err:true, errMsg:error};
       });
   }
 
@@ -89,7 +89,7 @@ class userAPI extends React.Component{
       })
       .catch(error => {
         console.log("userAPI.jsx - saveEditPartner-Err", error);
-        return error;
+        return {err:true, errMsg:error};
       });
   }
 
@@ -103,7 +103,7 @@ class userAPI extends React.Component{
       })
       .catch(error => {
         console.log("userAPI.jsx - saveUser-Err", error);
-        return error;
+        return {err:true, errMsg:error};
       });
   }
 
@@ -117,7 +117,7 @@ class userAPI extends React.Component{
       })
       .catch(error => {
         console.log("userAPI.jsx - savePartner-Err", error);
-        return error;
+        return {err:true, errMsg:error};
       });
   }
 

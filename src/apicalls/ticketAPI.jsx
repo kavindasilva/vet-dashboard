@@ -24,7 +24,7 @@ class ticketAPI extends React.Component{
       })
       .catch(error => {
         console.log("ticketAPI error", error);
-        return error;
+        return {err:true, errMsg:error};
       });
   }
   

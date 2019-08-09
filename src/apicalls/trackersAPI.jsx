@@ -21,7 +21,7 @@ class trackersAPI extends React.Component{
       })
       .catch(error => {
         console.log("trackersAPI error", error);
-        return error;
+        return {err:true, errMsg:error};
       });
   }
 
@@ -37,7 +37,7 @@ class trackersAPI extends React.Component{
       })
       .catch(error => {
         console.log("trackersAPI-saveTrackerConfig error", error);
-        return error;
+        return {err:true, errMsg:error};
       });
   }
 
@@ -50,7 +50,7 @@ class trackersAPI extends React.Component{
       })
       .catch(error => {
         console.log("trackersAPI-saveTrackerConfig error", error);
-        return error;
+        return {err:true, errMsg:error};
       });
   }
 
@@ -66,7 +66,7 @@ class trackersAPI extends React.Component{
       })
       .catch(error => {
         console.log("trackersAPI-saveTrackerConfig error", error);
-        return error;
+        return {err:true, errMsg:error};
       });
   }
 

@@ -52,9 +52,10 @@ const styles = theme => ({
 class Trackers extends React.Component{
 	state = { 
         ...this.props.metaData, 
-
         tabValue:0,
 
+        errorGetTrackers: false,
+        errorMsgGetTrackers: false,
     }
 
 	componentDidMount(){
@@ -99,20 +100,28 @@ class Trackers extends React.Component{
                         scrollButtons="auto"
                     >                        
                         {
-                            (this.props.configData)?
+                            (this.props.configData && !this.state.errorGetTrackers)?
                             this.props.configData.map( tracker => (
                                 <Tab 
                                     key={ tracker.tracker_id } 
                                     label={ tracker.name } 
                                 />
                             ))
-                            :"No Trackers"
+                            :(this.state.errorGetTrackers)
+                                ? <Tab 
+                                    key={ 0 } 
+                                    label={ Error } 
+                                />
+                                :<Tab 
+                                    key={ 0 } 
+                                    label={ "Trackers Loading..." } 
+                                />
                         }
                     </Tabs>
                 </AppBar>
 
                 {
-                    (this.props.configData)?
+                    (this.props.configData && !this.state.errorGetTrackers)?
                     this.props.configData.map( tracker => (
 
                         (this.state.tabValue+1) === tracker.tracker_id && 
@@ -145,7 +154,13 @@ class Trackers extends React.Component{
 
                         </div>
                     ))
-                    :"No trackers"
+                    :(this.state.errorGetTrackers)
+                        ? <div>
+                            { this.state.errorMsgGetTrackers.toString() }
+                        </div>
+                        :<div> 
+                            Loading...
+                        </div>
                 }
 
 			</div>
@@ -176,6 +191,15 @@ class Trackers extends React.Component{
         .then(
             res => {
                 console.log("trackers insta res:", res.data);
+                if(res && res.err){
+                    console.log("users - gettingUsers err", res);
+                    this.setState({
+                        errorGetTrackers: true,
+                        errorMsgGetTrackers: res.errMsg.toString()
+                    });
+                    return;
+                }
+
                 this.setState({ ticketsData: res.data }, function(){
                     this.dispatchTicketInstances();
                 }); 

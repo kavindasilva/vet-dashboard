@@ -88,6 +88,9 @@ class TrackersConfig extends React.Component{
         componentToShow:"allTrackers",
 
         attributeValue: "",
+
+        errorGetTrackerConfigs: false,
+        errorMsgGetTrackerConfigs: false,
     }
 
 	componentDidMount(){
@@ -197,7 +200,7 @@ class TrackersConfig extends React.Component{
                     </Tabs>
                 </AppBar>
                 {
-                    (this.props.trackers)
+                    (this.props.trackers && !this.state.errorGetTrackerConfigs)
                     ? this.props.trackers.map( tracker => (
                         (this.state.tabValue+1) === tracker.tracker_id && 
                         <React.Fragment key ={tracker.tracker_id}>
@@ -274,7 +277,17 @@ class TrackersConfig extends React.Component{
                             
                         </React.Fragment>
                     ) )
-                    : <React.Fragment>Loading...</React.Fragment>
+                    : (
+                        (this.state.errorGetTrackerConfigs)
+                        ? <React.Fragment>
+                            Data loading Error <hr/>
+                            { this.state.errorMsgGetTrackerConfigs.toString() }
+                        </React.Fragment>
+                        : <React.Fragment>
+                            Loading...
+                        </React.Fragment>
+                    )
+                    
                 }
 
 			</div>
@@ -292,6 +305,14 @@ class TrackersConfig extends React.Component{
         trackersAPIobj.getTrackerConfig()
         .then(
             res => {
+                if(res && res.err){
+                    console.log("users - gettingUsers err", res);
+                    this.setState({
+                        errorGetTrackerConfigs: true,
+                        errorMsgGetTrackerConfigs: res.errMsg.toString()
+                    });
+                    return;
+                }
                 console.log("trackers config res:", res.data);
                 this.setState({ trackersConfigData: res.data }, function(){
                     rootStore.dispatch({
