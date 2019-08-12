@@ -70,6 +70,9 @@ class Users extends React.Component{
     }
     propStyle = this.props.classes;
 
+    /**
+     * retrieve users in from the database
+     */
 	componentDidMount(){
         userAPIObj.getUsers()
         .then(
@@ -238,7 +241,7 @@ class Users extends React.Component{
                             {
                                 (this.props.userData && !this.state.errorGetUsers)
                                 ? this.props.userData.map( user => (
-                                    <TableRow>
+                                    <TableRow key={ user.user_id }>
                                         <TableCell>{ user.user_id }</TableCell>
                                         <TableCell>{ user.first_name+" "+user.last_name }</TableCell>
                                         <TableCell>{ user.email }</TableCell>

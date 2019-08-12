@@ -109,11 +109,11 @@ class Trackers extends React.Component{
                             ))
                             :(this.state.errorGetTrackers)
                                 ? <Tab 
-                                    key={ 0 } 
+                                    key={ 1001 } 
                                     label={ Error } 
                                 />
                                 :<Tab 
-                                    key={ 0 } 
+                                    key={ 1002 } 
                                     label={ "Trackers Loading..." } 
                                 />
                         }

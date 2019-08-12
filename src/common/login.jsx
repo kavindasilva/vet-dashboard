@@ -192,7 +192,7 @@ class Login extends React.Component{
 				type: parseInt( localStorage.getItem("userType") ),
 				user_id: parseInt( localStorage.getItem("userId") ),
 			}
-			//if(APP_MODE==="DEBUG")console.log('login.jsx - handleForm1', loggedData );
+			if(APP_MODE==="DEBUG")console.log('login.jsx - handleForm1', loggedData );
 
 			this.setState({serverData: loggedData}, function(){
 				if(APP_MODE==="DEBUG")console.log('login.jsx - handleForm2', this.state.serverData );

@@ -9,7 +9,7 @@ import TextField from '@material-ui/core/TextField';
 //import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Select from '@material-ui/core/Select';
-import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/core";
+import { MenuItem, RadioGroup, FormControlLabel, FormGroup, FormControl } from "@material-ui/core";
 
 import Radio from '@material-ui/core/Radio';
 import Button from '@material-ui/core/Button';
@@ -105,7 +105,7 @@ class NewUser extends React.Component{
         return(
             <Grid container spacing={3}>
                 {/* user type select bar */}
-                <Grid item xs={12} sm={12}>
+                {/* <Grid item xs={12} sm={12}>
                     <Select 
                         className={  this.props.classes.hiddenField }
                         value={ this.state.newUserType } 
@@ -113,7 +113,8 @@ class NewUser extends React.Component{
                         fullWidth={true}
                     >
                         {
-                            userTypes.map( item =>
+                            (userTypes)
+                            ? userTypes.map( item =>
                                 <MenuItem 
                                     key={ item.id }
                                     value={ item.type } 
@@ -121,11 +122,14 @@ class NewUser extends React.Component{
                                 { item.label }
                                 </MenuItem>
                             )
+                            : <MenuItem key={0} value={0} >
+                                No user types defined in constants
+                            </MenuItem>
                         }
                     </Select>
-                </Grid>
+                </Grid> */}
 
-                <Grid item xs={12} sm={12}>
+                {/* <Grid item xs={12} sm={12}>
                     <TextField
                         className={  this.props.classes.hiddenField }
                         disabled={ true} //required
@@ -134,7 +138,7 @@ class NewUser extends React.Component{
                         label="ID"
                         fullWidth
                     />
-                </Grid>
+                </Grid> */}
 
                 {/* user type radio btn */}
                 <Grid item xs={12} sm={12}>
@@ -147,15 +151,21 @@ class NewUser extends React.Component{
                         } }
                     >	
                         { 
-                            userTypes.map( val => (
+                            (userTypes)
+                            ?userTypes.map( (val, i) => (
                                 <FormControlLabel
-                                    key={val.id}
+                                    key={i}
                                     value={ val.type }
                                     control={<Radio color="primary" />}
                                     label={ val.label }
                                     labelPlacement="end"
                                 />
                             ) )
+                            : <FormControlLabel
+                                key={1001}
+                                control={<Radio color="primary" />}
+                                value={"No users found in constants.jsx"}
+                            />
                         }
                         
                     </RadioGroup>
@@ -334,7 +344,7 @@ class NewUser extends React.Component{
                 </Grid>
 
                 {/* user's partner */}                
-                <Grid item xs={6}>
+                {/* <Grid item xs={6}>
                     <TextField
                         className={  this.props.classes.hiddenField }
                         id="partnerAccountId"
@@ -343,10 +353,10 @@ class NewUser extends React.Component{
                         fullWidth
                         value={ this.state.account_id }
                     />
-                </Grid>
+                </Grid> */}
 
                 {/* user's  */}                
-                <Grid item xs={6}>
+                {/* <Grid item xs={6}>
                     <TextField
                         className={  this.props.classes.hiddenField }
                         id="partnerAccountId"
@@ -355,7 +365,7 @@ class NewUser extends React.Component{
                         fullWidth
                         //value={}
                     />
-                </Grid>
+                </Grid> */}
 
                 {/* user first name, last name boxes */}
                 <Grid item xs={6}>
