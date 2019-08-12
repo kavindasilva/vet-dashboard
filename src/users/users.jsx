@@ -330,7 +330,13 @@ class Users extends React.Component{
 			}
 		)
     }
-    
+
+    showCancelButton = () => (
+        <React.Fragment></React.Fragment>
+    )
+    showSaveButton = () => (
+        <React.Fragment></React.Fragment>
+    )
 
 }
 
