@@ -1,4 +1,4 @@
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 import React, { Component } from "react";
 // https://react-day-picker.js.org/
 import DayPicker from 'react-day-picker';
@@ -93,7 +93,7 @@ class PopDialog extends Component {
 				<div style={this.styleTD} 
 					onClick={ ()=>{ 
 						this.openPopUp();
-						if(APP_MODE==="DEBUG")console.log( "Popoup clicked: ",this ); 
+						console.log( "Popoup clicked: ",this ); 
 					} } >
 
 					{ this.props.value } 
@@ -209,7 +209,7 @@ class PopDialog extends Component {
 								value={ this.state.attributeValue }
 								onChange={ (e)=>{
 									this.setState({ attributeValue: e.target.value});
-									if(APP_MODE==="DEBUG")console.log(e)
+									console.log(e)
 									}
 								}
 							>	
@@ -295,7 +295,7 @@ class PopDialog extends Component {
 					);
 				
 				default:
-					if(APP_MODE==="DEBUG")console.log("invalid case");
+					console.log("invalid case");
 					break;
 			}
 	}

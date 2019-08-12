@@ -11,7 +11,7 @@ import { isUndefined } from "util";
 const ticketAPIobj = new ticketAPI();
 
 const PetReducerNOTUSED = (state, action) => {
-    //if(APP_MODE==="DEBUG")console.log("PetReducer: state: ", state, "\naction: ", action)
+    //console.log("PetReducer: state: ", state, "\naction: ", action)
     let newState = {};
 
     //if(state===null || state==="")
@@ -27,7 +27,7 @@ const PetReducerNOTUSED = (state, action) => {
                         let data = {};
                         data[action.payload.attribute] = action.payload.value;
 
-                        if(APP_MODE==="DEBUG")console.log("pet reducer UPDATE:", {...record, ...data });
+                        console.log("pet reducer UPDATE:", {...record, ...data });
                         saveToDB({...record, ...data });
                         return {
                             ...record,
@@ -37,7 +37,7 @@ const PetReducerNOTUSED = (state, action) => {
                         return record;
                 })
             }
-            if(APP_MODE==="DEBUG")console.log("petReducer_UPDATE_PET_DETAIL: ", newState);
+            console.log("petReducer_UPDATE_PET_DETAIL: ", newState);
             return newState;
 
 
@@ -48,7 +48,7 @@ const PetReducerNOTUSED = (state, action) => {
                     record => { return record }
                 )
             };
-            if(APP_MODE==="DEBUG")console.log("petReducer_FETCH_FROM_API: ", newState);
+            console.log("petReducer_FETCH_FROM_API: ", newState);
             return newState;
 
 
@@ -59,33 +59,33 @@ const PetReducerNOTUSED = (state, action) => {
                     record => { return record }
                 )
             };
-            if(APP_MODE==="DEBUG")console.log("petReducer_FETCH_TICKETS_FROM_API: ", newState);
+            console.log("petReducer_FETCH_TICKETS_FROM_API: ", newState);
             return newState;
 
             
         default:
-            //if(APP_MODE==="DEBUG")console.log("petReducer_default: ", state);
+            //console.log("petReducer_default: ", state);
             return state;
     }
 
 }
 
 const saveToDB = (allData) => {
-    if(APP_MODE==="DEBUG")console.log("popup - saveToDB", allData);
+    console.log("popup - saveToDB", allData);
     ticketAPIobj.saveToDB(allData);
-    //if(APP_MODE==="DEBUG")console.log("popup - saveToDB", allData.ticket_id);
+    //console.log("popup - saveToDB", allData.ticket_id);
     /*let data = ticketAPIobj.callApiDb()
         .then(response => {
-            if(APP_MODE==="DEBUG")console.log("popup - Tresponse1: ", response);
+            console.log("popup - Tresponse1: ", response);
 
-            if(APP_MODE==="DEBUG")console.log("popup - componenetDidMount");
+            console.log("popup - componenetDidMount");
             this.setState({ petAdmission: response.data })
             return response;
 
         })
         .then(
             response => {
-                if(APP_MODE==="DEBUG")console.log("popup - Tresponse2: ", response);
+                console.log("popup - Tresponse2: ", response);
 
                 // 
                 /*rootStore.dispatch({

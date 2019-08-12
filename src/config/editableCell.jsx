@@ -1,4 +1,4 @@
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
@@ -20,7 +20,7 @@ class EditableCell extends React.Component{
     }
 
     componentWillReceiveProps( newProps ){
-        //if(APP_MODE==="DEBUG")console.log("TrackerRulesCondition willrecieve props", this.props.columnRule.conditions);
+        //console.log("TrackerRulesCondition willrecieve props", this.props.columnRule.conditions);
         if( newProps.value !== this.state.value ){
             this.setState({value: newProps.value});
         }

@@ -1,4 +1,4 @@
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 //import { combineReducers } from 'redux'
 //import todos from './todos'
 //import visibilityFilter from './visibilityFilter'
@@ -8,7 +8,7 @@ import ticketAPI from "../apicalls/ticketAPI";
 import { isUndefined } from "util";
 
 const MetaReducer = (state, action) => {
-    if(APP_MODE==="DEBUG")console.log("MetaReducer: state: ", state, "\naction: ", action)
+    console.log("MetaReducer: state: ", state, "\naction: ", action)
     let newState = {
         metaData:{
             isLoggedIn: false,
@@ -36,7 +36,7 @@ const MetaReducer = (state, action) => {
                 }
             }
 
-            if(APP_MODE==="DEBUG")console.log("MetaReducer UPDATE_META_DETAIL: ", newState);
+            console.log("MetaReducer UPDATE_META_DETAIL: ", newState);
             return newState;
         
         case 'LOG_OUT_USER':
@@ -52,47 +52,14 @@ const MetaReducer = (state, action) => {
                 }
             }
 
-            if(APP_MODE==="DEBUG")console.log("MetaReducer LOG_OUT_USER: ", newState);
+            console.log("MetaReducer LOG_OUT_USER: ", newState);
             return newState;
 
         default:
-            if(APP_MODE==="DEBUG")console.log("MetaReducer_default: ", newState);
+            console.log("MetaReducer_default: ", newState);
             return state;
     }
 
-}
-
-const endSession = () => {
-    //
-}
-
-const saveToDB = (allData) => {
-    if(APP_MODE==="DEBUG")console.log("popup - saveToDB", allData);
-    //ticketAPIobj.saveToDB(allData);
-    //if(APP_MODE==="DEBUG")console.log("popup - saveToDB", allData.ticket_id);
-    /*let data = ticketAPIobj.callApiDb()
-        .then(response => {
-            if(APP_MODE==="DEBUG")console.log("popup - Tresponse1: ", response);
-
-            if(APP_MODE==="DEBUG")console.log("popup - componenetDidMount");
-            this.setState({ petAdmission: response.data })
-            return response;
-
-        })
-        .then(
-            response => {
-                if(APP_MODE==="DEBUG")console.log("popup - Tresponse2: ", response);
-
-                // 
-                /*rootStore.dispatch({
-                    type: 'FETCH_TICKETS_FROM_API',
-                    payload: {
-                        ticketData: response.data
-                    }
-                }) /* * /
-
-            }
-        ) /* */
 }
 
 export default MetaReducer

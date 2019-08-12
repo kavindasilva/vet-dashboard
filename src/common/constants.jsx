@@ -1,9 +1,11 @@
 
 /**
  * app running mode: DEBUG , PRODUCTION
+ * 
+ * currently removed from the context
  */
 //export const APP_MODE = "PRODUCTION";
-export const APP_MODE = "DEBUG";
+//export const APP_MODE = "DEBUG";
 
 export default function Records(){
     const sample1="sample text 1";

@@ -1,7 +1,7 @@
 /**
  * isBefore( moment(), addInterval( moment({{1}}), 7, 'days' ) )
  */
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 import Moment from 'react-moment';
 import momentJS from "moment";
 
@@ -16,7 +16,7 @@ export function tes(){
     //str = "Date";
     //str = eval("momentJS()").toString(); // error  momentJS is not defined
     //str = momentJS().toString(); // ok
-    //if(APP_MODE==="DEBUG")console.log(str);
+    //console.log(str);
     return str;
 }
 
@@ -39,28 +39,28 @@ export function main(pegStmt){
  */
 function checkType(stmt){
     if(stmt.type === "function"){
-        //if(APP_MODE==="DEBUG")console.log("checkType function");
+        //console.log("checkType function");
         return callFunction(stmt.name, stmt.parameters);
     }
 
     else if(stmt.type === "number"){
-        if(APP_MODE==="DEBUG")console.log("checkType number");
+        console.log("checkType number");
         return stmt.value;
     }
 
     else if(stmt.type === "string"){
-        if(APP_MODE==="DEBUG")console.log("checkType string");
+        console.log("checkType string");
         return stmt.value;
         //return callFunction(stmt.name, stmt.parameters);
     }
 
     else
-        if(APP_MODE==="DEBUG")console.log("checkType default");
+        console.log("checkType default");
 }
 
 function callFunction( funName, parameters=null ){
     if( parameters === null || parameters.length === 0 ){
-        if(APP_MODE==="DEBUG")console.log("checkType callFunction if", funName, parameters);
+        console.log("checkType callFunction if", funName, parameters);
         if(funName === "isBefore")
             return isBefore();
         
@@ -71,7 +71,7 @@ function callFunction( funName, parameters=null ){
             return moment(parameters);
     }
     else{
-        if(APP_MODE==="DEBUG")console.log("checkType callFunction else", funName, parameters);
+        console.log("checkType callFunction else", funName, parameters);
         parameters.forEach( para => {
             if(para.type === "function")
                 return callFunction( para.name, para.parameters );
@@ -103,7 +103,7 @@ export function addInterval(params=null){
  * trying to call a function by name dynamically
  */
 export function callDynamicFunction(funName){
-    if(APP_MODE==="DEBUG")console.log("callDynamicFunction", funName)
+    console.log("callDynamicFunction", funName)
     //var codeToExecute = funName;
     //var tmpFunc = new Function(codeToExecute);
     

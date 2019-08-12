@@ -1,4 +1,4 @@
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 
 import React from 'react';
 import { connect } from "react-redux";
@@ -29,8 +29,8 @@ class TrackerHeader extends React.Component{
     }
 
 	componentDidMount(){
-		//if(APP_MODE==="DEBUG")console.log("TrackerHeader - mount. props:", this.props); //ok
-		//if(APP_MODE==="DEBUG")console.log("TrackerHeader - mount. props.metaData:", this.props.metaData); 
+		//console.log("TrackerHeader - mount. props:", this.props); //ok
+		//console.log("TrackerHeader - mount. props.metaData:", this.props.metaData); 
 	}
 
 	render(){
@@ -69,8 +69,8 @@ class TrackerHeader extends React.Component{
 
 	showTableHeaders(){
 		let returnArr=[ ];
-		//if(APP_MODE==="DEBUG")console.log("trackerHeader trackerData:", this.props.trackerConfigData)
-		//if(APP_MODE==="DEBUG")console.log("matched trackerID:", this.props.trackerConfigData.id)
+		//console.log("trackerHeader trackerData:", this.props.trackerConfigData)
+		//console.log("matched trackerID:", this.props.trackerConfigData.id)
 
 		this.props.trackerConfigData.columns.forEach( (column, i) => { 
 
@@ -80,7 +80,7 @@ class TrackerHeader extends React.Component{
 			let usersVisibleColumns=(column.permissions.find( (userPermission) => 
 				userPermission.userId===this.props.metaData.userId,	
 			))
-			//if(APP_MODE==="DEBUG")console.log("trackerHeader userVisible", usersVisibleColumns)
+			//console.log("trackerHeader userVisible", usersVisibleColumns)
 
 			// if usersVisibleColumns not empty
 			if( usersVisibleColumns!==undefined && usersVisibleColumns.read ){
@@ -130,8 +130,8 @@ class TrackerHeader extends React.Component{
 }
 
 const mapStateToProps = (state, props) => {
-	//if(APP_MODE==="DEBUG")console.log('TrackerHeader.jsx-mapStateToProps', state);
-	if(APP_MODE==="DEBUG")console.log('state.ticketsDataReducer', state.ticketsDataReducer);
+	//console.log('TrackerHeader.jsx-mapStateToProps', state);
+	console.log('state.ticketsDataReducer', state.ticketsDataReducer);
 	return {
 		metaData: state.MetaReducer.metaData,
 

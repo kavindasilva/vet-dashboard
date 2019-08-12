@@ -1,4 +1,4 @@
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 import React, { Component } from "react";
 import '@y0c/react-datepicker/assets/styles/calendar.scss';
 
@@ -60,7 +60,7 @@ class TrackerPopup extends Component {
 	}
 
   	render() {
-		//if(APP_MODE==="DEBUG")console.log('trackerPopup: Rendering cell content');
+		//console.log('trackerPopup: Rendering cell content');
 		return (
 			<React.Fragment>
 				<Cell 
@@ -132,8 +132,8 @@ class TrackerPopup extends Component {
             this.setState({statementError: true});
         }
 
-        if(APP_MODE==="DEBUG")console.log("TrackerPopup expr res",  res);
-        //if(APP_MODE==="DEBUG")console.log("TrackerPopup expr evaluatedRes",  eRes.toString() );
+        console.log("TrackerPopup expr res",  res);
+        //console.log("TrackerPopup expr evaluatedRes",  eRes.toString() );
     }
 	/** evaluates expressions and returns color */
 	evaluateExpr = (rules) => {
@@ -141,7 +141,7 @@ class TrackerPopup extends Component {
 	}
 
 	componentDidMount(){
-		if(APP_MODE==="DEBUG")console.log("trackerPopup didmount props:", this.props);
+		console.log("trackerPopup didmount props:", this.props);
 
 		this.validateExpr();
 	}
@@ -150,7 +150,7 @@ class TrackerPopup extends Component {
 
 
 const mapStateToProps = (state, props) => {
-	//if(APP_MODE==="DEBUG")console.log('trackerPopup.jsx-mapStateToProps', state);
+	//console.log('trackerPopup.jsx-mapStateToProps', state);
 
 	/** tracker's instance's index */
 	let trackerIndex = state.ticketsDataReducer.ticketsData.findIndex( ticket => (
@@ -170,7 +170,7 @@ const mapStateToProps = (state, props) => {
 		));
 	}
 	else
-		if(APP_MODE==="DEBUG")console.log("trackerPopup trackerConfigIndex error");
+		console.log("trackerPopup trackerConfigIndex error");
 
 
 	if( trackerIndex > -1 ){
@@ -188,7 +188,7 @@ const mapStateToProps = (state, props) => {
 		};
 	}
 	else
-		if(APP_MODE==="DEBUG")console.log("trackerPopup indexError")
+		console.log("trackerPopup indexError")
 }
 
 

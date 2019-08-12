@@ -1,4 +1,4 @@
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
@@ -68,8 +68,8 @@ class EditUser extends React.Component{
     }
 
 	componentDidMount(){
-		//if(APP_MODE==="DEBUG")console.log("EditUser - mount. props:", this.props); //
-        if(APP_MODE==="DEBUG")console.log("EditUser - state:", this.state, "props", this.props); 
+		//console.log("EditUser - mount. props:", this.props); //
+        console.log("EditUser - state:", this.state, "props", this.props); 
         
         // userAPIObj.getPartners()
         //     .then(
@@ -136,7 +136,7 @@ class EditUser extends React.Component{
                         value="partnerForUser"
                         onChange={ (e)=>{
                             this.setState({ user_type_id: e.target.value});
-                            //if(APP_MODE==="DEBUG")console.log(e)
+                            //console.log(e)
                         } }
                     >	
                         { 
@@ -163,7 +163,7 @@ class EditUser extends React.Component{
                 <Grid item xs={6}>
                     <Button
                         onClick={ () => {
-                            if(APP_MODE==="DEBUG")console.log("editUser", this.state);
+                            console.log("editUser", this.state);
                             this.saveEditedUserData();
                         } }
                         //fullWidth
@@ -193,7 +193,7 @@ class EditUser extends React.Component{
                 userAPIObj.saveEditUser( this.state, this.props.userId);
                 break;
             default:
-                if(APP_MODE==="DEBUG")console.log("newUser - unknown user type to saveEdit", this.state.newUserType);
+                console.log("newUser - unknown user type to saveEdit", this.state.newUserType);
         }
     }
 
@@ -205,7 +205,7 @@ class EditUser extends React.Component{
             case "user":
                     return this.editUser();
             default:
-                if(APP_MODE==="DEBUG")console.log("editUser - unknown user type selected", this.state.editUserType);
+                console.log("editUser - unknown user type selected", this.state.editUserType);
         }
     }
 
@@ -423,7 +423,7 @@ class EditUser extends React.Component{
 }
 
 const mapStateToProps = (state, props) => {
-	if(APP_MODE==="DEBUG")console.log('users.jsx-mapStateToProps', state, props);
+	console.log('users.jsx-mapStateToProps', state, props);
 	return {
         userData: state.UserConfigReducer.userData.find( user => (
             user.user_id === props.userId

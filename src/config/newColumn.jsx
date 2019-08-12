@@ -1,4 +1,4 @@
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
@@ -81,8 +81,8 @@ class NewColumn extends React.Component{
     }
 
 	componentDidMount(){
-		//if(APP_MODE==="DEBUG")console.log("NewColumn - mount. json:", this.state.trackers); 
-        //if(APP_MODE==="DEBUG")console.log("NewColumn - mount. props.metaData:", this.props.metaData); 
+		//console.log("NewColumn - mount. json:", this.state.trackers); 
+        //console.log("NewColumn - mount. props.metaData:", this.props.metaData); 
     }
     
     render(){
@@ -212,12 +212,12 @@ class NewColumn extends React.Component{
 }
 
 const mapStateToProps = (state, props) => {
-    //if(APP_MODE==="DEBUG")console.log('NewColumn.jsx-mapStateToProps', state);
+    //console.log('NewColumn.jsx-mapStateToProps', state);
     let trackerRes = state.TrackConfigReducer.configData.find( tracker => (
         tracker.tracker_id === parseInt( props.tracker_id )
     ) );
     if(!trackerRes){
-        if(APP_MODE==="DEBUG")console.log("newColumn tracker not found");
+        console.log("newColumn tracker not found");
     }
 
 	return {

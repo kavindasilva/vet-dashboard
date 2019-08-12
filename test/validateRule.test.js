@@ -34,7 +34,7 @@ test(`"moment('2011-10-21')" will throw Expression should return only boolean va
 
 /** isAfter should return boolean on success */
 test(`typeof isAfter(moment('2010-03-01'), moment() )`, () => {
-    //if(APP_MODE==="DEBUG")console.log(typeof  evaluateExpression("isAfter(moment('2010-03-01'), moment() )") )
+    //console.log(typeof  evaluateExpression("isAfter(moment('2010-03-01'), moment() )") )
     expect(typeof  evaluateExpression("isAfter(moment('2010-03-01'), moment() )") )
     .toEqual("boolean");
     //.toContain( false);
@@ -49,7 +49,7 @@ test(`typeof isBefore(moment('2010-03-01'), moment() )`, () => {
 /** add a period should return new Date --not working */
 test.skip(`"addPeriod(moment('2010-03-01'),5,'days')" will give a valid date`, () => {
     expect( evaluateExpression("addPeriod(moment('2010-03-01'),5,'days')") )
-    //if(APP_MODE==="DEBUG")console.log("R",r)
+    //console.log("R",r)
     //.toMatchObject( moment('2010-03-01').add(5,'d') )  //ok
     .toMatchObject(moment("2010-03-05").add(2,'days ')); // not equal
 });

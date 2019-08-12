@@ -1,4 +1,4 @@
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 
 /**
 	Details about all pets
@@ -126,10 +126,10 @@ class Records extends Component {
 	}
 
 	componentDidMount(){
-		if(APP_MODE==="DEBUG")console.log("Records didMount - props", this.props);
+		console.log("Records didMount - props", this.props);
 		phoenixAPIobj.callApi()
 			.then( response => {
-				if(APP_MODE==="DEBUG")console.log(response);
+				console.log(response);
 				if(response.data){
 					this.setState({ phoenixRecords: response.data })
 					this.dispatchUpdate();
@@ -140,11 +140,11 @@ class Records extends Component {
 	}
 
 	/**/componentDidMount0(){ // working
-		if(APP_MODE==="DEBUG")console.log("Records - Mount");
+		console.log("Records - Mount");
 		//let data = phoenixAPIobj.callApi()
 		phoenixAPIobj.callApi()
 			.then( response => {
-				if(APP_MODE==="DEBUG")console.log(response);
+				console.log(response);
 				if(response.data){
 					this.setState({ phoenixRecords: response.data })
 					this.dispatchUpdate();
@@ -152,8 +152,8 @@ class Records extends Component {
 				return response;
 			})
 	
-		//if(APP_MODE==="DEBUG")console.log(data);
-		//let data = this.callApi0(); if(APP_MODE==="DEBUG")console.log("data", data);
+		//console.log(data);
+		//let data = this.callApi0(); console.log("data", data);
 
 	}/**/
 
@@ -269,7 +269,7 @@ class Records extends Component {
 
 		return (
 			this.state.phoenixRecords.map( (pet, index) => (
-				//if(APP_MODE==="DEBUG")console.log("records-- ", JSON.parse(tmpjson1).objectId );
+				//console.log("records-- ", JSON.parse(tmpjson1).objectId );
 				<Record 
 					//key={pet.id} 
 					key={
@@ -289,7 +289,7 @@ class Records extends Component {
 
 	/** Returns object id of nested object, in places where nested objects not supported */
 	getObjId = (obj) =>{
-		//if(APP_MODE==="DEBUG")console.log("Records-- ", obj.objectId );
+		//console.log("Records-- ", obj.objectId );
 		return obj.objectId;
 	}
 
@@ -307,7 +307,7 @@ class Records extends Component {
 }
 
 const mapStateToProps = state => {
-	if(APP_MODE==="DEBUG")console.log('records.jsx-mapStateToProps', state); // seems ok
+	console.log('records.jsx-mapStateToProps', state); // seems ok
 	return {
 	};
 }

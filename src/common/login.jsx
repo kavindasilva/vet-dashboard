@@ -1,4 +1,4 @@
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
@@ -83,14 +83,14 @@ class Login extends React.Component{
 	 * ex: page refresh
 	 */
 	componentDidMount(){
-		//if(APP_MODE==="DEBUG")console.log("Login - mount. classes:", this.classes);
+		//console.log("Login - mount. classes:", this.classes);
 		loginAPIobj.isLoggedIn()
 		.then(
 			res => {
-				if(APP_MODE==="DEBUG")console.log("login - mount - isloggedIn", res);
+				console.log("login - mount - isloggedIn", res);
 				if(!res.err && res.user_id){
 					let validatedServerResponse={
-						account_id: 99, 
+						account_id: res.account_id, 
 						type:res.user_type_id, 
 						user_id:res.user_id
 					}
@@ -118,19 +118,19 @@ class Login extends React.Component{
 	}
 
 	getFormData = (event)=> {
-		if(APP_MODE==="DEBUG")console.log("Login - formData:",event);
+		console.log("Login - formData:",event);
 	}
 
 	sendCredentials = () => {
-		if(APP_MODE==="DEBUG")console.log("Login - credentials:", this.state.username, this.state.password );
+		console.log("Login - credentials:", this.state.username, this.state.password );
 		
 		// call to API post
 		loginAPIobj.authenticate(this.state.username, this.state.password, this.state.otp)
 			.then( res => {
-				if(APP_MODE==="DEBUG")console.log("Login - authMsg:", res);
+				console.log("Login - authMsg:", res);
 				this.validateCredentials(res);
 			});
-		//if(APP_MODE==="DEBUG")console.log("Login - authMsg:", authMsg);
+		//console.log("Login - authMsg:", authMsg);
 	}
 
 	/** 
@@ -148,7 +148,7 @@ class Login extends React.Component{
 			&& serverData.data.type
 			&& serverData.data.account_id
 		){
-			if(APP_MODE==="DEBUG")console.log("credentials validated. serverData:", serverData);
+			console.log("credentials validated. serverData:", serverData);
 			this.setState({serverData: serverData.data}, () => {
 
 				/** temporary. needs to add security token from backend */
@@ -175,10 +175,10 @@ class Login extends React.Component{
 		else if( serverData.err || serverData.data =="Bad Request" ){
 			this.setState({authFailed: true});
 			this.setState({authFailedMsg: serverData.errMsg.toString() });
-			if(APP_MODE==="DEBUG")console.log("credentials not validated", serverData);
+			console.log("credentials not validated", serverData);
 		}
 		else{
-			if(APP_MODE==="DEBUG")console.log("credential validation error. unnknown condition" );
+			console.log("credential validation error. unnknown condition" );
 		}
 	}
 
@@ -187,7 +187,7 @@ class Login extends React.Component{
 	 * Display Menu bar if user logged in.
 	 */
 	handleLoginStatus(){
-		//if(APP_MODE==="DEBUG")console.log('login.jsx - handleLoginStatus', localStorage.getItem("logged")==='true', localStorage.getItem("userId"));
+		//console.log('login.jsx - handleLoginStatus', localStorage.getItem("logged")==='true', localStorage.getItem("userId"));
 		if(this.props.metaData.isLoggedIn===true){
 			return this.viewMenu();
 		}
@@ -198,10 +198,10 @@ class Login extends React.Component{
 				type: parseInt( localStorage.getItem("userType") ),
 				user_id: parseInt( localStorage.getItem("userId") ),
 			}
-			if(APP_MODE==="DEBUG")console.log('login.jsx - handleForm1', loggedData );
+			console.log('login.jsx - handleForm1', loggedData );
 
 			this.setState({serverData: loggedData}, function(){
-				if(APP_MODE==="DEBUG")console.log('login.jsx - handleForm2', this.state.serverData );
+				console.log('login.jsx - handleForm2', this.state.serverData );
 				//this.dispatchLogin();
 				this.getLoggedUserData( this.state.serverData.user_id )
 			});
@@ -234,7 +234,7 @@ class Login extends React.Component{
 				dbData: userDbData
 			}
 		});
-		if(APP_MODE==="DEBUG")console.log('login.jsx - dispatchLogin', { ...this.state.serverData, isLoggedIn: true } );
+		console.log('login.jsx - dispatchLogin', { ...this.state.serverData, isLoggedIn: true } );
 	}
 
 	/** get other user information like name,email,... from db, and update store */
@@ -244,7 +244,7 @@ class Login extends React.Component{
 		.then(
 			res => {
 				if( res && res.data){
-					if(APP_MODE==="DEBUG")console.log("login.jsx loggedUserDbInfo ", res)
+					console.log("login.jsx loggedUserDbInfo ", res)
 					this.dispatchLogin(res.data);
 				}
 			}
@@ -368,7 +368,7 @@ class Login extends React.Component{
 }
 
 const mapStateToProps = state => {
-	if(APP_MODE==="DEBUG")console.log('login.jsx-mapStateToProps', state);
+	console.log('login.jsx-mapStateToProps', state);
 	return {
 		//metaData: state.metaData,
 		metaData: state.MetaReducer.metaData,

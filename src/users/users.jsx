@@ -1,4 +1,4 @@
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
@@ -78,7 +78,7 @@ class Users extends React.Component{
         .then(
             result => {
                 if(result && result.err){
-                    if(APP_MODE==="DEBUG")console.log("users - gettingUsers err", result);
+                    console.log("users - gettingUsers err", result);
                     this.setState({
                         errorGetUsers: true,
                         errorMsgGetUsers: result.errMsg.toString()
@@ -89,14 +89,14 @@ class Users extends React.Component{
                 for(var i in result.data){
                     resultArr.push( result.data[i] );
                 }
-                if(APP_MODE==="DEBUG")console.log("users mount2 usersArr", resultArr); // type: arr
+                console.log("users mount2 usersArr", resultArr); // type: arr
                 this.setState({allUsers: resultArr }, function(){
                     this.dispatchUsers("users")
                 });
             }
         )
             
-        
+        // kept for further usage. like getting partners, other users
         // try{
         //     userAPIObj.getUsers()
         //     .then(
@@ -105,14 +105,14 @@ class Users extends React.Component{
         //             for(var i in result.data){
         //                 resultArr.push( result.data[i] );
         //             }
-        //             if(APP_MODE==="DEBUG")console.log("users mount2 usersArr", resultArr); // type: arr
+        //             console.log("users mount2 usersArr", resultArr); // type: arr
         //             this.setState({allUsers: resultArr }, function(){
         //                 this.dispatchUsers("users")
         //             });
         //         }
         //     );
         // }catch(e){
-        //     if(APP_MODE==="DEBUG")console.log("user getting failed.",e);
+        //     console.log("user getting failed.",e);
         // }
 
         // userAPIObj.getPartners()
@@ -122,7 +122,7 @@ class Users extends React.Component{
         //         for(var i in result.data){
         //             resultArr.push( result.data[i] );
         //         }
-        //         if(APP_MODE==="DEBUG")console.log("users mount2 partnersArr", resultArr); // type: arr
+        //         console.log("users mount2 partnersArr", resultArr); // type: arr
         //         this.setState({allPartners: resultArr }, function(){
         //             this.dispatchUsers("partners")
         //         });
@@ -130,7 +130,7 @@ class Users extends React.Component{
         // )
         
         
-		//if(APP_MODE==="DEBUG")console.log("Users - mount. props.metaData:", this.props.metaData); 
+		//console.log("Users - mount. props.metaData:", this.props.metaData); 
 	}
 
 	render(){
@@ -168,7 +168,7 @@ class Users extends React.Component{
                 break;
 
             default:
-                if(APP_MODE==="DEBUG")console.log("users dispatch unknown type: ", type);
+                console.log("users dispatch unknown type: ", type);
         }
     }
 
@@ -205,7 +205,7 @@ class Users extends React.Component{
                 );
 
             default:
-                if(APP_MODE==="DEBUG")console.log("users.jsx renderUserView default", this.state.componentToRender);
+                console.log("users.jsx renderUserView default", this.state.componentToRender);
         }
     }
 
@@ -309,7 +309,7 @@ class Users extends React.Component{
         loginAPIObj.forceResetPassword(email)
         .then(
 			res => {
-                if(APP_MODE==="DEBUG")console.log("users.jsx forceResetPassword ", res)
+                console.log("users.jsx forceResetPassword ", res)
                 if( res && res.data){
                     // make a notification. need to re-fetch data??
 				}
@@ -327,7 +327,7 @@ class Users extends React.Component{
 }
 
 const mapStateToProps = state => {
-	if(APP_MODE==="DEBUG")console.log('users.jsx-mapStateToProps', state);
+	console.log('users.jsx-mapStateToProps', state);
 	return {
         metaData: state.MetaReducer.metaData,
         userData: state.UserConfigReducer.userData,

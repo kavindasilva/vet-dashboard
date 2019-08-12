@@ -1,4 +1,4 @@
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
@@ -59,8 +59,8 @@ class Trackers extends React.Component{
     }
 
 	componentDidMount(){
-		if(APP_MODE==="DEBUG")console.log("Trackers - mount. props:", this.props); //ok
-        //if(APP_MODE==="DEBUG")console.log("Trackers - mount. props.metaData:", this.props.metaData); 
+		console.log("Trackers - mount. props:", this.props); //ok
+        //console.log("Trackers - mount. props.metaData:", this.props.metaData); 
         
         this.getTrackersConfig();
         this.getTicketData();
@@ -174,7 +174,7 @@ class Trackers extends React.Component{
         trackersAPIobj.getTrackerConfig()
         .then(
             res => {
-                if(APP_MODE==="DEBUG")console.log("trackers config res:", res.data);
+                console.log("trackers config res:", res.data);
                 //let m=Object.values(res.data);
                 this.setState({ trackersConfigData: res.data }, function(){
                     this.dispatchTrackerConfigs();
@@ -190,9 +190,9 @@ class Trackers extends React.Component{
         ticketAPIobj.getTicketsAndProperties()
         .then(
             res => {
-                if(APP_MODE==="DEBUG")console.log("trackers insta res:", res.data);
+                console.log("trackers insta res:", res.data);
                 if(res && res.err){
-                    if(APP_MODE==="DEBUG")console.log("users - gettingUsers err", res);
+                    console.log("users - gettingUsers err", res);
                     this.setState({
                         errorGetTrackers: true,
                         errorMsgGetTrackers: res.errMsg.toString()
@@ -238,7 +238,7 @@ class Trackers extends React.Component{
 }
 
 const mapStateToProps = state => {
-	if(APP_MODE==="DEBUG")console.log('trackers.jsx-mapStateToProps', state);
+	console.log('trackers.jsx-mapStateToProps', state);
 	return {
         metaData: state.MetaReducer.metaData,
         

@@ -1,4 +1,4 @@
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
@@ -77,8 +77,8 @@ class NewUser extends React.Component{
     }
 
 	componentDidMount(){
-		if(APP_MODE==="DEBUG")console.log("NewUser - mount. props:", this.props); //ok
-        //if(APP_MODE==="DEBUG")console.log("NewUser - mount. props.metaData:", this.props.metaData); 
+		console.log("NewUser - mount. props:", this.props); //ok
+        //console.log("NewUser - mount. props.metaData:", this.props.metaData); 
         
         // userAPIObj.getPartners()
         //     .then(
@@ -147,7 +147,7 @@ class NewUser extends React.Component{
                         value={ this.state.newUserType }
                         onChange={ (e)=>{
                             this.setState({ newUserType: e.target.value});
-                            //if(APP_MODE==="DEBUG")console.log(e)
+                            //console.log(e)
                         } }
                     >	
                         { 
@@ -180,7 +180,7 @@ class NewUser extends React.Component{
                 <Grid item xs={6}>
                     <Button
                         onClick={ () => {
-                            if(APP_MODE==="DEBUG")console.log("newUser", this.state);
+                            console.log("newUser", this.state);
                             this.saveNewUserData()
                             //userAPIObj.saveUser( this.state );
                         } }
@@ -209,7 +209,7 @@ class NewUser extends React.Component{
             case "partnerForUser":
                 userAPIObj.saveUser( this.state ); break;
             default:
-                if(APP_MODE==="DEBUG")console.log("newUser - unknown user type to save", this.state.newUserType);
+                console.log("newUser - unknown user type to save", this.state.newUserType);
         }
     }
 
@@ -221,7 +221,7 @@ class NewUser extends React.Component{
             case "partnerForUser":
                     return this.newUserforPartner();
             default:
-                if(APP_MODE==="DEBUG")console.log("newUser - unknown user type selected", this.state.newUserType);
+                console.log("newUser - unknown user type selected", this.state.newUserType);
         }
     }
 
@@ -441,7 +441,7 @@ class NewUser extends React.Component{
 }
 
 const mapStateToProps = state => {
-	if(APP_MODE==="DEBUG")console.log('users.jsx-mapStateToProps', state);
+	console.log('users.jsx-mapStateToProps', state);
 	return {
         // userData: state.UserConfigReducer.userData,
         partnerData: state.UserConfigReducer.partnerData,

@@ -1,10 +1,10 @@
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 import { isUndefined } from "util";
 import trackerAPI from "../apicalls/trackersAPI"
 const trackerAPIObj = new trackerAPI();
 
 const TrackConfigReducer = (state, action) => {
-    if(APP_MODE==="DEBUG")console.log("TrackConfigReducer: state: ", state, "\naction: ", action)
+    console.log("TrackConfigReducer: state: ", state, "\naction: ", action)
     let newState = {
         TrackerConfigReducer:{
             configData: false,
@@ -25,7 +25,7 @@ const TrackConfigReducer = (state, action) => {
     switch (action.type) {
         case 'GET_CONFIG_FROM_DB':
             newState = { configData: action.payload.data }
-            if(APP_MODE==="DEBUG")console.log("TrackConfigReducer GET_CONFIG_FROM_DB: ", newState);
+            console.log("TrackConfigReducer GET_CONFIG_FROM_DB: ", newState);
             return newState;
 
         case 'SAVE_CONFIG_TO_DB':
@@ -118,7 +118,7 @@ const TrackConfigReducer = (state, action) => {
             columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
             newState.configData[trackerIndex].columns[columnIndex][action.payload.attribute] = action.payload.value;
             
-            if(APP_MODE==="DEBUG")console.log("TrackConfigReducer UPDATE_CONFIG_ATTR: ", newState);
+            console.log("TrackConfigReducer UPDATE_CONFIG_ATTR: ", newState);
             return newState;
         
 
@@ -134,11 +134,11 @@ const TrackConfigReducer = (state, action) => {
                 newState.configData[trackerIndex].columns[columnIndex].permissions[userPermitIndex]["write"]=action.payload.rwValue;
 
 
-            if(APP_MODE==="DEBUG")console.log("TrackConfigReducer UPDATE_CONFIG_USER_PERMISSIONS: ", newState);
+            console.log("TrackConfigReducer UPDATE_CONFIG_USER_PERMISSIONS: ", newState);
             return newState;
 
         default:
-            if(APP_MODE==="DEBUG")console.log("TrackConfigReducer default: ", newState);
+            console.log("TrackConfigReducer default: ", newState);
             return state;
     }
 
@@ -159,7 +159,7 @@ function getTrackerIndex(stt, trackerId){
     ) );
     if(indexStatus > -1)
         return indexStatus;
-    if(APP_MODE==="DEBUG")console.log("getTrackerIndex index err");
+    console.log("getTrackerIndex index err");
 }
 
 /**
@@ -175,7 +175,7 @@ function getColumnIndex(stt, columnName){
     ) );
     if(indexStatus > -1)
         return indexStatus;
-    if(APP_MODE==="DEBUG")console.log("getColumnIndex index err");
+    console.log("getColumnIndex index err");
 }
 
 /**
@@ -191,7 +191,7 @@ function getUserPermissionIndex(stt, userId){
     ) );
     if(indexStatus > -1)
         return indexStatus;
-    if(APP_MODE==="DEBUG")console.log("getUserPermissionIndex index err");
+    console.log("getUserPermissionIndex index err");
 }
 
 /**
@@ -207,7 +207,7 @@ function getRulesIndex(stt, precedenceId){
     ) );
     if(indexStatus > -1)
         return indexStatus;
-    if(APP_MODE==="DEBUG")console.log("getRulesIndex index err");
+    console.log("getRulesIndex index err");
 }
 
 export default TrackConfigReducer

@@ -1,4 +1,4 @@
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 /**
 
 */
@@ -18,8 +18,8 @@ class Record extends Component {
 	state={}
 
 	componentDidMount(){
-		if(APP_MODE==="DEBUG")console.log("record - cons props: ", this.props);
-		if(APP_MODE==="DEBUG")console.log("record - cons state: ", this.state);
+		console.log("record - cons props: ", this.props);
+		console.log("record - cons state: ", this.state);
 	}
 
 	
@@ -91,8 +91,8 @@ class Record extends Component {
 const mapStateToProps = (state, myProps) => {
 	// finds the 1st matching record
 	let tickRecord = state.tickets.find(record => myProps.identifier == record.ticket_id );
-	//if(APP_MODE==="DEBUG")console.log("record - mapStateToProps tickState:", state);
-	if(APP_MODE==="DEBUG")console.log("record - mapStateToProps tickRec:", tickRecord );
+	//console.log("record - mapStateToProps tickState:", state);
+	console.log("record - mapStateToProps tickRec:", tickRecord );
 
 	let record = state.admissions.find(record => myProps.identifier === record.objectId );
 	//let record = state.admissions.find(record => myProps.identifier === 28868823);

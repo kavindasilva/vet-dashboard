@@ -1,4 +1,4 @@
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 import React from 'react';
 import axios from 'axios';
 
@@ -25,11 +25,11 @@ class userAPI extends React.Component{
     return axios.get(uriAllUsers)
     //return axios.get(alturiAllUsers)
       .then(result => {
-        if(APP_MODE==="DEBUG")console.log("userAPI.jsx - getUsers", result);
+        console.log("userAPI.jsx - getUsers", result);
         return result;
       })
       .catch(error => {
-        if(APP_MODE==="DEBUG")console.log("userAPI.jsx - getUsers-Err", error);
+        console.log("userAPI.jsx - getUsers-Err", error);
         return {err:true, errMsg:error};
         //throw new Error("userAPI getUsers, ",error);
       });
@@ -41,11 +41,11 @@ class userAPI extends React.Component{
     return axios.get(uriAllPartners)
     //return axios.get(alturiAllPartners)
       .then(result => {
-        if(APP_MODE==="DEBUG")console.log("userAPI.jsx - getPartners", result);
+        console.log("userAPI.jsx - getPartners", result);
         return result;
       })
       .catch(error => {
-        if(APP_MODE==="DEBUG")console.log("userAPI.jsx - getPartners-Err", error);
+        console.log("userAPI.jsx - getPartners-Err", error);
         return {err:true, errMsg:error};
       });
 
@@ -55,11 +55,11 @@ class userAPI extends React.Component{
   getSingleUser( userId ){
     return axios.get(uriSingleUser + userId )
       .then(result => {
-        if(APP_MODE==="DEBUG")console.log("userAPI.jsx - getSingleUser", result);
+        console.log("userAPI.jsx - getSingleUser", result);
         return result;
       })
       .catch(error => {
-        if(APP_MODE==="DEBUG")console.log("userAPI.jsx - getSingleUser-Err", error);
+        console.log("userAPI.jsx - getSingleUser-Err", error);
         return {err:true, errMsg:error};
       });
 
@@ -67,56 +67,56 @@ class userAPI extends React.Component{
 
   /** save EDIT user data to API. http://ontrack.dev.io/rest/user/9 */
   saveEditUser( data, userId ){
-    if(APP_MODE==="DEBUG")console.log("userAPI - saveEditUser", data, userId); return;
+    console.log("userAPI - saveEditUser", data, userId); return;
     axios.put( uriEditUserSave+userId, data )
       .then(res => {
-        if(APP_MODE==="DEBUG")console.log(res);
-        if(APP_MODE==="DEBUG")console.log(res.data);
+        console.log(res);
+        console.log(res.data);
       })
       .catch(error => {
-        if(APP_MODE==="DEBUG")console.log("userAPI.jsx - saveEditUser-Err", error);
+        console.log("userAPI.jsx - saveEditUser-Err", error);
         return {err:true, errMsg:error};
       });
   }
 
   /** save EDIT partner data to API. http://ontrack.dev.io/rest/partner/9 */
   saveEditPartner( data, partnerId ){
-    if(APP_MODE==="DEBUG")console.log("userAPI - saveEditPartner", data, partnerId); return;
+    console.log("userAPI - saveEditPartner", data, partnerId); return;
     axios.put( uriEdiPartnerSave+partnerId, data )
       .then(res => {
-        if(APP_MODE==="DEBUG")console.log(res);
-        if(APP_MODE==="DEBUG")console.log(res.data);
+        console.log(res);
+        console.log(res.data);
       })
       .catch(error => {
-        if(APP_MODE==="DEBUG")console.log("userAPI.jsx - saveEditPartner-Err", error);
+        console.log("userAPI.jsx - saveEditPartner-Err", error);
         return {err:true, errMsg:error};
       });
   }
 
   /** save new user data to API */
   saveUser( data ){
-    if(APP_MODE==="DEBUG")console.log("userAPI - saveUser", data); return;
+    console.log("userAPI - saveUser", data); return;
     axios.post( uriNewUserSave, data )
       .then(res => {
-        if(APP_MODE==="DEBUG")console.log(res);
-        if(APP_MODE==="DEBUG")console.log(res.data);
+        console.log(res);
+        console.log(res.data);
       })
       .catch(error => {
-        if(APP_MODE==="DEBUG")console.log("userAPI.jsx - saveUser-Err", error);
+        console.log("userAPI.jsx - saveUser-Err", error);
         return {err:true, errMsg:error};
       });
   }
 
   /** save new partner user data to API */
   savePartner( data ){
-    if(APP_MODE==="DEBUG")console.log("userAPI - savePartner", data); return;
+    console.log("userAPI - savePartner", data); return;
     axios.post( uriNewPartnerSave, data )
       .then(res => {
-        if(APP_MODE==="DEBUG")console.log(res);
-        if(APP_MODE==="DEBUG")console.log(res.data);
+        console.log(res);
+        console.log(res.data);
       })
       .catch(error => {
-        if(APP_MODE==="DEBUG")console.log("userAPI.jsx - savePartner-Err", error);
+        console.log("userAPI.jsx - savePartner-Err", error);
         return {err:true, errMsg:error};
       });
   }

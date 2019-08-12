@@ -1,4 +1,4 @@
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
@@ -56,7 +56,7 @@ class InstantPopup extends React.Component{
     }
 
     render(){
-        if(APP_MODE==="DEBUG")console.log('instantPopup: Rendering cell content');
+        console.log('instantPopup: Rendering cell content');
 
         return(
             <React.Fragment>
@@ -119,7 +119,7 @@ class InstantPopup extends React.Component{
                         onChange={ e => (
                             e.preventDefault(),
                             this.setState({ attributeValue: e.target.value })
-                            //if(APP_MODE==="DEBUG")console.log('New Value', e.target.value, this.state.attributeValue)
+                            //console.log('New Value', e.target.value, this.state.attributeValue)
                             ) }
 
                         type={ this.props.elementType }
@@ -151,7 +151,7 @@ class InstantPopup extends React.Component{
                         value={ this.state.attributeValue }
                         onChange={ (e)=>{
                             this.setState({ attributeValue: e.target.value});
-                            if(APP_MODE==="DEBUG")console.log(e)
+                            console.log(e)
                             }
                         }
                     >	
@@ -216,13 +216,13 @@ class InstantPopup extends React.Component{
                 );
             
             default:
-                if(APP_MODE==="DEBUG")console.log("invalid case");
+                console.log("invalid case");
                 break;
         }
     }
     
     componentDidMount(){
-        if(APP_MODE==="DEBUG")console.log("instant popup mount:", this.props);
+        console.log("instant popup mount:", this.props);
     }
 }
 

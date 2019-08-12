@@ -1,4 +1,4 @@
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
@@ -94,13 +94,13 @@ class TrackersConfig extends React.Component{
     }
 
 	componentDidMount(){
-		//if(APP_MODE==="DEBUG")console.log("TrackersConfig - mount. json:", this.state.trackers); 
-        //if(APP_MODE==="DEBUG")console.log("TrackersConfig - mount. props.metaData:", this.props.metaData); 
+		//console.log("TrackersConfig - mount. json:", this.state.trackers); 
+        //console.log("TrackersConfig - mount. props.metaData:", this.props.metaData); 
         this.getTrackersConfig();
     }
     
     componentWillReceiveProps( newProps ){
-		if(APP_MODE==="DEBUG")console.log("TrackersConfig - receiveNewProps:", newProps); 
+		console.log("TrackersConfig - receiveNewProps:", newProps); 
         if( newProps.trackers !== this.state.trackerConfigData ){
             this.setState({trackerConfigData: newProps.trackers});
         }
@@ -152,7 +152,7 @@ class TrackersConfig extends React.Component{
      * View Tabs layout of all trackers
      */
 	viewAllTrackers(){
-		//if(APP_MODE==="DEBUG")console.log("TrackersConfig - viewAllTrackers:", this.state.trackers); 
+		//console.log("TrackersConfig - viewAllTrackers:", this.state.trackers); 
 
 		return(
 			<div>
@@ -306,14 +306,14 @@ class TrackersConfig extends React.Component{
         .then(
             res => {
                 if(res && res.err){
-                    if(APP_MODE==="DEBUG")console.log("users - gettingUsers err", res);
+                    console.log("users - gettingUsers err", res);
                     this.setState({
                         errorGetTrackerConfigs: true,
                         errorMsgGetTrackerConfigs: res.errMsg.toString()
                     });
                     return;
                 }
-                if(APP_MODE==="DEBUG")console.log("trackers config res:", res.data);
+                console.log("trackers config res:", res.data);
                 this.setState({ trackersConfigData: res.data }, function(){
                     rootStore.dispatch({
                         type: 'GET_CONFIG_FROM_DB',
@@ -347,7 +347,7 @@ class TrackersConfig extends React.Component{
 }
 
 const mapStateToProps = state => {
-	if(APP_MODE==="DEBUG")console.log('trackerConfig.jsx-mapStateToProps', state);
+	console.log('trackerConfig.jsx-mapStateToProps', state);
 	return {
         metaData: state.MetaReducer.metaData,
         trackers: state.TrackConfigReducer.configData,

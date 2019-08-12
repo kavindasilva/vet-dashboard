@@ -1,4 +1,4 @@
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
@@ -85,7 +85,7 @@ class TrackersConfigColumns extends React.Component{
     }
    
     componentWillReceiveProps( newProps ){
-        if(APP_MODE==="DEBUG")console.log("TrackersColumnsConfig - receiveNewProps:", newProps); 
+        console.log("TrackersColumnsConfig - receiveNewProps:", newProps); 
         // if( JSON.stringify(this.props.tracker) !== this.state.trackersHash ){
         //     this.setState({trackersHash: JSON.stringify(this.props.tracker)});
         // } //not working
@@ -95,7 +95,7 @@ class TrackersConfigColumns extends React.Component{
     }
 
 	render(){
-        //if(APP_MODE==="DEBUG")console.log("trackreConfigColumn col count:", this.state.columnCount);
+        //console.log("trackreConfigColumn col count:", this.state.columnCount);
 		return(
 			<React.Fragment>
 				{ 
@@ -275,7 +275,7 @@ class TrackersConfigColumns extends React.Component{
 }
 
 const mapStateToProps = (state, props) => {
-	if(APP_MODE==="DEBUG")console.log('trackerColumnConfig.jsx-mapStateToProps', state, props);
+	console.log('trackerColumnConfig.jsx-mapStateToProps', state, props);
 	return {
         metaData: state.MetaReducer.metaData,
         tracker: state.TrackConfigReducer.configData.find( tracker => (

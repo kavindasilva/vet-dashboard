@@ -1,4 +1,4 @@
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
@@ -112,7 +112,7 @@ class PasswordResetRequestForm extends React.Component{
 			})
 			.then(
 				serverResponse => {
-					if(APP_MODE==="DEBUG")console.log("request pass", serverResponse);
+					console.log("request pass", serverResponse);
 					if(serverResponse.err && serverResponse.errMsg && serverResponse.errMsg.response
 						&& serverResponse.errMsg.response.headers 
 						&& serverResponse.errMsg.response.headers["x-status-reason"]
@@ -266,7 +266,7 @@ class PasswordResetRequestForm extends React.Component{
 		loginAPIobj.requestPasswordReset(this.state.userEmail)
 			.then(
 				serverResponse => {
-					if(APP_MODE==="DEBUG")console.log("request pass", serverResponse);
+					console.log("request pass", serverResponse);
 					if(serverResponse.err && serverResponse.errMsg && serverResponse.errMsg.response
 						&& serverResponse.errMsg.response.headers 
 						&& serverResponse.errMsg.response.headers["x-status-reason"]

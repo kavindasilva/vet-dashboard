@@ -1,4 +1,4 @@
-import {APP_MODE} from "../common/constants"
+//import {APP_MODE} from "../common/constants"
 
 import React from 'react';
 import { connect } from "react-redux";
@@ -30,8 +30,8 @@ class TrackerTableRow extends React.Component{
     }
 
 	componentDidMount(){
-		//if(APP_MODE==="DEBUG")console.log("TrackerTableRow - mount. props:", this.props); //ok
-		//if(APP_MODE==="DEBUG")console.log("TrackerTableRow - mount. props.metaData:", this.props.metaData); 
+		//console.log("TrackerTableRow - mount. props:", this.props); //ok
+		//console.log("TrackerTableRow - mount. props.metaData:", this.props.metaData); 
 	}
 
 	render(){
@@ -76,7 +76,7 @@ class TrackerTableRow extends React.Component{
 }
 
 const mapStateToProps = (state, props) => {
-	//if(APP_MODE==="DEBUG")console.log('TrackerTableRow.jsx-mapStateToProps', state);
+	//console.log('TrackerTableRow.jsx-mapStateToProps', state);
 	return {
 		metaData: state.MetaReducer.metaData,
 
