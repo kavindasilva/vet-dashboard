@@ -3,12 +3,9 @@
 //import visibilityFilter from './visibilityFilter'
 
 import ticketAPI from "../apicalls/ticketAPI";
-import { rootStore } from "../stores/mainStore";
-import { stat } from "fs";
+// import { rootStore } from "../stores/mainStore";
+// import { stat } from "fs";
 import { isUndefined } from "util";
-
-
-const ticketAPIobj = new ticketAPI();
 
 const PhoenixReducer = (state, action) => {
     //console.log("PhoenixReducer: state: ", state, "\naction: ", action)

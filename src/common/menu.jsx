@@ -21,6 +21,7 @@ import Button from '@material-ui/core/Button';
 //import MiniDrawer from "../common/drawer";
 import loginAPI from "../apicalls/loginAPI";
 import CurrentUser from '../users/currentUser';
+import { Link } from '@material-ui/core';
 
 const loginAPIobj = new loginAPI();
 
@@ -45,7 +46,7 @@ class Menu extends Component {
 				this.viewMenuBar() 
 			}
 			{ 
-				this.componentToShow() 
+				this.renderComponent() 
 			}
 			</React.Fragment>
 		);
@@ -61,6 +62,7 @@ class Menu extends Component {
 				
 				{ /** temporary menu bar */ }
 				<div style={{backgroundColor:"#f1f2f3"}}>
+					<Link onClick={()=>this.setState({componentToShow:"phoenixFailures"})}>phoenixAPI</Link>
 					<div>
 					Hi user ID: ... { this.props.metaData.userId } ...  
 					{ (this.props.metaData.userInfo)? this.props.metaData.userInfo.email:"who you?" }
@@ -125,7 +127,7 @@ class Menu extends Component {
 	}
 
 	/** determine which compoenent to be rendered */
-	componentToShow(){
+	renderComponent(){
 		let componentToShow = this.state.componentToShow;
 		if( componentToShow==="tickets" )
 			return <Trackers />
@@ -135,6 +137,8 @@ class Menu extends Component {
 			return <Users />
 		else if( componentToShow==="currentUserProfile" )
 			return <CurrentUser />
+		else if( componentToShow==="phoenixFailures" )
+			return <Records />
 		else
 			return "no app";
 

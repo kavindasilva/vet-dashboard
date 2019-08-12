@@ -1,6 +1,5 @@
 
 import React, { Component } from 'react';
-import Pets from "../components/pets";
 import { Provider } from 'react-redux';
 
 import Login from "../common/login";

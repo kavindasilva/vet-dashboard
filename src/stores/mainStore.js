@@ -139,7 +139,6 @@ const initialTicket=[
 ];
 
 const initialState = {
-
     PhoenixReducer:{
         phoenixRecords:{}
     },

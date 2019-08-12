@@ -3,14 +3,12 @@
 //import visibilityFilter from './visibilityFilter'
 
 import ticketAPI from "../apicalls/ticketAPI";
-import petAPI from "../apicalls/petAPI";
 import { rootStore } from "../stores/mainStore";
 import { stat } from "fs";
 import { isUndefined } from "util";
 
 
 const ticketAPIobj = new ticketAPI();
-const petAPIobj = new petAPI();
 
 const PetReducerNOTUSED = (state, action) => {
     //console.log("PetReducer: state: ", state, "\naction: ", action)
