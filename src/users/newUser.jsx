@@ -317,7 +317,8 @@ class NewUser extends React.Component{
                         fullWidth={true}
                     >
                         {
-                            this.state.partnerList.map( item =>
+                            (this.state.partnerList)
+                            ? this.state.partnerList.map( item =>
                                 <MenuItem 
                                     key={ item.partner_id }
                                     value={ item.partner_id } 
@@ -325,6 +326,9 @@ class NewUser extends React.Component{
                                 { item.partner_id } -- { item.name } -- {item.account_email}
                                 </MenuItem>
                             )
+                            : <MenuItem key={0} value={0}>
+                                No partners loaded
+                            </MenuItem>
                         }
                     </Select>
                 </Grid>
