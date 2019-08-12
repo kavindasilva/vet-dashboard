@@ -1,6 +1,5 @@
 
 import React, { Component } from 'react';
-import Pets from "./pets";
 import { Provider } from 'react-redux';
 
 import Radio from '@material-ui/core/Radio';
@@ -120,16 +119,13 @@ class ticketMain extends Component {
 	render(){
 		return(
 			<React.Fragment>
-				<Pets/>
+				
 			</React.Fragment>
 		)
 	}
 
 	componentDidMount(){ 
 		this.loadInitialData();
-		//this.loadData(0,0);
-		//this.loadData("speci","Cat");
-		//return( <Pets /> );
 	}
 
 	loadInitialData = () => {

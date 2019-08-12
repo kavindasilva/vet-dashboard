@@ -9,7 +9,6 @@ import { rootStore } from "../stores/mainStore"
 
 import App from "../components/app";
 import Records from "../oabpPhoenixFailures/records";
-import Pets from "../components/pets";
 
 import Trackers from "../dashboard/trackers";
 import Users from "../users/users";
