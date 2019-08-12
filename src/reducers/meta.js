@@ -1,14 +1,14 @@
+import {APP_MODE} from "../common/constants"
 //import { combineReducers } from 'redux'
 //import todos from './todos'
 //import visibilityFilter from './visibilityFilter'
 
 import ticketAPI from "../apicalls/ticketAPI";
-//import { rootStore } from "../stores/mainStore";
 
 import { isUndefined } from "util";
 
 const MetaReducer = (state, action) => {
-    console.log("MetaReducer: state: ", state, "\naction: ", action)
+    if(APP_MODE==="DEBUG")console.log("MetaReducer: state: ", state, "\naction: ", action)
     let newState = {
         metaData:{
             isLoggedIn: false,
@@ -36,7 +36,7 @@ const MetaReducer = (state, action) => {
                 }
             }
 
-            console.log("MetaReducer UPDATE_META_DETAIL: ", newState);
+            if(APP_MODE==="DEBUG")console.log("MetaReducer UPDATE_META_DETAIL: ", newState);
             return newState;
         
         case 'LOG_OUT_USER':
@@ -52,11 +52,11 @@ const MetaReducer = (state, action) => {
                 }
             }
 
-            console.log("MetaReducer LOG_OUT_USER: ", newState);
+            if(APP_MODE==="DEBUG")console.log("MetaReducer LOG_OUT_USER: ", newState);
             return newState;
 
         default:
-            console.log("MetaReducer_default: ", newState);
+            if(APP_MODE==="DEBUG")console.log("MetaReducer_default: ", newState);
             return state;
     }
 
@@ -67,21 +67,21 @@ const endSession = () => {
 }
 
 const saveToDB = (allData) => {
-    console.log("popup - saveToDB", allData);
+    if(APP_MODE==="DEBUG")console.log("popup - saveToDB", allData);
     //ticketAPIobj.saveToDB(allData);
-    //console.log("popup - saveToDB", allData.ticket_id);
+    //if(APP_MODE==="DEBUG")console.log("popup - saveToDB", allData.ticket_id);
     /*let data = ticketAPIobj.callApiDb()
         .then(response => {
-            console.log("popup - Tresponse1: ", response);
+            if(APP_MODE==="DEBUG")console.log("popup - Tresponse1: ", response);
 
-            console.log("popup - componenetDidMount");
+            if(APP_MODE==="DEBUG")console.log("popup - componenetDidMount");
             this.setState({ petAdmission: response.data })
             return response;
 
         })
         .then(
             response => {
-                console.log("popup - Tresponse2: ", response);
+                if(APP_MODE==="DEBUG")console.log("popup - Tresponse2: ", response);
 
                 // 
                 /*rootStore.dispatch({

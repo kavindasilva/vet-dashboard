@@ -1,5 +1,5 @@
+import {APP_MODE} from "../common/constants"
 import React, { Component } from "react";
-
 import '@y0c/react-datepicker/assets/styles/calendar.scss';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -60,7 +60,7 @@ class TrackerPopup extends Component {
 	}
 
   	render() {
-		//console.log('trackerPopup: Rendering cell content');
+		//if(APP_MODE==="DEBUG")console.log('trackerPopup: Rendering cell content');
 		return (
 			<React.Fragment>
 				<Cell 
@@ -132,8 +132,8 @@ class TrackerPopup extends Component {
             this.setState({statementError: true});
         }
 
-        console.log("TrackerPopup expr res",  res);
-        //console.log("TrackerPopup expr evaluatedRes",  eRes.toString() );
+        if(APP_MODE==="DEBUG")console.log("TrackerPopup expr res",  res);
+        //if(APP_MODE==="DEBUG")console.log("TrackerPopup expr evaluatedRes",  eRes.toString() );
     }
 	/** evaluates expressions and returns color */
 	evaluateExpr = (rules) => {
@@ -141,7 +141,7 @@ class TrackerPopup extends Component {
 	}
 
 	componentDidMount(){
-		console.log("trackerPopup didmount props:", this.props);
+		if(APP_MODE==="DEBUG")console.log("trackerPopup didmount props:", this.props);
 
 		this.validateExpr();
 	}
@@ -150,7 +150,7 @@ class TrackerPopup extends Component {
 
 
 const mapStateToProps = (state, props) => {
-	//console.log('trackerPopup.jsx-mapStateToProps', state);
+	//if(APP_MODE==="DEBUG")console.log('trackerPopup.jsx-mapStateToProps', state);
 
 	/** tracker's instance's index */
 	let trackerIndex = state.ticketsDataReducer.ticketsData.findIndex( ticket => (
@@ -170,7 +170,7 @@ const mapStateToProps = (state, props) => {
 		));
 	}
 	else
-		console.log("trackerPopup trackerConfigIndex error");
+		if(APP_MODE==="DEBUG")console.log("trackerPopup trackerConfigIndex error");
 
 
 	if( trackerIndex > -1 ){
@@ -188,7 +188,7 @@ const mapStateToProps = (state, props) => {
 		};
 	}
 	else
-		console.log("trackerPopup indexError")
+		if(APP_MODE==="DEBUG")console.log("trackerPopup indexError")
 }
 
 

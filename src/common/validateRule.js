@@ -101,10 +101,10 @@ export const validateExpression = function (expression) {
 
     try { 
         parseTree = Peg.parse(expression);
-        //console.log("Parse Tree", parseTree);
+        //if(APP_MODE==="DEBUG")console.log("Parse Tree", parseTree);
     }
     catch (ex) {
-        //console.log("ex1",  ex);
+        //if(APP_MODE==="DEBUG")console.log("ex1",  ex);
         throw ex;
         //return true;
     }
@@ -112,7 +112,7 @@ export const validateExpression = function (expression) {
     try {
         evaluateSubTree(parseTree);
     } catch (ex) {
-        //console.log("ex2",  ex);
+        //if(APP_MODE==="DEBUG")console.log("ex2",  ex);
         throw ex;
     }
 
@@ -145,11 +145,11 @@ function evaluateFunctionSubTree(commandStructure) {
         throw new Error(`Undefined Function: ${commandStructure.name}`);
     }
     
-    //console.log('evaluate', commandStructure, executableFunctions[commandStructure.name]);
+    //if(APP_MODE==="DEBUG")console.log('evaluate', commandStructure, executableFunctions[commandStructure.name]);
     let evaluatedParameters = evaluateSubTree(commandStructure.parameters);
-    //console.log('evaluatedParameters', evaluatedParameters);
+    //if(APP_MODE==="DEBUG")console.log('evaluatedParameters', evaluatedParameters);
     let result = executableFunctions[commandStructure.name].apply(null, evaluatedParameters);
-    //console.log('result', result);
+    //if(APP_MODE==="DEBUG")console.log('result', result);
     return result;
 
 }

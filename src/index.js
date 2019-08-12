@@ -1,3 +1,4 @@
+import {APP_MODE} from "./common/constants"
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -17,7 +18,7 @@ import StaticFixedTable from "./dashboard/staticFixedTable"
 
 
 const render = () => {
-  console.log('index.js-rendering');
+  if(APP_MODE==="DEBUG")console.log('index.js-rendering');
   ReactDOM.render(
     //<Menu />,
 

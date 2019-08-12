@@ -1,4 +1,4 @@
-
+import {APP_MODE} from "../common/constants"
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
@@ -53,7 +53,7 @@ class ChangePassword extends React.Component{
     }
 
 	render(){
-        //if(this.props.currentUserData)console.log("changePassword render", this.props.currentUserData)
+        //if(this.props.currentUserData)if(APP_MODE==="DEBUG")console.log("changePassword render", this.props.currentUserData)
 		return(
 			<React.Fragment>    
             {
@@ -84,7 +84,7 @@ class ChangePassword extends React.Component{
                         serverMsg: serverResponse.errMsg.response.headers["x-status-reason"].toString(),
                         msgHasError: true,
                     });
-                    console.log("changePassword - changePassword fail reason:", serverResponse.errMsg.response.headers["x-status-reason"])
+                    if(APP_MODE==="DEBUG")console.log("changePassword - changePassword fail reason:", serverResponse.errMsg.response.headers["x-status-reason"])
                 }
                 else if(serverResponse.err)
                     this.setState({
@@ -98,7 +98,7 @@ class ChangePassword extends React.Component{
                     })
                 
                 this.setState({viewMsg: true})
-                console.log("changePassword - handlePasswordChaning", serverResponse)
+                if(APP_MODE==="DEBUG")console.log("changePassword - handlePasswordChaning", serverResponse)
             }
         )
     }
@@ -200,7 +200,7 @@ class ChangePassword extends React.Component{
 }
 
 const mapStateToProps = state => {
-    console.log('changePassword.jsx-mapStateToProps', state);
+    if(APP_MODE==="DEBUG")console.log('changePassword.jsx-mapStateToProps', state);
     //let meta = state.MetaReducer.metaData;
 	return {
         metaData: state.MetaReducer.metaData,

@@ -1,4 +1,4 @@
-
+import {APP_MODE} from "../common/constants"
 import React, { Component } from "react";
 //import TrackerConfigCell from "../config/abstractTrackerConfigCell"
 
@@ -35,10 +35,10 @@ class TrackersPemissionsConfig extends React.Component{
     }
 
     render(){
-        //console.log('TrackersPemissionsConfig: Rendering cell content');
+        //if(APP_MODE==="DEBUG")console.log('TrackersPemissionsConfig: Rendering cell content');
         //return(<React.Fragment>x</React.Fragment>);
         let user = Object.values(this.props.allUsers).find( allUser => {
-            //console.log('this.props.columnPermissions.userId', allUser, this.props, this.props.columnPermissions);
+            //if(APP_MODE==="DEBUG")console.log('this.props.columnPermissions.userId', allUser, this.props, this.props.columnPermissions);
             return allUser.user_id === this.props.columnPermissions.userId;
          } );
         return(
@@ -81,8 +81,8 @@ class TrackersPemissionsConfig extends React.Component{
     }
 
     componentDidMount(){
-        //console.log("trackerUserConfig arr: :", this.props.allUsers );
-        //console.log("trackerUserConfig mount: props:", this.props, "state:", this.state);
+        //if(APP_MODE==="DEBUG")console.log("trackerUserConfig arr: :", this.props.allUsers );
+        //if(APP_MODE==="DEBUG")console.log("trackerUserConfig mount: props:", this.props, "state:", this.state);
         
         this.setState({ 
             read: this.props.columnPermissions.read,
@@ -109,7 +109,7 @@ const mapStateToProps = (state, props) => {
                 )
             )
         if (!trackerRes) { 
-            console.log("TrackersPermissionsConfig tracker not found");
+            if(APP_MODE==="DEBUG")console.log("TrackersPermissionsConfig tracker not found");
             return {} 
         }
 
@@ -119,7 +119,7 @@ const mapStateToProps = (state, props) => {
                 )
             )
         if (!columnRes) { 
-            console.log("TrackersPermissionsConfig column not found");
+            if(APP_MODE==="DEBUG")console.log("TrackersPermissionsConfig column not found");
             return {} 
         }
 

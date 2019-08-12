@@ -1,4 +1,4 @@
-
+import {APP_MODE} from "../common/constants"
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
@@ -69,12 +69,12 @@ class TrackerRulesCondition extends React.Component{
             this.setState({statementError: false})
         }
         catch(e){
-            console.log("TrackerRulesCondition exception", e);
+            if(APP_MODE==="DEBUG")console.log("TrackerRulesCondition exception", e);
             this.setState({statementError: true})
         }
 
 
-        console.log("TrackerRulesCondition expr",  evalResult);
+        if(APP_MODE==="DEBUG")console.log("TrackerRulesCondition expr",  evalResult);
     }
 
     componentDidMount(){
@@ -90,7 +90,7 @@ const mapStateToProps = (state, props) => {
         tracker.tracker_id === parseInt( props.tracker_id )
     ) );
     if(!trackerRes){
-        console.log("TrackersRulesCondition tracker not found");
+        if(APP_MODE==="DEBUG")console.log("TrackersRulesCondition tracker not found");
         return;
     }
 
@@ -98,7 +98,7 @@ const mapStateToProps = (state, props) => {
         column.name === props.column_name
     ) );
     if(!columnRes){
-        console.log("TrackersRulesCondition column not found");
+        if(APP_MODE==="DEBUG")console.log("TrackersRulesCondition column not found");
         return;
     }
 

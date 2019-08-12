@@ -1,4 +1,4 @@
-
+import {APP_MODE} from "../common/constants"
 import React from 'react';
 import axios from 'axios';
 import { useGraphQL ,GraphQL, GraphQLProvider } from 'graphql-react'
@@ -24,12 +24,12 @@ class Phoenix extends React.Component{
     //var retStr;
     return axios.get(APIGetUrl)
       .then(result => {
-        console.log("Phoenix.jsx - callAPI",result);
+        if(APP_MODE==="DEBUG")console.log("Phoenix.jsx - callAPI",result);
         //retStr=result;
         return result;
       })
       .catch(error => {
-        console.log( error);
+        if(APP_MODE==="DEBUG")console.log( error);
         return error;
       });
 

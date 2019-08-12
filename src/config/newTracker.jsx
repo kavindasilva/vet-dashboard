@@ -1,4 +1,4 @@
-
+import {APP_MODE} from "../common/constants"
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
@@ -109,7 +109,7 @@ class NewTracker extends React.Component{
         trackerAPIObj.getAvailablePipelines()
         .then(
             res => {
-                console.log("newTracker pipelines res:", res.data);
+                if(APP_MODE==="DEBUG")console.log("newTracker pipelines res:", res.data);
                 this.setState({HSPipelines: res.data });
             }
         )

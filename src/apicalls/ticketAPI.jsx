@@ -1,4 +1,4 @@
-
+import {APP_MODE} from "../common/constants"
 import React from 'react';
 import axios from 'axios';
 
@@ -16,14 +16,14 @@ class ticketAPI extends React.Component{
     if( ticketID!="" && ticketID!=null )
       getUri=uriGetTicketData + ticketID
 
-    console.log("ticketAPI call uri:", getUri);
+    if(APP_MODE==="DEBUG")console.log("ticketAPI call uri:", getUri);
     return axios.get( getUri )
       .then(result => {
-        console.log("ticketAPI.jsx - getTrackerConfig",result);
+        if(APP_MODE==="DEBUG")console.log("ticketAPI.jsx - getTrackerConfig",result);
         return result;
       })
       .catch(error => {
-        console.log("ticketAPI error", error);
+        if(APP_MODE==="DEBUG")console.log("ticketAPI error", error);
         return {err:true, errMsg:error};
       });
   }
@@ -31,11 +31,11 @@ class ticketAPI extends React.Component{
 
   /** save / update data to API (temporary hubspot mapping) */
   updateTicketPropery (ticketId, data) {
-    console.log("ticketAPI - saveToDB", ticketId, data); //return;
+    if(APP_MODE==="DEBUG")console.log("ticketAPI - saveToDB", ticketId, data); //return;
     
     return axios.patch(uriTickets + ticketId, data)
                 .then(res => {
-                    console.log(res);
+                    if(APP_MODE==="DEBUG")console.log(res);
                 });
   }
 

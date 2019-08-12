@@ -1,4 +1,4 @@
-
+import {APP_MODE} from "../common/constants"
 
 import React, { Component } from 'react';
 
@@ -39,7 +39,7 @@ class Menu extends Component {
 	}
 
 	render() {
-		//console.log('Menu.jsx-rendering' );
+		//if(APP_MODE==="DEBUG")console.log('Menu.jsx-rendering' );
 		return (
 			<React.Fragment >
 			{ 
@@ -146,7 +146,7 @@ class Menu extends Component {
 
 	/** make clicked componenents state value true */
 	switchComponents(clickedComponent){
-		console.log("menu - switchComps: ", clickedComponent);
+		if(APP_MODE==="DEBUG")console.log("menu - switchComps: ", clickedComponent);
 		this.setState( { componentToShow: clickedComponent } );
 	}
 
@@ -155,7 +155,7 @@ class Menu extends Component {
 		loginAPIobj.logout()
 		.then(
 			res => {
-				//console.log("menu logOutUser", res.data)
+				//if(APP_MODE==="DEBUG")console.log("menu logOutUser", res.data)
 			}
 		);
 		
@@ -186,7 +186,7 @@ class Menu extends Component {
 }
 
 const mapStateToProps = state => {
-	console.log('menu.jsx-mapStateToProps', state);
+	if(APP_MODE==="DEBUG")console.log('menu.jsx-mapStateToProps', state);
 	return {
 		metaData: state.MetaReducer.metaData,
 	};

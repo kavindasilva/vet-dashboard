@@ -1,4 +1,4 @@
-
+import {APP_MODE} from "../common/constants"
 
 import React from 'react';
 import axios from 'axios';
@@ -29,7 +29,7 @@ class loginAPI extends React.Component {
 		return axios.post(APIchangePassword, userData)
 			.then(
 				res => {
-					console.log("loginAPI.jsx - changePassword", res);
+					if(APP_MODE==="DEBUG")console.log("loginAPI.jsx - changePassword", res);
 					if(res && res.status && res.status === 200)
 						return { err: false }
 					else
@@ -37,7 +37,7 @@ class loginAPI extends React.Component {
 				}
 			)
 			.catch(error => {
-				console.log("loginAPI.jsx - changePassword-Err", error);
+				if(APP_MODE==="DEBUG")console.log("loginAPI.jsx - changePassword-Err", error);
 				return { errMsg:error, err: true};
 			});
 	}
@@ -54,7 +54,7 @@ class loginAPI extends React.Component {
 		return axios.post(APIforcePasswordReset, {account_email: userEmail})
 			.then(
 				res => {
-					console.log("loginAPI.jsx - forcePasswordReset", res);
+					if(APP_MODE==="DEBUG")console.log("loginAPI.jsx - forcePasswordReset", res);
 					if(res && res.status && res.status === 200)
 						return { err: false }
 					else
@@ -62,7 +62,7 @@ class loginAPI extends React.Component {
 				}
 			)
 			.catch(error => {
-				console.log("loginAPI.jsx - forcePasswordReset-Err", error);
+				if(APP_MODE==="DEBUG")console.log("loginAPI.jsx - forcePasswordReset-Err", error);
 				return { errMsg:error, err: true};
 			});
 	}
@@ -76,7 +76,7 @@ class loginAPI extends React.Component {
 		return axios.post(APIPasswordReset, userData)
 			.then(
 				res => {
-					console.log("loginAPI.jsx - sendPasswordResetData", res);
+					if(APP_MODE==="DEBUG")console.log("loginAPI.jsx - sendPasswordResetData", res);
 					if(res && res.status && res.status === 200)
 						return { err: false }
 					else
@@ -84,7 +84,7 @@ class loginAPI extends React.Component {
 				}
 			)
 			.catch(error => {
-				console.log("loginAPI.jsx - sendPasswordResetData-Err", error);
+				if(APP_MODE==="DEBUG")console.log("loginAPI.jsx - sendPasswordResetData-Err", error);
 				return { errMsg:error, err: true};
 			});
 	}
@@ -98,7 +98,7 @@ class loginAPI extends React.Component {
 		return axios.post(APIrequestPasswordReset, {account_email: userEmail})
 			.then(
 				res => {
-					console.log("loginAPI.jsx - requestPasswordReset", res);
+					if(APP_MODE==="DEBUG")console.log("loginAPI.jsx - requestPasswordReset", res);
 					if(res && res.status && res.status === 200)
 						return { err: false }
 					else
@@ -106,7 +106,7 @@ class loginAPI extends React.Component {
 				}
 			)
 			.catch(error => {
-				console.log("loginAPI.jsx - requestPasswordReset-Err", error);
+				if(APP_MODE==="DEBUG")console.log("loginAPI.jsx - requestPasswordReset-Err", error);
 				return { errMsg:error, err: true};
 			});
 	}
@@ -119,7 +119,7 @@ class loginAPI extends React.Component {
 				}
 			)
 			.catch(error => {
-				console.log("loginAPI.jsx - logout-Err", error);
+				if(APP_MODE==="DEBUG")console.log("loginAPI.jsx - logout-Err", error);
 				return { errMsg:error, err: true};
 			});
 
@@ -141,7 +141,7 @@ class loginAPI extends React.Component {
 					return res;
 			} )
 			.catch(error => {
-				console.log("loginAPI.jsx - isLoggedIn-Err", error);
+				if(APP_MODE==="DEBUG")console.log("loginAPI.jsx - isLoggedIn-Err", error);
 				return { errMsg:error, err: true};
 			});
 	}
@@ -155,7 +155,7 @@ class loginAPI extends React.Component {
 			"otp": otp
 		};
 
-		console.log("loginAPI - authenticate", data);
+		if(APP_MODE==="DEBUG")console.log("loginAPI - authenticate", data);
 
 		return axios.post(
 			APIauthenticateUrl,
@@ -170,12 +170,12 @@ class loginAPI extends React.Component {
 			}
 		)
 			.then(res => {
-				console.log("loginAPI - axios reponse:", res);
-				console.log(res.data);
+				if(APP_MODE==="DEBUG")console.log("loginAPI - axios reponse:", res);
+				if(APP_MODE==="DEBUG")console.log(res.data);
 				return res;
 			})
 			.catch(error => {
-				console.log("loginAPI.jsx - axios-Err", error);
+				if(APP_MODE==="DEBUG")console.log("loginAPI.jsx - axios-Err", error);
 				return { errMsg:error, err: true};
 			  });
 
@@ -195,12 +195,12 @@ class loginAPI extends React.Component {
 		};
 
 		data = JSON.parse(" { \"account_email\": \"ks@vetstoria.com\", \"account_password\": \"123\", \"is_otp_required\": true, \"otp\": \"qaauto\" } ");
-		console.log("loginAPI - authenticateAPI", data);
+		if(APP_MODE==="DEBUG")console.log("loginAPI - authenticateAPI", data);
 
 		axios.post(APIauthenticateUrl, data, { method: 'post' })
 			.then((res) => {
-				console.log("loginAPI - axios reponse:", res);
-				console.log(res.data);
+				if(APP_MODE==="DEBUG")console.log("loginAPI - axios reponse:", res);
+				if(APP_MODE==="DEBUG")console.log(res.data);
 				return res.data[0];
 			})
 

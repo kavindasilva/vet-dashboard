@@ -1,4 +1,4 @@
-
+import {APP_MODE} from "../common/constants"
 
 import React from 'react';
 import { connect } from "react-redux";
@@ -32,8 +32,8 @@ class TrackerTableData extends React.Component{
 	columnDataTypes = trackerColumnDataTypes;
 
 	componentDidMount(){
-		console.log("TrackerTableData - mount. props:", this.props); //ok
-		//console.log("TrackerTableData - mount. props.metaData:", this.props.metaData); 
+		if(APP_MODE==="DEBUG")console.log("TrackerTableData - mount. props:", this.props); //ok
+		//if(APP_MODE==="DEBUG")console.log("TrackerTableData - mount. props.metaData:", this.props.metaData); 
 	}
 
 	render(){
@@ -64,7 +64,7 @@ class TrackerTableData extends React.Component{
 	showTableData(){
 		let returnArr=[]; 
 
-		console.log('this.props.configData', this.props.configData);
+		if(APP_MODE==="DEBUG")console.log('this.props.configData', this.props.configData);
 
 		this.props.configData.columns.forEach( column => {
 			//each column of trackerConfig
@@ -120,13 +120,13 @@ class TrackerTableData extends React.Component{
 }
 
 const mapStateToProps = (state, props) => {
-	//console.log("trackerTableData", props);
+	//if(APP_MODE==="DEBUG")console.log("trackerTableData", props);
 	let ticketsData = state.ticketsDataReducer.ticketsData.find(record => (
 		record.ticket_id === props.ticketId
 	));
 
-	// console.log("trackerTableData ticketData", ticketsData);
-	// console.log('TrackerTableData.jsx-mapStateToProps', state);
+	// if(APP_MODE==="DEBUG")console.log("trackerTableData ticketData", ticketsData);
+	// if(APP_MODE==="DEBUG")console.log('TrackerTableData.jsx-mapStateToProps', state);
 
 	return {
 		//...props,

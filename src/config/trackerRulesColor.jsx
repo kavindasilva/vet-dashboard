@@ -1,4 +1,4 @@
-
+import {APP_MODE} from "../common/constants"
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
@@ -90,7 +90,7 @@ const mapStateToProps = (state, props) => {
         tracker.tracker_id === parseInt( props.tracker_id )
     ) );
     if(!trackerRes){
-        console.log("TrackersRulesColor tracker not found");
+        if(APP_MODE==="DEBUG")console.log("TrackersRulesColor tracker not found");
         return;
     }
 
@@ -98,7 +98,7 @@ const mapStateToProps = (state, props) => {
         column.name === props.column_name
     ) );
     if(!columnRes){
-        console.log("TrackersRulesColor column not found");
+        if(APP_MODE==="DEBUG")console.log("TrackersRulesColor column not found");
         return;
     }
 

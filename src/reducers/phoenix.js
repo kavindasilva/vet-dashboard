@@ -1,4 +1,4 @@
-//import { combineReducers } from 'redux'
+import {APP_MODE} from "../common/constants"
 //import todos from './todos'
 //import visibilityFilter from './visibilityFilter'
 
@@ -8,7 +8,7 @@ import ticketAPI from "../apicalls/ticketAPI";
 import { isUndefined } from "util";
 
 const PhoenixReducer = (state, action) => {
-    //console.log("PhoenixReducer: state: ", state, "\naction: ", action)
+    //if(APP_MODE==="DEBUG")console.log("PhoenixReducer: state: ", state, "\naction: ", action)
     let newState = {};
 
     if(state===undefined || isUndefined(state))
@@ -19,7 +19,7 @@ const PhoenixReducer = (state, action) => {
             newState = {
                 phoenixRecords: action.payload.phoenixRecords
             };
-            console.log("petReducer_FETCH_FROM_API: ", newState);
+            if(APP_MODE==="DEBUG")console.log("petReducer_FETCH_FROM_API: ", newState);
             return newState;
 
 
@@ -31,12 +31,12 @@ const PhoenixReducer = (state, action) => {
                     record => { return record }
                 )
             };
-            console.log("petReducer_FETCH_FROM_API: ", newState);
+            if(APP_MODE==="DEBUG")console.log("petReducer_FETCH_FROM_API: ", newState);
             return newState;
             
             
         default:
-            //console.log("petReducer_default: ", state);
+            //if(APP_MODE==="DEBUG")console.log("petReducer_default: ", state);
             return state;
     }
 

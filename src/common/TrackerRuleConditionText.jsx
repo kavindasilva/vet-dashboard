@@ -1,4 +1,4 @@
-
+import {APP_MODE} from "../common/constants"
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
@@ -55,7 +55,7 @@ class TrackerRuleConditionText extends React.Component{
         else
             this.setState({statementError: true})
 
-        console.log("TrackerRuleConditionText expr",  evalResult);
+        if(APP_MODE==="DEBUG")console.log("TrackerRuleConditionText expr",  evalResult);
     }
 
     componentDidMount(){

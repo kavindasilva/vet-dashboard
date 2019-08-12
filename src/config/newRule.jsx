@@ -1,4 +1,4 @@
-
+import {APP_MODE} from "../common/constants"
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
@@ -165,8 +165,8 @@ class NewRule extends React.Component{
     }
     
     componentDidMount(){
-        //console.log("trackerRulesConfig arr: :", this.props.allUsers );
-        //console.log("trackerRulesConfig mount: props:", this.props, "state:", this.state);
+        //if(APP_MODE==="DEBUG")console.log("trackerRulesConfig arr: :", this.props.allUsers );
+        //if(APP_MODE==="DEBUG")console.log("trackerRulesConfig mount: props:", this.props, "state:", this.state);
     }
 
     openPopUp = () => {
@@ -184,14 +184,14 @@ const mapStateToProps = (state, props) => {
     //     tracker.tracker_id === parseInt( props.tracker_id )
     // ) );
     // if(!trackerRes){
-    //     console.log("newRule tracker not found");
+    //     if(APP_MODE==="DEBUG")console.log("newRule tracker not found");
     // }
 
     // let columnRes = trackerRes.columns.find( column => (
     //     column.name === props.column_name
     // ) )
     // if(!columnRes){
-    //     console.log("newRule column not found");
+    //     if(APP_MODE==="DEBUG")console.log("newRule column not found");
     // }
 
     return {

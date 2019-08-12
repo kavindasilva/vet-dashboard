@@ -1,4 +1,4 @@
-
+import {APP_MODE} from "../common/constants"
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
@@ -88,7 +88,7 @@ class CurrentUser extends React.Component{
                 this.setState({currentUserData: result.data });
             }
         );
-		//console.log("CurrentUser - mount. props.metaData:", this.props.metaData); 
+		//if(APP_MODE==="DEBUG")console.log("CurrentUser - mount. props.metaData:", this.props.metaData); 
 	}
 
     viewProfile(){ //return(<div></div>);
@@ -196,7 +196,7 @@ class CurrentUser extends React.Component{
 }
 
 const mapStateToProps = state => {
-    console.log('currentUser.jsx-mapStateToProps', state);
+    if(APP_MODE==="DEBUG")console.log('currentUser.jsx-mapStateToProps', state);
     //let meta = state.MetaReducer.metaData;
 	return {
         metaData: state.MetaReducer.metaData,

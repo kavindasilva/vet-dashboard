@@ -1,4 +1,4 @@
-
+import {APP_MODE} from "../common/constants"
 import React from 'react';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
@@ -60,23 +60,6 @@ const predefinedData=[
 ]
 
 class Users extends React.Component{
-    table1Columns = [
-		{ title:'ID', field:'id', type: 'numeric' },
-        { title:'User Name', field:'name' },
-        { title:'Type', field:'type' },
-
-        //{ title:'Type', field:'type', type:'list', render:<Table/> },
-        //{ title:'Type', field:'type', render: row => <InstantInput /> },
-        { title:'Type', field:'type', lookup: { admin:"Adminn", standard:"STD", rest:"Restrict" } },
-
-        { title:'Type', field:'type', 
-            editComponent: props => (
-                console.log("users.jsx column props", props),
-                <React.Fragment>
-                </React.Fragment>
-            )
-        },
-    ];
 	state = {
         ...this.props.metaData, 
         componentToRender: "main",
@@ -92,7 +75,7 @@ class Users extends React.Component{
         .then(
             result => {
                 if(result && result.err){
-                    console.log("users - gettingUsers err", result);
+                    if(APP_MODE==="DEBUG")console.log("users - gettingUsers err", result);
                     this.setState({
                         errorGetUsers: true,
                         errorMsgGetUsers: result.errMsg.toString()
@@ -103,7 +86,7 @@ class Users extends React.Component{
                 for(var i in result.data){
                     resultArr.push( result.data[i] );
                 }
-                console.log("users mount2 usersArr", resultArr); // type: arr
+                if(APP_MODE==="DEBUG")console.log("users mount2 usersArr", resultArr); // type: arr
                 this.setState({allUsers: resultArr }, function(){
                     this.dispatchUsers("users")
                 });
@@ -119,14 +102,14 @@ class Users extends React.Component{
         //             for(var i in result.data){
         //                 resultArr.push( result.data[i] );
         //             }
-        //             console.log("users mount2 usersArr", resultArr); // type: arr
+        //             if(APP_MODE==="DEBUG")console.log("users mount2 usersArr", resultArr); // type: arr
         //             this.setState({allUsers: resultArr }, function(){
         //                 this.dispatchUsers("users")
         //             });
         //         }
         //     );
         // }catch(e){
-        //     console.log("user getting failed.",e);
+        //     if(APP_MODE==="DEBUG")console.log("user getting failed.",e);
         // }
 
         // userAPIObj.getPartners()
@@ -136,7 +119,7 @@ class Users extends React.Component{
         //         for(var i in result.data){
         //             resultArr.push( result.data[i] );
         //         }
-        //         console.log("users mount2 partnersArr", resultArr); // type: arr
+        //         if(APP_MODE==="DEBUG")console.log("users mount2 partnersArr", resultArr); // type: arr
         //         this.setState({allPartners: resultArr }, function(){
         //             this.dispatchUsers("partners")
         //         });
@@ -144,7 +127,7 @@ class Users extends React.Component{
         // )
         
         
-		//console.log("Users - mount. props.metaData:", this.props.metaData); 
+		//if(APP_MODE==="DEBUG")console.log("Users - mount. props.metaData:", this.props.metaData); 
 	}
 
 	render(){
@@ -182,7 +165,7 @@ class Users extends React.Component{
                 break;
 
             default:
-                console.log("users dispatch unknown type: ", type);
+                if(APP_MODE==="DEBUG")console.log("users dispatch unknown type: ", type);
         }
     }
 
@@ -219,7 +202,7 @@ class Users extends React.Component{
                 );
 
             default:
-                console.log("users.jsx renderUserView default", this.state.componentToRender);
+                if(APP_MODE==="DEBUG")console.log("users.jsx renderUserView default", this.state.componentToRender);
         }
     }
 
@@ -323,7 +306,7 @@ class Users extends React.Component{
         loginAPIObj.forceResetPassword(email)
         .then(
 			res => {
-                console.log("users.jsx forceResetPassword ", res)
+                if(APP_MODE==="DEBUG")console.log("users.jsx forceResetPassword ", res)
                 if( res && res.data){
                     // make a notification. need to re-fetch data??
 				}
@@ -341,7 +324,7 @@ class Users extends React.Component{
 }
 
 const mapStateToProps = state => {
-	console.log('users.jsx-mapStateToProps', state);
+	if(APP_MODE==="DEBUG")console.log('users.jsx-mapStateToProps', state);
 	return {
         metaData: state.MetaReducer.metaData,
         userData: state.UserConfigReducer.userData,

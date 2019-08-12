@@ -1,4 +1,4 @@
-
+import {APP_MODE} from "../common/constants"
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
@@ -50,7 +50,7 @@ class CustomDatePicker extends React.Component{
     }
 
     render(){
-        console.log('datePicker: Rendering cell content');
+        if(APP_MODE==="DEBUG")console.log('datePicker: Rendering cell content');
         
         return(
             <React.Fragment>
@@ -164,7 +164,7 @@ class CustomDatePicker extends React.Component{
 	};
     
     componentDidMount(){
-        //console.log("custom datepicker mount: props:", this.props, "state:", this.state);
+        //if(APP_MODE==="DEBUG")console.log("custom datepicker mount: props:", this.props, "state:", this.state);
     }
 }
 

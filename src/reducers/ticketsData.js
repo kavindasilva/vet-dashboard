@@ -1,11 +1,11 @@
-
+import {APP_MODE} from "../common/constants"
 import { isUndefined } from "util";
 
 import ticketAPI from "../apicalls/ticketAPI"
 const ticketAPIobj = new ticketAPI();
 
 const ticketsDataReducer = (state, action) => {
-    console.log("ticketsDataReducer: state: ", state, "\naction: ", action)
+    if(APP_MODE==="DEBUG")console.log("ticketsDataReducer: state: ", state, "\naction: ", action)
     let newState0 = {
         ticketsReducer:{
             ticketsData: false,
@@ -35,9 +35,9 @@ const ticketsDataReducer = (state, action) => {
                 updateTicketData(action.payload.ticketId, update);
             }
             else
-                console.log("trackerInstance: err2")
+                if(APP_MODE==="DEBUG")console.log("trackerInstance: err2")
 
-            console.log("ticketsDataReducer UPDATE_CELL_VALUE: ", newState);
+            if(APP_MODE==="DEBUG")console.log("ticketsDataReducer UPDATE_CELL_VALUE: ", newState);
             return newState;
 
 
@@ -49,7 +49,7 @@ const ticketsDataReducer = (state, action) => {
                 )
             };
 
-            console.log("ticketsDataReducer GET_HUBSPOT_TICKETS: ", newState);
+            if(APP_MODE==="DEBUG")console.log("ticketsDataReducer GET_HUBSPOT_TICKETS: ", newState);
             return newState;
         
 
@@ -59,19 +59,19 @@ const ticketsDataReducer = (state, action) => {
                 ticketsData: action.payload.data,
             }
 
-            console.log("TrackConfigReducer GET_TICKETS_FROM_DB: ", newState);
+            if(APP_MODE==="DEBUG")console.log("TrackConfigReducer GET_TICKETS_FROM_DB: ", newState);
             return newState;
 
 
         default:
-            console.log("ticketsDataReducer default: ", newState0);
+            if(APP_MODE==="DEBUG")console.log("ticketsDataReducer default: ", newState0);
             return state;
     }
 
 }
 
 const updateTicketData = (ticketId, data) => {
-    console.log("ticketData updateTicketData - saveToDB", data);
+    if(APP_MODE==="DEBUG")console.log("ticketData updateTicketData - saveToDB", data);
     return ticketAPIobj.updateTicketPropery(ticketId, data);
 }
 

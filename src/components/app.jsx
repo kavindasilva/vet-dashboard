@@ -1,4 +1,4 @@
-
+import {APP_MODE} from "../common/constants"
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 
@@ -9,7 +9,7 @@ import { rootStore } from "../stores/mainStore";
 class App extends Component {
 	state={}
 	render() {
-		//console.log('app.jsx-rendering. rootStore: ', rootStore.getState() );
+		//if(APP_MODE==="DEBUG")console.log('app.jsx-rendering. rootStore: ', rootStore.getState() );
 		return (
 			<Provider store={ rootStore } >
 				<Login />

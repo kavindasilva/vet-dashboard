@@ -1,4 +1,4 @@
-
+import {APP_MODE} from "../common/constants"
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
@@ -50,7 +50,7 @@ class TrackersRulesConfig extends React.Component{
     }
 
     render(){
-        //console.log("trackerRulesConfig props:", this.props);
+        //if(APP_MODE==="DEBUG")console.log("trackerRulesConfig props:", this.props);
         //return(<div></div>);
         return(
 
@@ -141,7 +141,7 @@ class TrackersRulesConfig extends React.Component{
             if(index===0)
                 return null;
 
-            console.log("going up");
+            if(APP_MODE==="DEBUG")console.log("going up");
             rootStore.dispatch({
                 type: 'UPDATE_CONFIG_RULE_UP',
                 payload: {
@@ -156,7 +156,7 @@ class TrackersRulesConfig extends React.Component{
             if(index === this.props.columnRules.length-1)
                 return null;
             
-            console.log("going down");
+            if(APP_MODE==="DEBUG")console.log("going down");
             rootStore.dispatch({
                 type: 'UPDATE_CONFIG_RULE_DOWN',
                 payload: {
@@ -171,8 +171,8 @@ class TrackersRulesConfig extends React.Component{
     }
     
     componentDidMount(){
-        //console.log("trackerRulesConfig arr: :", this.props.allUsers );
-        //console.log("trackerRulesConfig mount: props:", this.props, "state:", this.state);
+        //if(APP_MODE==="DEBUG")console.log("trackerRulesConfig arr: :", this.props.allUsers );
+        //if(APP_MODE==="DEBUG")console.log("trackerRulesConfig mount: props:", this.props, "state:", this.state);
     }
 }
 
@@ -181,7 +181,7 @@ const mapStateToProps = (state, props) => {
     let findResult = state.TrackConfigReducer.configData.find( tracker => (
         tracker.tracker_id === parseInt( props.tracker_id )
     ) );
-    //console.log("trackerRulesConfig props", props, findResult)
+    //if(APP_MODE==="DEBUG")console.log("trackerRulesConfig props", props, findResult)
     
 
     return {
@@ -197,7 +197,7 @@ const mapStateToProps = (state, props) => {
             tracker.tracker_id === parseInt( props.tracker_id )
         ) );
         if(!trackerRes){
-            console.log("TrackersRulesConfig tracker not found");
+            if(APP_MODE==="DEBUG")console.log("TrackersRulesConfig tracker not found");
             return {};
         }
     
@@ -205,7 +205,7 @@ const mapStateToProps = (state, props) => {
             column.name === props.column_name
         ) );
         if(!columnRes){
-            console.log("TrackersRulesConfig column not found");
+            if(APP_MODE==="DEBUG")console.log("TrackersRulesConfig column not found");
             return { };
         }
 
