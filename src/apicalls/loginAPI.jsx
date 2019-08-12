@@ -135,10 +135,10 @@ class loginAPI extends React.Component {
 	isLoggedIn(){
 		return axios.get(APIisLoggedIn)
 			.then( res => {
-				// if(res && res.data && res.data.user_id)
-				// 	return res.data;
-				// else
-					return res;
+				if(res && res.data && res.data.user_id)
+					return res.data;
+				else
+					return { errMsg:res.data, err: true};
 			} )
 			.catch(error => {
 				if(APP_MODE==="DEBUG")console.log("loginAPI.jsx - isLoggedIn-Err", error);

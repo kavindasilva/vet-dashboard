@@ -82,21 +82,26 @@ class Login extends React.Component{
 	 * handle php session checking and redirecting logged user in some events
 	 * ex: page refresh
 	 */
-	componentDidMount2(){
+	componentDidMount(){
 		//if(APP_MODE==="DEBUG")console.log("Login - mount. classes:", this.classes);
 		loginAPIobj.isLoggedIn()
 		.then(
 			res => {
 				if(APP_MODE==="DEBUG")console.log("login - mount - isloggedIn", res);
-				if(!res.err && res.data && res.data.user_id){
+				if(!res.err && res.user_id){
 					let validatedServerResponse={
 						account_id: 99, 
-						type:res.data.user_type_id, 
-						user_id:res.data.user_id
+						type:res.user_type_id, 
+						user_id:res.user_id
 					}
 					this.setState({serverData: validatedServerResponse}, ()=>{
 						this.getLoggedUserData( this.state.serverData.user_id )
 					});
+				}
+				else{
+					rootStore.dispatch({
+						type: 'LOG_OUT_USER'
+					})
 				}
 			}
 		)
@@ -186,6 +191,7 @@ class Login extends React.Component{
 		if(this.props.metaData.isLoggedIn===true){
 			return this.viewMenu();
 		}
+		// this part is only for testing in port 3000. comment in production
 		else if( localStorage.getItem("logged")==="true" && localStorage.getItem("userId")!=="0" ){
 			let loggedData = {
 				account_id:  localStorage.getItem("accountId") ,
