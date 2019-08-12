@@ -309,8 +309,6 @@ class Records extends Component {
 const mapStateToProps = state => {
 	console.log('records.jsx-mapStateToProps', state); // seems ok
 	return {
-		recordsData: state.PetReducer.phoenixRecords
-		//tickets: state.tickets
 	};
 }
 

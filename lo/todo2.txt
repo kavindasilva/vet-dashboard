@@ -54,5 +54,7 @@ https://stackoverflow.com/questions/48125230/skip-one-test-in-test-file-jest
 --aug 06
 php session checking with js
 
+--aug 12
+https://stackoverflow.com/questions/1338728/delete-commits-from-a-branch-in-git 3757 
 
 
