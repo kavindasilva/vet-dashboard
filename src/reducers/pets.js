@@ -12,7 +12,7 @@ import { isUndefined } from "util";
 const ticketAPIobj = new ticketAPI();
 const petAPIobj = new petAPI();
 
-const PetReducer = (state, action) => {
+const PetReducerNOTUSED = (state, action) => {
     //console.log("PetReducer: state: ", state, "\naction: ", action)
     let newState = {};
 
