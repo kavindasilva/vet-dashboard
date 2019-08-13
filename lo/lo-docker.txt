@@ -1,0 +1,26 @@
+
+# login to hub.doker.io
+docker login
+
+# go to Dockerfile folder
+# build the image
+# don't forget the dot at last
+docker build --tag=tagname .
+
+# view images
+sudo docker image ls
+sudo docker image --help
+
+#view containers 
+sudo docker container ls
+sudo docker container ls -a
+sudo docker ps
+
+# clear cache
+docker rmi $(sudo docker images --filter "dangling=true" -q --no-trunc)
+
+#run container
+sudo docker run -p <host port>:<guest port>
+
+#get inside the container
+sudo docker exec -it <container id> /bin/bash
