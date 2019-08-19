@@ -1,5 +1,5 @@
 
-comment{
+comment1{
     simple script with git Checkout
 }
 pipeline {
@@ -42,3 +42,57 @@ pipeline {
 
     }
 }
+
+
+comment2{
+    bit bucket with change dir
+}
+pipeline {
+    agent {
+        docker {
+            image 'node:10.16.2-alpine' 
+            args '-p 3000:3000' 
+        }
+    }
+    environment {
+        CI = 'true'
+    }
+
+    stages {
+        stage('Checkout external proj') {
+            steps {
+                git branch: 'feature/initial-work',
+                url: 'git@bitbucket.org:vetstoria/tracker-dashboard.git',
+                credentialsId: 'BIT_BUCK_KEY_1'
+            }
+        }
+        stage('view files & browse') { 
+            steps {
+                dir('source/ui'){
+                    sh 'pwd'
+                    sh 'ls -al'
+                }
+            }
+        }
+        stage('Build - Install') { 
+            steps {
+                dir('source/ui'){
+                    sh 'npm install' 
+            		sh 'npm rebuild node-sass'
+            		sh 'npm install'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                dir('source/ui'){
+                    sh 'npm test'
+    		        sh 'npm test validate'
+                }
+            }
+        }
+    }
+
+    
+}
+
