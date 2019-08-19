@@ -57,4 +57,9 @@ php session checking with js
 --aug 12
 https://stackoverflow.com/questions/1338728/delete-commits-from-a-branch-in-git 3757 
 
+--aug 15
+https://stackoverflow.com/questions/44065827/jenkins-wrong-volume-permissions 6, kiem
+lynx as terminal web browser
+
+
 

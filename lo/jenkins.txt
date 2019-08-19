@@ -1,0 +1,44 @@
+
+comment{
+    simple script with git Checkout
+}
+pipeline {
+    agent {
+        docker {
+            image 'node:10.16.2-alpine' 
+            args '-p 3000:3000' 
+        }
+    }
+    environment {
+        CI = 'true'
+    }
+    stages {
+        stage('Checkout external proj') {
+        steps {
+            git branch: 'trackers-dashboard',
+                url: 'https://github.com/kavindasilva/vet-dashboard.git'
+        }
+    }
+       stage('Build - Install') { 
+            steps {
+                sh 'npm install' 
+		sh 'npm rebuild node-sass'
+		sh 'npm install'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'npm test'
+		sh 'npm test validate'
+            }
+        }
+        stage('Deliver') {
+            steps {
+                sh './jenkins/scripts/deliver.sh'
+                input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                sh './jenkins/scripts/kill.sh'
+            }
+        }
+
+    }
+}
