@@ -96,3 +96,421 @@ pipeline {
     
 }
 
+
+config.xml
+<?xml version='1.1' encoding='UTF-8'?>
+<hudson>
+  <disabledAdministrativeMonitors/>
+  <version>2.176.2</version>
+  <installStateName>RUNNING</installStateName>
+  <numExecutors>2</numExecutors>
+  <mode>NORMAL</mode>
+  <useSecurity>true</useSecurity>
+  <authorizationStrategy class="hudson.security.FullControlOnceLoggedInAuthorizationStrategy">
+    <denyAnonymousReadAccess>true</denyAnonymousReadAccess>
+  </authorizationStrategy>
+  <securityRealm class="hudson.security.HudsonPrivateSecurityRealm">
+    <disableSignup>true</disableSignup>
+    <enableCaptcha>false</enableCaptcha>
+  </securityRealm>
+  <disableRememberMe>false</disableRememberMe>
+  <projectNamingStrategy class="jenkins.model.ProjectNamingStrategy$DefaultProjectNamingStrategy"/>
+  <workspaceDir>${JENKINS_HOME}/workspace/${ITEM_FULL_NAME}</workspaceDir>
+  <buildsDir>${ITEM_ROOTDIR}/builds</buildsDir>
+  <jdks/>
+  <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
+  <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
+  <clouds/>
+  <scmCheckoutRetryCount>0</scmCheckoutRetryCount>
+  <views>
+    <hudson.model.AllView>
+      <owner class="hudson" reference="../../.."/>
+      <name>all</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+    </hudson.model.AllView>
+  </views>
+  <primaryView>all</primaryView>
+  <slaveAgentPort>50000</slaveAgentPort>
+  <label></label>
+  <crumbIssuer class="hudson.security.csrf.DefaultCrumbIssuer">
+    <excludeClientIPFromCrumb>false</excludeClientIPFromCrumb>
+  </crumbIssuer>
+  <nodeProperties/>
+  <globalNodeProperties/>
+</hudson>
+
+
+comment3{
+    trying with composer. not working
+}
+pipeline {
+    agent {
+        docker {
+            image 'node:10.16.2-alpine' 
+            args '-p 3000:3000' 
+        }
+    }
+    environment {
+        CI = 'true'
+        PATH = "/usr/bin/"
+    }
+
+    stages {
+        stage('Checkout external proj') {
+            steps {
+                git branch: 'feature/initial-work',
+                url: 'git@bitbucket.org:vetstoria/tracker-dashboard.git',
+                credentialsId: 'BIT_BUCK_KEY_1'
+            }
+        }
+        stage('view files & browse') { 
+            steps {
+                dir('source/ui'){
+                    sh 'pwd'
+                    sh 'ls -al'
+                }
+            }
+        }
+        stage('install composer'){
+            
+            steps{
+                withEnv(['PATH+EXTRA=/usr/local/bin']) {
+                sh 'apk add composer'
+                sh 'composer '
+                sh 'ls -l /usr/local/bin'
+                sh 'ls -l /usr/bin/composer'
+                }
+            }
+            
+        }
+        stage('Build - Install') { 
+            steps {
+                dir('source/ui'){
+                    sh 'npm install' 
+            		sh 'npm rebuild node-sass'
+            		sh 'npm install'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                dir('source/ui'){
+                    sh 'npm test'
+    		        sh 'npm test validate'
+                }
+            }
+        }
+        stage('compress react code'){
+            steps{
+                dir('source/'){
+                    sh 'tar -cvf ui/* -f /root/zipped.tar.gz'
+                    sh 'pwd'
+                    sh 'ls /root/ -al'
+                }
+            }
+        }
+    }
+
+    
+}
+
+comment4{
+    tired of trying php5.6-cli
+}
+pipeline {
+    agent any
+    environment {
+        CI = 'true'
+    }
+
+    stages {
+        stage('Checkout external proj') {
+            agent {
+            docker {
+                image 'php:5.6-cli'
+                args '-p 3000:3000' 
+            }
+        }
+            steps {
+                git branch: 'feature/initial-work',
+                url: 'git@bitbucket.org:vetstoria/tracker-dashboard.git',
+                credentialsId: 'BIT_BUCK_KEY_1'
+            }
+        }
+        stage('view files & browse') { 
+            agent {
+                docker {
+                    image 'php:5.6-cli' 
+                    args '-p 8001:80' 
+                }
+            }
+            steps {
+                dir('source/app/Classes'){
+                    sh 'pwd'
+                    sh 'ls -l'
+                    sh 'php -v'
+                }
+            }
+        }
+        stage('install composer'){
+            agent {
+                docker {
+                    image 'ubuntu:bionic' 
+                    args '-p 8001:80' 
+                }
+            }
+            
+            steps{
+                sh 'php -r "copy(\'https://getcomposer.org/installer\', \'composer-setup.php\');"'
+                sh 'php composer-setup.php --install-dir=/usr/local/bin --filename=composer'
+                sh 'php -r "unlink(\'composer-setup.php\');"'
+                sh 'chown -R $USER:$USER ~/.composer/'
+                
+                sh 'rm /etc/apt/preferences.d/no-debian-php'
+                sh 'apt-get update'
+                
+                sh 'apt-get install -y wget'
+                sh 'apt-get install -y gnupg'
+                sh 'apt-get install -y gnupg1'
+                sh 'apt-get install -y gnupg2'
+                sh 'apt-get update'
+                
+                sh 'wget -q -O- https://packages.sury.org/php/apt.gpg | apt-key add -'
+                sh 'echo "deb https://packages.sury.org/php/ stretch main" | tee /etc/apt/sources.list.d/php.list'
+                sh 'echo apt-get update'
+                
+                sh ' apt-get install -y php-gd'
+                sh ' apt-get install -y php-intl'
+                sh ' apt-get install -y php-xsl'
+               
+                sh ' composer install'
+                
+                sh 'ls -l /usr/local/bin'
+                sh 'ls -l /usr/bin'
+                
+                sh 'php -v'
+
+            }
+            
+        }
+        stage('Build - Install') { 
+            agent {
+        docker {
+            image 'node:10.16.2-alpine' 
+            args '-p 3000:3000' 
+        }
+    }
+            steps {
+                dir('source/ui'){
+                    sh 'npm install' 
+            		sh 'npm rebuild node-sass'
+            		sh 'npm install'
+                }
+            }
+        }
+        stage('Test') {
+            agent {
+        docker {
+            image 'node:10.16.2-alpine' 
+            args '-p 3000:3000' 
+        }
+    }
+            steps {
+                dir('source/ui'){
+                    sh 'npm test'
+    		        sh 'npm test validate'
+                }
+            }
+        }
+        stage('compress react code'){
+            agent {
+        docker {
+            image 'node:10.16.2-alpine' 
+            args '-p 3000:3000' 
+        }
+    }
+            steps{
+                dir('source/'){
+                    sh 'tar -cvf ui/* -f /root/zipped.tar.gz'
+                    sh 'pwd'
+                    sh 'ls /root/ -al'
+                }
+            }
+        }
+    }
+
+    
+}
+
+
+comment5{
+    new testing with bit bucket
+}
+pipeline {
+    agent any
+    environment {
+        CI = 'true'
+        DEBIAN_FRONTEND = 'noninteractive'
+    }
+
+    stages {
+        stage('Checkout external proj') {
+            agent {
+                docker {
+                    image 'ubuntu:bionic'
+                    args '-p 3000:3000' 
+                }
+            }      
+            steps {
+                git branch: 'feature/initial-work',
+                url: 'git@bitbucket.org:vetstoria/tracker-dashboard.git',
+                credentialsId: 'BIT_BUCK_KEY_1'
+            }
+        }
+        stage('view files & browse') { 
+            agent {
+                docker {
+                    image 'ubuntu:bionic' 
+                    args '-p 8001:80' 
+                }
+            }
+            steps {
+                dir('source/app/Classes'){
+                    sh 'pwdss fo'
+                    sh 'ls -l'
+                }
+            }
+        }
+        stage('install composer'){
+            agent {
+                docker {
+                    image 'ubuntu:bionic' 
+                    args '-p 8001:80' 
+                }
+            }
+            
+            steps{
+                sh 'apt update'
+                sh 'apt install debconf-utils'
+                sh 'apt install -y apt-utils software-properties-common --fix-missing'
+                sh 'add-apt-repository -y ppa:ondrej/php'
+                
+                sh 'apt update'
+
+                sh 'debconf-get-selections'
+                sh 'echo "php5.6 Please select the geographic area in which you live. Subsequent configuration questions will narrow this down by presenting a list of cities, representing the time zones in which they are located. 1" | debconf-set-selections'
+                sh 'export DEBIAN_FRONTEND=noninteractive'
+                sh 'apt install -q -y --force-yes php5.6'
+                sh 'apt install -y php5.6-mbstring'
+                sh 'apt install -y php5.6-mcrypt'
+                sh 'apt install -y php5.6-mysql'
+                sh 'apt install -y php5.6-xml'
+                sh 'apt install -y php5.6-gd'
+                sh 'apt install -y php5.6-zip'
+                sh 'apt install -y php5.6-curl'
+                sh 'apt install -y php5.6-soap'
+                sh 'apt install -y php5.6-intl'
+                
+                sh 'php -r "copy(\'https://getcomposer.org/installer\', \'composer-setup.php\');"'
+                sh 'php composer-setup.php --install-dir=/usr/local/bin --filename=composer'
+                sh 'php -r "unlink(\'composer-setup.php\');"'
+                sh 'chown -R $USER:$USER ~/.composer/'
+
+                sh 'apt install -y apache2'
+                sh 'apt install -y git'
+                sh 'apt install -y php5.6-dev'
+                sh 'apt install -y libpcre3-dev'
+                sh 'apt install -y gcc'
+                sh 'apt install -y make'
+                
+                sh 'git clone --depth 1 https://github.com/phalcon/cphalcon.git'
+                sh 'cd cphalcon'
+                sh "git remote set-branches origin '2.0.x'"
+                sh "git fetch --tags --depth 1 origin tags/phalcon-v2.0.9"
+                sh "git checkout phalcon-v2.0.9"
+                sh 'cd build && ./install'
+                sh 'echo "extension=phalcon.so" > /etc/php/5.6/mods-available/phalcon.ini'
+                sh 'ln -s /etc/php/5.6/mods-available/phalcon.ini /etc/php/5.6/cli/conf.d/30-phalcon.ini'
+                sh 'ln -s /etc/php/5.6/mods-available/phalcon.ini /etc/php/5.6/apache2/conf.d/30-phalcon.ini'
+                sh '/etc/init.d/apache2 restart'
+                
+                sh 'touch /etc/php/5.6/vetstoria.ini'
+                sh 'echo "memory_limit = 1024M" >> /etc/php/5.6/vetstoria.ini'
+                sh 'echo "max_execution_time = 600" >> /etc/php/5.6/vetstoria.ini'
+                sh 'ln -s /etc/php/5.6/vetstoria.ini /etc/php/5.6/cli/conf.d/30-vetstoria.ini'
+                sh 'ln -s /etc/php/5.6/vetstoria.ini /etc/php/5.6/apache2/conf.d/30-vetstoria.ini'
+                
+                sh 'apt install -y curl'
+                sh 'curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -'
+                sh 'echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list'
+                sh 'apt update'
+                sh 'apt install -y yarn'
+                
+                sh 'apt install -y wget'
+                sh 'mkdir /etc/php/extras'
+                sh 'wget http://browscap.org/stream?q=Lite_PHP_BrowsCapINI -O /etc/php/extras/browscap.ini'
+                sh 'touch /etc/php/5.6/browscap.ini'
+                sh 'echo "[browscap]" >> /etc/php/5.6/browscap.ini'
+                
+                sh "echo \"browscap = '/etc/php/extras/browscap.ini'\" >> /etc/php/5.6/browscap.ini"
+                sh 'ln -s /etc/php/5.6/browscap.ini /etc/php/5.6/cli/conf.d/20-browscap.ini'
+                sh 'ln -s /etc/php/5.6/browscap.ini /etc/php/5.6/apache2/conf.d/20-browscap.ini'
+                
+                sh ' composer install'
+                
+                sh 'ls -l /usr/local/bin'
+                sh 'ls -l /usr/bin'
+                
+                sh 'php -v'
+            }
+        }
+        stage('Build - Install') { 
+            agent {
+        docker {
+            image 'node:10.16.2-alpine' 
+            args '-p 3000:3000' 
+        }
+    }
+            steps {
+                dir('source/ui'){
+                    sh 'npm install' 
+            		sh 'npm rebuild node-sass'
+            		sh 'npm install'
+                }
+            }
+        }
+        stage('Test') {
+            agent {
+        docker {
+            image 'node:10.16.2-alpine' 
+            args '-p 3000:3000' 
+        }
+    }
+            steps {
+                dir('source/ui'){
+                    sh 'npm test'
+    		        sh 'npm test validate'
+                }
+            }
+        }
+        stage('compress react code'){
+            agent {
+        docker {
+            image 'node:10.16.2-alpine' 
+            args '-p 3000:3000' 
+        }
+    }
+            steps{
+                dir('source/'){
+                    sh 'tar -cvf ui/* -f /root/zipped.tar.gz'
+                    sh 'pwd'
+                    sh 'ls /root/ -al'
+                }
+            }
+        }
+    }
+
+    
+}
