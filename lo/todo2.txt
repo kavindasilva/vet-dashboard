@@ -64,5 +64,11 @@ lynx as terminal web browser
 --aug 19
 https://stackoverflow.com/questions/38461705/checkout-jenkins-pipeline-git-scm-with-credentials upul
 
+--aug 21
+https://stackoverflow.com/questions/7167650/jenkins-hudson-accessing-the-current-build-number
+
+--aug 22
+https://stackoverflow.com/questions/36547680/how-to-do-i-get-the-output-of-a-shell-command-executed-using-into-a-variable-fro?rq=1
+
 
 

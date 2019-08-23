@@ -514,3 +514,467 @@ pipeline {
 
     
 }
+
+comment6{
+    upto composer install working
+}
+pipeline {
+    agent any
+    environment {
+        CI = 'true'
+        DEBIAN_FRONTEND = 'noninteractive'
+    }
+
+    stages {
+        stage('Checkout external proj') {
+            agent {
+                docker {
+                    image 'localhost:32000/vetstoria/oabp:php56'
+                    args '-p 8001:80' 
+                }
+            }      
+            steps {
+                git branch: 'feature/initial-work',
+                url: 'git@bitbucket.org:vetstoria/tracker-dashboard.git',
+                credentialsId: 'BIT_BUCK_KEY_1'
+            }
+        }
+        stage('view files & browse') { 
+            agent {
+                docker {
+                    image 'localhost:32000/vetstoria/oabp:php56' 
+                    args '-p 8001:80' 
+                }
+            }
+            steps {
+                dir('source/app/Classes'){
+                    sh 'pwd'
+                    sh 'ls -l'
+                }
+            }
+        }
+        stage('install composer'){
+            agent {
+                docker {
+                    image 'localhost:32000/vetstoria/oabp:php56' 
+                    args '-p 8001:80' 
+                }
+            }
+            
+            steps{
+                sh 'apt update'
+                
+                git branch: 'develop',
+                url: 'git@bitbucket.org:vetstoria/core.git',
+                credentialsId: 'BIT_BUCK_KEY_1'
+                
+                sh ' composer install'
+                
+                sh 'ls -l /usr/local/bin'
+                sh 'ls -l /usr/bin'
+                
+                sh 'php -v'
+            }
+        }
+        stage('Build - Install') { 
+            agent {
+                docker {
+                    image 'node:10.16.2-alpine' 
+                    args '-p 3000:3000' 
+                }
+            }
+            steps {
+                dir('source/ui'){
+                    sh 'pwd && ls -l'
+                    sh 'npm install' 
+            		sh 'npm rebuild node-sass'
+            		sh 'npm install'
+                }
+            }
+        }
+        stage('Test') {
+            agent {
+        docker {
+            image 'node:10.16.2-alpine' 
+            args '-p 3000:3000' 
+        }
+    }
+            steps {
+                dir('source/ui'){
+                    sh 'npm test'
+    		        sh 'npm test validate'
+                }
+            }
+        }
+        stage('compress react code'){
+            agent {
+        docker {
+            image 'node:10.16.2-alpine' 
+            args '-p 3000:3000' 
+        }
+    }
+            steps{
+                dir('source/'){
+                    sh 'tar -cvf ui/* -f /root/zipped.tar.gz'
+                    sh 'pwd'
+                    sh 'ls /root/ -al'
+                }
+            }
+        }
+    }
+
+    
+}
+
+comment7{
+    with build number. dunamic date not working
+}
+pipeline {
+    agent any
+    environment {
+        CI = 'true'
+        DEBIAN_FRONTEND = 'noninteractive'
+    }
+
+    stages {
+        stage('Checkout external proj') {
+            agent {
+                docker {
+                    image 'localhost:32000/vetstoria/oabp:php56'
+                    args '-p 8001:80' 
+                }
+            }      
+            steps {
+                sh 'nowDate=`date +"%Y%m%d-%H%M%S"`'
+                writeFile file: 'build-info'+BUILD_NUMBER, 
+                    text: 'Build# : '+BUILD_NUMBER+'\nBuildID : '+BUILD_ID+'\nNodeName : '+NODE_NAME+'\n'
+                sh 'cat build-info'+BUILD_NUMBER
+                git branch: 'feature/initial-work',
+                url: 'git@bitbucket.org:vetstoria/tracker-dashboard.git',
+                credentialsId: 'BIT_BUCK_KEY_1'
+                
+                sh 'curl  -k -u vetstoria:vetstoria --ftp-ssl  ftp://192.168.1.4:21'
+                sh 'mv build-info'+BUILD_NUMBER+' $nowDate.build'+BUILD_NUMBER
+                sh 'curl  -T build-info'+BUILD_NUMBER+' -u vetstoria:vetstoria --ftp-ssl  ftp://192.168.1.4'
+                
+            }
+            
+        }
+        stage('view files & browse') { 
+            agent {
+                docker {
+                    image 'localhost:32000/vetstoria/oabp:php56' 
+                    args '-p 8001:80' 
+                }
+            }
+            steps {
+                dir('source/app/Classes'){
+                    sh 'pwd'
+                    sh 'ls -l'
+                }
+            }
+        }
+        
+        
+        stage('install composer'){
+            agent {
+                docker {
+                    image 'localhost:32000/vetstoria/oabp:php56' 
+                    args '-p 8001:80' 
+                }
+            }
+            
+            steps{
+                sh 'apt update'
+                
+                git branch: 'develop',
+                url: 'git@bitbucket.org:vetstoria/core.git',
+                credentialsId: 'BIT_BUCK_KEY_1'
+                
+                sh ' composer install'
+                
+                sh 'ls -l /usr/local/bin'
+                sh 'ls -l /usr/bin'
+                
+                sh 'php -v'
+            }
+        }
+        stage('Build - Install') { 
+            agent {
+                docker {
+                    image 'node:10.16.2-alpine' 
+                    args '-p 3000:3000' 
+                }
+            }
+            steps {
+                git branch: 'feature/initial-work',
+                url: 'git@bitbucket.org:vetstoria/tracker-dashboard.git',
+                credentialsId: 'BIT_BUCK_KEY_1'
+                
+                dir('source/ui'){
+                    sh 'pwd && ls -l'
+                    sh 'npm install' 
+            		sh 'npm rebuild node-sass'
+            		sh 'npm install'
+                }
+            }
+        }
+        stage('Test') {
+            agent {
+        docker {
+            image 'node:10.16.2-alpine' 
+            args '-p 3000:3000' 
+        }
+    }
+            steps {
+                dir('source/ui'){
+                    sh 'pwd && ls -l'
+                    sh 'npm test'
+    		        sh 'npm test validate'
+                }
+            }
+        }
+        stage('compress react code'){
+            agent {
+        docker {
+            image 'node:10.16.2-alpine' 
+            args '-p 3000:3000' 
+        }
+    }
+            steps{
+                dir('source/'){
+                    sh 'tar -cvf ui/* -f /root/zipped.tar.gz'
+                    sh 'pwd'
+                    sh 'ls /root/ -al'
+                }
+            }
+        }
+    }
+
+    
+}
+
+comment8{
+    a stable version woth uploading
+}
+pipeline {
+    agent any
+    environment {
+        CI = 'true'
+        DEBIAN_FRONTEND = 'noninteractive'
+    }
+
+    stages {
+        stage('Checkout external proj') {
+            agent {
+                docker {
+                    image 'localhost:32000/vetstoria/oabp:php56'
+                    args '-p 8001:80' 
+                }
+            }      
+            steps {
+                
+                writeFile file: 'build-info', 
+                    text: 'Build# : '+BUILD_NUMBER+
+                        '\nBuildID : '+BUILD_ID+
+                        '\nNodeName : '+NODE_NAME+
+                        '\ndate : ' + sh ( script:"echo `date +'%Y%m%d-%H%M%S'`", returnStdout:true).trim() +
+                        '\n'
+                
+                git branch: 'feature/initial-work',
+                url: 'git@bitbucket.org:vetstoria/tracker-dashboard.git',
+                credentialsId: 'BIT_BUCK_KEY_1'
+                
+                sh 'cat build-info'
+
+                sh 'curl  -k -u vetstoria:vetstoria --ftp-ssl  ftp://192.168.1.4:21'
+                sh 'mv build-info '+BUILD_NUMBER+'build'
+                
+                sh 'curl  -T '+BUILD_NUMBER+'build -u vetstoria:vetstoria --ftp-ssl  ftp://192.168.1.4'
+                
+                
+            }
+            
+        }
+        stage('compress react code'){
+            agent {
+                docker {
+                    image 'localhost:32000/vetstoria/oabp:php56'
+                    args '-p 8001:80' 
+                }
+            }
+            steps{
+                dir('source/'){
+                    sh 'tar --exclude="node_modules" --exclude=".git" -cvzf /root/zipped.tar.gz ui '
+                    sh 'pwd'
+                    sh 'ls /root/ -al'
+                }
+            
+                sh 'mv /root/zipped.tar.gz '+BUILD_NUMBER+'build.tar.gz'
+                sh 'curl  -T '+BUILD_NUMBER+'build.tar.gz -u vetstoria:vetstoria --ftp-ssl  ftp://192.168.1.4'
+            
+            }
+        }
+        stage('view files & browse') { 
+            agent {
+                docker {
+                    image 'localhost:32000/vetstoria/oabp:php56' 
+                    args '-p 8001:80' 
+                }
+            }
+            steps {
+                dir('source/app/Classes'){
+                    sh 'pwd11'
+                    sh 'ls -l'
+                }
+            }
+        }
+        
+        
+        stage('install composer'){
+            agent {
+                docker {
+                    image 'localhost:32000/vetstoria/oabp:php56' 
+                    args '-p 8001:80' 
+                }
+            }
+            
+            steps{
+                sh 'apt update'
+                
+                git branch: 'develop',
+                url: 'git@bitbucket.org:vetstoria/core.git',
+                credentialsId: 'BIT_BUCK_KEY_1'
+                
+                sh ' composer install'
+                
+                sh 'ls -l /usr/local/bin'
+                sh 'ls -l /usr/bin'
+                
+                sh 'php -v'
+            }
+        }
+        stage('Build - Install') { 
+            agent {
+                docker {
+                    image 'node:10.16.2-alpine' 
+                    args '-p 3000:3000' 
+                }
+            }
+            steps {
+                git branch: 'feature/initial-work',
+                url: 'git@bitbucket.org:vetstoria/tracker-dashboard.git',
+                credentialsId: 'BIT_BUCK_KEY_1'
+                
+                dir('source/ui'){
+                    sh 'pwd && ls -l'
+                    sh 'npm install' 
+            		sh 'npm rebuild node-sass'
+            		sh 'npm install'
+                }
+            }
+        }
+        stage('Test') {
+            agent {
+        docker {
+            image 'node:10.16.2-alpine' 
+            args '-p 3000:3000' 
+        }
+    }
+            steps {
+                dir('source/ui'){
+                    sh 'pwd && ls -l'
+                    sh 'npm test'
+    		        sh 'npm test validate'
+                }
+            }
+        }
+        
+    }
+
+    
+}
+
+comment9{
+    upto setup oabp .unit testing not working
+}
+pipeline {
+    agent {
+        docker {
+            image 'localhost:32000/vetstoria/oabp:php56'
+            args '-p 8002:80' 
+        }
+    }    
+    environment {
+        CI = 'true'
+        DEBIAN_FRONTEND = 'noninteractive'
+    }
+
+    stages {
+        stage('Checkout external proj') {
+            steps {
+                sh 'apt update'
+                writeFile file: 'build-info', 
+                    text: 'Build# : '+BUILD_NUMBER+
+                        '\nBuildID : '+BUILD_ID+
+                        '\nNodeName : '+NODE_NAME+
+                        '\ndate : ' + sh ( script:"echo `date +'%Y%m%d-%H%M%S'`", returnStdout:true).trim() +
+                        '\n'
+                
+                git branch: 'develop',
+                url: 'git@bitbucket.org:vetstoria/core.git',
+                credentialsId: 'BIT_BUCK_KEY_1'
+
+                sh 'cat build-info'
+                sh 'mv build-info '+BUILD_NUMBER+'build'
+                
+                sh 'curl  -T '+BUILD_NUMBER+'build -u vetstoria:vetstoria --ftp-ssl  ftp://192.168.1.2'
+            }
+            
+        }
+        
+        stage('view files & browse') { 
+            steps {
+                dir('source/app/Classes'){
+                    sh 'pwd'
+                    sh 'ls -l'
+                }
+                sh 'pwd'
+                sh 'ls -l'
+            }
+        }
+
+        stage('install composer'){
+            steps{
+                sh 'apt update'
+                
+                git branch: 'develop',
+                url: 'git@bitbucket.org:vetstoria/core.git',
+                credentialsId: 'BIT_BUCK_KEY_1'
+                
+                sh ' composer install'
+                
+                sh 'ls -l /usr/local/bin'
+                sh 'ls -l /usr/bin'
+                
+                sh 'php -v'
+            }
+        }
+        
+        stage('run unit tests'){
+            steps{
+                dir("/var/www/html/app/"){
+                    
+                    sh '/bin/bash -c "source /docker/envvars" && ./vendor/codeception/codeception/codecept run unit'
+                }
+            }
+        }
+        
+    }
+    
+
+    
+}
+
+
+
