@@ -976,5 +976,249 @@ pipeline {
     
 }
 
+comment10{
+    temp state (not working) 0826-1408
+}
+pipeline {
+    agent {
+        docker {
+            image 'localhost:32000/vetstoria/oabp:php56'
+            args '-p 8002:80 -v /var/www/html/app:/var/jenkins_home/workspace/oabp1'
+        }
+    }    
+    environment {
+        CI = 'true'
+        DEBIAN_FRONTEND = 'noninteractive'
+    }
+
+    stages {
+
+        stage('Checkout oabp proj') {
+            steps {
+                    sh 'pwd'
+                    sh 'ls -l'
+                    sh 'apt update'
+                    writeFile file: 'build-info', 
+                        text: 'Build# : '+BUILD_NUMBER+
+                            '\nBuildID : '+BUILD_ID+
+                            '\nNodeName : '+NODE_NAME+
+                            '\ndate : ' + sh ( script:"echo `date +'%Y%m%d-%H%M%S'`", returnStdout:true).trim() +
+                            '\n'
+                    
+                    git branch: 'develop',
+                    url: 'git@bitbucket.org:vetstoria/oabp.git',
+                    credentialsId: 'BIT_BUCK_KEY_1'
+    
+                    sh 'ls /var/www/html/'
+                    sh 'ls -l docker/'
+                    sh 'cat build-info'
+                    sh 'mv build-info '+BUILD_NUMBER+'build'
+                    
+                    sh 'curl  -T '+BUILD_NUMBER+'build -u vetstoria:vetstoria --ftp-ssl  ftp://192.168.1.2'
+                    sh 'rm -f '+BUILD_NUMBER+'build'
+
+            }
+            
+        }
+        
+        stage('view files & browse') { 
+            steps {
+                dir('source/app/Classes'){
+                    sh 'pwd'
+                    sh 'ls -l'
+                }
+                sh 'echo /docker/entrypoint.sh'
+                sh 'pwd'
+                sh 'ls -l'
+            }
+        }
+        
+        
+        stage("exec entrypoint"){
+            steps{
+                sh 'echo cp docker/app/entrypoint.sh /docker/'
+                sh '''
+                    ln -s "$(pwd)/" /var/www/html/app
+                    rm -rf /var/www/html/app/source/cache/*
+                    chgrp -R www-data /var/www/html/app
+                    chmod -R g=rwx /var/www/html/app/
+                    rm -rf /var/www/html/app/source/cache/*
+                    chmod -R 777 /var/www/html/app/source/cache
+                '''
+                
+                sh '''
+                    rm /etc/apache2/sites-available/000-default.conf
+                    ln -s /var/www/html/app/docker/app/apache2.conf /etc/apache2/sites-available/000-default.conf
+                    awk 'NF { print "SetEnv "$1" "$2 }' /var/www/html/app/docker/app/app.env > /etc/apache2/env.conf
+                    awk 'NF { print "export "$1"="$2 }' /var/www/html/app/docker/app/app.env > /docker/envvars
+                '''
+            }
+        }
+
+        stage('install composer'){
+            steps{
+                    sh 'pwd'
+                    git branch: 'develop',
+                    url: 'git@bitbucket.org:vetstoria/core.git',
+                    credentialsId: 'BIT_BUCK_KEY_1'
+                    
+                    sh 'composer install'
+                    
+                    sh 'ls -l /usr/local/bin'
+                    sh 'ls -l /usr/bin'
+                    
+                    sh 'php -v'
+                
+            }
+        }
+        
+        stage('run unit tests'){
+            steps{
+                sh 'ls /var/www/html/'
+
+                    sh 'ls -l && pwd'
+                    sh '/bin/bash -c "source /docker/envvars && vendor/codeception/codeception/codecept run unit"'
+                
+            }
+        }
+        
+    }
+    
+
+    
+}
+
+comment11{
+    temp state (not working) 0827-1008
+}
+pipeline {
+    agent {
+        docker {
+            image 'localhost:32000/vetstoria/oabp:php56'
+            args '-p 8002:80 '
+        }
+    }   
+    environment {
+        CI = 'true'
+        DEBIAN_FRONTEND = 'noninteractive'
+    }
+
+    stages {
+        stage('Checkout oabp proj') {
+            steps {
+                    sh 'pwd'
+                    sh 'apt update'
+                    writeFile file: 'build-info', 
+                        text: 'Build# : '+BUILD_NUMBER+
+                            '\nBuildID : '+BUILD_ID+
+                            '\nNodeName : '+NODE_NAME+
+                            '\ndate : ' + sh ( script:"echo `date +'%Y%m%d-%H%M%S'`", returnStdout:true).trim() +
+                            '\n'
+                    sh 'ls -l'
+                    
+                    git branch: 'develop',
+                    url: 'git@bitbucket.org:vetstoria/oabp.git',
+                    credentialsId: 'BIT_BUCK_KEY_1'
+
+                    sh 'ls -l /var/www/html'
+                    sh 'cat build-info'
+                    sh 'mv build-info '+BUILD_NUMBER+'build'
+                    
+                    sh 'curl  -T '+BUILD_NUMBER+'build -u vetstoria:vetstoria --ftp-ssl  ftp://192.168.1.2'
+                    sh 'rm -f '+BUILD_NUMBER+'build'
+
+            }
+            
+        }
+        
+        stage('view files & browse') { 
+            steps {
+                
+                dir('source/app/Classes'){
+                    sh 'pwd'
+                    sh 'ls -l'
+                }
+                sh 'echo /docker/entrypoint.sh'
+                sh 'pwd'
+                sh 'ls -l'
+            }
+        }
+        
+        
+        stage("exec entrypoint"){
+            steps{
+                sh 'echo cp docker/app/entrypoint.sh /docker/'
+                sh '''
+                    ln -s "$(pwd)/" /var/www/html/app
+                    rm -rf /var/www/html/app/source/cache/*
+                    chgrp -R www-data /var/www/html/app
+                    chmod -R g=rwx /var/www/html/app/
+                    rm -rf /var/www/html/app/source/cache/*
+                    chmod -R 777 /var/www/html/app/source/cache
+                '''
+                
+                sh '''
+                    rm /etc/apache2/sites-available/000-default.conf
+                    ln -s /var/www/html/app/docker/app/apache2.conf /etc/apache2/sites-available/000-default.conf
+                    awk 'NF { print "SetEnv "$1" "$2 }' /var/www/html/app/docker/app/app.env > /etc/apache2/env.conf
+                    awk 'NF { print "export "$1"="$2 }' /var/www/html/app/docker/app/app.env > /docker/envvars
+                '''
+            }
+        }
+        
+        stage('install core'){
+            steps{
+                    sh 'pwd'
+                    git branch: 'develop',
+                    url: 'git@bitbucket.org:vetstoria/core.git',
+                    credentialsId: 'BIT_BUCK_KEY_1'
+                    sh 'composer install'
+                    
+                    sh 'php -v'
+                
+            }
+        }
+        
+        stage("install pms drivers"){
+            steps{
+                git branch: 'develop',
+                url: 'git@bitbucket.org:vetstoria/pms-drivers.git',
+                credentialsId: 'BIT_BUCK_KEY_1'
+                sh 'composer install'
+            }
+        }
+        stage("install phptoken"){
+            steps{
+                git branch: 'develop',
+                    url: 'https://github.com/dumith-eranga/PHP-Token-Reflection.git'
+                    sh 'composer install'
+            }
+        }
+        stage("install quikbooks"){
+            steps{
+                git branch: 'master',
+                    url: 'https://github.com/samanala-athaudahetti/quickbooks-php.git'
+                    sh 'composer install'
+            }
+        }
+        
+        stage('run unit tests'){
+            steps{
+                sh 'ls /var/www/html/app'
+
+                    sh 'ls -l && pwd'
+                    sh '/bin/bash -c "source /docker/envvars && vendor/codeception/codeception/codecept run unit"'
+                
+            }
+        }
+        
+    }
+    
+
+    
+}
+
+
+
 
 

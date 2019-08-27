@@ -70,5 +70,8 @@ https://stackoverflow.com/questions/7167650/jenkins-hudson-accessing-the-current
 --aug 22
 https://stackoverflow.com/questions/36547680/how-to-do-i-get-the-output-of-a-shell-command-executed-using-into-a-variable-fro?rq=1
 
+--aug 27
+https://stackoverflow.com/questions/23439126/how-to-mount-a-host-directory-in-a-docker-container 157 eduardo
+
 
 
