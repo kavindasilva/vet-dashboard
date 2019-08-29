@@ -1218,6 +1218,378 @@ pipeline {
     
 }
 
+comment12{
+    core installing in oabp
+}
+pipeline {
+    agent {
+        docker {
+            image 'localhost:32000/vetstoria/oabp:php56'
+            args '-p 8002:80 -i -t -v /home/user/jenkins-test/composer-key-1:/root/ssh2/'
+        }
+    }   
+    environment {
+        CI = 'true'
+        DEBIAN_FRONTEND = 'noninteractive'
+    }
+
+    stages {
+        stage('Checkout oabp proj') {
+            steps {
+                    sh 'ls /root/ssh2/'
+                    sh 'ls -l /home/user/jenkins-test/composer-key-1'
+                    sh 'cp /home/user/jenkins-test/composer-key-1/* /root/.ssh/'
+                    sh 'mv /root/.ssh/test-key /root/.ssh/id_rsa'
+                    sh 'mv /root/.ssh/test-key.pub /root/.ssh/id_rsa.pub'
+                    sh 'pwd'
+                    sh 'echo docker'
+                    
+                    git branch: 'develop',
+                    url: 'git@bitbucket.org:vetstoria/oabp.git',
+                    credentialsId: 'BIT_BUCK_KEY_1'
+        
+                    sh 'ls -l /var/www/html'
+            }
+            
+        }
+        
+        stage('testing for') { 
+            steps {
+                sh 'cat /root/.ssh/known_hosts'
+                dir('source/app/Classes'){
+                    sh 'pwd'
+                    sh 'ls -l'
+                }
+                sh 'echo /docker/entrypoint.sh'
+                sh 'pwd'
+                sh 'ls -l'
+            }
+        }
+        
+        
+        stage("exec entrypoint"){
+            steps{
+                sh 'echo cp docker/app/entrypoint.sh /docker/'
+                sh '''
+                    ln -s "$(pwd)/" /var/www/html/app
+                    rm -rf /var/www/html/app/source/cache/*
+                    chgrp -R www-data /var/www/html/app
+                    chmod -R g=rwx /var/www/html/app/
+                    rm -rf /var/www/html/app/source/cache/*
+                    chmod -R 777 /var/www/html/app/source/cache
+                '''
+                
+                sh '''
+                    rm /etc/apache2/sites-available/000-default.conf
+                    ln -s /var/www/html/app/docker/app/apache2.conf /etc/apache2/sites-available/000-default.conf
+                    awk 'NF { print "SetEnv "$1" "$2 }' /var/www/html/app/docker/app/app.env > /etc/apache2/env.conf
+                    awk 'NF { print "export "$1"="$2 }' /var/www/html/app/docker/app/app.env > /docker/envvars
+                '''
+            }
+        }
+        
+        stage('install core'){
+            steps{
+                    sh 'pwd'
+                    sh 'ls /root/.ssh/'
+                    sh 'composer install  --no-plugins --no-scripts'
+                    
+                    sh 'php -v'
+                
+            }
+        }
+        
+        stage('run unit tests'){
+            steps{
+                input 'dd'
+                sh 'ls /var/www/html/app'
+
+                    sh 'ls -l && pwd'
+                    sh '/bin/bash -c "source /docker/envvars && vendor/codeception/codeception/codecept run unit"'
+                
+                writeFile file: 'build-info', 
+                    text: 'Build# : '+BUILD_NUMBER+
+                        '\nBuildID : '+BUILD_ID+
+                        '\nNodeName : '+NODE_NAME+
+                        '\ndate : ' + sh ( script:"echo `date +'%Y%m%d-%H%M%S'`", returnStdout:true).trim() +
+                        '\n'
+                sh 'ls -l'
+                
+                sh 'cat build-info'
+                sh 'mv build-info '+BUILD_NUMBER+'build'
+                
+                sh 'curl  -T '+BUILD_NUMBER+'build -u vetstoria:vetstoria --ftp-ssl  ftp://192.168.8.107'
+                sh 'rm -f '+BUILD_NUMBER+'build'
+            }
+        }
+        
+    }
+    
+
+    
+}
+
+comment14{
+    upto php metrices
+}
+pipeline {
+    agent {
+        docker {
+            image 'localhost:32000/vetstoria/oabp:php56'
+            args '-p 8002:80 -i -t -v /home/user/jenkins-test/composer-key-1:/root/ssh2/'
+        }
+    }   
+    environment {
+        CI = 'true'
+        DEBIAN_FRONTEND = 'noninteractive'
+    }
+
+    stages {
+        stage('Checkout oabp proj') {
+            steps {
+                    sh 'ls /root/ssh2/'
+                    sh 'ls -l /home/user/jenkins-test/composer-key-1'
+                    sh 'cp /home/user/jenkins-test/composer-key-1/* /root/.ssh/'
+                    sh 'mv /root/.ssh/test-key /root/.ssh/id_rsa'
+                    sh 'mv /root/.ssh/test-key.pub /root/.ssh/id_rsa.pub'
+                    sh 'pwd'
+                    sh 'echo docker'
+                    
+                    git branch: 'develop',
+                    url: 'git@bitbucket.org:vetstoria/oabp.git',
+                    credentialsId: 'BIT_BUCK_KEY_1'
+        
+                    sh 'ls -l /var/www/html'
+            }
+            
+        }
+        
+        stage('testing for') { 
+            steps {
+                sh 'cat /root/.ssh/known_hosts'
+                dir('source/app/Classes'){
+                    sh 'pwd'
+                    sh 'ls -l'
+                }
+                sh 'echo /docker/entrypoint.sh'
+                sh 'pwd'
+                sh 'ls -l'
+            }
+        }
+        
+        
+        stage("exec entrypoint"){
+            steps{
+                sh 'echo cp docker/app/entrypoint.sh /docker/'
+                sh '''
+                    ln -s "$(pwd)/" /var/www/html/app
+                    rm -rf /var/www/html/app/source/cache/*
+                    chgrp -R www-data /var/www/html/app
+                    chmod -R g=rwx /var/www/html/app/
+                    rm -rf /var/www/html/app/source/cache/*
+                    chmod -R 777 /var/www/html/app/source/cache
+                '''
+                
+                sh '''
+                    rm /etc/apache2/sites-available/000-default.conf
+                    ln -s /var/www/html/app/docker/app/apache2.conf /etc/apache2/sites-available/000-default.conf
+                    awk 'NF { print "SetEnv "$1" "$2 }' /var/www/html/app/docker/app/app.env > /etc/apache2/env.conf
+                    awk 'NF { print "export "$1"="$2 }' /var/www/html/app/docker/app/app.env > /docker/envvars
+                '''
+            }
+        }
+        
+        stage('install core'){
+            steps{
+                    sh 'pwd'
+                    sh 'ls /root/.ssh/'
+                    sh 'composer install  --no-plugins --no-scripts'
+                    
+                    sh 'echo "172.17.0.1  db" >> /etc/hosts '
+                    
+                    input "x"
+                    sh 'echo /bin/bash -c "source /docker/envvars && /var/www/html/app/docker/app/setup.sh" '
+                    sh 'php -v'
+                
+            }
+        }
+        
+        stage('php metrices'){
+            steps{
+                sh 'pwd'
+                sh 'ls -l'
+                sh '/bin/bash -c "source /docker/envvars && ./vendor/phing/phing/bin/phing report-phpmetrics" '
+            }
+        }
+        
+        stage('run unit tests'){
+            steps{
+                input 'dd'
+                sh 'ls /var/www/html/app'
+
+                    sh 'ls -l && pwd'
+                    sh '/bin/bash -c "source /docker/envvars && vendor/codeception/codeception/codecept run unit"'
+                
+                writeFile file: 'build-info', 
+                    text: 'Build# : '+BUILD_NUMBER+
+                        '\nBuildID : '+BUILD_ID+
+                        '\nNodeName : '+NODE_NAME+
+                        '\ndate : ' + sh ( script:"echo `date +'%Y%m%d-%H%M%S'`", returnStdout:true).trim() +
+                        '\n'
+                sh 'ls -l'
+                
+                sh 'cat build-info'
+                sh 'mv build-info '+BUILD_NUMBER+'build'
+                
+                sh 'curl  -T '+BUILD_NUMBER+'build -u vetstoria:vetstoria --ftp-ssl  ftp://192.168.8.107'
+                sh 'rm -f '+BUILD_NUMBER+'build'
+            }
+        }
+        
+    }
+    
+
+    
+}
+
+comment15{
+    without db invloving unit tests. anyway needs to specify DB credentails
+}
+pipeline {
+    agent {
+        docker {
+            image 'localhost:32000/vetstoria/oabp:php56'
+            args '-p 8002:80  -i -t -v /home/user/jenkins-test/composer-key-1:/root/ssh2/ '
+        }
+    }   
+    environment {
+        CI = 'true'
+        DEBIAN_FRONTEND = 'noninteractive'
+    }
+
+    stages {
+        stage('Checkout oabp proj') {
+            steps {
+                    sh 'ls /root/ssh2/'
+                    sh 'ls -l /home/user/jenkins-test/composer-key-1'
+                    sh 'cp /home/user/jenkins-test/composer-key-1/* /root/.ssh/'
+                    sh 'mv /root/.ssh/test-key /root/.ssh/id_rsa'
+                    sh 'mv /root/.ssh/test-key.pub /root/.ssh/id_rsa.pub'
+                    sh 'pwd'
+                    
+                    git branch: 'dev/jenkins',
+                    url: 'git@bitbucket.org:vetstoria/oabp.git',
+                    credentialsId: 'BIT_BUCK_KEY_1'
+        
+                    sh 'ls -l /var/www/html'
+            }
+            
+        }
+        
+        stage('testing for') { 
+            steps {
+                sh 'cat /root/.ssh/known_hosts'
+                dir('source/app/Classes'){
+                    sh 'pwd'
+                    sh 'ls -l'
+                }
+                sh 'apt install netcat -y'
+                sh 'apt install net-tools -y'
+                sh 'echo /docker/entrypoint.sh'
+                sh 'pwd'
+                sh 'ls -l'
+            }
+        }
+
+        
+        stage("exec entrypoint"){
+            steps{  
+                sh '''
+                    ln -s "$(pwd)/" /var/www/html/app
+                    rm -rf /var/www/html/app/source/cache/*
+                    chgrp -R www-data /var/www/html/app
+                    chmod -R g=rwx /var/www/html/app/
+                    rm -rf /var/www/html/app/source/cache/*
+                    chmod -R 777 /var/www/html/app/source/cache
+                '''
+                
+                sh '''
+                    rm /etc/apache2/sites-available/000-default.conf
+                    ln -s /var/www/html/app/docker/app/apache2.conf /etc/apache2/sites-available/000-default.conf
+                    awk 'NF { print "SetEnv "$1" "$2 }' /var/www/html/app/docker/app/app.env > /etc/apache2/env.conf
+                    awk 'NF { print "export "$1"="$2 }' /var/www/html/app/docker/app/app.env > /docker/envvars
+                '''
+            }
+        }
+        
+        stage('install core'){
+            steps{
+
+                    sh 'pwd'
+                    sh 'ls /root/.ssh/'
+                    sh 'composer install  --no-plugins --no-scripts'
+                    
+                    sh 'echo "172.17.0.1  db" >> /etc/hosts '
+                    
+                    
+                    echo ' /bin/bash -c "source /docker/envvars && ./docker/app/setup.sh" '
+                    sh 'php -v'
+                
+            }
+        }
+        
+        stage('php metrices'){
+            steps{
+                sh 'pwd'
+                sh 'ls -l'
+                echo '/bin/bash -c "source /docker/envvars && ./vendor/phing/phing/bin/phing report-phpmetrics" '
+                sh '/bin/bash -c "source /docker/envvars && ./vendor/phing/phing/bin/phing report-phpmetrics" '
+                
+                sh 'tar -cvzf /root/zipped.tar.gz reports '
+                sh 'mv /root/zipped.tar.gz '+BUILD_NUMBER+'build.tar.gz'
+                sh 'curl  -T '+BUILD_NUMBER+'build.tar.gz -u vetstoria:vetstoria --ftp-ssl  ftp://192.168.8.104'
+                sh 'rm '+BUILD_NUMBER+'build.tar.gz'
+            }
+        }
+        
+        stage('run unit tests'){
+            steps{
+                input 'continue?'
+                sh 'ls /var/www/html/app'
+
+                sh 'ls -l && pwd'
+                echo '/bin/bash -c "source /docker/envvars && vendor/codeception/codeception/codecept run unit"'
+                sh '/bin/bash -c "source /docker/envvars && ./vendor/codeception/codeception/codecept run unit"'
+                
+                writeFile file: 'build-info', 
+                    text: 'Build# : '+BUILD_NUMBER+
+                        '\nBuildID : '+BUILD_ID+
+                        '\nNodeName : '+NODE_NAME+
+                        '\ndate : ' + sh ( script:"echo `date +'%Y%m%d-%H%M%S'`", returnStdout:true).trim() +
+                        '\n'
+                sh 'ls -l'
+                
+                sh 'cat build-info'
+                sh 'mv build-info '+BUILD_NUMBER+'build'
+                
+                sh 'curl  -T '+BUILD_NUMBER+'build -u vetstoria:vetstoria --ftp-ssl  ftp://192.168.8.104'
+                sh 'rm -f '+BUILD_NUMBER+'build'
+            }
+        }
+        
+    }
+    
+    post { 
+        always { 
+            echo 'always in post section'
+            input 'exit?'
+        }
+    }
+    
+
+    
+}
+
 
 
 

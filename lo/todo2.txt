@@ -73,5 +73,9 @@ https://stackoverflow.com/questions/36547680/how-to-do-i-get-the-output-of-a-she
 --aug 27
 https://stackoverflow.com/questions/23439126/how-to-mount-a-host-directory-in-a-docker-container 157 eduardo
 
+--aug 28
+https://stackoverflow.com/questions/525592/find-and-replace-inside-a-text-file-from-a-bash-command
+https://stackoverflow.com/questions/50298987/php-pdo-sqlstatehy000-2002-connection-refused/50299042
+
 
 
