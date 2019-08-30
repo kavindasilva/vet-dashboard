@@ -1590,6 +1590,514 @@ pipeline {
     
 }
 
+comment16{
+    try catch 
+}
+pipeline {
+    agent {
+        docker {
+            image 'localhost:32000/vetstoria/oabp:php56'
+            args '-p 8002:80  -i -t -v /home/user/jenkins-test/composer-key-1:/root/ssh2/ '
+        }
+    }   
+    environment {
+        CI = 'true'
+        DEBIAN_FRONTEND = 'noninteractive'
+    }
+
+    stages {
+        stage('Checkout oabp proj') {
+            steps {
+                script{
+                    try{
+                        sh 'echo inside try'
+                    }
+                    catch(e){
+                        sh 'echo inside exception'
+                        echo e.toString()
+                        echo e.getMessage()
+                    }
+                }
+                sh 'ls /root/ssh2/'
+                sh 'ls -l /home/user/jenkins-test/composer-key-1'
+                sh 'cp /home/user/jenkins-test/composer-key-1/* /root/.ssh/'
+                sh 'mv /root/.ssh/test-key /root/.ssh/id_rsa'
+                sh 'mv /root/.ssh/test-key.pub /root/.ssh/id_rsa.pub'
+                sh 'pwd'
+                
+                git branch: '4707809',
+                url: 'git@bitbucket.org:vetstoria/oabp.git',
+                credentialsId: 'BIT_BUCK_KEY_1'
+    
+                sh 'ls -l /var/www/html'
+            }
+            
+        }
+        
+        stage('testing for') { 
+            steps {
+                sh 'cat /root/.ssh/known_hosts'
+                dir('source/app/Classes'){
+                    sh 'pwd'
+                    sh 'ls -l'
+                }
+                sh 'apt install netcat -y'
+                sh 'apt install net-tools -y'
+                sh 'echo /docker/entrypoint.sh'
+                sh 'pwd'
+                sh 'ls -l'
+            }
+        }
+
+        
+        stage("exec entrypoint"){
+            steps{  
+                sh '''
+                    ln -s "$(pwd)/" /var/www/html/app
+                    rm -rf /var/www/html/app/source/cache/*
+                    chgrp -R www-data /var/www/html/app
+                    chmod -R g=rwx /var/www/html/app/
+                    rm -rf /var/www/html/app/source/cache/*
+                    chmod -R 777 /var/www/html/app/source/cache
+                '''
+                
+                sh '''
+                    rm /etc/apache2/sites-available/000-default.conf
+                    ln -s /var/www/html/app/docker/app/apache2.conf /etc/apache2/sites-available/000-default.conf
+                    awk 'NF { print "SetEnv "$1" "$2 }' /var/www/html/app/docker/app/app.env > /etc/apache2/env.conf
+                    awk 'NF { print "export "$1"="$2 }' /var/www/html/app/docker/app/app.env > /docker/envvars
+                '''
+            }
+        }
+        
+        stage('install core'){
+            steps{
+
+                sh 'pwd'
+                sh 'ls /root/.ssh/'
+                sh 'composer install  --no-plugins --no-scripts'
+                
+                echo ' /bin/bash -c "source /docker/envvars && ./docker/app/setup.sh" '
+                sh 'php -v'
+                
+            }
+        }
+        
+        stage('php metrices'){
+            steps{
+                sh 'pwd'
+                sh 'ls -l'
+                echo '/bin/bash -c "source /docker/envvars && ./vendor/phing/phing/bin/phing report-phpmetrics" '
+                
+                script{
+                    try{
+                        sh '/bin/bash -c "source /docker/envvars && ./vendor/phing/phing/bin/phing report-phpmetrics" '
+                    }
+                    catch(e){
+                        sh 'echo inside exception'
+                        sh 'echo '+e.toString()+' > reports/phpMetricesErrorMessage.txt '
+                        echo e.toString()
+                    }
+                }
+            }
+        }
+        
+        stage('run unit tests'){
+            steps{
+                sh 'ls /var/www/html/app'
+                
+                script{
+                    try{
+                        sh '/bin/bash -c "source /docker/envvars && ./vendor/codeception/codeception/codecept run unit"'
+                    }
+                    catch(e){
+                        sh 'echo inside exception'
+                        sh 'echo '+e.toString()+' > reports/unitTestErrorMessage.txt '
+                        echo e.toString()
+                    }
+                }
+
+                sh 'ls -l && pwd'
+                echo '/bin/bash -c "source /docker/envvars && vendor/codeception/codeception/codecept run unit"'                
+
+            }
+        }
+        
+    }
+    
+    post { 
+        always {
+            
+            echo 'always in post section'
+            echo 'upload result?'
+            
+            writeFile file: 'build-info', 
+                text: 'Build# : '+BUILD_NUMBER+
+                    '\nBuildID : '+BUILD_ID+
+                    '\nNodeName : '+NODE_NAME+
+                    '\ndate : ' + sh ( script:"echo `date +'%Y%m%d-%H%M%S'`", returnStdout:true).trim() +
+                    '\n'
+            sh 'ls -l'
+            
+            sh 'cat build-info'
+            sh 'mv -f build-info reports/'+BUILD_NUMBER+'build'
+            
+            
+            sh 'tar -cvzf /root/zipped.tar.gz reports '
+            sh 'mv /root/zipped.tar.gz '+BUILD_NUMBER+'build.tar.gz'
+            sh 'curl  -T '+BUILD_NUMBER+'build.tar.gz -u vetstoria:vetstoria --ftp-ssl  ftp://192.168.8.104'
+            sh 'rm '+BUILD_NUMBER+'build.tar.gz'
+        }
+    }
+    
+
+    
+}
+
+comment17{
+    error & terminal output to text files
+}
+pipeline {
+    agent {
+        docker {
+            image 'localhost:32000/vetstoria/oabp:php56'
+            args '-p 8002:80  -i -t -v /home/user/jenkins-test/composer-key-1:/root/ssh2/ '
+        }
+    }   
+    environment {
+        CI = 'true'
+        DEBIAN_FRONTEND = 'noninteractive'
+    }
+
+    stages {
+        stage('Checkout oabp proj') {
+            steps {
+                script{
+                    try{
+                        sh 'echo inside try'
+                    }
+                    catch(e){
+                        sh 'echo inside exception'
+                        echo e.toString()
+                        echo e.getMessage()
+                    }
+                }
+                sh 'ls /root/ssh2/'
+                sh 'ls -l /home/user/jenkins-test/composer-key-1'
+                sh 'cp /home/user/jenkins-test/composer-key-1/* /root/.ssh/'
+                sh 'mv /root/.ssh/test-key /root/.ssh/id_rsa'
+                sh 'mv /root/.ssh/test-key.pub /root/.ssh/id_rsa.pub'
+                sh 'pwd'
+                
+                git branch: 'dev/jenkins',
+                url: 'git@bitbucket.org:vetstoria/oabp.git',
+                credentialsId: 'BIT_BUCK_KEY_1'
+    
+                sh 'git checkout 4707809'
+                sh 'ls -l /var/www/html'
+            }
+            
+        }
+        
+        stage('testing for') { 
+            steps {
+                sh 'cat /root/.ssh/known_hosts'
+                dir('source/app/Classes'){
+                    sh 'pwd'
+                    sh 'ls -l'
+                }
+                echo 'apt install netcat -y'
+                echo 'apt install net-tools -y'
+                sh 'echo /docker/entrypoint.sh'
+                sh 'pwd'
+                sh 'ls -l'
+            }
+        }
+
+        
+        stage("exec entrypoint"){
+            steps{  
+                sh '''
+                    ln -s "$(pwd)/" /var/www/html/app
+                    rm -rf /var/www/html/app/source/cache/*
+                    chgrp -R www-data /var/www/html/app
+                    chmod -R g=rwx /var/www/html/app/
+                    rm -rf /var/www/html/app/source/cache/*
+                    chmod -R 777 /var/www/html/app/source/cache
+                '''
+                
+                sh '''
+                    rm /etc/apache2/sites-available/000-default.conf
+                    ln -s /var/www/html/app/docker/app/apache2.conf /etc/apache2/sites-available/000-default.conf
+                    awk 'NF { print "SetEnv "$1" "$2 }' /var/www/html/app/docker/app/app.env > /etc/apache2/env.conf
+                    awk 'NF { print "export "$1"="$2 }' /var/www/html/app/docker/app/app.env > /docker/envvars
+                '''
+            }
+        }
+        
+        stage('install core'){
+            steps{
+
+                sh 'pwd'
+                sh 'ls /root/.ssh/'
+                sh 'composer install  --no-plugins --no-scripts'
+                
+                echo ' /bin/bash -c "source /docker/envvars && ./docker/app/setup.sh" '
+                sh 'php -v'
+                
+            }
+        }
+        
+        stage('php metrices'){
+            steps{
+                sh 'pwd'
+                sh 'ls -l'
+                echo '/bin/bash -c "source /docker/envvars && ./vendor/phing/phing/bin/phing report-phpmetrics" '
+                
+                script{
+                    try{
+                        sh '/bin/bash -c "source /docker/envvars && ./vendor/phing/phing/bin/phing report-phpmetrics" >reports/phpMatrixResult.txt  2> reports/phpMatrixError.txt '
+                    }
+                    catch(e){
+                        sh 'echo inside exception'
+                        sh 'echo '+e.toString()+' > reports/phpMetricesErrorMessage.txt '
+                        echo e.toString()
+                    }
+                }
+                sh 'cat reports/phpMatrixResult.txt'
+                sh 'cat reports/phpMatrixError.txt'
+            }
+        }
+        
+        stage('run unit tests'){
+            steps{
+                sh 'ls /var/www/html/app'
+                
+                script{
+                    try{
+                        sh '/bin/bash -c "source /docker/envvars && ./vendor/codeception/codeception/codecept run unit" >reports/unitTestResult.txt  2> reports/unitTestError.txt'
+                    }
+                    catch(e){
+                        sh 'echo inside exception'
+                        sh 'echo '+e.toString()+' > reports/unitTestErrorMessage.txt '
+                        echo e.toString()
+                    }
+                }
+
+                sh 'cat reports/unitTestResult.txt'
+                sh 'cat reports/unitTestError.txt'
+                
+                sh 'ls -l && pwd'
+                echo '/bin/bash -c "source /docker/envvars && vendor/codeception/codeception/codecept run unit"'                
+
+            }
+        }
+        
+    }
+    
+    post { 
+        always {
+            echo 'always in post section'
+            echo 'upload result?'
+            
+            writeFile file: 'build-info', 
+                text: 'Build# : '+BUILD_NUMBER+
+                    '\nBuildID : '+BUILD_ID+
+                    '\nNodeName : '+NODE_NAME+
+                    '\ndate : ' + sh ( script:"echo `date +'%Y%m%d-%H%M%S'`", returnStdout:true).trim() +
+                    '\n'
+            sh 'ls -l'
+            
+            sh 'cat build-info'
+            sh 'mv -f build-info reports/'+JOB_NAME+'_'+BUILD_NUMBER+'build.txt'
+            
+            sh 'tar -cvzf /root/zipped.tar.gz reports '
+            sh 'mv /root/zipped.tar.gz '+JOB_NAME+'_'+BUILD_NUMBER+'build.tar.gz'
+            sh "curl  -T "+JOB_NAME+"_"+BUILD_NUMBER+"build.tar.gz -u vetstoria:vetstoria --ftp-ssl  ftp://192.168.8.103"
+            
+            sh 'rm '+JOB_NAME+'_'+BUILD_NUMBER+'build.tar.gz'
+            sh 'rm reports/*.txt'
+        }
+    }
+    
+
+    
+}
+
+comment18{
+    with environment var & few error handling
+}
+pipeline {
+    agent {
+        docker {
+            image 'localhost:32000/vetstoria/oabp:php56'
+            args '-p 8002:80  -i -t -v /home/user/jenkins-test/composer-key-1:/root/ssh2/ '
+        }
+    }   
+    environment {
+        CI = 'true'
+        DEBIAN_FRONTEND = 'noninteractive'
+        FTP_URL = '192.168.8.101'
+    }
+
+    stages {
+        stage('Checkout oabp proj') {
+            //yX = "sh"
+            steps {
+                
+                script{
+                    try{
+                        sh 'echo inside try'
+                    }
+                    catch(e){
+                        sh 'echo inside exception'
+                        echo e.toString()
+                        echo e.getMessage()
+                    }
+                }
+                sh 'ls /root/ssh2/'
+                sh 'ls -l /home/user/jenkins-test/composer-key-1'
+                sh 'cp /home/user/jenkins-test/composer-key-1/* /root/.ssh/'
+                sh 'mv /root/.ssh/test-key /root/.ssh/id_rsa'
+                sh 'mv /root/.ssh/test-key.pub /root/.ssh/id_rsa.pub'
+                sh 'pwd'
+                
+                git branch: 'dev/jenkins',
+                url: 'git@bitbucket.org:vetstoria/oabp.git',
+                credentialsId: 'BIT_BUCK_KEY_1'
+    
+                echo 'git checkout 4707809'
+                sh 'ls -l /var/www/html'
+            }
+            
+        }
+
+        stage('testing for') { 
+            steps{
+                sh 'curl -k -u vetstoria:vetstoria --ftp-ssl $FTP_URL'
+                sh 'cat /root/.ssh/known_hosts'
+                dir('source/app/Classes'){
+                    sh 'pwd'
+                    sh 'ls -l'
+                }
+                echo 'apt install netcat -y'
+                echo 'apt install net-tools -y'
+                sh 'echo /docker/entrypoint.sh'
+                sh 'pwd'
+                sh 'ls -l'
+            }
+        }
+
+        
+        stage("exec entrypoint"){
+            steps{  
+                sh '''
+                    ln -s "$(pwd)/" /var/www/html/app
+                    rm -rf /var/www/html/app/source/cache/*
+                    chgrp -R www-data /var/www/html/app
+                    chmod -R g=rwx /var/www/html/app/
+                    rm -rf /var/www/html/app/source/cache/*
+                    chmod -R 777 /var/www/html/app/source/cache
+                '''
+                
+                sh '''
+                    rm /etc/apache2/sites-available/000-default.conf
+                    ln -s /var/www/html/app/docker/app/apache2.conf /etc/apache2/sites-available/000-default.conf
+                    awk 'NF { print "SetEnv "$1" "$2 }' /var/www/html/app/docker/app/app.env > /etc/apache2/env.conf
+                    awk 'NF { print "export "$1"="$2 }' /var/www/html/app/docker/app/app.env > /docker/envvars
+                '''
+            }
+        }
+        
+        stage('install core'){
+            steps{
+
+                sh 'pwd'
+                sh 'ls /root/.ssh/'
+                sh 'composer install  --no-plugins --no-scripts'
+                
+                echo ' /bin/bash -c "source /docker/envvars && ./docker/app/setup.sh" '
+                sh 'php -v'
+                
+            }
+        }
+        
+        stage('php metrices'){
+            steps{
+                sh 'pwd'
+                sh 'ls -l'
+                echo '/bin/bash -c "source /docker/envvars && ./vendor/phing/phing/bin/phing report-phpmetrics" '
+                
+                script{
+                    try{
+                        sh '/bin/bash -c "source /docker/envvars && ./vendor/phing/phing/bin/phing report-phpmetrics" >reports/phpMatrixResult.txt  2> reports/phpMatrixError.txt '
+                    }
+                    catch(e){
+                        sh 'echo inside exception'
+                        sh 'echo '+e.toString()+' > reports/phpMetricesErrorMessage.txt '
+                        echo e.toString()
+                    }
+                }
+                sh 'cat reports/phpMatrixResult.txt'
+                sh 'cat reports/phpMatrixError.txt'
+            }
+        }
+        
+        stage('run unit tests'){
+            steps{
+                sh 'ls /var/www/html/app'
+                
+                script{
+                    try{
+                        sh '/bin/bash -c "source /docker/envvars && ./vendor/codeception/codeception/codecept run unit" >reports/unitTestResult.txt  2> reports/unitTestError.txt'
+                    }
+                    catch(e){
+                        sh 'echo inside exception'
+                        sh 'echo '+e.toString()+' > reports/unitTestErrorMessage.txt '
+                        echo e.toString()
+                    }
+                }
+
+                sh 'cat reports/unitTestResult.txt'
+                sh 'cat reports/unitTestError.txt'
+                
+                sh 'ls -l && pwd'
+                echo '/bin/bash -c "source /docker/envvars && vendor/codeception/codeception/codecept run unit"'                
+
+            }
+        }
+        
+    }
+    
+    post { 
+        always {
+            echo 'always in post section'
+            echo 'upload result?'
+            
+            writeFile file: 'build-info', 
+                text: 'Build# : '+BUILD_NUMBER+
+                    '\nBuildID : '+BUILD_ID+
+                    '\nNodeName : '+NODE_NAME+
+                    '\ndate : ' + sh ( script:"echo `date +'%Y%m%d-%H%M%S'`", returnStdout:true).trim() +
+                    '\n'
+            sh 'ls -l'
+            
+            sh 'cat build-info'
+            sh 'mv -f build-info reports/'+JOB_NAME+'_'+BUILD_NUMBER+'build.txt'
+            
+            sh 'tar -cvzf /root/zipped.tar.gz reports '
+            sh 'mv /root/zipped.tar.gz '+JOB_NAME+'_'+BUILD_NUMBER+'build.tar.gz'
+            sh "curl  -T "+JOB_NAME+"_"+BUILD_NUMBER+"build.tar.gz -u vetstoria:vetstoria --ftp-ssl  $FTP_URL"
+            
+            sh 'rm '+JOB_NAME+'_'+BUILD_NUMBER+'build.tar.gz'
+            sh 'rm reports/*.txt'
+        }
+    }
+    
+
+    
+}
+
 
 
 
