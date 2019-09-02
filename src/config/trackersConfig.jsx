@@ -107,15 +107,20 @@ class TrackersConfig extends React.Component{
     }
 
 	render(){
-		return(
-			<React.Fragment>
-                <small>config ui</small>
-				{ 
-                    //this.viewAllTrackers() 
-                    this.showComponent() 
-                }
-			</React.Fragment>
-		)
+        if(this.props.metaData.userInfo && this.props.metaData.userInfo.user_type_id!==3)
+            return(
+                <React.Fragment>You are not auth to view this page</React.Fragment>
+            )
+        else
+            return(
+                <React.Fragment>
+                    <small>config ui</small>
+                    { 
+                        //this.viewAllTrackers() 
+                        this.showComponent() 
+                    }
+                </React.Fragment>
+            )
     }
 
     /** renders the desired component */

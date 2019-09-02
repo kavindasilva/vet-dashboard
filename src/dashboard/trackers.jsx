@@ -133,8 +133,8 @@ class Trackers extends React.Component{
                             <small> | Pipeline: {tracker.pipeline_label} </small>
 
                             <div 
-                                style={{width: '100%', height: '100%'}}
-                                //style={{width: '100%', height: '200px'}}
+                                //style={{width: '100%', height: '120%'}}
+                                style={{width: '100%', height: '200px'}}
                             >
                                 <StickyTable 
                                     stickyHeaderCount={1}
