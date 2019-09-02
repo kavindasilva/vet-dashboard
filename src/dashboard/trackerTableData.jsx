@@ -70,14 +70,14 @@ class TrackerTableData extends React.Component{
 			//each column of trackerConfig
 
 			/** store user permissions of CURRENT COLUMN of trackerConfig user  */
-			let userPermission = column.permissions.find( user => (
-				user.userId === this.props.metaData.userId
+			let userTypePermission = column.permissions.find( permission => (
+				permission.userTypeId === this.props.metaData.userInfo.user_type_id
 			));
 
-			if (userPermission) {
+			if (userTypePermission) {
 				let columnValue = this.props.ticketsData[column.name];
 
-				if (userPermission.read && userPermission.write) {
+				if (userTypePermission.read && userTypePermission.write) {
 					// read & write
 					returnArr.push( 
 						<TrackerPopup
@@ -92,7 +92,7 @@ class TrackerTableData extends React.Component{
 						</TrackerPopup> 
 					)
 				}
-				else if (userPermission.read) {
+				else if (userTypePermission.read) {
 					// read only permission
 					returnArr.push(
 						<Cell 
