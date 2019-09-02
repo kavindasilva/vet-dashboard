@@ -46,6 +46,7 @@ import ArrowDown from "@material-ui/icons/ArrowDropDown"
 
 const trackersAPIobj = new trackersAPI();
 
+
 const useStyles = theme => ({
     configTopAlignedCell: {
         verticalAlign: 'top'
@@ -200,18 +201,20 @@ class TrackersConfigColumns extends React.Component{
                                 className={ this.props.classes.configTopAlignedCell }
                             >
                                 <Collapse 
-                                    hidden={!this.state.rowCollapsed[column.name]} 
-                                    in={this.state.rowCollapsed[column.name]}
+                                    // hidden={!this.state.rowCollapsed[column.name]} 
+                                    // in={this.state.rowCollapsed[column.name]}
+                                    hidden={ false }
+                                    in={true}
                                     //timeout={ { enter:10, exit:10 } }
                                 >
                                 {
                                     column.permissions.map( user => (
-                                        <React.Fragment key ={user.userId}>
+                                        <React.Fragment key ={user.userTypeId}>
                                             <TrackersPemissionsConfig
                                                 tracker_id={ this.props.tracker.tracker_id }
                                                 column_name={ column.name }
-                                                user_id ={user.userId}
-                                                key ={user.userId}
+                                                user_type_id ={user.userTypeId}
+                                                key ={user.userTypeId}
                                             />
                                             <br/>
                                         </React.Fragment>

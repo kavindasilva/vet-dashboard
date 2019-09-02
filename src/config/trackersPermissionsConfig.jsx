@@ -18,16 +18,16 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead, FormControlLabel, IconButton } from "@material-ui/core";
+import { spacing } from '@material-ui/system';
 
 import RwIcon from "../config/rwIcon"
-
-import { spacing } from '@material-ui/system';
+import { userTypeArray } from "../common/constants"
 
 //class TrackersPemissionsConfig extends TrackerConfigCell{    
 class TrackersPemissionsConfig extends React.Component{    
     state ={
         trackerId: this.props.tracker_id,
-        userId: this.props.user_id,
+        userTypeId: this.props.user_id,
         columnName: this.props.column_name,
 
         read: false,
@@ -37,19 +37,19 @@ class TrackersPemissionsConfig extends React.Component{
     render(){
         //console.log('TrackersPemissionsConfig: Rendering cell content');
         //return(<React.Fragment>x</React.Fragment>);
-        let user = Object.values(this.props.allUsers).find( allUser => {
-            //console.log('this.props.columnPermissions.userId', allUser, this.props, this.props.columnPermissions);
-            return allUser.user_id === this.props.columnPermissions.userId;
-         } );
+        // let user = Object.values(this.props.allUsers).find( allUser => {
+        //     //console.log('this.props.columnPermissions.userTypeId', allUser, this.props, this.props.columnPermissions);
+        //     return allUser.user_id === this.props.columnPermissions.userTypeId;
+        //  } );
         return(
             <React.Fragment>
                 <span >
-                { this.props.columnPermissions.userId } . 
+                { this.props.columnPermissions.userTypeId } . 
                 { 
-                    /** match current user with all_user_data */
-                    (user)
-                    ?user.account_email.toString()
-                    :"none"
+                    /** show user type */
+                    (userTypeArray[this.props.columnPermissions.userTypeId])
+                    ? userTypeArray[this.props.columnPermissions.userTypeId]
+                    : "user type not found"
                 }
                 </span>
                     
@@ -57,7 +57,7 @@ class TrackersPemissionsConfig extends React.Component{
                     trackerId={ this.state.trackerId }
                     columnName={ this.state.columnName }
 
-                    userId={ this.state.userId }
+                    userTypeId={ this.state.userTypeId }
                     rwType={ "read" }
                     rwValue={ this.props.columnPermissions.read }
                     label={"R"}
@@ -68,7 +68,7 @@ class TrackersPemissionsConfig extends React.Component{
                     trackerId={ this.state.trackerId }
                     columnName={ this.state.columnName }
 
-                    userId={ this.state.userId }
+                    userTypeId={ this.state.userTypeId }
                     rwType={ "write" }
                     rwValue={ this.props.columnPermissions.write }
                     label={"W"}
@@ -125,7 +125,7 @@ const mapStateToProps = (state, props) => {
 
         let permissions = columnRes.permissions.find(
                 user => (
-                    user.userId === props.user_id
+                    user.userTypeId === props.user_type_id
                 )
             )
         return !permissions ? {} : permissions

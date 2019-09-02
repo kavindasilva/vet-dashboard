@@ -33,8 +33,8 @@ class Menu extends Component {
 		showPh: false,
 
 		//componentToShow: 'def',
-		//componentToShow: "trackerConfig",
-		componentToShow: "currentUserProfile",
+		componentToShow: "trackerConfig",
+		//componentToShow: "currentUserProfile",
 		//componentToShow: "tickets",
 	}
 
