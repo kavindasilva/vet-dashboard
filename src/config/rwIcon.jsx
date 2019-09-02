@@ -9,7 +9,7 @@ class RWIcon extends React.Component{
     state= {
         trackerId: this.props.trackerId,
         columnName: this.props.columnName,
-        userId: this.props.userId,
+        userTypeId: this.props.userTypeId,
 
         rwType: this.props.rwType,
         rwValue: this.props.rwValue,
@@ -49,7 +49,7 @@ class RWIcon extends React.Component{
 				trackerId: this.state.trackerId,
                 columnName: this.state.columnName,
                 
-                userId: this.state.userId,
+                userTypeId: this.state.userTypeId,
                 
                 rwType: this.state.rwType,
                 rwValue: this.state.rwValue,

@@ -126,7 +126,7 @@ const TrackConfigReducer = (state, action) => {
             //return state; // to check whether not working update
             trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;
             columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
-            let userPermitIndex  = getUserPermissionIndex( newState.configData[trackerIndex].columns[columnIndex], action.payload.userId); //userPermitIndex=-1;
+            let userPermitIndex  = getUserPermissionIndex( newState.configData[trackerIndex].columns[columnIndex], action.payload.userTypeId); //userPermitIndex=-1;
 
             if(action.payload.rwType==="read")
                 newState.configData[trackerIndex].columns[columnIndex].permissions[userPermitIndex]["read"]=action.payload.rwValue;
@@ -183,11 +183,11 @@ function getColumnIndex(stt, columnName){
  * 
  * stt: tracker column object
  * 
- * userId: user id to find index
+ * userTypeId: user id to find index
  */
-function getUserPermissionIndex(stt, userId){
+function getUserPermissionIndex(stt, userTypeId){
     let indexStatus = stt.permissions.findIndex( user => (
-        user.userId === userId
+        user.userTypeId === userTypeId
     ) );
     if(indexStatus > -1)
         return indexStatus;

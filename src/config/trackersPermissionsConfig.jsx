@@ -27,7 +27,7 @@ import { userTypeArray } from "../common/constants"
 class TrackersPemissionsConfig extends React.Component{    
     state ={
         trackerId: this.props.tracker_id,
-        userTypeId: this.props.user_id,
+        userTypeId: this.props.user_type_id,
         columnName: this.props.column_name,
 
         read: false,
