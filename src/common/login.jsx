@@ -59,6 +59,10 @@ const useStyles = theme => ({
 	submit: {
 		margin: theme.spacing(3, 0, 2),
 	},
+	inputError:{
+		borderWidth: '1px',
+		borderColor: 'red !important'
+	},
 });
 
 //export default class Login{
@@ -253,6 +257,7 @@ class Login extends React.Component{
 
 	/** render the login form */
 	viewLoginForm(){
+		let inputStyles = (1) && { notchedOutline: this.classes.inputError };
 		return (
 			<Container component="main" maxWidth="xs">
 				<CssBaseline />
@@ -270,6 +275,12 @@ class Login extends React.Component{
 					>
 						<TextField
 							variant="outlined"
+							InputProps={
+								(this.state.authFailed) && {
+								classes:{
+									notchedOutline: this.classes.inputError
+								}
+							}}
 							margin="normal"
 							required
 							fullWidth
@@ -281,6 +292,12 @@ class Login extends React.Component{
 							autoFocus
 						/>
 						<TextField
+							InputProps={
+								(this.state.authFailed) && {
+								classes:{
+									notchedOutline: this.classes.inputError
+								}
+							}}
 							variant="outlined"
 							margin="normal"
 							required
@@ -294,6 +311,12 @@ class Login extends React.Component{
 						/>
 
 						<TextField
+							InputProps={
+								(this.state.authFailed) && {
+								classes:{
+									notchedOutline: this.classes.inputError
+								}
+							}}
 							variant="outlined"
 							margin="normal"
 							required
@@ -306,6 +329,13 @@ class Login extends React.Component{
 							onChange = { (e)=>{ this.setState({otp: e.target.value}) } }
 							//autoComplete=""
 						/>
+
+						<FormLabel
+							hidden={ !this.state.authFailed }
+						>
+							Having trouble logging in? <br/>
+							Contact Vetstoria support for help on support@vetstoria
+						</FormLabel>
 						
 						<Button
 							type="button"
@@ -321,6 +351,10 @@ class Login extends React.Component{
 						<Snackbar
 							open={ this.state.authFailed }
 							aria-describedby="client-snackbar"
+							anchorOrigin={{
+								horizontal: 'center',
+								vertical: 'top'
+							}}
 							message={ 
 								<span style={{color:"red"}}>
 									{ this.state.authFailedMsg }
