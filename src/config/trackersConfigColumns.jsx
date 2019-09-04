@@ -100,7 +100,9 @@ class TrackersConfigColumns extends React.Component{
 		return(
 			<React.Fragment>
 				{ 
-                    this.showColumns() 
+                    (this.props.tracker && this.props.tracker.columns)
+                    ? this.showColumns() 
+                    : "No tracker columns found"
                 }
 			</React.Fragment>
 		)

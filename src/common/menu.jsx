@@ -21,7 +21,7 @@ import Button from '@material-ui/core/Button';
 //import MiniDrawer from "../common/drawer";
 import loginAPI from "../apicalls/loginAPI";
 import CurrentUser from '../users/currentUser';
-import { Link } from '@material-ui/core';
+import { Link, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 
 const loginAPIobj = new loginAPI();
 
@@ -31,11 +31,12 @@ class Menu extends Component {
 	state={
 		showApp: false,
 		showPh: false,
+		showNewClinicAddForm: true,
 
 		//componentToShow: 'def',
-		componentToShow: "trackerConfig",
+		//componentToShow: "trackerConfig",
 		//componentToShow: "currentUserProfile",
-		//componentToShow: "tickets",
+		componentToShow: "tickets",
 	}
 
 	render() {
@@ -75,6 +76,20 @@ class Menu extends Component {
 					</div>
 
 					Temporary menu bar: 
+					
+					{
+						(
+							this.props.metaData.userInfo 
+							&& this.props.metaData.userInfo.user_type_id===3 // --check for all auth users
+						) 
+						&&
+						<Button 
+							onClick={ ()=> this.setState({ showNewClinicAddForm: true }) } 
+						>
+							New Clinic
+						</Button>
+					}
+
 					<Button 
 						onClick={ ()=>{ this.setState({ componentToShow:'tickets'}) } } 
 					>
@@ -120,6 +135,61 @@ class Menu extends Component {
 				
 			</React.Fragment>
 		);
+	}
+
+	/**
+	 * shows the new New clinic adding form in a popup dialog
+	 */
+	showNewClinicForm = () => (
+		<Dialog
+			open={this.state.showNewClinicAddForm}
+			onClose={this.closeNewClinicForm}
+			aria-labelledby="draggable-dialog-title"
+		>
+			{/* <AppBar position="relative" ></AppBar> */}
+			<DialogTitle id="draggable-dialog-title" 
+			style={
+				{ ...this.styleMatUI.titleBarPrimary,  padding: "18px 24px 16px 24px" }
+			}
+			>
+
+				Change { this.state.attributeName }
+
+			</DialogTitle>
+
+			<DialogContent>
+
+				
+			</DialogContent>
+
+			<DialogActions>
+				<Button onClick={ ()=>{
+						this.setState({ attributeValue: this.props.value });
+						this.closeNewClinicForm() 
+					} }
+					style={ this.styleMatUI.closeButton }	
+					variant="text"
+					color="primary"
+				>
+					Cancel
+				</Button>
+									
+				<Button onClick={ () => { 
+						//this.setState({ attributeValue:this.state.attributeValue });
+						this.dispatchUpdate()
+						this.closeNewClinicForm(); 
+					} } 
+					variant="text" color="primary"
+					style={this.styleMatUI.closeButton} >OK
+				</Button>
+
+				
+			</DialogActions>
+		</Dialog>
+	)
+
+	closeNewClinicForm = () => {
+		this.setState({showNewClinicAddForm: false});
 	}
 
 	componentDidMount(){ 

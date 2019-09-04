@@ -30,6 +30,7 @@ import TrackerTableRow from "../dashboard/trackerTableRow";
 
 import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 
 //import StaticFixedTable from "../dashboard/staticFixedTable"
 
@@ -53,6 +54,7 @@ class Trackers extends React.Component{
 	state = { 
         ...this.props.metaData, 
         tabValue:0,
+        showNewClinicAddForm: true,
 
         errorGetTrackers: false,
         errorMsgGetTrackers: false,
@@ -69,8 +71,16 @@ class Trackers extends React.Component{
 	render(){
 		return(
 			<React.Fragment>
+                <Button
+                    onClick={ ()=> this.setState({showNewClinicAddForm: true}) }
+                >
+                    NewCilinc
+                </Button>
                 { 
-                    this.viewTabs() 
+                    this.viewTabs()
+                }
+                {
+                    this.showNewClinicForm()
                 }
                 
 			</React.Fragment>
@@ -166,6 +176,55 @@ class Trackers extends React.Component{
 			</div>
 		);
     }
+
+    /**
+	 * shows the new New clinic adding form in a popup dialog
+	 */
+	showNewClinicForm(){
+        return(
+            <Dialog
+                open={this.state.showNewClinicAddForm}
+                onClose={this.closeNewClinicForm}
+                aria-labelledby="draggable-dialog-title"
+                height={ "600px" }
+                width={ "800px" }
+                minWidth={ "600px" }
+                maxWidth={ "1000px" }
+            >
+                <DialogTitle>
+                    Add new VG
+                </DialogTitle>
+
+                <DialogContent>
+                    <iframe 
+                        src={"https://share.hsforms.com/1IPCBgBVWScO77b_XOmVMlQ3j8em" /* may be need to import from constants */}
+                        height={ "600px" }
+                        width={ "1000px" }
+                    >
+                        Loading "https://share.hsforms.com/1IPCBgBVWScO77b_XOmVMlQ3j8em"
+                    </iframe>
+                </DialogContent>
+
+                <DialogActions>
+                    <Button onClick={ ()=>{
+                            //this.setState({ attributeValue: this.props.value });
+                            this.closeNewClinicForm() 
+                        } }
+                        //style={ this.styleMatUI.closeButton }	
+                        variant="text"
+                        color="primary"
+                    >
+                        Close
+                    </Button>
+                    
+                </DialogActions>
+            </Dialog>
+        );
+    }
+
+	closeNewClinicForm = () => {
+		this.setState({showNewClinicAddForm: false});
+	}
 
     /**
      * retrieve trackers configuration data from DB
