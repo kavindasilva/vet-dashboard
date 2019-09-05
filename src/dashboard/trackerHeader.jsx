@@ -78,7 +78,7 @@ class TrackerHeader extends React.Component{
 			 * current user's permitted columns & premission data
 			 */
 			let usersVisibleColumns=(column.permissions.find( (userPermission) => 
-				userPermission.userTypeId===this.props.metaData.userInfo.user_type_id,	
+				userPermission.user_type_id===this.props.metaData.userInfo.user_type_id,	
 			))
 			//console.log("trackerHeader userVisible", usersVisibleColumns)
 

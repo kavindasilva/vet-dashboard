@@ -9,10 +9,11 @@ class RWIcon extends React.Component{
     state= {
         trackerId: this.props.trackerId,
         columnName: this.props.columnName,
-        userTypeId: this.props.userTypeId,
+        user_type_id: this.props.user_type_id,
 
         rwType: this.props.rwType,
-        rwValue: this.props.rwValue,
+        //rwcValue: (this.props.rwValue===1)?false:true, /** receives restricted/not */
+        rwcValue: this.props.rwValue,
     }
 
     render(){
@@ -20,12 +21,12 @@ class RWIcon extends React.Component{
             <IconButton
                 size="small"
                 style={
-                    (this.state.rwValue)?
+                    (this.state.rwcValue)?
                         { "backgroundColor":"green" }
                         :{ "textDecoration": "line-through", "backgroundColor":"red" }
                 }
                 onClick = { () => { 
-                    this.setState({rwValue: !this.state.rwValue}, function(){
+                    this.setState({rwcValue: !this.state.rwcValue}, function(){
                         this.dispatchPermissionsUpdate()
                     });
                 } }
@@ -37,8 +38,9 @@ class RWIcon extends React.Component{
     }
 
     componentWillReceiveProps( newProps ){
-        if( newProps.rwValue !== this.state.rwValue ){
-            this.setState({rwValue: newProps.rwValue});
+        //let newRwc = (newProps.rwValue===1)?false:true;
+        if( newProps.rwValue !== this.state.rwcValue ){
+            this.setState({rwcValue: newProps.rwValue});
         }
     }
 
@@ -49,10 +51,10 @@ class RWIcon extends React.Component{
 				trackerId: this.state.trackerId,
                 columnName: this.state.columnName,
                 
-                userTypeId: this.state.userTypeId,
+                user_type_id: this.state.user_type_id,
                 
                 rwType: this.state.rwType,
-                rwValue: this.state.rwValue,
+                rwcValue: (this.state.rwcValue===false)?1:0,
 			}
 		});
     }

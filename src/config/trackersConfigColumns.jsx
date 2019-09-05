@@ -189,8 +189,8 @@ class TrackersConfigColumns extends React.Component{
                                     tracker_id={ this.props.tracker.tracker_id }
                                     column_name={ column.name }
 
-                                    value={column.type}
-                                    attribute="type"
+                                    value={column.data_type}
+                                    attribute="data_type"
                                     predefinedData={ trackerColumnDataTypes }
 
                                 />
@@ -211,12 +211,12 @@ class TrackersConfigColumns extends React.Component{
                                 >
                                 {
                                     column.permissions.map( user => (
-                                        <React.Fragment key ={user.userTypeId}>
+                                        <React.Fragment key ={user.user_type_id}>
                                             <TrackersPemissionsConfig
                                                 tracker_id={ this.props.tracker.tracker_id }
                                                 column_name={ column.name }
-                                                user_type_id ={user.userTypeId}
-                                                key ={user.userTypeId}
+                                                user_type_id ={user.user_type_id}
+                                                key ={user.user_type_id}
                                             />
                                             <br/>
                                         </React.Fragment>

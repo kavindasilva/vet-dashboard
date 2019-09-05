@@ -27,7 +27,7 @@ import { userTypeArray } from "../common/constants"
 class TrackersPemissionsConfig extends React.Component{    
     state ={
         trackerId: this.props.tracker_id,
-        userTypeId: this.props.user_type_id,
+        user_type_id: this.props.user_type_id,
         columnName: this.props.column_name,
 
         read: false,
@@ -38,17 +38,17 @@ class TrackersPemissionsConfig extends React.Component{
         //console.log('TrackersPemissionsConfig: Rendering cell content');
         //return(<React.Fragment>x</React.Fragment>);
         // let user = Object.values(this.props.allUsers).find( allUser => {
-        //     //console.log('this.props.columnPermissions.userTypeId', allUser, this.props, this.props.columnPermissions);
-        //     return allUser.user_id === this.props.columnPermissions.userTypeId;
+        //     //console.log('this.props.columnPermissions.user_type_id', allUser, this.props, this.props.columnPermissions);
+        //     return allUser.user_id === this.props.columnPermissions.user_type_id;
         //  } );
         return(
             <React.Fragment>
                 <span >
-                { this.props.columnPermissions.userTypeId } . 
+                { this.props.columnPermissions.user_type_id } . 
                 { 
                     /** show user type */
-                    (userTypeArray[this.props.columnPermissions.userTypeId])
-                    ? userTypeArray[this.props.columnPermissions.userTypeId]
+                    (userTypeArray[this.props.columnPermissions.user_type_id])
+                    ? userTypeArray[this.props.columnPermissions.user_type_id]
                     : "user type not found"
                 }
                 </span>
@@ -57,9 +57,9 @@ class TrackersPemissionsConfig extends React.Component{
                     trackerId={ this.state.trackerId }
                     columnName={ this.state.columnName }
 
-                    userTypeId={ this.state.userTypeId }
+                    user_type_id={ this.state.user_type_id }
                     rwType={ "read" }
-                    rwValue={ this.props.columnPermissions.read }
+                    rwValue={ (parseInt(this.props.columnPermissions.is_read_restricted) === 0)?true:false }
                     label={"R"}
                 >
                 </RwIcon>
@@ -68,10 +68,21 @@ class TrackersPemissionsConfig extends React.Component{
                     trackerId={ this.state.trackerId }
                     columnName={ this.state.columnName }
 
-                    userTypeId={ this.state.userTypeId }
+                    user_type_id={ this.state.user_type_id }
                     rwType={ "write" }
-                    rwValue={ this.props.columnPermissions.write }
+                    rwValue={ (parseInt(this.props.columnPermissions.is_write_restricted) === 0)?true:false }
                     label={"W"}
+                >
+                </RwIcon>
+
+                <RwIcon
+                    trackerId={ this.state.trackerId }
+                    columnName={ this.state.columnName }
+
+                    user_type_id={ this.state.user_type_id }
+                    rwType={ "comment" }
+                    rwValue={ (parseInt(this.props.columnPermissions.is_comment_restricted) === 0)?true:false }
+                    label={"C"}
                 >
                 </RwIcon>
 
@@ -85,8 +96,9 @@ class TrackersPemissionsConfig extends React.Component{
         //console.log("trackerUserConfig mount: props:", this.props, "state:", this.state);
         
         this.setState({ 
-            read: this.props.columnPermissions.read,
-            write: this.props.columnPermissions.write,
+            read: this.props.columnPermissions.is_read_restricted,
+            write: this.props.columnPermissions.is_write_restricted,
+            comment: this.props.columnPermissions.is_comment_restricted,
         })
     
     }
@@ -125,7 +137,7 @@ const mapStateToProps = (state, props) => {
 
         let permissions = columnRes.permissions.find(
                 user => (
-                    user.userTypeId === props.user_type_id
+                    user.user_type_id === props.user_type_id
                 )
             )
         return !permissions ? {} : permissions

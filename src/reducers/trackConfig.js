@@ -126,12 +126,14 @@ const TrackConfigReducer = (state, action) => {
             //return state; // to check whether not working update
             trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;
             columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
-            let userPermitIndex  = getUserPermissionIndex( newState.configData[trackerIndex].columns[columnIndex], action.payload.userTypeId); //userPermitIndex=-1;
+            let userPermitIndex  = getUserPermissionIndex( newState.configData[trackerIndex].columns[columnIndex], action.payload.user_type_id); //userPermitIndex=-1;
 
             if(action.payload.rwType==="read")
-                newState.configData[trackerIndex].columns[columnIndex].permissions[userPermitIndex]["read"]=action.payload.rwValue;
+                newState.configData[trackerIndex].columns[columnIndex].permissions[userPermitIndex]["is_read_restricted"]=action.payload.rwcValue;
             else if(action.payload.rwType==="write")
-                newState.configData[trackerIndex].columns[columnIndex].permissions[userPermitIndex]["write"]=action.payload.rwValue;
+                newState.configData[trackerIndex].columns[columnIndex].permissions[userPermitIndex]["is_write_restricted"]=action.payload.rwcValue;
+            else if(action.payload.rwType==="comment")
+                newState.configData[trackerIndex].columns[columnIndex].permissions[userPermitIndex]["is_comment_restricted"]=action.payload.rwcValue;
 
 
             console.log("TrackConfigReducer UPDATE_CONFIG_USER_PERMISSIONS: ", newState);
@@ -183,11 +185,11 @@ function getColumnIndex(stt, columnName){
  * 
  * stt: tracker column object
  * 
- * userTypeId: user id to find index
+ * user_type_id: user id to find index
  */
-function getUserPermissionIndex(stt, userTypeId){
+function getUserPermissionIndex(stt, user_type_id){
     let indexStatus = stt.permissions.findIndex( user => (
-        user.userTypeId === userTypeId
+        user.user_type_id === user_type_id
     ) );
     if(indexStatus > -1)
         return indexStatus;

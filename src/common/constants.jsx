@@ -17,11 +17,18 @@ export default function Records(){
  * these types are defined in the column configuration
  */
 export const trackerColumnDataTypes = {
-    1: 'text',
-    2: 'number',
-    3: 'radio',
-    4: 'date'
+    'text'      : 'text',
+    'number'    : 'number',
+    'radio'     : 'radio',
+    'date'      : 'date'
 };
+
+// export const trackerColumnDataTypes = {
+//     1: 'text',
+//     2: 'number',
+//     3: 'radio',
+//     4: 'date'
+// };
 
 export const globalStyles = {
     "cell-borders":{

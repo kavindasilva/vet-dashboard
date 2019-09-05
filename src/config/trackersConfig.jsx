@@ -82,7 +82,7 @@ class TrackersConfig extends React.Component{
         trackerConfigData: this.props.trackers,
 
         /** current viewing tracker */      
-        tabValue:0,
+        tabValue:2,
 
         /** component to show */            
         componentToShow:"allTrackers",
