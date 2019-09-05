@@ -334,7 +334,7 @@ class Login extends React.Component{
 							hidden={ !this.state.authFailed }
 						>
 							Having trouble logging in? <br/>
-							Contact Vetstoria support for help on support@vetstoria
+							Contact Vetstoria support for help on <a href="mailto: support@vetstoria.com">support@vetstoria</a>
 						</FormLabel>
 						
 						<Button
@@ -349,6 +349,7 @@ class Login extends React.Component{
 						</Button>
 
 						<Snackbar
+							//style={{ backgroundColor: "#dd1100 !important" }}
 							open={ this.state.authFailed }
 							aria-describedby="client-snackbar"
 							anchorOrigin={{
@@ -356,7 +357,7 @@ class Login extends React.Component{
 								vertical: 'top'
 							}}
 							message={ 
-								<span style={{color:"red"}}>
+								<span style={{color:"red", backgroundColor: "blue"}}>
 									{ this.state.authFailedMsg }
 								</span>
 							}
@@ -382,13 +383,7 @@ class Login extends React.Component{
 									Forgot password?
 								</Link>
 							</Grid>
-							<Grid item>
-								<Link 
-									href="#" variant="body2"
-								>
-									{"Don't have an account? Sign Up"}
-								</Link>
-							</Grid>
+							
 						</Grid>
 					</form>
 				</div>

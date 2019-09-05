@@ -32,8 +32,6 @@ import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 
-//import StaticFixedTable from "../dashboard/staticFixedTable"
-
 const ticketAPIobj = new ticketAPI();
 const trackersAPIobj = new trackersAPI();
 
@@ -54,7 +52,7 @@ class Trackers extends React.Component{
 	state = { 
         ...this.props.metaData, 
         tabValue:0,
-        showNewClinicAddForm: true,
+        showNewClinicAddForm: false,
 
         errorGetTrackers: false,
         errorMsgGetTrackers: false,
@@ -80,7 +78,7 @@ class Trackers extends React.Component{
                     this.viewTabs()
                 }
                 {
-                    this.showNewClinicForm()
+                    this.handleNewClinicAddForm()
                 }
                 
 			</React.Fragment>
@@ -88,7 +86,6 @@ class Trackers extends React.Component{
     }
     
     handleChange = (event, newValue) => {
-        //this.tabValue=2;
         this.setState({tabValue: newValue});
     }
 
@@ -180,7 +177,7 @@ class Trackers extends React.Component{
     /**
 	 * shows the new New clinic adding form in a popup dialog
 	 */
-	showNewClinicForm(){
+	handleNewClinicAddForm(){
         return(
             <Dialog
                 open={this.state.showNewClinicAddForm}
