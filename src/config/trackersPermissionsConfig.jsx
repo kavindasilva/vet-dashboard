@@ -59,7 +59,7 @@ class TrackersPemissionsConfig extends React.Component{
 
                     user_type_id={ this.state.user_type_id }
                     rwType={ "read" }
-                    rwValue={ (parseInt(this.props.columnPermissions.is_read_restricted) === 0)?true:false }
+                    rwValue={ this.props.columnPermissions.is_read_restricted }
                     label={"R"}
                 >
                 </RwIcon>
@@ -70,7 +70,7 @@ class TrackersPemissionsConfig extends React.Component{
 
                     user_type_id={ this.state.user_type_id }
                     rwType={ "write" }
-                    rwValue={ (parseInt(this.props.columnPermissions.is_write_restricted) === 0)?true:false }
+                    rwValue={ this.props.columnPermissions.is_write_restricted }
                     label={"W"}
                 >
                 </RwIcon>
@@ -81,7 +81,7 @@ class TrackersPemissionsConfig extends React.Component{
 
                     user_type_id={ this.state.user_type_id }
                     rwType={ "comment" }
-                    rwValue={ (parseInt(this.props.columnPermissions.is_comment_restricted) === 0)?true:false }
+                    rwValue={ this.props.columnPermissions.is_comment_restricted }
                     label={"C"}
                 >
                 </RwIcon>

@@ -51,7 +51,7 @@ const styles = theme => ({
 class Trackers extends React.Component{
 	state = { 
         ...this.props.metaData, 
-        tabValue:0,
+        tabValue:2,
         showNewClinicAddForm: false,
 
         errorGetTrackers: false,

@@ -54,7 +54,7 @@ class RWIcon extends React.Component{
                 user_type_id: this.state.user_type_id,
                 
                 rwType: this.state.rwType,
-                rwcValue: (this.state.rwcValue===false)?1:0,
+                rwcValue: this.state.rwcValue,
 			}
 		});
     }

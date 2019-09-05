@@ -34,9 +34,9 @@ class Menu extends Component {
 		showNewClinicAddForm: true,
 
 		//componentToShow: 'def',
-		componentToShow: "trackerConfig",
+		//componentToShow: "trackerConfig",
 		//componentToShow: "currentUserProfile",
-		//componentToShow: "tickets",
+		componentToShow: "tickets",
 	}
 
 	render() {
