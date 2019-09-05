@@ -123,8 +123,8 @@ class TrackersRulesConfig extends React.Component{
                             column_name={ this.props.column_name }
 
                             nextPrecedence={ 
-                                (this.props.columnRules.length>0)
-                                ?(this.props.columnRules.length + 1)
+                                (this.props.ruleCount>0)
+                                ?(this.props.ruleCount + 1)
                                 :1
                             }
                         />
@@ -183,9 +183,11 @@ const mapStateToProps = (state, props) => {
     ) );
     //console.log("trackerRulesConfig props", props, findResult)
     
-
+    let columnRules = getColumnRules(state.TrackConfigReducer.configData);
     return {
-        columnRules: getColumnRules(state.TrackConfigReducer.configData),
+        columnRules: columnRules,
+
+        ruleCount: columnRules.length,
 		
         allUsers: { ...state.UserConfigReducer.userData, 
             ...state.UserConfigReducer.partnerData 
@@ -209,7 +211,7 @@ const mapStateToProps = (state, props) => {
             return { };
         }
 
-        let RuleRes = columnRes.rules;
+        let RuleRes = columnRes.color_rules;
         return RuleRes ? RuleRes : {}
     }
 }

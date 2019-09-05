@@ -91,6 +91,12 @@ export const userTypeArray=[
     "USER_PROXY",
     "USER_KIOSK", //8
     "USER_ANY",
+    "usertype10-null",
+    "STANDARD",
+    "CLASS_A",
+    "CLASS_B",
+    "CLASS_C",
+    "CLASS_D"
 ]
 
 

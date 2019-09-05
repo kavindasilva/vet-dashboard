@@ -232,10 +232,10 @@ class TrackersConfigColumns extends React.Component{
                                 className={ this.props.classes.configTopAlignedCell }
                             >
                                 <Collapse 
-                                    hidden={!this.state.rowCollapsed[column.name]} 
-                                    //hidden={ false } 
-                                    in={this.state.rowCollapsed[column.name]}
-                                    //in={ true }
+                                    // hidden={!this.state.rowCollapsed[column.name]} 
+                                    // in={this.state.rowCollapsed[column.name]}
+                                    hidden={ false } 
+                                    in={ true }
                                 >
 
                                     <TrackerRulesConfig

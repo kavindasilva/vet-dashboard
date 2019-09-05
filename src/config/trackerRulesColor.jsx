@@ -102,7 +102,7 @@ const mapStateToProps = (state, props) => {
         return;
     }
 
-    let ruleRes = columnRes.rules.find(rule => (
+    let ruleRes = columnRes.color_rules.find(rule => (
         rule.precedence === props.precedence_id
     ) );
 

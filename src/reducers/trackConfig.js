@@ -46,7 +46,7 @@ const TrackConfigReducer = (state, action) => {
                     "type": action.payload.columnDataType,
 
                     "permissions":[],
-                    "rules":[]
+                    "color_rules":[]
                 }
             );
             return newState;
@@ -55,7 +55,7 @@ const TrackConfigReducer = (state, action) => {
             trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;
             columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
 
-            newState.configData[trackerIndex].columns[columnIndex].rules.push(
+            newState.configData[trackerIndex].columns[columnIndex].color_rules.push(
                 {
                     "precedence": action.payload.precedenceId,
                     "bgcolor": action.payload.bgcolor,
@@ -69,7 +69,7 @@ const TrackConfigReducer = (state, action) => {
             columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
             precedenceIndex  =  getRulesIndex( newState.configData[trackerIndex].columns[columnIndex], action.payload.precedenceId); //precedenceIndex=-1;
 
-            newState.configData[trackerIndex].columns[columnIndex].rules[precedenceIndex]["conditions"] = action.payload.precedenceConditions;
+            newState.configData[trackerIndex].columns[columnIndex].color_rules[precedenceIndex]["conditions"] = action.payload.precedenceConditions;
             return newState;
 
 
@@ -78,7 +78,7 @@ const TrackConfigReducer = (state, action) => {
             columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
             precedenceIndex  =  getRulesIndex( newState.configData[trackerIndex].columns[columnIndex], action.payload.precedenceId); //precedenceIndex=-1;
 
-            newState.configData[trackerIndex].columns[columnIndex].rules[precedenceIndex][action.payload.attribute] = action.payload.precedenceColor;
+            newState.configData[trackerIndex].columns[columnIndex].color_rules[precedenceIndex][action.payload.attribute] = action.payload.precedenceColor;
             return newState;
 
         
@@ -88,12 +88,12 @@ const TrackConfigReducer = (state, action) => {
             columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
 
             //  [arr[0], arr[1]] = [arr[1], arr[0]];
-            ruleArr = newState.configData[trackerIndex].columns[columnIndex].rules;
+            ruleArr = newState.configData[trackerIndex].columns[columnIndex].color_rules;
             ruleIndex = action.payload.ruleIndex;
 
             [ruleArr[ruleIndex-1], ruleArr[ruleIndex]] = [ruleArr[ruleIndex], ruleArr[ruleIndex-1]];
 
-            newState.configData[trackerIndex].columns[columnIndex].rules = ruleArr;
+            newState.configData[trackerIndex].columns[columnIndex].color_rules = ruleArr;
             return newState;
 
 
@@ -103,12 +103,12 @@ const TrackConfigReducer = (state, action) => {
             columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
 
             //  [arr[0], arr[1]] = [arr[1], arr[0]];
-            ruleArr = newState.configData[trackerIndex].columns[columnIndex].rules;
+            ruleArr = newState.configData[trackerIndex].columns[columnIndex].color_rules;
             ruleIndex = action.payload.ruleIndex;
 
             [ruleArr[ruleIndex+1], ruleArr[ruleIndex]] = [ruleArr[ruleIndex], ruleArr[ruleIndex+1]];
 
-            newState.configData[trackerIndex].columns[columnIndex].rules = ruleArr;
+            newState.configData[trackerIndex].columns[columnIndex].color_rules = ruleArr;
             return newState;
 
 
@@ -204,7 +204,7 @@ function getUserPermissionIndex(stt, user_type_id){
  * precedenceId: precendece's id to find index
  */
 function getRulesIndex(stt, precedenceId){
-    let indexStatus = stt.rules.findIndex( prec => (
+    let indexStatus = stt.color_rules.findIndex( prec => (
         prec.precedence === precedenceId
     ) );
     if(indexStatus > -1)

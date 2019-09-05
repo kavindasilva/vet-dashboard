@@ -75,7 +75,7 @@ class NewRule extends React.Component{
                                     {/* color */}
                                     <TableCell m={0} p={0} size="small">
                                     { 
-                                        "p-"+this.state.precedence+"-"+this.state.bgcolor
+                                        "p-"+this.props.nextPrecedence+"-"+this.state.bgcolor
                                     }
                                         <Select
                                             value={ this.state.bgcolor }
@@ -155,7 +155,7 @@ class NewRule extends React.Component{
                     trackerId: this.state.trackerId,
                     columnName: this.state.columnName,
 
-                    precedenceId: this.state.precedence,
+                    precedenceId: this.props.nextPrecedence,
                     bgcolor: this.state.bgcolor,
                     conditions: this.state.conditions,
                     //ruleIndex: index,
