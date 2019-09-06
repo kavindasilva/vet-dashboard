@@ -1,7 +1,23 @@
 //import {APP_MODE} from "../common/constants"
 import { isUndefined } from "util";
 import trackerAPI from "../apicalls/trackersAPI"
+
+import { userTypeArray } from "../common/constants"
+
 const trackerAPIObj = new trackerAPI();
+
+const defaultPermissions = () => { 
+    let retArr = [];
+    for( var i=0; i<userTypeArray.length; i++) {
+        retArr.push({ 
+            user_type_id: i,  
+            is_read_restricted: true,
+            is_write_restricted: true,
+            is_comment_restricted: true
+        });
+    }
+    return retArr;
+}
 
 const TrackConfigReducer = (state, action) => {
     console.log("TrackConfigReducer: state: ", state, "\naction: ", action)
@@ -45,7 +61,7 @@ const TrackConfigReducer = (state, action) => {
                     "label": action.payload.columnLabel,
                     "type": action.payload.columnDataType,
 
-                    "permissions":[],
+                    "permissions": defaultPermissions() ,
                     "color_rules":[]
                 }
             );

@@ -210,7 +210,7 @@ class TrackersConfigColumns extends React.Component{
                                     //timeout={ { enter:10, exit:10 } }
                                 >
                                 {
-                                    column.permissions.map( user => (
+                                    (column) && column.permissions.map( user => (
                                         <React.Fragment key ={user.user_type_id}>
                                             <TrackersPemissionsConfig
                                                 tracker_id={ this.props.tracker.tracker_id }

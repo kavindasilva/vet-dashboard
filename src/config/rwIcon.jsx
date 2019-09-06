@@ -21,7 +21,7 @@ class RWIcon extends React.Component{
             <IconButton
                 size="small"
                 style={
-                    (this.state.rwcValue)?
+                    (!this.state.rwcValue)?
                         { "backgroundColor":"green" }
                         :{ "textDecoration": "line-through", "backgroundColor":"red" }
                 }

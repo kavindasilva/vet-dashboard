@@ -13,6 +13,7 @@ import Records from "../oabpPhoenixFailures/records";
 import Trackers from "../dashboard/trackers";
 import Users from "../users/users";
 import TrackerConfig from "../config/trackersConfig";
+import ReportsUI from "../reports/reportsui"
 
 import { userTypeArray } from "../common/constants"
 
@@ -77,19 +78,6 @@ class Menu extends Component {
 
 					Temporary menu bar: 
 					
-					{
-						(
-							this.props.metaData.userInfo 
-							&& this.props.metaData.userInfo.user_type_id===3 // --check for all auth users
-						) 
-						&&
-						<Button 
-							onClick={ ()=> this.setState({ showNewClinicAddForm: true }) } 
-						>
-							New Clinic
-						</Button>
-					}
-
 					<Button 
 						onClick={ ()=>{ this.setState({ componentToShow:'tickets'}) } } 
 					>
@@ -130,6 +118,20 @@ class Menu extends Component {
 					>
 						My profile
 					</Button>
+
+					{
+						(
+							this.props.metaData.userInfo 
+							&& this.props.metaData.userInfo.user_type_id===3 // --check for all auth users
+						) 
+						&&
+						<Button 
+							onClick={ ()=> this.setState({ componentToShow: 'reportsUi' }) } 
+						>
+							Reports
+						</Button>
+					}
+
 				</div>
 				{/*  */}
 				
@@ -209,6 +211,8 @@ class Menu extends Component {
 			return <CurrentUser />
 		else if( componentToShow==="phoenixFailures" )
 			return <Records />
+		else if( componentToShow==="reportsUi" )
+			return <ReportsUI />
 		else
 			return "no app";
 
