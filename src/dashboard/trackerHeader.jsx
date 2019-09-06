@@ -83,7 +83,7 @@ class TrackerHeader extends React.Component{
 			//console.log("trackerHeader userVisible", usersVisibleColumns)
 
 			// if usersVisibleColumns not empty
-			if( usersVisibleColumns!==undefined && usersVisibleColumns.is_read_restricted==0 ){
+			if( usersVisibleColumns!==undefined && !usersVisibleColumns.is_read_restricted ){
 
 				returnArr.push( 
 					<Cell 

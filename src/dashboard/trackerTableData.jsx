@@ -77,22 +77,22 @@ class TrackerTableData extends React.Component{
 			if (userTypePermission) {
 				let columnValue = this.props.ticketsData[column.name];
 
-				if (userTypePermission.is_read_restricted==0 && userTypePermission.is_write_restricted==0) {
+				if ( !userTypePermission.is_read_restricted && !userTypePermission.is_write_restricted ) {
 					// read & write
 					returnArr.push( 
 						<TrackerPopup
 							key={ column.name }
 							ticketId={ this.props.ticketsData.ticket_id }
 							columnName={ column.name }
-							value={ (columnValue)?columnValue:"--" }
+							value={ (columnValue)?columnValue:"-td-N/A-" }
 							trackerId={ this.props.trackerId }
-							elementType={ this.columnDataTypes[column.type] }
+							elementType={ this.columnDataTypes[column.data_type] }
 						>
 							{ columnValue }
 						</TrackerPopup> 
 					)
 				}
-				else if (userTypePermission.is_read_restricted==0) {
+				else if (!userTypePermission.is_read_restricted) {
 					// read only permission
 					returnArr.push(
 						<Cell 
@@ -105,7 +105,7 @@ class TrackerTableData extends React.Component{
 							<span 
 								className="read-only-input"	
 							>
-								{ (columnValue)?columnValue:"--" }
+								{ (columnValue)?columnValue:"-td-N/A-" }
 							</span>
 						</Cell>
 					)

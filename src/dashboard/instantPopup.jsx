@@ -67,7 +67,7 @@ class InstantPopup extends React.Component{
             <React.Fragment>
                 <Popup 
                     trigger={ <div style={ {width: "100%", height:"100%" } }> {
-                        String( (this.props.popValue)?(this.props.popValue):"--" )
+                        String( (this.props.popValue)?(this.props.popValue):"-pop-" )
                         }  </div>  } 
                     position="bottom right"
                 >
@@ -222,7 +222,7 @@ class InstantPopup extends React.Component{
                 );
             
             default:
-                console.log("invalid case");
+                console.log("invalid case. elemetType: ", this.props.elementType);
                 break;
         }
     }

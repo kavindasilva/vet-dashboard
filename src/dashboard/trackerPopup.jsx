@@ -132,7 +132,7 @@ class TrackerPopup extends Component {
             this.setState({statementError: true});
         }
 
-        console.log("TrackerPopup expr res",  res);
+        //console.log("TrackerPopup expr res",  res);
         //console.log("TrackerPopup expr evaluatedRes",  eRes.toString() );
     }
 	/** evaluates expressions and returns color */
@@ -151,6 +151,7 @@ class TrackerPopup extends Component {
 
 const mapStateToProps = (state, props) => {
 	//console.log('trackerPopup.jsx-mapStateToProps', state);
+	console.log('trackerPopup.jsx-props1', props);
 
 	/** tracker's instance's index */
 	let trackerIndex = state.ticketsDataReducer.ticketsData.findIndex( ticket => (
@@ -183,7 +184,7 @@ const mapStateToProps = (state, props) => {
 			ticketProperty: {
 				'property'	: props.columnName,
 				'value' 	: state.ticketsDataReducer.ticketsData[trackerIndex][props.columnName],
-				'ticketId'  : state.ticketsDataReducer.ticketsData['ticket_id'],
+				'ticketId'  : state.ticketsDataReducer.ticketsData[trackerIndex]['ticket_id'],
 			},
 		};
 	}
