@@ -57,6 +57,7 @@ class InstantPopup extends React.Component{
         ticket_id: this.props.ticket_id,
         columnName: this.props.columnName,
         isOpen: false,
+        hs_source_field : this.props.hs_source_field,
         attributeValue: this.props.value,
     }
 
@@ -109,6 +110,7 @@ class InstantPopup extends React.Component{
 				ticketId: this.state.ticket_id,
 				property: this.state.columnName,
                 value: this.state.attributeValue,
+                data_source: this.state.hs_source_field,
 			}
 		});
 	}
@@ -235,10 +237,12 @@ class InstantPopup extends React.Component{
 
 const mapStateToProps = (state, props) => {
     //console.log("instant popup", props);
+    let source_field = props.hs_source_field + "_properties";
+
     return {
         popValue: state.ticketsDataReducer.ticketsData.find(
                 tracker => (tracker.ticket_id === props.ticket_id)
-            )[props.columnName]
+            )[source_field][props.columnName]
     };
 }
 

@@ -86,6 +86,7 @@ class TrackerPopup extends Component {
 						columnName={ this.props.ticketProperty.property }
 						value={ this.props.ticketProperty.value }
 						elementType={ this.props.elementType }
+						hs_source_field={ this.props.hs_source_field }
 					/>
 				</React.Fragment>
 				
@@ -101,6 +102,7 @@ class TrackerPopup extends Component {
 							columnName={ this.props.ticketProperty.property }
 							value={ this.props.ticketProperty.value }
 							elementType={ this.props.elementType }
+							hs_source_field={ this.props.hs_source_field }
 						>
 						</InstantPopup>
 					
@@ -143,7 +145,8 @@ class TrackerPopup extends Component {
 	componentDidMount(){
 		console.log("trackerPopup didmount props:", this.props);
 
-		this.validateExpr();
+		this.evaluateExpr(null);
+		//this.validateExpr();
 	}
 
 }
@@ -153,7 +156,7 @@ const mapStateToProps = (state, props) => {
 	//console.log('trackerPopup.jsx-mapStateToProps', state);
 	console.log('trackerPopup.jsx-props1', props);
 
-	/** tracker's instance's index */
+	/** ticket's index */
 	let trackerIndex = state.ticketsDataReducer.ticketsData.findIndex( ticket => (
 		ticket.ticket_id === props.ticket_id
 	) );
@@ -175,6 +178,9 @@ const mapStateToProps = (state, props) => {
 
 
 	if( trackerIndex > -1 ){
+		let source_field = props.hs_source_field + "_properties";
+		//console.log("trackerPopup val", state.ticketsDataReducer.ticketsData[trackerIndex][source_field][props.columnName]);
+		
 		return {
 			configData: trackerConfig,
 
@@ -183,7 +189,7 @@ const mapStateToProps = (state, props) => {
 			/** tracker instance's particular column's data */
 			ticketProperty: {
 				'property'	: props.columnName,
-				'value' 	: state.ticketsDataReducer.ticketsData[trackerIndex][props.columnName],
+				'value' 	: state.ticketsDataReducer.ticketsData[trackerIndex][source_field][props.columnName],
 				'ticketId'  : state.ticketsDataReducer.ticketsData[trackerIndex]['ticket_id'],
 			},
 		};

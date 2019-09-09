@@ -84,6 +84,7 @@ class TrackerTableData extends React.Component{
 							key={ column.name }
 							ticket_id={ this.props.ticketsData.ticket_id }
 							columnName={ column.name }
+							hs_source_field={ column.hs_source_field }
 							value={ (columnValue)?columnValue:"-td-N/A-" }
 							tracker_id={ this.props.tracker_id }
 							elementType={ this.columnDataTypes[column.data_type] }

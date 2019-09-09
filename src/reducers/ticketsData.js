@@ -19,18 +19,18 @@ const ticketsDataReducer = (state, action) => {
 
     switch (action.type) {
         case 'UPDATE_CELL_VALUE': // update cell value changes
-            let index = state.ticketsData.findIndex(
+            let ticketIndex = state.ticketsData.findIndex(
                     ticket => (ticket.ticket_id === action.payload.ticketId)
                 );
 
-            if (index >-1 ) {
-                let ticket = newState.ticketsData[index];
+            if (ticketIndex >-1 ) {
+                let ticket = newState.ticketsData[ticketIndex];
 
                 let update = {};
                 update[action.payload.property] = action.payload.value;
 
-                newState.ticketsData[index][action.payload.property] = action.payload.value;
-                //newState.ticketsData[index] = {...ticket, ...update};
+                newState.ticketsData[ticketIndex][action.payload.property] = action.payload.value;
+                //newState.ticketsData[ticketIndex] = {...ticket, ...update};
 
                 updateTicketData(action.payload.ticketId, update);
             }
