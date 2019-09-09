@@ -61,8 +61,8 @@ class TrackerTableRow extends React.Component{
 					<Row key={record.ticket_id} >
 						<TrackerTableData 
 							key={record.ticket_id} 
-							ticketId={ record.ticket_id }
-							trackerId = { record.tracker_id }
+							ticket_id={ record.ticket_id }
+							tracker_id = { record.tracker_id }
 						/>
 					</Row>
 				)
@@ -83,12 +83,12 @@ const mapStateToProps = (state, props) => {
 		//trackerConfigData: state.TrackConfigReducer.configData,
 		/** particular tracker related config data */
 		trackerConfigData: state.TrackConfigReducer.configData.find( trackerConfigs => (
-			trackerConfigs.trackerId===props.trackerId
+			trackerConfigs.tracker_id===props.tracker_id
 		) ),
 
 		/** particular tracker ticket related ticket data */
 		ticketsData: state.ticketsDataReducer.ticketsData.filter(ticket => (
-			ticket.tracker_id === props.trackerId
+			ticket.tracker_id === props.tracker_id
 		)),
 
 	};

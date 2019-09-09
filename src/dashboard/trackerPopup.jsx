@@ -45,7 +45,7 @@ import Peg from "../parsers/conditionsParser"
 //export default class TrackerPopup extends Component {
 class TrackerPopup extends Component {
 	state = {
-		/** trackerInstaid. need in dispatching */	ticketId	:this.props.ticketId,
+		/** trackerInstaid. need in dispatching */	ticket_id	:this.props.ticket_id,
 		/** property name */					columnName		:this.props.ticketProperty.property,
 		/** property value */     				attributeValue	:this.props.ticketProperty.value,
 		/** element input type */ 				elementType		:this.props.elementType,
@@ -82,7 +82,7 @@ class TrackerPopup extends Component {
 				<React.Fragment>
 					{ /*this.props.ticketProperty.value */ }
 					<CustomDatePicker
-						ticketId={ this.props.ticketId }
+						ticket_id={ this.props.ticket_id }
 						columnName={ this.props.ticketProperty.property }
 						value={ this.props.ticketProperty.value }
 						elementType={ this.props.elementType }
@@ -97,7 +97,7 @@ class TrackerPopup extends Component {
 					{/* test{ String(this.props.ticketProperty.value) } */}
 					
 						<InstantPopup
-							ticketId={ this.props.ticketId }
+							ticket_id={ this.props.ticket_id }
 							columnName={ this.props.ticketProperty.property }
 							value={ this.props.ticketProperty.value }
 							elementType={ this.props.elementType }
@@ -155,12 +155,12 @@ const mapStateToProps = (state, props) => {
 
 	/** tracker's instance's index */
 	let trackerIndex = state.ticketsDataReducer.ticketsData.findIndex( ticket => (
-		ticket.ticket_id === props.ticketId
+		ticket.ticket_id === props.ticket_id
 	) );
 
 	/** tracker's config's index */
 	let trackerConfigIndex = state.TrackConfigReducer.configData.findIndex(tracker => (
-		tracker.tracker_id === props.trackerId
+		tracker.tracker_id === props.tracker_id
 	));
 
 	/** tracker's config's column data */

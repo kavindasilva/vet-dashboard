@@ -137,12 +137,12 @@ const mapStateToProps = (state, props) => {
 
 		/** filter only the needed tracker tickets */
 		ticketsData: state.ticketsDataReducer.ticketsData.filter( tickets => (
-			tickets.tracker_id===props.trackerId
+			tickets.tracker_id===props.tracker_id
 		) ),
 
 		/** filter only the needed tracker's config */
 		trackerConfigData: state.TrackConfigReducer.configData.find( trackerConfigs => (
-			trackerConfigs.tracker_id===props.trackerId
+			trackerConfigs.tracker_id===props.tracker_id
 		) ),
 
 	};

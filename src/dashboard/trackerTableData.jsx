@@ -82,10 +82,10 @@ class TrackerTableData extends React.Component{
 					returnArr.push( 
 						<TrackerPopup
 							key={ column.name }
-							ticketId={ this.props.ticketsData.ticket_id }
+							ticket_id={ this.props.ticketsData.ticket_id }
 							columnName={ column.name }
 							value={ (columnValue)?columnValue:"-td-N/A-" }
-							trackerId={ this.props.trackerId }
+							tracker_id={ this.props.tracker_id }
 							elementType={ this.columnDataTypes[column.data_type] }
 						>
 							{ columnValue }
@@ -122,7 +122,7 @@ class TrackerTableData extends React.Component{
 const mapStateToProps = (state, props) => {
 	//console.log("trackerTableData", props);
 	let ticketsData = state.ticketsDataReducer.ticketsData.find(record => (
-		record.ticket_id === props.ticketId
+		record.ticket_id === props.ticket_id
 	));
 
 	// console.log("trackerTableData ticketData", ticketsData);
@@ -134,7 +134,7 @@ const mapStateToProps = (state, props) => {
 
 		/** particular tracker related config data */
 		configData: state.TrackConfigReducer.configData.find(tracker => (
-			tracker.tracker_id === props.trackerId
+			tracker.tracker_id === props.tracker_id
 		)),
 
 		/** particular tracker related instance data && hubspot data */

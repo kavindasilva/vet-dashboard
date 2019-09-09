@@ -43,7 +43,7 @@ class CustomDatePicker extends React.Component{
 	}
     
     state ={
-        ticketId: this.props.ticketId,
+        ticket_id: this.props.ticket_id,
         columnName: this.props.columnName,
         isOpen: false, //this.props.show,
         attributeValue: this.props.value,
@@ -133,7 +133,7 @@ class CustomDatePicker extends React.Component{
 		rootStore.dispatch({
 			type: 'UPDATE_CELL_VALUE',
 			payload: {
-				ticketId: this.state.ticketId,
+				ticketId: this.state.ticket_id,
 				property: this.state.columnName,
                 value: this.state.attributeValue,
 			}
@@ -172,7 +172,7 @@ class CustomDatePicker extends React.Component{
 const mapStateToProps = (state, props) => {
     return {
         dateValue: state.ticketsDataReducer.ticketsData.find(
-                        ticket => (ticket.ticket_id === props.ticketId)
+                        ticket => (ticket.ticket_id === props.ticket_id)
                     )[props.columnName]
     };
 }
