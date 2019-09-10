@@ -78,4 +78,8 @@ https://stackoverflow.com/questions/525592/find-and-replace-inside-a-text-file-f
 https://stackoverflow.com/questions/50298987/php-pdo-sqlstatehy000-2002-connection-refused/50299042
 
 
+--sep 10
+https://stackoverflow.com/questions/47493723/reload-component-react
+
+
 

@@ -46,6 +46,7 @@ class CustomDatePicker extends React.Component{
         ticket_id: this.props.ticket_id,
         columnName: this.props.columnName,
         isOpen: false, //this.props.show,
+        hs_source_field: this.props.hs_source_field,
         attributeValue: this.props.value,
     }
 
@@ -59,7 +60,7 @@ class CustomDatePicker extends React.Component{
                         this.setState({ isOpen: true })
                         ) } 
                 >
-                    { String( (this.props.dateValue)?(this.props.dateValue):"--" ) }
+                    { String( (this.props.dateValue)?(this.props.dateValue):"-date-" ) }
                 </div>
 
                 {/* popup modal UI */}
@@ -114,7 +115,8 @@ class CustomDatePicker extends React.Component{
                             Cancel
                         </Button>
                                             
-                        <Button onClick={ () => { 
+                        <Button onClick={ (e) => { 
+                                e.preventDefault()
                                 this.dispatchUpdate()
                                 this.closePopUp(); 
                             } } 
@@ -136,6 +138,7 @@ class CustomDatePicker extends React.Component{
 				ticketId: this.state.ticket_id,
 				property: this.state.columnName,
                 value: this.state.attributeValue,
+                data_source: this.state.hs_source_field + "_properties",
 			}
 		});
 	}
@@ -170,10 +173,11 @@ class CustomDatePicker extends React.Component{
 
 
 const mapStateToProps = (state, props) => {
+    let source_field = props.hs_source_field + "_properties";
     return {
         dateValue: state.ticketsDataReducer.ticketsData.find(
                         ticket => (ticket.ticket_id === props.ticket_id)
-                    )[props.columnName]
+                    )[source_field][props.columnName]
     };
 }
 

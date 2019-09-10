@@ -70,8 +70,9 @@ class TrackerTableData extends React.Component{
 			//each column of trackerConfig
 
 			/** store user permissions of CURRENT COLUMN of trackerConfig user  */
+			let current_user_type = (this.props.metaData.userInfo)? this.props.metaData.userInfo.user_type_id: 0;
 			let userTypeRestriction = column.permissions.find( permission => (
-				parseInt(permission.user_type_id) === this.props.metaData.userInfo.user_type_id
+				parseInt(permission.user_type_id) === current_user_type
 			));
 
 			let columnValue = this.props.ticketsData[column.name];

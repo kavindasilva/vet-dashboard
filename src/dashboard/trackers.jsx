@@ -51,6 +51,7 @@ const styles = theme => ({
 class Trackers extends React.Component{
 	state = { 
         ...this.props.metaData, 
+        last_updated: "N/A",
         tabValue:2,
         showNewClinicAddForm: false,
 
@@ -73,6 +74,12 @@ class Trackers extends React.Component{
                     onClick={ ()=> this.setState({showNewClinicAddForm: true}) }
                 >
                     NewCilinc
+                </Button>
+                <Button
+                    onClick={ ()=>this.componentDidMount() }
+                >
+                    Reload  Last Updated: 
+                    { String(this.state.last_updated) }
                 </Button>
                 { 
                     this.viewTabs()
@@ -259,7 +266,12 @@ class Trackers extends React.Component{
 
                 this.setState({ ticketsData: res.data }, function(){
                     this.dispatchTicketInstances();
-                }); 
+                });
+
+                //console.log("trackers getTicketData headers: ", res.headers["last-updated"]);
+                if(res.headers &&  res.headers["last-updated"]){
+                    this.setState({last_updated: res.headers["last-updated"]});
+                }
             }
         )
     }
