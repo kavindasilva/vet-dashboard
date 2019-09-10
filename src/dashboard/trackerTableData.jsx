@@ -70,14 +70,14 @@ class TrackerTableData extends React.Component{
 			//each column of trackerConfig
 
 			/** store user permissions of CURRENT COLUMN of trackerConfig user  */
-			let userTypePermission = column.permissions.find( permission => (
+			let userTypeRestriction = column.permissions.find( permission => (
 				parseInt(permission.user_type_id) === this.props.metaData.userInfo.user_type_id
 			));
 
-			if (userTypePermission) {
-				let columnValue = this.props.ticketsData[column.name];
+			let columnValue = this.props.ticketsData[column.name];
 
-				if ( !userTypePermission.is_read_restricted && !userTypePermission.is_write_restricted ) {
+			if (userTypeRestriction) {
+				if ( !userTypeRestriction.is_read_restricted && !userTypeRestriction.is_write_restricted ) {
 					// read & write
 					returnArr.push( 
 						<TrackerPopup
@@ -93,7 +93,7 @@ class TrackerTableData extends React.Component{
 						</TrackerPopup> 
 					)
 				}
-				else if (!userTypePermission.is_read_restricted) {
+				else if (!userTypeRestriction.is_read_restricted) {
 					// read only permission
 					returnArr.push(
 						<Cell 
@@ -111,6 +111,21 @@ class TrackerTableData extends React.Component{
 						</Cell>
 					)
 				}
+			}
+			else{ // no restrictions defined
+				returnArr.push( 
+					<TrackerPopup
+						key={ column.name }
+						ticket_id={ this.props.ticketsData.ticket_id }
+						columnName={ column.name }
+						hs_source_field={ column.hs_source_field }
+						value={ (columnValue)?columnValue:"-td-N/A-" }
+						tracker_id={ this.props.tracker_id }
+						elementType={ this.columnDataTypes[column.data_type] }
+					>
+						{ columnValue }
+					</TrackerPopup> 
+				)
 			}			
 			
 		} )

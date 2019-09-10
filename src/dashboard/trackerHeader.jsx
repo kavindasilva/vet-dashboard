@@ -77,13 +77,13 @@ class TrackerHeader extends React.Component{
 			/**
 			 * current user's permitted columns & premission data
 			 */
-			let usersVisibleColumns=(column.permissions.find( (userPermission) => 
+			let userRestrictedColumns=(column.permissions.find( (userPermission) => 
 				parseInt(userPermission.user_type_id)===this.props.metaData.userInfo.user_type_id,	
 			))
-			//console.log("trackerHeader userVisible", usersVisibleColumns)
+			//console.log("trackerHeader userVisible", userRestrictedColumns)
 
-			// if usersVisibleColumns not empty
-			if( usersVisibleColumns!==undefined && !usersVisibleColumns.is_read_restricted ){
+			// if userRestrictedColumns not empty
+			if( userRestrictedColumns!==undefined && !userRestrictedColumns.is_read_restricted ){
 
 				returnArr.push( 
 					<Cell 
@@ -106,21 +106,21 @@ class TrackerHeader extends React.Component{
 				)
 
 			}
-			// else{
-			// 	returnArr.push( 
-			// 		<Cell 
-			// 			key={ i }
-			// 			style={ { 
-			// 				color:"#1122ee", 
-			// 				padding: "2px 10px 2px 12px",
-			// 				backgroundColor: "#e3d3cc",
-			// 				...globalStyles["cell-borders"]
-			// 			}}
-			// 		>
-			// 			No Headers are visible to you
-			// 		</Cell> 
-			// 	)
-			// }
+			else{ // not restricted
+				returnArr.push( 
+					<Cell 
+						key={ i }
+						style={ { 
+							color:"#1122ee", 
+							padding: "2px 10px 2px 12px",
+							backgroundColor: "#e3d3cc",
+							...globalStyles["cell-borders"]
+						}}
+					>
+						{ column.label }
+					</Cell> 
+				)
+			}
 			
 		} );		
 

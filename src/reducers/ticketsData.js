@@ -24,12 +24,12 @@ const ticketsDataReducer = (state, action) => {
                 );
 
             if (ticketIndex >-1 ) {
-                let ticket = newState.ticketsData[ticketIndex];
-
                 let update = {};
                 update[action.payload.property] = action.payload.value;
+                
+                newState.ticketsData[ticketIndex][action.payload.data_source][action.payload.property] = action.payload.value;
 
-                newState.ticketsData[ticketIndex][action.payload.property] = action.payload.value;
+                //let ticket = newState.ticketsData[ticketIndex];
                 //newState.ticketsData[ticketIndex] = {...ticket, ...update};
 
                 updateTicketData(action.payload.ticketId, update);
@@ -69,7 +69,9 @@ const ticketsDataReducer = (state, action) => {
     }
 
 }
-
+/**
+ * should call to ticket updating API endpoint
+ */
 const updateTicketData = (ticketId, data) => {
     console.log("ticketData updateTicketData - saveToDB", data);
     return ticketAPIobj.updateTicketPropery(ticketId, data);

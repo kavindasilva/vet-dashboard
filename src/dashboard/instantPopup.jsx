@@ -110,7 +110,7 @@ class InstantPopup extends React.Component{
 				ticketId: this.state.ticket_id,
 				property: this.state.columnName,
                 value: this.state.attributeValue,
-                data_source: this.state.hs_source_field,
+                data_source: this.state.hs_source_field + "_properties",
 			}
 		});
 	}
