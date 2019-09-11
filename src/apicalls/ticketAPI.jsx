@@ -28,6 +28,21 @@ class ticketAPI extends React.Component{
       });
   }
 
+  /**
+   * gets all the pipeline stages
+   */
+  getPipelines(){
+    return axios.get( 'getUri' )
+      .then(result => {
+        console.log("ticketAPI.jsx - getTrackerConfig",result);
+        return result;
+      })
+      .catch(error => {
+        console.log("ticketAPI error", error);
+        return {err:true, errMsg:error};
+      });
+  }
+
   
   /** save / update data to API (temporary hubspot mapping) */
   updateTicketPropery (ticketId, data) {

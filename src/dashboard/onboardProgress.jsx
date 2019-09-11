@@ -50,7 +50,14 @@ const ColorlibConnector = withStyles({
 class onboardProgress extends Component {
 	state = {
 		isOpen: false,
-		steps: ['sdfsd', 'sg', 'dg'],
+		steps: [
+			{ id:"679569", label:"Registration"} ,
+			{ id:"679571", label:"Wdget live"} ,
+			{ id:"679572", label:"Lost"} ,
+			{ id:"679568", label:"Hospital ready for onboarding"} ,
+			{ id:"679570", label:"Training/Testing"} ,
+			{ id:"679573", label:"Account Customization"} ,
+		],
 		activeStep: 2,
 	}
 
@@ -83,21 +90,25 @@ class onboardProgress extends Component {
 						<React.Fragment>
 						{
 							(this.props.pipelineData && this.props.pipelineData.stage_id) &&
-							<span>
+							<div>
 								{ this.props.pipelineData.stage_id }
-							</span>
-						}
 
-							<div >
-								<Stepper alternativeLabel activeStep={this.state.activeStep} connector={<ColorlibConnector />}>
-								{ this.state.steps.map(label => (
-									<Step key={label}>
-									<StepLabel >{label}</StepLabel>
-									</Step>
-								))}
-								</Stepper>
+								<div >
+									<Stepper 
+										alternativeLabel 
+										activeStep={ this.state.steps.findIndex( s => (s.id === this.props.pipelineData.stage_id) ) } 
+										connector={<ColorlibConnector />}>
+										{ 
+											this.state.steps.map(step => (
+												<Step key={step.stage_id}>
+													<StepLabel >{step.label}</StepLabel>
+												</Step>
+											))
+										}
+									</Stepper>
+								</div>
 							</div>
-						
+						}
 						</React.Fragment>
 					</DialogContent>
 
