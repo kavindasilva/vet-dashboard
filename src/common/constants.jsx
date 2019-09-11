@@ -78,6 +78,20 @@ export const userTypes=[
 ];
 
 /**
+ * Pipeline stages of Existing Onboarding Pipeline
+ * 
+ * we had to add this like because hs sends stages not in the exact order
+ */
+export const pipelineSteps = [
+    { id:"679568", label:"Hospital ready for onboarding"} ,
+    { id:"679569", label:"Registration"} ,
+    { id:"679573", label:"Account Customization"} ,
+    { id:"679570", label:"Training/Testing"} ,
+    { id:"679571", label:"Wdget live"} ,
+    { id:"679572", label:"Lost"} ,
+];
+
+/**
  * system user types indexed
  */
 export const userTypeArray=[

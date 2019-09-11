@@ -19,7 +19,7 @@ import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
 
 import  * as Rule from "../dashboard/colouringFunctions"
-import Peg from "../parsers/conditionsParser"
+import { pipelineSteps } from "../common/constants"
 import { IconButton, Stepper, Step, StepLabel } from "@material-ui/core";
 import StepConnector from '@material-ui/core/StepConnector';
 
@@ -30,13 +30,13 @@ const ColorlibConnector = withStyles({
 	active: {
 	  '& $line': {
 		backgroundImage:
-		  'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+		  'linear-gradient( 0deg,rgb(0,0,0) 0%,rgb(0,0,0) 50%,rgb(0,0,0) 100%)',
 	  },
 	},
 	completed: {
 	  '& $line': {
 		backgroundImage:
-		  'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+		  'linear-gradient( 0deg,rgb(0,0,0) 0%,rgb(0,0,0) 50%,rgb(0,0,0) 100%)',
 	  },
 	},
 	line: {
@@ -50,14 +50,7 @@ const ColorlibConnector = withStyles({
 class onboardProgress extends Component {
 	state = {
 		isOpen: false,
-		steps: [
-			{ id:"679569", label:"Registration"} ,
-			{ id:"679571", label:"Wdget live"} ,
-			{ id:"679572", label:"Lost"} ,
-			{ id:"679568", label:"Hospital ready for onboarding"} ,
-			{ id:"679570", label:"Training/Testing"} ,
-			{ id:"679573", label:"Account Customization"} ,
-		],
+		steps: pipelineSteps,
 		activeStep: 2,
 	}
 
@@ -66,11 +59,11 @@ class onboardProgress extends Component {
 		return (
 			<React.Fragment>
 				<IconButton 
-                        size="small"
-                        onClick={ ()=>this.setState({isOpen: true}) }
-                    >
-                        o
-						{ this.showPop() }
+					size="small"
+					onClick={ ()=>this.setState({isOpen: true}) }
+				>
+					o
+					{ this.showPop() }
                 </IconButton>
 
 				<Dialog
@@ -78,12 +71,13 @@ class onboardProgress extends Component {
                     onClose={this.closePopUp}
                     aria-labelledby="draggable-dialog-title"
                 >
-                    <DialogTitle id="draggable-dialog-title" 
-                    style={
-                        { padding: "18px 24px 16px 24px" }
-                    }
+					<DialogTitle 
+						id="draggable-dialog-title" 
+						style={
+							{ padding: "18px 24px 16px 24px" }
+						}
                     >
-                        Change { this.props.pipelineData.toString() }
+                        Onboarding status for { this.props.hospital_name }
                     </DialogTitle>
 
                     <DialogContent>
@@ -91,13 +85,12 @@ class onboardProgress extends Component {
 						{
 							(this.props.pipelineData && this.props.pipelineData.stage_id) &&
 							<div>
-								{ this.props.pipelineData.stage_id }
-
 								<div >
 									<Stepper 
 										alternativeLabel 
 										activeStep={ this.state.steps.findIndex( s => (s.id === this.props.pipelineData.stage_id) ) } 
-										connector={<ColorlibConnector />}>
+										connector={<ColorlibConnector />}
+									>
 										{ 
 											this.state.steps.map(step => (
 												<Step key={step.stage_id}>

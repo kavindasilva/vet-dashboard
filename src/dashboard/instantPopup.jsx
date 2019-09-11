@@ -80,6 +80,7 @@ class InstantPopup extends React.Component{
                     (this.state.columnName==="clinic_name") && 
                     <ProgressBar
                         ticket_id={ this.props.ticket_id }
+                        hospital_name={ this.state.attributeValue }
                     />
                 }
             </React.Fragment>

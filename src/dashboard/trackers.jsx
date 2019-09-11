@@ -150,7 +150,7 @@ class Trackers extends React.Component{
 
                             <div 
                                 //style={{width: '100%', height: '120%'}}
-                                style={{width: '100%', height: '200px'}}
+                                style={{width: '100%', height: '600px'}}
                             >
                                 <StickyTable 
                                     stickyHeaderCount={1}
