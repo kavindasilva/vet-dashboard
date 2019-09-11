@@ -21,10 +21,10 @@ import Popup from "reactjs-popup";
 import CustomDatePicker from "../dashboard/datePicker";
 
 import TableCell from '@material-ui/core/TableCell';
-import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/core";
+import { MenuItem, RadioGroup, FormControlLabel, FormGroup, IconButton } from "@material-ui/core";
 
 import { trackerPopupDefaultValues } from "../common/constants";
-
+import ProgressBar from "../dashboard/onboardProgress"
 
 class InstantPopup extends React.Component{
 
@@ -76,6 +76,10 @@ class InstantPopup extends React.Component{
                     this.showPop()
                 }
                 </Popup>
+                {
+                    (this.state.columnName==="clinic_name") && 
+                    <ProgressBar/>
+                }
             </React.Fragment>
         );
     }
