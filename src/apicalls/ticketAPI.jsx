@@ -27,8 +27,8 @@ class ticketAPI extends React.Component{
         return {err:true, errMsg:error};
       });
   }
-  
 
+  
   /** save / update data to API (temporary hubspot mapping) */
   updateTicketPropery (ticketId, data) {
     console.log("ticketAPI - saveToDB", ticketId, data); //return;

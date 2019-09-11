@@ -51,7 +51,7 @@ const styles = theme => ({
 class Trackers extends React.Component{
 	state = { 
         ...this.props.metaData, 
-        last_updated: "N/A",
+        last_updated: [], // get by tracker_id
         tabValue:2,
         showNewClinicAddForm: false,
 
@@ -78,7 +78,7 @@ class Trackers extends React.Component{
                 <Button
                     onClick={ ()=>this.componentDidMount() }
                 >
-                    Reload  Last Updated: 
+                    Reload 
                     { String(this.state.last_updated) }
                 </Button>
                 { 
@@ -119,6 +119,7 @@ class Trackers extends React.Component{
                                 <Tab 
                                     key={ tracker.tracker_id } 
                                     label={ tracker.name } 
+                                    onClick={ ()=>this.setLastUpdatedTime(tracker.tracker_id) }
                                 />
                             ))
                             :(this.state.errorGetTrackers)
@@ -142,6 +143,7 @@ class Trackers extends React.Component{
                         <div 
                             key={ tracker.tracker_id } 
                         >
+                            <small>Last updated: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "NN" }</small>
                             <h3>Tracker Name: { tracker.name } </h3>
                             <small>Tracker ID: {tracker.tracker_id} </small>
                             <small> | Pipeline: {tracker.pipeline_label} </small>
@@ -230,6 +232,23 @@ class Trackers extends React.Component{
 	closeNewClinicForm = () => {
 		this.setState({showNewClinicAddForm: false});
 	}
+
+    setLastUpdatedTime = (trackerId) => {
+        trackersAPIobj.getTrackerLastUpdated(trackerId)
+        .then(
+            res => {
+                if(res.headers &&  res.headers["last-updated"]){
+                    let newLastUpdated = {...this.state.last_updated} ;
+
+                    newLastUpdated[trackerId] = res.headers["last-updated"];
+                    this.setState({ last_updated: newLastUpdated });
+                    //this.setState({last_updated: res.headers["last-updated"]});
+                }
+            }
+        )
+
+        
+    }
 
     /**
      * retrieve trackers configuration data from DB

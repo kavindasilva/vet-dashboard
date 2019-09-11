@@ -2,8 +2,12 @@
 import React from 'react';
 import axios from 'axios';
 
+
 const uriGetConfigData = 'http://ontrack.dev.io/rest/trackers/'; // from db
 const uriGetPipelines  = "http://ontrack.dev.io/rest/trackers/pipes"
+const uriGetTicketData = 'http://ontrack.dev.io/rest/tickets/'; // 
+
+
 
 class trackersAPI extends React.Component{
   
@@ -70,6 +74,27 @@ class trackersAPI extends React.Component{
       });
   }
 
+    
+  /**
+   * gets only the last updated date with headers
+   * with empty body
+   */
+  getTrackerLastUpdated( ticketID ){
+    var getUri= uriGetTicketData;
+    if( ticketID!="" && ticketID!=null )
+      getUri=uriGetTicketData + "?tracker_id=" + ticketID
+
+    console.log("trackerAPI lastUpdateCall uri:", getUri);
+    return axios.get( getUri )
+      .then(result => {
+        console.log("trackerAPI.jsx - getTicketLastUpdated",result);
+        return result;
+      })
+      .catch(error => {
+        console.log("trackerAPI error", error);
+        return {err:true, errMsg:error};
+      });
+  }
 
 
 }
