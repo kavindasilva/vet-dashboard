@@ -9,42 +9,49 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Select from '@material-ui/core/Select';
-import Radio from '@material-ui/core/Radio';
-import Checkbox from '@material-ui/core/Checkbox';
-import TextField from '@material-ui/core/TextField';
 
-import Popup from "reactjs-popup";
-import CustomDatePicker from "../dashboard/datePicker";
-import InstantPopup from "../dashboard/instantPopup";
-//import SmallPop from "../dashboard/smallPop";
-
-import TableCell from '@material-ui/core/TableCell';
 
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
 import { rootStore } from "../stores/mainStore";
-
-import DateFnsUtils from "@date-io/date-fns";
-import {format} from "date-fns";
-
-import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
-
-import { trackerPopupDefaultValues, globalStyles } from "../common/constants";
-
-import Moment from 'react-moment';
-import moment from "moment";
 
 import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
 
 import  * as Rule from "../dashboard/colouringFunctions"
 import Peg from "../parsers/conditionsParser"
-import { IconButton } from "@material-ui/core";
+import { IconButton, Stepper, Step, StepLabel } from "@material-ui/core";
+import StepConnector from '@material-ui/core/StepConnector';
+
+const ColorlibConnector = withStyles({
+	alternativeLabel: {
+	  top: 22,
+	},
+	active: {
+	  '& $line': {
+		backgroundImage:
+		  'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+	  },
+	},
+	completed: {
+	  '& $line': {
+		backgroundImage:
+		  'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+	  },
+	},
+	line: {
+	  height: 3,
+	  border: 0,
+	  backgroundColor: '#eaeaf0',
+	  borderRadius: 1,
+	},
+  })(StepConnector);
 
 class onboardProgress extends Component {
 	state = {
-        isOpen: false,
+		isOpen: false,
+		steps: ['sdfsd', 'sg', 'dg'],
+		activeStep: 2,
 	}
 
   	render() {
@@ -69,10 +76,30 @@ class onboardProgress extends Component {
                         { padding: "18px 24px 16px 24px" }
                     }
                     >
-                        Change { this.state.attributeName }
+                        Change { this.props.pipelineData.toString() }
                     </DialogTitle>
 
-                    <DialogContent></DialogContent>
+                    <DialogContent>
+						<React.Fragment>
+						{
+							(this.props.pipelineData && this.props.pipelineData.stage_id) &&
+							<span>
+								{ this.props.pipelineData.stage_id }
+							</span>
+						}
+
+							<div >
+								<Stepper alternativeLabel activeStep={this.state.activeStep} connector={<ColorlibConnector />}>
+								{ this.state.steps.map(label => (
+									<Step key={label}>
+									<StepLabel >{label}</StepLabel>
+									</Step>
+								))}
+								</Stepper>
+							</div>
+						
+						</React.Fragment>
+					</DialogContent>
 
 					<DialogActions>
 						<Button
@@ -102,6 +129,19 @@ class onboardProgress extends Component {
 const mapStateToProps = (state, props) => {
 	//console.log('onboardPopup.jsx-mapStateToProps', state);
 	console.log('onboardPopup.jsx-props1', props);
+
+	let ticketData = state.ticketsDataReducer.ticketsData.find( ticket => (
+		ticket.ticket_id === props.ticket_id
+	) );
+
+	if(ticketData && ticketData.hs_pipeline_stage && ticketData.hs_pipeline_stage.stage_id){
+		return{
+			pipelineData: ticketData.hs_pipeline_stage
+		}
+	}
+	return {
+		pipelineData: null
+	}
 }
 
 

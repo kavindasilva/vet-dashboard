@@ -143,7 +143,7 @@ class TrackerPopup extends Component {
 	}
 
 	componentDidMount(){
-		console.log("trackerPopup didmount props:", this.props);
+		//console.log("trackerPopup didmount props:", this.props);
 
 		this.evaluateExpr(null);
 		//this.validateExpr();
@@ -154,7 +154,7 @@ class TrackerPopup extends Component {
 
 const mapStateToProps = (state, props) => {
 	//console.log('trackerPopup.jsx-mapStateToProps', state);
-	console.log('trackerPopup.jsx-props1', props);
+	//console.log('trackerPopup.jsx-props1', props);
 
 	/** ticket's index */
 	let trackerIndex = state.ticketsDataReducer.ticketsData.findIndex( ticket => (

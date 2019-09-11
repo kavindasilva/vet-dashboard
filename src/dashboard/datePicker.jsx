@@ -51,7 +51,7 @@ class CustomDatePicker extends React.Component{
     }
 
     render(){
-        console.log('datePicker: Rendering cell content');
+        //console.log('datePicker: Rendering cell content');
         
         return(
             <React.Fragment>
