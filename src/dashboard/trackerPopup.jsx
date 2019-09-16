@@ -50,6 +50,7 @@ class TrackerPopup extends Component {
 		/** property value */     				attributeValue	:this.props.ticketProperty.value,
 		/** element input type */ 				elementType		:this.props.elementType,
 
+		attributeValue2	:this.props.propertyValue,
 		hoverTimeOut: null,
 		viewHoverButtons: false,
 		
@@ -77,7 +78,7 @@ class TrackerPopup extends Component {
 						...globalStyles["cell-borders"],
 					}}
 				>
-					{ this.showPop() }
+					{ this.state.attributeValue2 }
 					{ this.showHoverButtons() }
 				</Cell>
 			</React.Fragment>
@@ -90,9 +91,7 @@ class TrackerPopup extends Component {
 	showHoverButtons(){
 		return(
 			<div hidden={ !this.state.viewHoverButtons }>
-				<Button >
-					Edit
-				</Button>
+				{ this.showPop() }
 				<Button >
 					History
 				</Button>
@@ -193,6 +192,12 @@ class TrackerPopup extends Component {
 		//this.validateExpr();
 	}
 
+	componentWillReceiveProps(newProps){
+		console.log("trackerPopup newProps")
+        if(newProps.ticketProperty && newProps.ticketProperty.value!== this.state.attributeValue2)
+            this.setState({attributeValue2: newProps.propertyValue})
+	}
+	
 }
 
 
@@ -236,6 +241,8 @@ const mapStateToProps = (state, props) => {
 				'value' 	: state.ticketsDataReducer.ticketsData[trackerIndex][source_field][props.columnName],
 				'ticketId'  : state.ticketsDataReducer.ticketsData[trackerIndex]['ticket_id'],
 			},
+
+			propertyValue: state.ticketsDataReducer.ticketsData[trackerIndex][source_field][props.columnName],
 		};
 	}
 	else

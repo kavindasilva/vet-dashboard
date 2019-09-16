@@ -46,6 +46,7 @@ class CustomDatePicker extends React.Component{
         ticket_id: this.props.ticket_id,
         columnName: this.props.columnName,
         isOpen: false, //this.props.show,
+        //isOpen: this.props.showElement, 
         hs_source_field: this.props.hs_source_field,
         attributeValue: this.props.value,
     }
@@ -55,13 +56,7 @@ class CustomDatePicker extends React.Component{
         
         return(
             <React.Fragment>
-                <div style={this.styleTD}
-                    onClick={ ()=>(
-                        this.setState({ isOpen: true })
-                        ) } 
-                >
-                    { String( (this.props.dateValue)?(this.props.dateValue):"-date-" ) }
-                </div>
+                <Button onClick={ ()=>this.setState({ isOpen: true }) }>Edit</Button>
 
                 {/* popup modal UI */}
                 <Dialog
@@ -87,11 +82,8 @@ class CustomDatePicker extends React.Component{
                             onClick={() =>  this.setState({ isOpen: true}) }>
                             <DatePicker
                                 autoFocus = { false }
-                                //onlyCalendar
-                                //variant="inline"
                                 format="yyyy/MM/dd"
                                 label="Pet admitted date"
-                                //helperText="No year selection"
                                 value={ this.state.attributeValue }
                                 onChange={ this.changeDatepickerValue }
                                 onAccept={ this.acceptDatepickerValue }

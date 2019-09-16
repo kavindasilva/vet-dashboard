@@ -59,32 +59,69 @@ class InstantPopup extends React.Component{
         isOpen: false,
         hs_source_field : this.props.hs_source_field,
         attributeValue: this.props.value,
+
+        componentState: "read",
+
+        //value: this.props.value,
+
     }
 
     render(){
-        //console.log('instantPopup: Rendering cell content');
-
         return(
             <React.Fragment>
-                <Popup 
-                    trigger={ <div style={ {width: "100%", height:"100%" } }> {
-                        String( (this.props.popValue)?(this.props.popValue):"-pop-" )
-                        }  </div>  } 
-                    position="bottom right"
-                >
-                { 
-                    this.showPop()
-                }
-                </Popup>
-                {
-                    (this.state.columnName==="clinic_name") && 
-                    <ProgressBar
-                        ticket_id={ this.props.ticket_id }
-                        hospital_name={ this.state.attributeValue }
-                    />
-                }
+            {
+                this.viewCell()
+            }
+            {
+                this.viewProgressBar()
+            }
             </React.Fragment>
         );
+    }
+
+    viewCell(){
+        //console.log('instantPopup: Rendering cell content');
+        switch(this.state.componentState){
+            case "read":
+                return this.sendReadOnly();
+            case "edit":
+                return this.sendTextBox();
+
+            default:
+                return this.sendTextBox();
+        }
+    }
+
+    viewProgressBar = () => (
+        <React.Fragment>
+            {
+                (this.state.columnName==="clinic_name") && 
+                <ProgressBar
+                    ticket_id={ this.props.ticket_id }
+                    hospital_name={ this.state.attributeValue }
+                />
+            }
+        </React.Fragment>
+    )
+
+    sendTextBox(){
+        return(
+            <TextField
+                value={ this.state.attributeValue }
+                onChange={ (e)=>{ this.setState({attributeValue: e.target.value}) } }
+                onBlur={ ()=>{ this.dispatchUpdate() } }
+            />
+        )
+    }
+
+    sendReadOnly(){
+        return(
+            <Button
+                onClick={ ()=> { this.setState({componentState: ""}) } }            
+            >
+                Edit
+            </Button>
+        )
     }
 
     showPop = () => (
