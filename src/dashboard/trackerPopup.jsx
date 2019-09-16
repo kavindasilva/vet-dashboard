@@ -37,10 +37,12 @@ import moment from "moment";
 
 import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
+import CellHistory from "../dashboard/cellHistory"
 
 //import Rule from "../dashboard/colouringFunctions"
 import  * as Rule from "../dashboard/colouringFunctions"
 import Peg from "../parsers/conditionsParser"
+import cellHistory from "../dashboard/cellHistory";
 
 //export default class TrackerPopup extends Component {
 class TrackerPopup extends Component {
@@ -92,9 +94,7 @@ class TrackerPopup extends Component {
 		return(
 			<div hidden={ !this.state.viewHoverButtons }>
 				{ this.showPop() }
-				<Button >
-					History
-				</Button>
+				<CellHistory />
 			</div>
 		)
 	}

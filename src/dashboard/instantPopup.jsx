@@ -109,7 +109,7 @@ class InstantPopup extends React.Component{
             <TextField
                 value={ this.state.attributeValue }
                 onChange={ (e)=>{ this.setState({attributeValue: e.target.value}) } }
-                onBlur={ ()=>{ this.dispatchUpdate() } }
+                onBlur={ ()=>{ this.dispatchUpdate(); this.setState({componentState:"read"}); } }
             />
         )
     }
