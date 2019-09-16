@@ -94,7 +94,9 @@ class TrackerPopup extends Component {
 		return(
 			<div hidden={ !this.state.viewHoverButtons }>
 				{ this.showPop() }
-				<CellHistory />
+				<CellHistory 
+					ticketPropertyId = { this.props.ticketPropertyId }
+				/>
 			</div>
 		)
 	}
@@ -188,7 +190,7 @@ class TrackerPopup extends Component {
 	componentDidMount(){
 		//console.log("trackerPopup didmount props:", this.props);
 
-		this.evaluateExpr(null);
+		//this.evaluateExpr(null);
 		//this.validateExpr();
 	}
 
@@ -206,7 +208,7 @@ const mapStateToProps = (state, props) => {
 	//console.log('trackerPopup.jsx-props1', props);
 
 	/** ticket's index */
-	let trackerIndex = state.ticketsDataReducer.ticketsData.findIndex( ticket => (
+	let ticketIndex = state.ticketsDataReducer.ticketsData.findIndex( ticket => (
 		ticket.ticket_id === props.ticket_id
 	) );
 
@@ -226,9 +228,24 @@ const mapStateToProps = (state, props) => {
 		console.log("trackerPopup trackerConfigIndex error");
 
 
-	if( trackerIndex > -1 ){
+	if( ticketIndex > -1 ){
 		let source_field = props.hs_source_field + "_properties";
-		//console.log("trackerPopup val", state.ticketsDataReducer.ticketsData[trackerIndex][source_field][props.columnName]);
+		//console.log("trackerPopup val", state.ticketsDataReducer.ticketsData[ticketIndex][source_field][props.columnName]);
+
+		let ticketPropId = 0;
+		if(
+			state.ticketsDataReducer.ticketsData[ticketIndex]
+			&& state.ticketsDataReducer.ticketsData[ticketIndex].properties
+			&& state.ticketsDataReducer.ticketsData[ticketIndex].properties.length>0
+		){
+			ticketPropId = state.ticketsDataReducer.ticketsData[ticketIndex].properties.find( p => (
+				p.tracker_column_id == String(trackerConfig['tracker_column_id'])
+			))
+
+			ticketPropId = (ticketPropId)? ticketPropId.ticket_property_id : null;
+		}
+		console.log("trackerPopup mapState", ticketPropId, trackerConfig['tracker_column_id'])
+		//ticketPropId = trackerConfig['tracker_column_id']
 		
 		return {
 			configData: trackerConfig,
@@ -238,11 +255,13 @@ const mapStateToProps = (state, props) => {
 			/** tracker instance's particular column's data */
 			ticketProperty: {
 				'property'	: props.columnName,
-				'value' 	: state.ticketsDataReducer.ticketsData[trackerIndex][source_field][props.columnName],
-				'ticketId'  : state.ticketsDataReducer.ticketsData[trackerIndex]['ticket_id'],
+				'value' 	: state.ticketsDataReducer.ticketsData[ticketIndex][source_field][props.columnName],
+				'ticketId'  : state.ticketsDataReducer.ticketsData[ticketIndex]['ticket_id'],
 			},
 
-			propertyValue: state.ticketsDataReducer.ticketsData[trackerIndex][source_field][props.columnName],
+			propertyValue: state.ticketsDataReducer.ticketsData[ticketIndex][source_field][props.columnName],
+
+			ticketPropertyId: ticketPropId,
 		};
 	}
 	else

@@ -5,6 +5,8 @@ import axios from 'axios';
 const uriGetTicketData = 'http://ontrack.dev.io/rest/tickets/'; // 
 const uriTickets = 'http://ontrack.dev.io/rest/tickets/'; // 
 
+const uriPropertyHistory = "http://ontrack.dev.io/rest/tickets/history/"; //http://ontrack.dev.io/rest/tickets/history/5
+
 class ticketAPI extends React.Component{
 
   /** 
@@ -52,6 +54,14 @@ class ticketAPI extends React.Component{
                 .then(res => {
                     console.log(res);
                 });
+  }
+
+  retrieveCellHistory(propertyId){
+    return axios.get( uriPropertyHistory + propertyId )
+    .then( res => {
+      console.log("ticketAPI.jsx - retrieveCellHistory",res);
+      return res;
+    } )
   }
 
 

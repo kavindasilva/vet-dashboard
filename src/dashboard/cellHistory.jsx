@@ -36,15 +36,20 @@ import 'react-sticky-table/dist/react-sticky-table.css';
 import  * as Rule from "../dashboard/colouringFunctions"
 import Peg from "../parsers/conditionsParser"
 
+import ticketAPI from "../apicalls/ticketAPI"
+const ticketAPIObj = new ticketAPI();
+
+
 class CellHistory extends Component {
 	state = {
+        historyData: null,
 	}
 
   	render() {
 		//console.log('trackerPopup: Rendering cell content');
 		return (
 			<React.Fragment>
-                <Button onClick={ ()=>this.setState({ isOpen: true }) }>History</Button>
+                <Button onClick={ ()=>this.getHistoryData() }>History</Button>
 
                 <Dialog
                     open={this.state.isOpen} // not ok
@@ -56,7 +61,28 @@ class CellHistory extends Component {
                     </DialogTitle>
 
                     <DialogContent>
-                        history data
+                        history data <br/>
+                        <table>
+                            <thead>
+                                <tr> <th>date</th> <th>user</th> <th>value</th> <th>description</th> </tr>
+                            </thead>
+                            <tbody>
+                            {
+                                (this.state.historyData)
+                                ?(
+                                    this.state.historyData.map( (history, i) => (  
+                                        <tr key={i} >
+                                            <td>{history.edit_date}</td>
+                                            <td>{history.user_id}</td>
+                                            <td>{history.value}</td>
+                                            <td>{history.description}</td>
+                                        </tr>
+                                    ))
+                                )
+                                :<tr><td colSpan='4'>no history</td></tr>
+                            }
+                            </tbody>
+                        </table>
                     </DialogContent>
 
                     <DialogActions>
@@ -73,6 +99,20 @@ class CellHistory extends Component {
             </React.Fragment>
 		)
     }
+
+
+    getHistoryData = () => {
+        this.setState({ isOpen: true });
+        ticketAPIObj.retrieveCellHistory(this.props.ticketPropertyId)
+        .then(
+            res => {
+                if(res && res.data)
+                    this.setState({historyData: res.data})
+                else
+                    this.setState({historyData: res})
+            }
+        );
+    }
     
     closePopUp = () => this.setState({ isOpen: false });
 
@@ -82,7 +122,9 @@ class CellHistory extends Component {
 
 const mapStateToProps = (state, props) => {
 	//console.log('trackerPopup.jsx-mapStateToProps', state);
-	//console.log('trackerPopup.jsx-props1', props);
+    //console.log('trackerPopup.jsx-props1', props);
+    
+    return {};
 }
 
 
