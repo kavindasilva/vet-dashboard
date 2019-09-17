@@ -146,7 +146,11 @@ class Trackers extends React.Component{
                             key={ tracker.tracker_id } 
                         >
                             <TicketSearch
-                            />
+                                tracker_id={tracker.tracker_id}
+                                getAllTickets={this.getTicketData}
+                                dispatchTickets={this.dispatchTicketInstances}
+                            /><br/>
+                            
                             <small>Last updated: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "NN" }</small>
                             <h3>Tracker Name: { tracker.name } </h3>
                             <small>Tracker ID: {tracker.tracker_id} </small>
@@ -272,7 +276,7 @@ class Trackers extends React.Component{
     /**
      * retrieve tracker instances data from DB
      */
-    getTicketData(){
+    getTicketData = () => {
         ticketAPIobj.getTicketsAndProperties()
         .then(
             res => {

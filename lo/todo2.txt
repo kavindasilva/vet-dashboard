@@ -81,5 +81,9 @@ https://stackoverflow.com/questions/50298987/php-pdo-sqlstatehy000-2002-connecti
 --sep 10
 https://stackoverflow.com/questions/47493723/reload-component-react
 
+--sep 17
+https://stackoverflow.com/questions/6795383/how-to-make-strpos-case-insensitive stripos()
+https://stackoverflow.com/questions/53499361/how-do-i-call-a-method-from-another-class-component-in-react-js
+
 
 

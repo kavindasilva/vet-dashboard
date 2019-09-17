@@ -33,8 +33,11 @@ import moment from "moment";
 import { ticketSearchParams } from "../common/constants"
 import { MenuItem } from "@material-ui/core";
 
-//export default class TrackerPopup extends Component {
-class TrackerPopup extends Component {
+import ticketAPI from "../apicalls/ticketAPI";
+const ticketAPIObj = new ticketAPI();
+
+//export default class ticketSearch extends Component {
+class ticketSearch extends Component {
 	state = {
 		searchOption: 'ticket_id',
 		searchWord: '',
@@ -60,11 +63,36 @@ class TrackerPopup extends Component {
 				/>
 
 				<Button
-					onClick={ ()=>console.log() }
+					//onClick={ ()=>console.log("ticketSearch params", this.state.searchOption, this.state.searchWord, this.props.tracker_id) }
+					onClick={ ()=>this.searchTickets() }
 				>
 					Search
 				</Button>
+				<Button
+					onClick={ ()=>this.props.getAllTickets() }
+				>
+					Reset
+				</Button>
 			</React.Fragment>
+		)
+	}
+
+	searchTickets = () => {
+		ticketAPIObj.searchTickets( 'param=' +this.state.searchOption+ '&value=' +this.state.searchWord )
+		.then(
+			res => {
+				console.log("ticketSearch res", res);
+				if(res && res.data){
+					this.setState({ ticketsData: res.data }, function(){
+						rootStore.dispatch({
+							type: 'GET_TICKETS_FROM_DB',
+							payload: {
+								data: this.state.ticketsData
+							}
+						});
+					});
+				}
+			}
 		)
 	}
 
@@ -86,6 +114,6 @@ const mapStateToProps = (state, props) => {
 }
 
 
-export default connect(mapStateToProps)(TrackerPopup);
+export default connect(mapStateToProps)(ticketSearch);
 
 

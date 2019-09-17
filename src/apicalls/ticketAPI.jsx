@@ -7,6 +7,8 @@ const uriTickets = 'http://ontrack.dev.io/rest/tickets/'; //
 
 const uriPropertyHistory = "http://ontrack.dev.io/rest/tickets/history/"; //http://ontrack.dev.io/rest/tickets/history/5
 
+const uriSearchTicket = "http://ontrack.dev.io/rest/tickets/search?"; //http://ontrack.dev.io/rest/tickets/search?param=ticket_id&value=42805955
+
 class ticketAPI extends React.Component{
 
   /** 
@@ -56,10 +58,20 @@ class ticketAPI extends React.Component{
                 });
   }
 
+  /** return the history of a  table cell */
   retrieveCellHistory(propertyId){
     return axios.get( uriPropertyHistory + propertyId )
     .then( res => {
       console.log("ticketAPI.jsx - retrieveCellHistory",res);
+      return res;
+    } )
+  }
+
+  /** return the search result  */
+  searchTickets(query){
+    return axios.get( uriSearchTicket + query )
+    .then( res => {
+      console.log("ticketAPI.jsx - searchTickets",res);
       return res;
     } )
   }
