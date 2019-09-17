@@ -105,6 +105,13 @@ class Trackers extends React.Component{
 	viewTabs(){
 		return(
 			<div>
+                <div float={'right'} align={'right'}>
+                    <TicketSearch
+                        //tracker_id={tracker.tracker_id}
+                        getAllTickets={this.getTicketData}
+                        dispatchTickets={this.dispatchTicketInstances}
+                    /><br/>
+                </div>
 				<AppBar position="static" color="default">
                     <Tabs
                         key={this.state.tabValue}
@@ -145,11 +152,7 @@ class Trackers extends React.Component{
                         <div 
                             key={ tracker.tracker_id } 
                         >
-                            <TicketSearch
-                                tracker_id={tracker.tracker_id}
-                                getAllTickets={this.getTicketData}
-                                dispatchTickets={this.dispatchTicketInstances}
-                            /><br/>
+                            
                             
                             <small>Last updated: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "NN" }</small>
                             <h3>Tracker Name: { tracker.name } </h3>
