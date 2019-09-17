@@ -42,6 +42,7 @@ const ticketAPIObj = new ticketAPI();
 
 class CellHistory extends Component {
 	state = {
+        isOpen: false,
         historyData: null,
 	}
 
@@ -64,22 +65,22 @@ class CellHistory extends Component {
                         history data <br/>
                         <table>
                             <thead>
-                                <tr> <th>date</th> <th>user</th> <th>value</th> <th>description</th> </tr>
+                                <tr><th>date</th><th>user</th><th>value</th><th>description</th></tr>
                             </thead>
                             <tbody>
                             {
-                                (this.state.historyData)
+                                (this.state.historyData && this.state.historyData.length>0 )
                                 ?(
                                     this.state.historyData.map( (history, i) => (  
                                         <tr key={i} >
                                             <td>{history.edit_date}</td>
-                                            <td>{history.user_id}</td>
+                                            <td>{history.username}</td>
                                             <td>{history.value}</td>
                                             <td>{history.description}</td>
                                         </tr>
                                     ))
                                 )
-                                :<tr><td colSpan='4'>no history</td></tr>
+                                :<tr><td colSpan={4}>no history</td></tr>
                             }
                             </tbody>
                         </table>
@@ -100,7 +101,10 @@ class CellHistory extends Component {
 		)
     }
 
-
+    /**
+     * opens the popup
+     * gets history data from API
+     */
     getHistoryData = () => {
         this.setState({ isOpen: true });
         ticketAPIObj.retrieveCellHistory(this.props.ticketPropertyId)
@@ -109,7 +113,7 @@ class CellHistory extends Component {
                 if(res && res.data)
                     this.setState({historyData: res.data})
                 else
-                    this.setState({historyData: res})
+                    this.setState({historyDataDump: res})
             }
         );
     }

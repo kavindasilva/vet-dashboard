@@ -25,6 +25,8 @@ import Menu from "../common/menu";
 import ticketAPI from "../apicalls/ticketAPI";
 import trackersAPI from "../apicalls/trackersAPI";
 
+import TicketSearch from "../dashboard/ticketSearch"
+
 import TrackerTableHeader from "../dashboard/trackerHeader";
 import TrackerTableRow from "../dashboard/trackerTableRow";
 
@@ -143,6 +145,8 @@ class Trackers extends React.Component{
                         <div 
                             key={ tracker.tracker_id } 
                         >
+                            <TicketSearch
+                            />
                             <small>Last updated: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "NN" }</small>
                             <h3>Tracker Name: { tracker.name } </h3>
                             <small>Tracker ID: {tracker.tracker_id} </small>
@@ -196,7 +200,6 @@ class Trackers extends React.Component{
                 height={ "600px" }
                 width={ "800px" }
                 minWidth={ "600px" }
-                maxWidth={ "1000px" }
             >
                 <DialogTitle>
                     Add new VG

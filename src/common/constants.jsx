@@ -113,4 +113,10 @@ export const userTypeArray=[
     "CLASS_D"
 ]
 
+/** ticket searching options */
+export const ticketSearchParams = [
+    { param:"ticket_id", label:"HS ticket number"},
+    { param:"clinic_name", label:"Clinic name"},
+]
+
 

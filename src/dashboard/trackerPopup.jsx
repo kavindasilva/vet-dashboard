@@ -244,7 +244,7 @@ const mapStateToProps = (state, props) => {
 
 			ticketPropId = (ticketPropId)? ticketPropId.ticket_property_id : null;
 		}
-		console.log("trackerPopup mapState", ticketPropId, trackerConfig['tracker_column_id'])
+		//console.log("trackerPopup mapState", ticketPropId, trackerConfig['tracker_column_id'])
 		//ticketPropId = trackerConfig['tracker_column_id']
 		
 		return {
