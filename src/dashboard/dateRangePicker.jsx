@@ -71,12 +71,13 @@ class CustomDateRangePicker extends React.Component{
     }
 
 	makeReturnString = () => {
-        let st = this.state.startDate + ";" + this.state.endDate
-        this.props.changeSearchWord(st);
+        let combinedDate = this.state.startDate + ";" + this.state.endDate
+        this.props.changeSearchWord(combinedDate);
     }
     
     componentDidMount(){
         //console.log("CustomDateRangePicker mount: props:", this.props, "state:", this.state);
+        this.makeReturnString();
     }
 }
 

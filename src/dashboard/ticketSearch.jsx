@@ -36,7 +36,7 @@ import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } f
 import { MenuItem } from "@material-ui/core";
 
 import ticketAPI from "../apicalls/ticketAPI";
-import { thisExpression } from "@babel/types";
+import CSVdownloader from "../dashboard/ticketDownload"
 const ticketAPIObj = new ticketAPI();
 
 const changeInputType = (e) => {
@@ -46,7 +46,7 @@ const changeInputType = (e) => {
 class ticketSearch extends Component {
 	state = {
 		//searchOption: 'ticket_id',
-		searchOption: 'hs_createddate',
+		searchOption: 'create_date',
 		searchWord: '',
 		searchInputType: 'date',
 	}
@@ -80,7 +80,7 @@ class ticketSearch extends Component {
 				</Select>
 
 				{
-					(this.state.searchOption === "hs_createddate") /** unable to change input type with custom props in Menu item  */
+					(this.state.searchOption === "create_date") /** unable to change input type with custom props in Menu item  */
 					? <DateRangePicker
 						changeSearchWord={ this.changeSearchWord }
 					/>
@@ -102,6 +102,9 @@ class ticketSearch extends Component {
 				>
 					Reset
 				</Button>
+				<CSVdownloader
+					tracker_id={ 3 }
+				/>
 			</React.Fragment>
 		)
 	}
