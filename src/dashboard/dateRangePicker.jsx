@@ -26,6 +26,8 @@ class CustomDateRangePicker extends React.Component{
 
         startDate: format(new Date(), 'yyyy-MM-dd'),
         endDate: format(new Date(), 'yyyy-MM-dd'),
+
+        searchDate: format(new Date(), 'yyyy-MM-dd') + ";" + format(new Date(), 'yyyy-MM-dd')
     }
 
     render(){
@@ -41,7 +43,7 @@ class CustomDateRangePicker extends React.Component{
                         format="yyyy/MM/dd"
                         label="Starting date"
                         value={ this.state.startDate }
-                        onChange={ this.changeStartDate }
+                        onChange={ (val) => { this.changeStartDate(val) } }
                     />
 
                     <DatePicker
@@ -50,7 +52,7 @@ class CustomDateRangePicker extends React.Component{
                         format="yyyy/MM/dd"
                         label="Ending date"
                         value={ this.state.endDate }
-                        onChange={ this.changeEndDate }
+                        onChange={ (val) => { this.changeEndDate(val) } }
                     />
                 </MuiPickersUtilsProvider>	
             
@@ -59,39 +61,19 @@ class CustomDateRangePicker extends React.Component{
         )
     }
 
-    dispatchUpdate = () => {
-        return;
-		rootStore.dispatch({
-			type: 'UPDATE_CELL_VALUE',
-			payload: {
-				ticketId: this.state.ticket_id,
-				property: this.state.columnName,
-                value: this.state.attributeValue,
-                data_source: this.state.hs_source_field + "_properties",
-			}
-		});
-	}
 
 	changeStartDate = (selectedDate) => {
-        this.setState({ startDate: format(new Date(selectedDate), 'yyyy-MM-dd') });
+        this.setState({ startDate: format(new Date(selectedDate), 'yyyy-MM-dd') }, ()=>this.makeReturnString() );
     }
 
     changeEndDate = (selectedDate) => {
-		this.setState({ endDate: format(new Date(selectedDate), 'yyyy-MM-dd') });
+		this.setState({ endDate: format(new Date(selectedDate), 'yyyy-MM-dd') }, ()=>this.makeReturnString() );
     }
 
-	acceptDatepickerValue = () => {
-        this.dispatchUpdate();
-        this.closeDatepicker();
+	makeReturnString = () => {
+        let st = this.state.startDate + ";" + this.state.endDate
+        this.props.changeSearchWord(st);
     }
-
-    openPopUp = () => {
-		this.setState({ isOpen: true });
-	};
-
-	closePopUp = () => {
-		this.setState({ isOpen: false });
-	};
     
     componentDidMount(){
         //console.log("CustomDateRangePicker mount: props:", this.props, "state:", this.state);

@@ -127,7 +127,7 @@ class ticketSearch extends Component {
 	}
 
 	changeSearchWord = (newWord) => {
-		thisExpression.setState({searchWord: newWord});
+		this.setState({searchWord: newWord});
 	}
 
 	componentDidMount(){

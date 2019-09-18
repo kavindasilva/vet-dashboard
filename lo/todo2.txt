@@ -85,5 +85,7 @@ https://stackoverflow.com/questions/47493723/reload-component-react
 https://stackoverflow.com/questions/6795383/how-to-make-strpos-case-insensitive stripos()
 https://stackoverflow.com/questions/53499361/how-do-i-call-a-method-from-another-class-component-in-react-js
 
+--sep 18
+https://stackoverflow.com/questions/34623651/how-to-get-value-of-date-picker-from-material-ui/34629423
 
 
