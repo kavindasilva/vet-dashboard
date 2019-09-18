@@ -31,12 +31,12 @@ class TicketDownload extends React.Component{
 		console.log("ticketDownload - mount. props:", this.props); //ok
 		//console.log("TicketDownload - mount. props.metaData:", this.props.metaData); 
 		
-		if(
-			this.props.configData
-			&& this.props.configData.columns
-			&& this.props.configData.columns.length > 0
-		)
-		console.log("ticketDownload arr", this.prepareDownloadData() );
+		// if(
+		// 	this.props.configData
+		// 	&& this.props.configData.columns
+		// 	&& this.props.configData.columns.length > 0
+		// )
+		// console.log("ticketDownload arr", this.prepareDownloadData() );
 	}
 
 	render(){
@@ -45,10 +45,10 @@ class TicketDownload extends React.Component{
 			&& this.props.configData.columns
 			&& this.props.configData.columns.length > 0
 
-			&& this.props.ticketsData !== undefined
+			&& this.props.ticketsData 
 			
 		){
-			// console.log("ticketDownload arr", this.prepareDownloadData() );
+			console.log("ticketDownload arr", this.prepareDownloadData() );
 			return(
 				<React.Fragment>
 					<button>x</button>

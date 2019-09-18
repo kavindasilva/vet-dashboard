@@ -103,7 +103,7 @@ class ticketSearch extends Component {
 					Reset
 				</Button>
 				<CSVdownloader
-					tracker_id={ 3 }
+					tracker_id={ this.props.tracker_id }
 				/>
 			</React.Fragment>
 		)

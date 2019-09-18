@@ -59,6 +59,8 @@ class Trackers extends React.Component{
 
         errorGetTrackers: false,
         errorMsgGetTrackers: false,
+
+        selectedTrackerToDownload: 1,
     }
 
 	componentDidMount(){
@@ -107,7 +109,7 @@ class Trackers extends React.Component{
 			<div>
                 <div float={'right'} align={'right'}>
                     <TicketSearch
-                        //tracker_id={tracker.tracker_id}
+                        tracker_id={ this.state.selectedTrackerToDownload }
                         getAllTickets={this.getTicketData}
                         dispatchTickets={this.dispatchTicketInstances}
                     /><br/>
@@ -128,7 +130,10 @@ class Trackers extends React.Component{
                                 <Tab 
                                     key={ tracker.tracker_id } 
                                     label={ tracker.name } 
-                                    onClick={ ()=>this.setLastUpdatedTime(tracker.tracker_id) }
+                                    onClick={ ()=> {
+                                        this.setLastUpdatedTime(tracker.tracker_id);
+                                        this.setState({selectedTrackerToDownload: tracker.tracker_id})
+                                    }}
                                 />
                             ))
                             :(this.state.errorGetTrackers)
