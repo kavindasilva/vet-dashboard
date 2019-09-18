@@ -68,7 +68,7 @@ class TicketDownload extends React.Component{
 
 	prepareDownloadData = () => {
 		let returnArr = [];
-		console.log('ticketDownload props-configdata', this.props);
+		console.log('ticketDownload props', this.props);
 
 		let columnHeaders = []
 		this.props.configData.columns.forEach( column => {
@@ -76,28 +76,43 @@ class TicketDownload extends React.Component{
 		});
 		returnArr.push(columnHeaders);
 
-		this.props.configData.columns.forEach( column => {
-			//each column of trackerConfig
+		this.props.ticketsData.map( ticket => {
+				let ticketRow = [];
+				this.props.configData.columns.forEach( column => {
+				//each column of trackerConfig
 
-			/** store user permissions of CURRENT COLUMN of trackerConfig user  */
-			let current_user_type = (this.props.metaData.userInfo)? this.props.metaData.userInfo.user_type_id: 0;
-			let userTypeRestriction = column.permissions.find( permission => (
-				parseInt(permission.user_type_id) === current_user_type
-			));
-
-			let ticketRow = [];
-			let columnValue = this.props.ticketsData[column.name];
-
-			if (userTypeRestriction && !userTypeRestriction.is_read_restricted) {
-				// read 
-				ticketRow.push(columnValue)
-			}
-			else{ // no restrictions defined
-				ticketRow.push(columnValue)
-			}
-			
+				let source_field = "hs";
+				if(column.hs_source_field === "db")
+					source_field = "db";
+				source_field = source_field + "_properties";
+				//console.log('ticketDownload source-field', source_field);
+	
+				/** store user permissions of CURRENT COLUMN of trackerConfig user  */
+				let current_user_type = (this.props.metaData.userInfo)? this.props.metaData.userInfo.user_type_id: 0;
+				let userTypeRestriction = column.permissions.find( permission => (
+					parseInt(permission.user_type_id) === current_user_type
+				));
+	
+				let columnValue = ticket[source_field][column.name];
+	
+				columnValue = (columnValue)? columnValue : "null";
+	
+				if(userTypeRestriction && !userTypeRestriction.is_read_restricted) {
+					// read 
+					ticketRow.push(columnValue)
+				}
+				else if(userTypeRestriction && userTypeRestriction.is_read_restricted) {
+					ticketRow.push('forbidden')
+				}
+				else{ // no restrictions defined
+					ticketRow.push(columnValue)
+				}				
+			} )
 			returnArr.push(ticketRow);
-		} )
+
+		 } )
+
+		
 
 		return returnArr;
 	}
@@ -115,7 +130,7 @@ const mapStateToProps = (state, props) => {
 			tracker.tracker_id == props.tracker_id
 		)),
 
-		ticketsData: state.ticketsDataReducer.ticketsData.find( ticket => (
+		ticketsData: state.ticketsDataReducer.ticketsData.filter( ticket => (
 			ticket.tracker_id == props.tracker_id
 		) ),
 
