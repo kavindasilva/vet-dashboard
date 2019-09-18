@@ -115,8 +115,9 @@ export const userTypeArray=[
 
 /** ticket searching options */
 export const ticketSearchParams = [
-    { param:"ticket_id", label:"HS ticket number"},
-    { param:"clinic_name", label:"Clinic name"},
+    { param:"ticket_id", inputType:"text", label:"HS ticket number"},
+    { param:"clinic_name", inputType:"text", label:"Clinic name"},
+    { param:"hs_createddate", inputType:"date", label:"Deal agreed date(s)"},
 ]
 
 

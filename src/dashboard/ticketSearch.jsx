@@ -25,42 +25,71 @@ import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
 import { rootStore } from "../stores/mainStore";
 
-import { trackerPopupDefaultValues, globalStyles } from "../common/constants";
+import { trackerPopupDefaultValues, globalStyles, ticketSearchParams } from "../common/constants";
 
-import Moment from 'react-moment';
-import moment from "moment";
+import DateRangePicker from "../dashboard/dateRangePicker"
 
-import { ticketSearchParams } from "../common/constants"
+import DateFnsUtils from "@date-io/date-fns";
+import {format} from "date-fns";
+import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
+
 import { MenuItem } from "@material-ui/core";
 
 import ticketAPI from "../apicalls/ticketAPI";
+import { thisExpression } from "@babel/types";
 const ticketAPIObj = new ticketAPI();
 
+const changeInputType = (e) => {
+	console.log("ticketSearch changeInput ", e, e.target)
+}
 //export default class ticketSearch extends Component {
 class ticketSearch extends Component {
 	state = {
-		searchOption: 'ticket_id',
+		//searchOption: 'ticket_id',
+		searchOption: 'hs_createddate',
 		searchWord: '',
+		searchInputType: 'date',
 	}
 
   	render() {
 		return (
 			<React.Fragment>
-				<Select value={ this.state.searchOption } 
-					onChange={ e => this.setState({ searchOption: e.target.value }) }
+				<Select 
+					value={ this.state.searchOption } 
+					onChange={ e => {
+						this.setState({ searchOption: e.target.value, searchInputType: e.target.inputtype });
+						//console.log("ticketSearch input", e, e.target, e.target.input_type) 
+					}}
 					fullWidth={false}
 				>
 					{
 						ticketSearchParams.map( item =>
-								<MenuItem key={ item.param } value={ item.param } >{ item.label }</MenuItem>
+								<MenuItem 
+									key={ item.param } value={ item.param }
+									inputtype={ item.inputType }
+									//onClick={ ()=>this.setState({searchInputType: 'text'}) }
+									// onClick={ changeInputType }
+									// data-my-value={123}
+								>
+								{ 
+									item.label
+								}
+								</MenuItem>
 							)
 					}
 				</Select>
 
-				<TextField
-					value={ this.state.searchWord }
-					onChange={ (e)=>this.setState({searchWord: e.target.value}) }
-				/>
+				{
+					(this.state.searchOption === "hs_createddate") /** unable to change input type with custom props in Menu item  */
+					? <DateRangePicker
+						changeSearchWord={ this.changeSearchWord }
+					/>
+					:<TextField
+						value={ this.state.searchWord }
+						onChange={ (e)=>this.setState({searchWord: e.target.value}) }
+					/>
+				}
+				
 
 				<Button
 					//onClick={ ()=>console.log("ticketSearch params", this.state.searchOption, this.state.searchWord, this.props.tracker_id) }
@@ -76,6 +105,7 @@ class ticketSearch extends Component {
 			</React.Fragment>
 		)
 	}
+
 
 	searchTickets = () => {
 		ticketAPIObj.searchTickets( 'param=' +this.state.searchOption+ '&value=' +this.state.searchWord )
@@ -94,6 +124,10 @@ class ticketSearch extends Component {
 				}
 			}
 		)
+	}
+
+	changeSearchWord = (newWord) => {
+		thisExpression.setState({searchWord: newWord});
 	}
 
 	componentDidMount(){
