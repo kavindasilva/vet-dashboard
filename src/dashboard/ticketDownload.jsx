@@ -18,11 +18,11 @@ import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
 
 import { CSVLink } from "react-csv";
+import { Button } from '@material-ui/core';
 
 class TicketDownload extends React.Component{
 	state = { 
 		...this.props.metaData, 
-		csvFileData: [[1,2,4]],
 	}
 	
 	columnDataTypes = trackerColumnDataTypes;
@@ -30,13 +30,6 @@ class TicketDownload extends React.Component{
 	componentDidMount(){
 		console.log("ticketDownload - mount. props:", this.props); //ok
 		//console.log("TicketDownload - mount. props.metaData:", this.props.metaData); 
-		
-		// if(
-		// 	this.props.configData
-		// 	&& this.props.configData.columns
-		// 	&& this.props.configData.columns.length > 0
-		// )
-		// console.log("ticketDownload arr", this.prepareDownloadData() );
 	}
 
 	render(){
@@ -51,19 +44,19 @@ class TicketDownload extends React.Component{
 			console.log("ticketDownload arr", this.prepareDownloadData() );
 			return(
 				<React.Fragment>
-					<button>x</button>
-					<CSVLink 
-						//data={ this.state.csvFileData }
-						data={ this.prepareDownloadData() }
-					>
-						Download me
-					</CSVLink>
+					<Button>
+						<CSVLink 
+							data={ this.prepareDownloadData() }
+						>
+							Download
+						</CSVLink>
+					</Button>
 				</React.Fragment>
 
 			)
 		}
 		else
-			return(<div>PROPS</div>)
+			return(<div>loading csv data...</div>)
     }
 
 	prepareDownloadData = () => {
@@ -77,8 +70,8 @@ class TicketDownload extends React.Component{
 		returnArr.push(columnHeaders);
 
 		this.props.ticketsData.map( ticket => {
-				let ticketRow = [];
-				this.props.configData.columns.forEach( column => {
+			let ticketRow = [];
+			this.props.configData.columns.forEach( column => {
 				//each column of trackerConfig
 
 				let source_field = "hs";
@@ -97,11 +90,10 @@ class TicketDownload extends React.Component{
 	
 				columnValue = (columnValue)? columnValue : "null";
 	
-				if(userTypeRestriction && !userTypeRestriction.is_read_restricted) {
-					// read 
+				if(userTypeRestriction && !userTypeRestriction.is_read_restricted) { // read allowed
 					ticketRow.push(columnValue)
 				}
-				else if(userTypeRestriction && userTypeRestriction.is_read_restricted) {
+				else if(userTypeRestriction && userTypeRestriction.is_read_restricted) { // read restricted
 					ticketRow.push('forbidden')
 				}
 				else{ // no restrictions defined

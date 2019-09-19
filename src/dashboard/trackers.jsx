@@ -34,6 +34,8 @@ import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 
+import moment from "moment";
+
 const ticketAPIobj = new ticketAPI();
 const trackersAPIobj = new trackersAPI();
 
@@ -69,6 +71,7 @@ class Trackers extends React.Component{
         
         this.getTrackersConfig();
         this.getTicketData();
+        this.setLastUpdatedTime()
 	}
 
 	render(){
@@ -83,7 +86,6 @@ class Trackers extends React.Component{
                     onClick={ ()=>this.componentDidMount() }
                 >
                     Reload 
-                    { String(this.state.last_updated) }
                 </Button>
                 { 
                     this.viewTabs()
@@ -133,6 +135,7 @@ class Trackers extends React.Component{
                                     onClick={ ()=> {
                                         this.setLastUpdatedTime(tracker.tracker_id);
                                         this.setState({selectedTrackerToDownload: tracker.tracker_id})
+                                        //this.setState({lastSynced: moment().format('MM/DD/YYYY, HH:mm:ss')})
                                     }}
                                 />
                             ))
@@ -159,7 +162,8 @@ class Trackers extends React.Component{
                         >
                             
                             
-                            <small>Last updated: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "NN" }</small>
+                            <small>TDB Last updated: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "NN" }</small><br/>
+                            <small>HS Last Synced: { (this.state.lastSynced)? (this.state.lastSynced): "NN" }</small>
                             <h3>Tracker Name: { tracker.name } </h3>
                             <small>Tracker ID: {tracker.tracker_id} </small>
                             <small> | Pipeline: {tracker.pipeline_label} </small>
@@ -257,8 +261,13 @@ class Trackers extends React.Component{
 
                     newLastUpdated[trackerId] = res.headers["last-updated"];
                     this.setState({ last_updated: newLastUpdated });
-                    //this.setState({last_updated: res.headers["last-updated"]});
+
+                    this.setState({lastSynced: moment().format('YYYY-MM-DD HH:mm:ss')})
+
                 }
+                else if(res.data)
+                    this.setState({lastSynced: moment().format('YYYY-MM-DD HH:mm:ss')})
+
             }
         )
 

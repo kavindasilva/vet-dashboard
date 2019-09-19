@@ -119,7 +119,7 @@ class Menu extends Component {
 						My profile
 					</Button>
 
-					{
+					{/* {
 						(
 							this.props.metaData.userInfo 
 							&& this.props.metaData.userInfo.user_type_id===3 // --check for all auth users
@@ -130,7 +130,7 @@ class Menu extends Component {
 						>
 							Reports
 						</Button>
-					}
+					} */}
 
 				</div>
 				{/*  */}
