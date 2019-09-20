@@ -16,12 +16,13 @@ import Select from '@material-ui/core/Select';
 import Radio from '@material-ui/core/Radio';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
+import EditIcon from '@material-ui/icons/Edit';
 
 import Popup from "reactjs-popup";
 import CustomDatePicker from "../dashboard/datePicker";
 
 import TableCell from '@material-ui/core/TableCell';
-import { MenuItem, RadioGroup, FormControlLabel, FormGroup, IconButton } from "@material-ui/core";
+import { MenuItem, RadioGroup, FormControlLabel, FormGroup, IconButton, Tooltip } from "@material-ui/core";
 
 import { trackerPopupDefaultValues } from "../common/constants";
 import ProgressBar from "../dashboard/onboardProgress"
@@ -116,11 +117,14 @@ class InstantPopup extends React.Component{
 
     sendReadOnly(){
         return(
-            <Button
-                onClick={ ()=> { this.setState({componentState: ""}) } }            
-            >
-                Edit
-            </Button>
+            <Tooltip title="Edit">
+                <IconButton
+                    size="small"
+                    onClick={ ()=> { this.setState({componentState: ""}) } }            
+                >
+                    <EditIcon />
+                </IconButton>
+            </Tooltip>
         )
     }
 

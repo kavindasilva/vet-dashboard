@@ -45,7 +45,7 @@ class CustomDateRangePicker extends React.Component{
                                 autoFocus = { false }
                                 variant="inline"
                                 format="yyyy/MM/dd"
-                                //label="Starting date"
+                                label="Starting date"
                                 value={ this.state.startDate }
                                 onChange={ (val) => { this.changeStartDate(val) } }
                             />
@@ -56,7 +56,7 @@ class CustomDateRangePicker extends React.Component{
                                 autoFocus = { false }
                                 variant="inline"
                                 format="yyyy/MM/dd"
-                                //label="Ending date"
+                                label="Ending date"
                                 value={ this.state.endDate }
                                 onChange={ (val) => { this.changeEndDate(val) } }
                             />

@@ -33,7 +33,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import {format} from "date-fns";
 import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
 
-import { MenuItem, IconButton } from "@material-ui/core";
+import { MenuItem, IconButton, InputLabel } from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -60,8 +60,16 @@ class ticketSearch extends Component {
 			<React.Fragment>
 				<Grid container spacing={0}>
 					<Grid item sm={2} md={2} xs={2}></Grid>
+					
 					<Grid item sm={3} md={3} xs={3}>
+						<InputLabel size="sm">Search by1</InputLabel>
 						<Select 
+							inputProps={{
+								label: 'Search by2',
+								id: 'search-type-label-placeholder',
+							}}
+							labelWidth={1}
+							variant="filled"
 							style={ {} }
 							value={ this.state.searchOption } 
 							onChange={ e => {
@@ -95,6 +103,7 @@ class ticketSearch extends Component {
 							changeSearchWord={ this.changeSearchWord }
 						/>
 						:<TextField
+							label={ "keyword" }
 							fullWidth={ true }
 							value={ this.state.searchWord }
 							onChange={ (e)=>this.setState({searchWord: e.target.value}) }

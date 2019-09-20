@@ -37,6 +37,8 @@ import  * as Rule from "../dashboard/colouringFunctions"
 import Peg from "../parsers/conditionsParser"
 
 import ticketAPI from "../apicalls/ticketAPI"
+import HistoryIcon from '@material-ui/icons/History';
+import { Tooltip, IconButton } from "@material-ui/core";
 const ticketAPIObj = new ticketAPI();
 
 
@@ -50,7 +52,14 @@ class CellHistory extends Component {
 		//console.log('trackerPopup: Rendering cell content');
 		return (
 			<React.Fragment>
-                <Button onClick={ ()=>this.getHistoryData() }>History</Button>
+                <Tooltip title="History">
+                    <IconButton
+                        size="small"
+                        onClick={ ()=>this.getHistoryData() }            
+                    >
+                        <HistoryIcon />
+                    </IconButton>
+                </Tooltip>
 
                 <Dialog
                     open={this.state.isOpen} // not ok
@@ -62,7 +71,6 @@ class CellHistory extends Component {
                     </DialogTitle>
 
                     <DialogContent>
-                        history data <br/>
                         <table>
                             <thead>
                                 <tr><th>date</th><th>user</th><th>value</th><th>description</th></tr>

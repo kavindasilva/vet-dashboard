@@ -174,8 +174,9 @@ class Trackers extends React.Component{
                             </div>
                             
                             
-                            <small>TDB Last updated: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "NN" }</small><br/>
-                            <small>HS Last Synced: { (this.state.lastSynced)? (this.state.lastSynced): "NN" }</small>
+                            <small>Last Sync at: { (this.state.lastSynced)? (this.state.lastSynced): "N/A" }</small><br/>
+                            <small>Last Refresh: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "N/A" }</small>
+
                             <h3>Tracker Name: { tracker.name } </h3>
                             <small>Tracker ID: {tracker.tracker_id} </small>
                             <small> | Pipeline: {tracker.pipeline_label} </small>

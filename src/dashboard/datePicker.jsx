@@ -16,6 +16,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import EditIcon from '@material-ui/icons/Edit';
+import { Tooltip, IconButton } from "@material-ui/core";
 
 class CustomDatePicker extends React.Component{
 
@@ -56,7 +58,14 @@ class CustomDatePicker extends React.Component{
         
         return(
             <React.Fragment>
-                <Button onClick={ ()=>this.setState({ isOpen: true }) }>Edit</Button>
+                <Tooltip title="Edit">
+                    <IconButton
+                        size="small"
+                        onClick={ ()=>this.setState({ isOpen: true }) }
+                    >
+                        <EditIcon />
+                    </IconButton>
+                </Tooltip>
 
                 {/* popup modal UI */}
                 <Dialog
