@@ -155,6 +155,7 @@ class InstantPopup extends React.Component{
 				property: this.state.columnName,
                 value: this.state.attributeValue,
                 data_source: this.state.hs_source_field + "_properties",
+				ticketPropertyId: this.props.ticket_property_id
 			}
 		});
 	}
@@ -285,7 +286,6 @@ const mapStateToProps = (state, props) => {
 
     // update problem occurs in db_properties
     let columnObjValue = null;
-    let popValue = null;
 
     if(source_field==="db_properties"){
         columnObjValue = state.ticketsDataReducer.ticketsData.find(

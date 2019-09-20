@@ -33,7 +33,7 @@ const ticketsDataReducer = (state, action) => {
                 else if(action.payload.data_source==="hs_properties")
                     newState.ticketsData[ticketIndex][action.payload.data_source][action.payload.property] = action.payload.value;
 
-                //updateTicketData(action.payload.ticketId, update);
+                updateTicketData(action.payload.ticketPropertyId, { value: action.payload.value, description: 'static'});
             }
             else
                 console.log("trackerInstance: err2")
@@ -72,9 +72,9 @@ const ticketsDataReducer = (state, action) => {
 /**
  * should call to ticket updating API endpoint
  */
-const updateTicketData = (ticketId, data) => {
+const updateTicketData = (ticketPropertyId, data) => {
     console.log("ticketData updateTicketData - saveToDB", data);
-    return ticketAPIobj.updateTicketPropery(ticketId, data);
+    return ticketAPIobj.updateTicketPropery(ticketPropertyId, data);
 }
 
 

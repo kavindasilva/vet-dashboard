@@ -107,7 +107,7 @@ class CellHistory extends Component {
      */
     getHistoryData = () => {
         this.setState({ isOpen: true });
-        ticketAPIObj.retrieveCellHistory(this.props.ticketPropertyId)
+        ticketAPIObj.retrieveCellHistory(this.props.ticket_property_id)
         .then(
             res => {
                 if(res && res.data)

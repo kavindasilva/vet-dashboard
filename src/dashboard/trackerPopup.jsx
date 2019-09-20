@@ -95,7 +95,7 @@ class TrackerPopup extends Component {
 			<div hidden={ !this.state.viewHoverButtons }>
 				{ this.showPop() }
 				<CellHistory 
-					ticketPropertyId = { this.props.ticketPropertyId }
+					ticket_property_id = { this.props.ticket_property_id }
 				/>
 			</div>
 		)
@@ -112,6 +112,7 @@ class TrackerPopup extends Component {
 						value={ this.props.ticketProperty.value }
 						elementType={ this.props.elementType }
 						hs_source_field={ this.props.hs_source_field }
+						ticket_property_id = { this.props.ticket_property_id }
 					/>
 				</React.Fragment>
 				
@@ -122,14 +123,15 @@ class TrackerPopup extends Component {
 				<div style={ { width: "100%", minHeight: "18px", color: "#111111"} }>
 					{/* test{ String(this.props.ticketProperty.value) } */}
 					
-						<InstantPopup
-							ticket_id={ this.props.ticket_id }
-							columnName={ this.props.ticketProperty.property }
-							value={ this.props.ticketProperty.value }
-							elementType={ this.props.elementType }
-							hs_source_field={ this.props.hs_source_field }
-						>
-						</InstantPopup>
+					<InstantPopup
+						ticket_id={ this.props.ticket_id }
+						columnName={ this.props.ticketProperty.property }
+						value={ this.props.ticketProperty.value }
+						elementType={ this.props.elementType }
+						hs_source_field={ this.props.hs_source_field }
+						ticket_property_id = { this.props.ticket_property_id }
+					>
+					</InstantPopup>
 					
 				</div>
 			);
@@ -270,7 +272,7 @@ const mapStateToProps = (state, props) => {
 
 			propertyValue: columnObjValue,
 
-			ticketPropertyId: ticketPropId,
+			ticket_property_id: ticketPropId,
 		};
 	}
 	else

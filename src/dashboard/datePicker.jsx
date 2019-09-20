@@ -131,6 +131,7 @@ class CustomDatePicker extends React.Component{
 				property: this.state.columnName,
                 value: this.state.attributeValue,
                 data_source: this.state.hs_source_field + "_properties",
+				ticketPropertyId: this.props.ticket_property_id
 			}
 		});
 	}
@@ -166,10 +167,25 @@ class CustomDatePicker extends React.Component{
 
 const mapStateToProps = (state, props) => {
     let source_field = props.hs_source_field + "_properties";
+
+    // update problem occurs in db_properties
+    let columnObjValue = null;
+
+    if(source_field==="db_properties"){
+        columnObjValue = state.ticketsDataReducer.ticketsData.find(
+            tracker => (tracker.ticket_id === props.ticket_id)
+        )[source_field][props.columnName];
+
+        columnObjValue = (columnObjValue)? columnObjValue['value']: null;
+    }
+    else if(source_field==="hs_properties"){
+        columnObjValue = state.ticketsDataReducer.ticketsData.find(
+            tracker => (tracker.ticket_id === props.ticket_id)
+        )[source_field][props.columnName]
+    }
+    
     return {
-        dateValue: state.ticketsDataReducer.ticketsData.find(
-                        ticket => (ticket.ticket_id === props.ticket_id)
-                    )[source_field][props.columnName]
+        dateValue: columnObjValue
     };
 }
 
