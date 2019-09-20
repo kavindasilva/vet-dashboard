@@ -33,7 +33,10 @@ import DateFnsUtils from "@date-io/date-fns";
 import {format} from "date-fns";
 import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
 
-import { MenuItem } from "@material-ui/core";
+import { MenuItem, IconButton } from "@material-ui/core";
+import SearchIcon from '@material-ui/icons/Search';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import ticketAPI from "../apicalls/ticketAPI";
 import CSVdownloader from "../dashboard/ticketDownload"
@@ -90,21 +93,28 @@ class ticketSearch extends Component {
 					/>
 				}
 				
-
-				<Button
-					//onClick={ ()=>console.log("ticketSearch params", this.state.searchOption, this.state.searchWord, this.props.tracker_id) }
-					onClick={ ()=>this.searchTickets() }
-				>
-					Search
-				</Button>
-				<Button
-					onClick={ ()=>this.props.getAllTickets() }
-				>
-					Reset
-				</Button>
-				<CSVdownloader
-					tracker_id={ this.props.tracker_id }
-				/>
+                <Tooltip title="Search">
+					<IconButton
+						size="small"
+						//onClick={ ()=>console.log("ticketSearch params", this.state.searchOption, this.state.searchWord, this.props.tracker_id) }
+						onClick={ ()=>this.searchTickets() }
+					>
+						<SearchIcon  fontSize="small" />
+					</IconButton>
+				</Tooltip>
+				<Tooltip title="Clear">
+					<IconButton
+						size="small"
+						onClick={ ()=>this.props.getAllTickets() }
+					>
+						<HighlightOffIcon fontSize="small" />
+					</IconButton>
+				</Tooltip>
+                <Tooltip title="Download CSV">
+					<CSVdownloader	
+						tracker_id={ this.props.tracker_id }
+					/>
+				</Tooltip>
 			</React.Fragment>
 		)
 	}

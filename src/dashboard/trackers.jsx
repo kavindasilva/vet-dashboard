@@ -21,6 +21,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 import Menu from "../common/menu";
+import Icon from '@material-ui/core/Icon';
+import { red } from '@material-ui/core/colors';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import ticketAPI from "../apicalls/ticketAPI";
 import trackersAPI from "../apicalls/trackersAPI";
@@ -32,7 +36,7 @@ import TrackerTableRow from "../dashboard/trackerTableRow";
 
 import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, IconButton } from '@material-ui/core';
 
 import moment from "moment";
 
@@ -49,7 +53,13 @@ const styles = theme => ({
 	  backgroundColor: "#eee",
 	  position: "sticky",
 	  top: 0
-	}
+    },
+    iconHover: {
+        margin: theme.spacing(2),
+        '&:hover': {
+          color: red[800],
+        },
+    }
 });
 
 class Trackers extends React.Component{
@@ -82,11 +92,13 @@ class Trackers extends React.Component{
                 >
                     NewCilinc
                 </Button>
-                <Button
-                    onClick={ ()=>this.componentDidMount() }
-                >
-                    Reload 
-                </Button>
+                <Tooltip title="Refresh">
+                    <IconButton
+                        onClick={ ()=>this.componentDidMount() } size="small"
+                    >
+                        <RefreshIcon color="primary" s />
+                    </IconButton>
+                </Tooltip>
                 { 
                     this.viewTabs()
                 }
@@ -109,13 +121,6 @@ class Trackers extends React.Component{
 	viewTabs(){
 		return(
 			<div>
-                <div float={'right'} align={'right'}>
-                    <TicketSearch
-                        tracker_id={ this.state.selectedTrackerToDownload }
-                        getAllTickets={this.getTicketData}
-                        dispatchTickets={this.dispatchTicketInstances}
-                    /><br/>
-                </div>
 				<AppBar position="static" color="default">
                     <Tabs
                         key={this.state.tabValue}
@@ -160,6 +165,13 @@ class Trackers extends React.Component{
                         <div 
                             key={ tracker.tracker_id } 
                         >
+                            <div float={'right'} align={'right'}>
+                                <TicketSearch
+                                    tracker_id={ this.state.selectedTrackerToDownload }
+                                    getAllTickets={this.getTicketData}
+                                    dispatchTickets={this.dispatchTicketInstances}
+                                /><br/>
+                            </div>
                             
                             
                             <small>TDB Last updated: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "NN" }</small><br/>

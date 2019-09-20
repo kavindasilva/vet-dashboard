@@ -17,6 +17,7 @@
         "babel-jest": "^24.8.0",
         "bootstrap": "^4.3.1",
         "date-fns": "^2.0.0-alpha.27",
+        "font-awesome": "^4.7.0",
         "graphql": "^14.3.0",
         "graphql-react": "^8.2.0",
         "material-table": "^1.39.0",
