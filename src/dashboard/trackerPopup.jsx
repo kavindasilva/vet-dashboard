@@ -48,8 +48,8 @@ import cellHistory from "../dashboard/cellHistory";
 class TrackerPopup extends Component {
 	state = {
 		/** trackerInstaid. need in dispatching */	ticket_id	:this.props.ticket_id,
-		/** property name */					columnName		:this.props.ticketProperty.property,
-		/** property value */     				attributeValue	:this.props.ticketProperty.value,
+		// /** property name */					columnName		:this.props.ticketProperty.property,
+		// /** property value */     				attributeValue	:this.props.ticketProperty.value,
 		/** element input type */ 				elementType		:this.props.elementType,
 
 		attributeValue2	:this.props.propertyValue,
@@ -230,7 +230,6 @@ const mapStateToProps = (state, props) => {
 
 	if( ticketIndex > -1 ){
 		let source_field = props.hs_source_field + "_properties";
-		//console.log("trackerPopup val", state.ticketsDataReducer.ticketsData[ticketIndex][source_field][props.columnName]);
 
 		let ticketPropId = 0;
 		if(
@@ -245,7 +244,17 @@ const mapStateToProps = (state, props) => {
 			ticketPropId = (ticketPropId)? ticketPropId.ticket_property_id : null;
 		}
 		//console.log("trackerPopup mapState", ticketPropId, trackerConfig['tracker_column_id'])
-		//ticketPropId = trackerConfig['tracker_column_id']
+
+		// update problem occurs in db_properties
+		let columnObjValue = null;
+		let columnObj = state.ticketsDataReducer.ticketsData[ticketIndex][source_field][props.columnName];
+		if(source_field==="db_properties"){
+			columnObjValue = state.ticketsDataReducer.ticketsData[ticketIndex][source_field][props.columnName];
+			columnObjValue = (columnObjValue)? columnObjValue['value']: null;
+		}
+		else if(source_field==="hs_properties")
+			columnObjValue = state.ticketsDataReducer.ticketsData[ticketIndex][source_field][props.columnName];
+		
 		
 		return {
 			configData: trackerConfig,
@@ -255,11 +264,11 @@ const mapStateToProps = (state, props) => {
 			/** tracker instance's particular column's data */
 			ticketProperty: {
 				'property'	: props.columnName,
-				'value' 	: state.ticketsDataReducer.ticketsData[ticketIndex][source_field][props.columnName],
+				'value' 	: columnObjValue,
 				'ticketId'  : state.ticketsDataReducer.ticketsData[ticketIndex]['ticket_id'],
 			},
 
-			propertyValue: state.ticketsDataReducer.ticketsData[ticketIndex][source_field][props.columnName],
+			propertyValue: columnObjValue,
 
 			ticketPropertyId: ticketPropId,
 		};

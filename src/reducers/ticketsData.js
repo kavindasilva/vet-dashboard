@@ -27,12 +27,13 @@ const ticketsDataReducer = (state, action) => {
                 let update = {};
                 update[action.payload.property] = action.payload.value;
                 
-                newState.ticketsData[ticketIndex][action.payload.data_source][action.payload.property] = action.payload.value;
+		        // update problem occurs in db_properties
+                if(action.payload.data_source==="db_properties")
+                    newState.ticketsData[ticketIndex][action.payload.data_source][action.payload.property]['value'] = action.payload.value;
+                else if(action.payload.data_source==="hs_properties")
+                    newState.ticketsData[ticketIndex][action.payload.data_source][action.payload.property] = action.payload.value;
 
-                //let ticket = newState.ticketsData[ticketIndex];
-                //newState.ticketsData[ticketIndex] = {...ticket, ...update};
-
-                updateTicketData(action.payload.ticketId, update);
+                //updateTicketData(action.payload.ticketId, update);
             }
             else
                 console.log("trackerInstance: err2")
@@ -41,19 +42,18 @@ const ticketsDataReducer = (state, action) => {
             return newState;
 
 
-        case 'GET_HUBSPOT_TICKETS': // get ticket data from hubspot
+        case 'GET_HUBSPOT_TICKETS': // currently not used
             newState = {
                 ...state,
                 hubspotTickets: action.payload.ticketData.map(
                     record => { return record }
                 )
             };
-
             console.log("ticketsDataReducer GET_HUBSPOT_TICKETS: ", newState);
             return newState;
         
 
-        case "GET_TICKETS_FROM_DB": // get instance data from DB
+        case "GET_TICKETS_FROM_DB": // get tickets data from DB
             newState = {
                 ...state,
                 ticketsData: action.payload.data,

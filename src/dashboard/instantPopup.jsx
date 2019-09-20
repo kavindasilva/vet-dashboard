@@ -283,10 +283,29 @@ const mapStateToProps = (state, props) => {
     //console.log("instant popup", props);
     let source_field = props.hs_source_field + "_properties";
 
+    // update problem occurs in db_properties
+    let columnObjValue = null;
+    let popValue = null;
+
+    if(source_field==="db_properties"){
+        columnObjValue = state.ticketsDataReducer.ticketsData.find(
+            tracker => (tracker.ticket_id === props.ticket_id)
+        )[source_field][props.columnName];
+
+        columnObjValue = (columnObjValue)? columnObjValue['value']: null;
+    }
+    else if(source_field==="hs_properties"){
+        columnObjValue = state.ticketsDataReducer.ticketsData.find(
+            tracker => (tracker.ticket_id === props.ticket_id)
+        )[source_field][props.columnName]
+    }
+    
     return {
-        popValue: state.ticketsDataReducer.ticketsData.find(
-                tracker => (tracker.ticket_id === props.ticket_id)
-            )[source_field][props.columnName]
+        // popValue: state.ticketsDataReducer.ticketsData.find(
+        //         tracker => (tracker.ticket_id === props.ticket_id)
+        //     )[source_field][props.columnName]
+
+        popValue: columnObjValue
     };
 }
 
