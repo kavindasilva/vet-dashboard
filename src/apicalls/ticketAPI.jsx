@@ -3,7 +3,7 @@ import React from 'react';
 import axios from 'axios';
 
 const uriGetTicketData = 'http://ontrack.dev.io/rest/tickets/'; // 
-const uriTickets = 'http://ontrack.dev.io/rest/tickets/'; // 
+const uriTicketPropertyUpdate = 'http://ontrack.dev.io/rest/ticketproperty/'; // http://ontrack.dev.io/rest/ticketproperty/5
 
 const uriPropertyHistory = "http://ontrack.dev.io/rest/tickets/history/"; //http://ontrack.dev.io/rest/tickets/history/5
 
@@ -52,14 +52,14 @@ class ticketAPI extends React.Component{
   updateTicketPropery (ticketId, data) {
     console.log("ticketAPI - saveToDB", ticketId, data); //return;
     
-    return axios.patch(uriTickets + ticketId, data)
+    return axios.patch(uriTicketPropertyUpdate + ticketId, data)
                 .then(res => {
                     console.log(res);
                 });
   }
 
   /** return the history of a  table cell */
-  retrieveCellHistory(propertyId){
+  retrieveCellHistory(propertyId){ return;
     return axios.get( uriPropertyHistory + propertyId )
     .then( res => {
       console.log("ticketAPI.jsx - retrieveCellHistory",res);
