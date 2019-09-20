@@ -37,6 +37,7 @@ import { MenuItem, IconButton } from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Tooltip from '@material-ui/core/Tooltip';
+import Grid from '@material-ui/core/Grid';
 
 import ticketAPI from "../apicalls/ticketAPI";
 import CSVdownloader from "../dashboard/ticketDownload"
@@ -57,64 +58,75 @@ class ticketSearch extends Component {
   	render() {
 		return (
 			<React.Fragment>
-				<Select 
-					value={ this.state.searchOption } 
-					onChange={ e => {
-						this.setState({ searchOption: e.target.value, searchInputType: e.target.inputtype });
-						//console.log("ticketSearch input", e, e.target, e.target.input_type) 
-					}}
-					fullWidth={false}
-				>
-					{
-						ticketSearchParams.map( item =>
-								<MenuItem 
-									key={ item.param } value={ item.param }
-									inputtype={ item.inputType }
-									//onClick={ ()=>this.setState({searchInputType: 'text'}) }
-									// onClick={ changeInputType }
-									// data-my-value={123}
-								>
-								{ 
-									item.label
-								}
-								</MenuItem>
-							)
-					}
-				</Select>
+				<Grid container spacing={0}>
+					<Grid item sm={2} md={2} xs={2}></Grid>
+					<Grid item sm={3} md={3} xs={3}>
+						<Select 
+							style={ {} }
+							value={ this.state.searchOption } 
+							onChange={ e => {
+								this.setState({ searchOption: e.target.value, searchInputType: e.target.inputtype });
+								//console.log("ticketSearch input", e, e.target, e.target.input_type) 
+							}}
+							fullWidth={false}
+						>
+							{
+								ticketSearchParams.map( item =>
+									<MenuItem 
+										key={ item.param } value={ item.param }
+										inputtype={ item.inputType }
+										//onClick={ ()=>this.setState({searchInputType: 'text'}) }
+										// onClick={ changeInputType }
+										// data-my-value={123}
+									>
+									{ 
+										item.label
+									}
+									</MenuItem>
+								)
+							}
+						</Select>
+					</Grid>
 
-				{
-					(this.state.searchOption === "create_date") /** unable to change input type with custom props in Menu item  */
-					? <DateRangePicker
-						changeSearchWord={ this.changeSearchWord }
-					/>
-					:<TextField
-						value={ this.state.searchWord }
-						onChange={ (e)=>this.setState({searchWord: e.target.value}) }
-					/>
-				}
-				
-                <Tooltip title="Search">
-					<IconButton
-						size="small"
-						//onClick={ ()=>console.log("ticketSearch params", this.state.searchOption, this.state.searchWord, this.props.tracker_id) }
-						onClick={ ()=>this.searchTickets() }
-					>
-						<SearchIcon  fontSize="small" />
-					</IconButton>
-				</Tooltip>
-				<Tooltip title="Clear">
-					<IconButton
-						size="small"
-						onClick={ ()=>this.props.getAllTickets() }
-					>
-						<HighlightOffIcon fontSize="small" />
-					</IconButton>
-				</Tooltip>
-                <Tooltip title="Download CSV">
-					<CSVdownloader	
-						tracker_id={ this.props.tracker_id }
-					/>
-				</Tooltip>
+					<Grid item sm={6} md={6} xs={6}>
+					{
+						(this.state.searchOption === "create_date") /** unable to change input type with custom props in Menu item  */
+						? <DateRangePicker
+							changeSearchWord={ this.changeSearchWord }
+						/>
+						:<TextField
+							fullWidth={ true }
+							value={ this.state.searchWord }
+							onChange={ (e)=>this.setState({searchWord: e.target.value}) }
+						/>
+					}
+					</Grid>
+					
+					<Grid item sm={1} md={1} xs={1}>
+						<Tooltip title="Search">
+							<IconButton
+								size="small"
+								//onClick={ ()=>console.log("ticketSearch params", this.state.searchOption, this.state.searchWord, this.props.tracker_id) }
+								onClick={ ()=>this.searchTickets() }
+							>
+								<SearchIcon  fontSize="small" />
+							</IconButton>
+						</Tooltip>
+						<Tooltip title="Clear">
+							<IconButton
+								size="small"
+								onClick={ ()=>this.props.getAllTickets() }
+							>
+								<HighlightOffIcon fontSize="small" />
+							</IconButton>
+						</Tooltip>
+						<Tooltip title="Download CSV">
+							<CSVdownloader	
+								tracker_id={ this.props.tracker_id }
+							/>
+						</Tooltip>
+					</Grid>
+				</Grid>
 			</React.Fragment>
 		)
 	}

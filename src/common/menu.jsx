@@ -64,7 +64,7 @@ class Menu extends Component {
 				
 				{ /** temporary menu bar */ }
 				<div style={{backgroundColor:"#f1f2f3"}}>
-					<Link onClick={()=>this.setState({componentToShow:"phoenixFailures"})}>phoenixAPI</Link>
+					{/* <Link onClick={()=>this.setState({componentToShow:"phoenixFailures"})}>phoenixAPI</Link> */}
 					<div>
 					Hi user ID: ... { this.props.metaData.userId } ...  
 					{ (this.props.metaData.userInfo)? this.props.metaData.userInfo.email:"who you?" }

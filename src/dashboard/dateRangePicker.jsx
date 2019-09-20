@@ -16,6 +16,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { Grid } from "@material-ui/core";
 
 class CustomDateRangePicker extends React.Component{
     state ={
@@ -37,23 +38,30 @@ class CustomDateRangePicker extends React.Component{
                     utils={DateFnsUtils} 
                     onClick={() =>  this.setState({ isOpen: true}) }
                 >
-                    <DatePicker
-                        autoFocus = { false }
-                        variant="inline"
-                        format="yyyy/MM/dd"
-                        label="Starting date"
-                        value={ this.state.startDate }
-                        onChange={ (val) => { this.changeStartDate(val) } }
-                    />
-
-                    <DatePicker
-                        autoFocus = { false }
-                        variant="inline"
-                        format="yyyy/MM/dd"
-                        label="Ending date"
-                        value={ this.state.endDate }
-                        onChange={ (val) => { this.changeEndDate(val) } }
-                    />
+                    <Grid container spacing={1}>
+					    <Grid item sm={6} md={6} xs={6}>
+                            <DatePicker
+                                fullWidth={ true }
+                                autoFocus = { false }
+                                variant="inline"
+                                format="yyyy/MM/dd"
+                                //label="Starting date"
+                                value={ this.state.startDate }
+                                onChange={ (val) => { this.changeStartDate(val) } }
+                            />
+                        </Grid>
+                        <Grid item sm={6} md={6} xs={6}>
+                            <DatePicker
+                                fullWidth={ true }
+                                autoFocus = { false }
+                                variant="inline"
+                                format="yyyy/MM/dd"
+                                //label="Ending date"
+                                value={ this.state.endDate }
+                                onChange={ (val) => { this.changeEndDate(val) } }
+                            />
+                        </Grid>
+                    </Grid>
                 </MuiPickersUtilsProvider>	
             
             </React.Fragment>
