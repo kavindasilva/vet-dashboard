@@ -67,6 +67,7 @@ class Trackers extends React.Component{
         ...this.props.metaData, 
         last_updated: [], // get by tracker_id
         tabValue:2,
+        viewingTabTrackerId: 3,
         showNewClinicAddForm: false,
 
         errorGetTrackers: false,
@@ -92,13 +93,13 @@ class Trackers extends React.Component{
                 >
                     NewCilinc
                 </Button>
-                <Tooltip title="Refresh">
+                {/* <Tooltip title="Refresh">
                     <IconButton
                         onClick={ ()=>this.componentDidMount() } size="small"
                     >
                         <RefreshIcon color="primary" s />
                     </IconButton>
-                </Tooltip>
+                </Tooltip> */}
                 { 
                     this.viewTabs()
                 }
@@ -139,7 +140,7 @@ class Trackers extends React.Component{
                                     label={ tracker.name } 
                                     onClick={ ()=> {
                                         this.setLastUpdatedTime(tracker.tracker_id);
-                                        this.setState({selectedTrackerToDownload: tracker.tracker_id})
+                                        this.setState({selectedTrackerToDownload: tracker.tracker_id, viewingTabTrackerId: tracker.tracker_id })
                                         //this.setState({lastSynced: moment().format('MM/DD/YYYY, HH:mm:ss')})
                                     }}
                                 />
@@ -166,6 +167,23 @@ class Trackers extends React.Component{
                             key={ tracker.tracker_id } 
                         >
                             <div float={'right'} align={'right'}>
+                                <span>Last Sync at: { "N/Implemented" }
+                                    
+                                </span><br/>
+                                <span>Last Refresh: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "N/A" }
+                                    <Tooltip title="Refresh">
+                                        <IconButton
+                                            onClick={ ()=>this.componentDidMount() } 
+                                            size="small"
+                                            style={ {width: "20px", height: "20px"} }
+                                        >
+                                            <RefreshIcon color="primary" style={ {width: "20px", height: "20px"} } />
+                                        </IconButton>
+                                    </Tooltip>
+                                </span>
+                            </div>
+
+                            <div float={'right'} align={'right'}>
                                 <TicketSearch
                                     tracker_id={ this.state.selectedTrackerToDownload }
                                     getAllTickets={this.getTicketData}
@@ -174,9 +192,6 @@ class Trackers extends React.Component{
                             </div>
                             
                             
-                            <small>Last Sync at: { (this.state.lastSynced)? (this.state.lastSynced): "N/A" }</small><br/>
-                            <small>Last Refresh: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "N/A" }</small>
-
                             <h3>Tracker Name: { tracker.name } </h3>
                             <small>Tracker ID: {tracker.tracker_id} </small>
                             <small> | Pipeline: {tracker.pipeline_label} </small>

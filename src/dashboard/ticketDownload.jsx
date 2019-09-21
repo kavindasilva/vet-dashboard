@@ -18,7 +18,9 @@ import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
 
 import { CSVLink } from "react-csv";
-import { Button } from '@material-ui/core';
+import { Button, Tooltip, IconButton } from '@material-ui/core';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+
 
 class TicketDownload extends React.Component{
 	state = { 
@@ -44,13 +46,22 @@ class TicketDownload extends React.Component{
 			console.log("ticketDownload arr", this.prepareDownloadData() );
 			return(
 				<React.Fragment>
-					<Button>
+					<IconButton
+						size="small"
+						style={ {
+							paddingTop: "4px"
+							// maxHeight: "20x",
+							// maxWidth: "20x",
+						} }
+					>
 						<CSVLink 
 							data={ this.prepareDownloadData() }
 						>
-							Download
+							<Tooltip title="Download CSV">
+								<CloudDownloadIcon fontSize="small" />
+							</Tooltip>
 						</CSVLink>
-					</Button>
+					</IconButton>
 				</React.Fragment>
 
 			)

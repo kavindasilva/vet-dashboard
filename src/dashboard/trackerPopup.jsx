@@ -30,7 +30,7 @@ import {format} from "date-fns";
 
 import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
 
-import { trackerPopupDefaultValues, globalStyles } from "../common/constants";
+import { trackerPopupDefaultValues, globalStyles, ticketCellSize } from "../common/constants";
 
 import Moment from 'react-moment';
 import moment from "moment";
@@ -78,7 +78,10 @@ class TrackerPopup extends Component {
 					//style={ { backgroundColor: this.evaluateExpr( this.props.configData.rules)} }
 					style={{
 						...globalStyles["cell-borders"],
-						minHeight: "30px", minWidth: "70px" 
+						minHeight: "70px", // not working
+						minWidth: ticketCellSize.cellWidth, // working
+						height: ticketCellSize.cellHeight, // working
+						width: "30px", // not working
 					}}
 				>
 					{ this.state.attributeValue2 }
@@ -105,7 +108,7 @@ class TrackerPopup extends Component {
 	showPop(){
 		if(this.state.elementType ==="date" ){
 			return(
-				<React.Fragment>
+				<div style={ { width: "100%", minHeight: "18px", color: "#111111"} }>
 					{ /*this.props.ticketProperty.value */ }
 					<CustomDatePicker
 						ticket_id={ this.props.ticket_id }
@@ -115,7 +118,7 @@ class TrackerPopup extends Component {
 						hs_source_field={ this.props.hs_source_field }
 						ticket_property_id = { this.props.ticket_property_id }
 					/>
-				</React.Fragment>
+				</div>
 				
 			);
 		}

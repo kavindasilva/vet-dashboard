@@ -94,6 +94,12 @@ class TrackerHeader extends React.Component{
 							color:"#1122ee", 
 							padding: "2px 10px 2px 12px",
 							backgroundColor: "#e3d3cc",
+
+							minHeight: "70px", // not working
+							minWidth: "150px", // working
+							height: "50px", // working
+							width: "150px", // not working
+
 							//backgroundColor: "transparent",
 							//border: "0.5pt solid #888888",
 
@@ -115,6 +121,12 @@ class TrackerHeader extends React.Component{
 							color:"#1122ee", 
 							padding: "2px 10px 2px 12px",
 							backgroundColor: "#e3d3cc",
+							
+							minHeight: "70px", // not working
+							minWidth: "150px", // working
+							height: "50px", // working
+							width: "150px", // not working
+
 							...globalStyles["cell-borders"]
 						}}
 					>

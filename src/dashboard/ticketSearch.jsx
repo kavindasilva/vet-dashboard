@@ -61,9 +61,9 @@ class ticketSearch extends Component {
 		return (
 			<React.Fragment>
 				<Grid container spacing={0}>
-					<Grid item sm={2} md={2} xs={2}></Grid>
+					<Grid item sm={2} md={2} xs={2} lg={2}></Grid>
 					
-					<Grid item sm={3} md={3} xs={3}>
+					<Grid item sm={3} md={3} xs={3} lg={3}>
 						<InputLabel size="sm">Search by1</InputLabel>
 						<Select 
 							inputProps={{
@@ -71,7 +71,7 @@ class ticketSearch extends Component {
 								id: 'search-type-label-placeholder',
 							}}
 							variant="filled"
-							style={ {} }
+							style={ { width: "200px" } }
 							value={ this.state.searchOption } 
 							onChange={ e => {
 								this.setState({
@@ -101,7 +101,7 @@ class ticketSearch extends Component {
 						</Select>
 					</Grid>
 
-					<Grid item sm={6} md={6} xs={6}>
+					<Grid item sm={6} md={6} xs={6} lg={6}>
 					{
 						(this.state.searchOption === "create_date") /** unable to change input type with custom props in Menu item  */
 						? <DateRangePicker
@@ -118,29 +118,31 @@ class ticketSearch extends Component {
 					}
 					</Grid>
 					
-					<Grid item sm={1} md={1} xs={1}>
-						<Tooltip title="Search">
-							<IconButton
-								size="small"
-								//onClick={ ()=>console.log("ticketSearch params", this.state.searchOption, this.state.searchWord, this.props.tracker_id) }
-								onClick={ ()=>this.searchTickets() }
-							>
-								<SearchIcon  fontSize="small" />
-							</IconButton>
-						</Tooltip>
-						<Tooltip title="Clear">
-							<IconButton
-								size="small"
-								onClick={ ()=>this.props.getAllTickets() }
-							>
-								<HighlightOffIcon fontSize="small" />
-							</IconButton>
-						</Tooltip>
-						<Tooltip title="Download CSV">
+					<Grid item sm={1} md={1} xs={1} lg={1} style={ {paddingTop: "10px"}} >
+						<Grid item sm={0} md={2} xs={0} lg={4} ></Grid>
+						<Grid item sm={12} md={10} xs={12} lg={8} >
+							<Tooltip title="Search">
+								<IconButton
+									size="small"
+									//onClick={ ()=>console.log("ticketSearch params", this.state.searchOption, this.state.searchWord, this.props.tracker_id) }
+									onClick={ ()=>this.searchTickets() }
+								>
+									<SearchIcon  fontSize="small" />
+								</IconButton>
+							</Tooltip>
+							<Tooltip title="Clear">
+								<IconButton
+									size="small"
+									onClick={ ()=>this.props.getAllTickets() }
+								>
+									<HighlightOffIcon fontSize="small" />
+								</IconButton>
+							</Tooltip>
+
 							<CSVdownloader	
 								tracker_id={ this.props.tracker_id }
 							/>
-						</Tooltip>
+						</Grid>
 					</Grid>
 				</Grid>
 			</React.Fragment>
@@ -168,14 +170,14 @@ class ticketSearch extends Component {
 	}
 
 	changeSearchWord = (newWord, searchType) => {
-		console.log("ticketSearch changeWord", newWord, searchType);
+		//console.log("ticketSearch changeWord", newWord, searchType);
 		let newSearchArr = { ...this.state.searchWordArr };
 		newSearchArr[searchType] = newWord;
 		this.setState({
 			searchWord: newWord,
 			searchWordArr: newSearchArr
-		},
-		()=>console.log("ticketSearch changeWord2", this.state.searchWord, this.state.searchWordArr)
+		}
+		//,()=>console.log("ticketSearch changeWord2", this.state.searchWord, this.state.searchWordArr)
 		);
 	}
 

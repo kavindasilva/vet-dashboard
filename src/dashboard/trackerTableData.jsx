@@ -12,7 +12,7 @@ import TrackerPopup from "../dashboard/trackerPopup";
 import TableCell from '@material-ui/core/TableCell';
 import { withStyles } from '@material-ui/core/styles';
 
-import { trackerColumnDataTypes, globalStyles } from "../common/constants";
+import { trackerColumnDataTypes, globalStyles, ticketCellSize } from "../common/constants";
 
 import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
@@ -101,6 +101,9 @@ class TrackerTableData extends React.Component{
 							key={column.name} 
 							style={{
 								//backgroundColor:"#ffffff",
+								minWidth: ticketCellSize.cellWidth, 
+								height: ticketCellSize.cellHeight, 
+								
 								...globalStyles["cell-borders"]								
 							}}
 						>

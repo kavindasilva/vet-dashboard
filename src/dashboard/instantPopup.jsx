@@ -108,6 +108,7 @@ class InstantPopup extends React.Component{
     sendTextBox(){
         return(
             <TextField
+                autoFocus={ true }
                 value={ this.state.attributeValue }
                 onChange={ (e)=>{ this.setState({attributeValue: e.target.value}) } }
                 onBlur={ ()=>{ this.dispatchUpdate(); this.setState({componentState:"read"}); } }

@@ -120,4 +120,9 @@ export const ticketSearchParams = [
     { param:"create_date", inputType:"date", label:"Deal agreed date(s)"},
 ]
 
+/** ticket cell sizes */
+export const ticketCellSize = {
+    cellHeight: "60px",
+    cellWidth: "150px",
+}
 
