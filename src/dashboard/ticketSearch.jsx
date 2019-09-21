@@ -53,7 +53,7 @@ class ticketSearch extends Component {
 		searchOption: 'create_date',
 		searchWord: '',
 
-		searchWordArr: { create_date:'', ticket_id:'', clinic_name:'' },
+		searchWordArr: { create_date:format(new Date(), 'yyyy-MM-dd')+';'+format(new Date(), 'yyyy-MM-dd'), ticket_id:'', clinic_name:'' },
 		searchInputType: 'date',
 	}
 
@@ -105,6 +105,8 @@ class ticketSearch extends Component {
 					{
 						(this.state.searchOption === "create_date") /** unable to change input type with custom props in Menu item  */
 						? <DateRangePicker
+							start_date={ this.state.searchWordArr['create_date'].split(';')[0] }
+							end_date={ this.state.searchWordArr['create_date'].split(';')[1] }
 							changeSearchWord={ this.changeSearchWord }
 						/>
 						:<TextField

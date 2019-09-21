@@ -25,8 +25,8 @@ class CustomDateRangePicker extends React.Component{
         isOpen: false,
         hs_source_field: this.props.hs_source_field,
 
-        startDate: format(new Date(), 'yyyy-MM-dd'),
-        endDate: format(new Date(), 'yyyy-MM-dd'),
+        startDate: (this.props.start_date) ?this.props.start_date :format(new Date(), 'yyyy-MM-dd'),
+        endDate: (this.props.end_date) ?this.props.end_date :format(new Date(), 'yyyy-MM-dd'),
 
         searchDate: format(new Date(), 'yyyy-MM-dd') + ";" + format(new Date(), 'yyyy-MM-dd')
     }
