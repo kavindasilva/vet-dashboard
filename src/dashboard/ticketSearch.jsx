@@ -84,7 +84,7 @@ class ticketSearch extends Component {
 					<Grid item sm={2} md={2} xs={2} lg={2}></Grid>
 					
 					<Grid item sm={3} md={3} xs={3} lg={3}>
-						<InputLabel size="sm">Search by1</InputLabel>
+						<InputLabel style={{fontSize:"14px", padding: "2px 10px 0px 0px"}} size="sm">Search by </InputLabel>
 						<Select 
 							inputProps={{
 								label: 'Search by2',
@@ -153,6 +153,7 @@ class ticketSearch extends Component {
 							</Tooltip>
 							<Tooltip title="Clear">
 								<IconButton
+									className={ "btn btn-warning" }
 									size="small"
 									onClick={ ()=>this.props.getAllTickets() }
 								>

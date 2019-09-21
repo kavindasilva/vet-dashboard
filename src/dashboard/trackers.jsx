@@ -25,6 +25,7 @@ import Icon from '@material-ui/core/Icon';
 import { red } from '@material-ui/core/colors';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import Tooltip from '@material-ui/core/Tooltip';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import ticketAPI from "../apicalls/ticketAPI";
 import trackersAPI from "../apicalls/trackersAPI";
@@ -87,11 +88,13 @@ class Trackers extends React.Component{
 
 	render(){
 		return(
-			<React.Fragment>
+			<div align={"right"} float={"right"} >
                 <Button
+            
                     onClick={ ()=> this.setState({showNewClinicAddForm: true}) }
                 >
-                    NewCilinc
+                    <AddCircleOutlineIcon />
+                    NewClinic
                 </Button>
                 {/* <Tooltip title="Refresh">
                     <IconButton
@@ -107,7 +110,7 @@ class Trackers extends React.Component{
                     this.handleNewClinicAddForm()
                 }
                 
-			</React.Fragment>
+			</div>
 		)
     }
     
@@ -166,7 +169,7 @@ class Trackers extends React.Component{
                         <div 
                             key={ tracker.tracker_id } 
                         >
-                            <div float={'right'} align={'right'}>
+                            <div float={'right'} align={'right'} style={{padding:"10px 10px 0px 0px"}} >
                                 <span>Last Sync at: { "N/Implemented" }
                                     
                                 </span><br/>
@@ -191,10 +194,6 @@ class Trackers extends React.Component{
                                 /><br/>
                             </div>
                             
-                            
-                            <h3>Tracker Name: { tracker.name } </h3>
-                            <small>Tracker ID: {tracker.tracker_id} </small>
-                            <small> | Pipeline: {tracker.pipeline_label} </small>
 
                             <div 
                                 //style={{width: '100%', height: '120%'}}
