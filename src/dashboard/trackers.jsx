@@ -244,6 +244,8 @@ class Trackers extends React.Component{
                 height={ "600px" }
                 width={ "800px" }
                 minWidth={ "600px" }
+                maxWidth="lg"
+                fullWidth={ true }
             >
                 <DialogTitle>
                     Add new VG
@@ -253,7 +255,7 @@ class Trackers extends React.Component{
                     <iframe 
                         src={"https://share.hsforms.com/1IPCBgBVWScO77b_XOmVMlQ3j8em" /* may be need to import from constants */}
                         height={ "600px" }
-                        width={ "1000px" }
+                        width={ "100%" }
                     >
                         Loading "https://share.hsforms.com/1IPCBgBVWScO77b_XOmVMlQ3j8em"
                     </iframe>

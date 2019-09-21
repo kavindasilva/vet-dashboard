@@ -43,6 +43,26 @@ import ticketAPI from "../apicalls/ticketAPI";
 import CSVdownloader from "../dashboard/ticketDownload"
 const ticketAPIObj = new ticketAPI();
 
+const useStyles = theme => ({
+    root: {
+      width: '100%',
+    },
+    paper: {
+      marginTop: theme.spacing(3),
+      width: '100%',
+      overflowX: 'auto',
+      marginBottom: theme.spacing(2),
+    },
+    table: {
+      minWidth: 650,
+	},
+	searchicon: {
+		'$:hover':{
+			backgroundColor: "red"
+		}
+	}
+});
+
 const changeInputType = (e) => {
 	console.log("ticketSearch changeInput ", e, e.target)
 }
@@ -123,6 +143,7 @@ class ticketSearch extends Component {
 						<Grid item sm={12} md={10} xs={12} lg={8} >
 							<Tooltip title="Search">
 								<IconButton
+									className={"searchicon"}
 									size="small"
 									//onClick={ ()=>console.log("ticketSearch params", this.state.searchOption, this.state.searchWord, this.props.tracker_id) }
 									onClick={ ()=>this.searchTickets() }
@@ -199,6 +220,6 @@ const mapStateToProps = (state, props) => {
 }
 
 
-export default connect(mapStateToProps)(ticketSearch);
+export default connect(mapStateToProps)(withStyles(useStyles)(ticketSearch));
 
 

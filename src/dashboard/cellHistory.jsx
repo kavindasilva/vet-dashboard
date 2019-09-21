@@ -14,6 +14,12 @@ import Radio from '@material-ui/core/Radio';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
@@ -42,6 +48,21 @@ import { Tooltip, IconButton } from "@material-ui/core";
 const ticketAPIObj = new ticketAPI();
 
 
+const useStyles = theme => ({
+    root: {
+      width: '100%',
+    },
+    paper: {
+      marginTop: theme.spacing(3),
+      width: '100%',
+      overflowX: 'auto',
+      marginBottom: theme.spacing(2),
+    },
+    table: {
+      minWidth: 650,
+    },
+});
+
 class CellHistory extends Component {
 	state = {
         isOpen: false,
@@ -63,6 +84,8 @@ class CellHistory extends Component {
                 </Tooltip>
 
                 <Dialog
+                    fullWidth={ true }
+                    maxWidth="lg"
                     open={this.state.isOpen} // not ok
                     onClose={this.closePopUp}
                     aria-labelledby="draggable-dialog-title"
@@ -72,27 +95,33 @@ class CellHistory extends Component {
                     </DialogTitle>
 
                     <DialogContent>
-                        <table>
-                            <thead>
-                                <tr><th>date</th><th>user</th><th>value</th><th>description</th></tr>
-                            </thead>
-                            <tbody>
-                            {
-                                (this.state.historyData && this.state.historyData.length>0 )
-                                ?(
-                                    this.state.historyData.map( (history, i) => (  
-                                        <tr key={i} >
-                                            <td>{history.edit_date}</td>
-                                            <td>{history.username}</td>
-                                            <td>{history.value}</td>
-                                            <td>{history.description}</td>
-                                        </tr>
-                                    ))
-                                )
-                                :<tr><td colSpan={4}>no history</td></tr>
-                            }
-                            </tbody>
-                        </table>
+                        <div className={this.props.classes.root}>
+                            <Paper className={this.props.classes.paper}>
+                                <Table className={this.props.classes.table} size="small">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>Date</TableCell><TableCell>User</TableCell><TableCell>Value</TableCell><TableCell>Description</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                    {
+                                        (this.state.historyData && this.state.historyData.length>0 )
+                                        ?(
+                                            this.state.historyData.map( (history, i) => (  
+                                                <TableRow key={i} >
+                                                    <TableCell>{history.edit_date}</TableCell>
+                                                    <TableCell>{history.username}</TableCell>
+                                                    <TableCell>{history.value}</TableCell>
+                                                    <TableCell>{history.description}</TableCell>
+                                                </TableRow>
+                                            ))
+                                        )
+                                        :<TableRow><TableCell colSpan={4}>no history</TableCell></TableRow>
+                                    }
+                                    </TableBody>
+                                </Table>
+                            </Paper>
+                        </div>
                     </DialogContent>
 
                     <DialogActions>
@@ -141,6 +170,6 @@ const mapStateToProps = (state, props) => {
 }
 
 
-export default connect(mapStateToProps)(CellHistory);
+export default connect(mapStateToProps)(withStyles(useStyles)(CellHistory));
 
 

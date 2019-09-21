@@ -67,6 +67,7 @@ class TrackerPopup extends Component {
 			<React.Fragment>
 				<Cell
 					onMouseEnter={ ()=>this.handleHoverButtons() }
+					onClick={ ()=>this.setState({viewHoverButtons: true}) }
 					onMouseLeave={ ()=> {
 						//console.log("trackerPopup mouse leave");
 						this.setState({viewHoverButtons: false});
