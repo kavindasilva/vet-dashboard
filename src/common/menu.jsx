@@ -63,7 +63,7 @@ class Menu extends Component {
 				{/* <MiniDrawer /> */}
 				
 				{ /** temporary menu bar */ }
-				<div style={{backgroundColor:"#f1f2f3"}}>
+				<div style={{backgroundColor:"#f1f2f3", textTransform: "none"}}>
 					{/* <Link onClick={()=>this.setState({componentToShow:"phoenixFailures"})}>phoenixAPI</Link> */}
 					<div>
 					Hi user ID: ... { this.props.metaData.userId } ...  
@@ -79,6 +79,7 @@ class Menu extends Component {
 					Temporary menu bar: 
 					
 					<Button 
+						style={{textTransform: "none"}}
 						onClick={ ()=>{ this.setState({ componentToShow:'tickets'}) } } 
 					>
 						Tickets
@@ -91,6 +92,7 @@ class Menu extends Component {
 						) 
 						&&
 						<Button 
+							style={{textTransform: "none"}}
 							onClick={ ()=>{ this.setState({ componentToShow:'trackerConfig'}) } } 
 						>
 							TrackerConfig
@@ -104,6 +106,7 @@ class Menu extends Component {
 						) 
 						&&
 						<Button 
+							style={{textTransform: "none"}}
 							onClick={ ()=>{ this.setState({ componentToShow:'users'}) } } 
 							//disabled={true}
 							hidden={true}
@@ -114,6 +117,7 @@ class Menu extends Component {
 					}
 
 					<Button 
+						style={{textTransform: "none"}}
 						onClick={ ()=>{ this.setState({ componentToShow:'currentUserProfile'}) } } 
 					>
 						My profile

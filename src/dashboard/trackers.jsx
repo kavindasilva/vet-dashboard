@@ -90,7 +90,7 @@ class Trackers extends React.Component{
 		return(
 			<div align={"right"} float={"right"} >
                 <Button
-            
+                    style={{textTransform: "none"}}
                     onClick={ ()=> this.setState({showNewClinicAddForm: true}) }
                 >
                     <AddCircleOutlineIcon />
@@ -176,7 +176,10 @@ class Trackers extends React.Component{
                                 <span>Last Refresh: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "N/A" }
                                     <Tooltip title="Refresh">
                                         <IconButton
-                                            onClick={ ()=>this.componentDidMount() } 
+                                            onClick={ ()=> {
+                                                this.setLastUpdatedTime(this.state.viewingTabTrackerId);
+                                                this.setState({selectedTrackerToDownload: this.state.viewingTabTrackerId })
+                                            }}
                                             size="small"
                                             style={ {width: "20px", height: "20px"} }
                                         >

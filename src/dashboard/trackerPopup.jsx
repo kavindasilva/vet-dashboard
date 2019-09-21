@@ -97,7 +97,7 @@ class TrackerPopup extends Component {
 	 */
 	showHoverButtons(){
 		return(
-			<div hidden={ !this.state.viewHoverButtons }>
+			<div hidden={ !this.state.viewHoverButtons } style={ { width: "100%", minHeight: "18px", color: "#111111"} }>
 				{ this.showPop() }
 				<CellHistory 
 					ticket_property_id = { this.props.ticket_property_id }

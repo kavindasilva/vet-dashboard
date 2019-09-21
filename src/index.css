@@ -59,3 +59,7 @@ ol, ul {
   vertical-align: 'top'
 }
 
+paper-button {
+  text-transform: none;
+}
+

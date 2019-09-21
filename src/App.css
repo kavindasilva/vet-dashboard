@@ -37,3 +37,6 @@
   color: "#0000ee";
 }
 
+Button {
+  text-transform: none;
+}
