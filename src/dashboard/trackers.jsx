@@ -81,9 +81,11 @@ class Trackers extends React.Component{
 		console.log("Trackers - mount. props:", this.props); //ok
         //console.log("Trackers - mount. props.metaData:", this.props.metaData); 
         
+        this.setLastUpdatedTime(this.state.viewingTabTrackerId);
+        //this.setLastUpdatedTime()
+
         this.getTrackersConfig();
         this.getTicketData();
-        this.setLastUpdatedTime()
 	}
 
 	render(){
@@ -141,6 +143,7 @@ class Trackers extends React.Component{
                                 <Tab 
                                     key={ tracker.tracker_id } 
                                     label={ tracker.name } 
+                                    style={{textTransform: "none"}}
                                     onClick={ ()=> {
                                         this.setLastUpdatedTime(tracker.tracker_id);
                                         this.setState({selectedTrackerToDownload: tracker.tracker_id, viewingTabTrackerId: tracker.tracker_id })

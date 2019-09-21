@@ -21,6 +21,7 @@
         "graphql": "^14.3.0",
         "graphql-react": "^8.2.0",
         "material-table": "^1.39.0",
+        "material-ui-datetime-range-picker": "^0.2.4",
         "material-ui-tree": "^2.0.1",
         "moment": "^2.24.0",
         "mui-datatables": "^2.3.0",
