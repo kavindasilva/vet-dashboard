@@ -65,7 +65,7 @@ class TrackerPopup extends Component {
 		//console.log('trackerPopup: Rendering cell content');
 		return (
 			<React.Fragment>
-				<Cell 
+				<Cell
 					onMouseEnter={ ()=>this.handleHoverButtons() }
 					onMouseLeave={ ()=> {
 						//console.log("trackerPopup mouse leave");
@@ -78,6 +78,7 @@ class TrackerPopup extends Component {
 					//style={ { backgroundColor: this.evaluateExpr( this.props.configData.rules)} }
 					style={{
 						...globalStyles["cell-borders"],
+						minHeight: "30px", minWidth: "70px" 
 					}}
 				>
 					{ this.state.attributeValue2 }

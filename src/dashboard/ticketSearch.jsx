@@ -52,6 +52,8 @@ class ticketSearch extends Component {
 		//searchOption: 'ticket_id',
 		searchOption: 'create_date',
 		searchWord: '',
+
+		searchWordArr: { create_date:'', ticket_id:'', clinic_name:'' },
 		searchInputType: 'date',
 	}
 
@@ -68,12 +70,15 @@ class ticketSearch extends Component {
 								label: 'Search by2',
 								id: 'search-type-label-placeholder',
 							}}
-							labelWidth={1}
 							variant="filled"
 							style={ {} }
 							value={ this.state.searchOption } 
 							onChange={ e => {
-								this.setState({ searchOption: e.target.value, searchInputType: e.target.inputtype });
+								this.setState({
+									searchOption: e.target.value, 
+									searchInputType: e.target.inputtype,
+									searchWord: this.state.searchWordArr[e.target.value]
+								});
 								//console.log("ticketSearch input", e, e.target, e.target.input_type) 
 							}}
 							fullWidth={false}
@@ -105,8 +110,8 @@ class ticketSearch extends Component {
 						:<TextField
 							label={ "keyword" }
 							fullWidth={ true }
-							value={ this.state.searchWord }
-							onChange={ (e)=>this.setState({searchWord: e.target.value}) }
+							value={ (this.state.searchOption==="ticket_id") ?this.state.searchWordArr['ticket_id'] :this.state.searchWordArr['clinic_name'] }
+							onChange={ (e)=>this.changeSearchWord(e.target.value, this.state.searchOption) }
 						/>
 					}
 					</Grid>
@@ -160,8 +165,16 @@ class ticketSearch extends Component {
 		)
 	}
 
-	changeSearchWord = (newWord) => {
-		this.setState({searchWord: newWord});
+	changeSearchWord = (newWord, searchType) => {
+		console.log("ticketSearch changeWord", newWord, searchType);
+		let newSearchArr = { ...this.state.searchWordArr };
+		newSearchArr[searchType] = newWord;
+		this.setState({
+			searchWord: newWord,
+			searchWordArr: newSearchArr
+		},
+		()=>console.log("ticketSearch changeWord2", this.state.searchWord, this.state.searchWordArr)
+		);
 	}
 
 	componentDidMount(){

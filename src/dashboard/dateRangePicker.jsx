@@ -78,9 +78,10 @@ class CustomDateRangePicker extends React.Component{
 		this.setState({ endDate: format(new Date(selectedDate), 'yyyy-MM-dd') }, ()=>this.makeReturnString() );
     }
 
+    /** makes the return string and sets it to parent */
 	makeReturnString = () => {
         let combinedDate = this.state.startDate + ";" + this.state.endDate
-        this.props.changeSearchWord(combinedDate);
+        this.props.changeSearchWord(combinedDate, 'create_date');
     }
     
     componentDidMount(){

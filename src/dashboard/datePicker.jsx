@@ -60,6 +60,7 @@ class CustomDatePicker extends React.Component{
             <React.Fragment>
                 <Tooltip title="Edit">
                     <IconButton
+                        style={ { position: "absolute" } }        
                         size="small"
                         onClick={ ()=>this.setState({ isOpen: true }) }
                     >

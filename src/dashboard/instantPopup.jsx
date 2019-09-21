@@ -119,6 +119,7 @@ class InstantPopup extends React.Component{
         return(
             <Tooltip title="Edit">
                 <IconButton
+                    style={ { position: "absolute" } }        
                     size="small"
                     onClick={ ()=> { this.setState({componentState: ""}) } }            
                 >

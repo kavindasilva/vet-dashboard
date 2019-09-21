@@ -55,7 +55,8 @@ class CellHistory extends Component {
                 <Tooltip title="History">
                     <IconButton
                         size="small"
-                        onClick={ ()=>this.getHistoryData() }            
+                        onClick={ ()=>this.getHistoryData() }    
+                        style={ { position: "absolute" } }        
                     >
                         <HistoryIcon />
                     </IconButton>
