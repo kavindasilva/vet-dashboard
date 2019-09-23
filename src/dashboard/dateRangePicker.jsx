@@ -9,6 +9,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import {format} from "date-fns";
 
 import {  DatePicker, KeyboardDatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { DateRangePicker } from 'material-ui-datetime-range-picker';
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -38,6 +39,22 @@ class CustomDateRangePicker extends React.Component{
                     utils={DateFnsUtils} 
                     onClick={() =>  this.setState({ isOpen: true}) }
                 >
+                    {/* <DateRangePicker
+                        autoOk={true}
+                        autoOpenField={true}
+                        // onChange={onChange}
+                        // onDismiss={onDismiss}
+                        showCalendarStatus={true}
+                        //className="my-date-picker"
+                        firstDayOfWeek={0}
+                        dayButtonSize="6.25vw"
+                        calendarDateWidth="80vw"
+                        calendarTimeWidth="40vw"
+                        local='en-US'
+                        mode='portrait'
+                        startLabel='Beginning'
+                        endLabel='Ending'
+                    /> */}
                     <Grid container spacing={1}>
 					    <Grid item sm={6} md={6} xs={6}>
                             <DatePicker

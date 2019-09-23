@@ -67,7 +67,7 @@ class Trackers extends React.Component{
 	state = { 
         ...this.props.metaData, 
         last_updated: [], // get by tracker_id
-        tabValue:2,
+        tabValue:0,
         viewingTabTrackerId: 3,
         showNewClinicAddForm: false,
 
@@ -83,6 +83,7 @@ class Trackers extends React.Component{
         
         this.setLastUpdatedTime(this.state.viewingTabTrackerId);
         //this.setLastUpdatedTime()
+        this.setState({selectedTrackerToDownload: this.state.viewingTabTrackerId });
 
         this.getTrackersConfig();
         this.getTicketData();
@@ -166,9 +167,9 @@ class Trackers extends React.Component{
 
                 {
                     (this.props.configData && !this.state.errorGetTrackers)?
-                    this.props.configData.map( tracker => (
+                    this.props.configData.map( (tracker, trackerIndex) => (
 
-                        (this.state.tabValue+1) === tracker.tracker_id && 
+                        (this.state.tabValue) === trackerIndex && 
                         <div 
                             key={ tracker.tracker_id } 
                         >

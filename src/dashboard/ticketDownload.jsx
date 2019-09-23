@@ -67,7 +67,7 @@ class TicketDownload extends React.Component{
 			)
 		}
 		else
-			return(<div>loading csv data...</div>)
+			return(<React.Fragment>loading csv data...</React.Fragment>)
     }
 
 	prepareDownloadData = () => {
