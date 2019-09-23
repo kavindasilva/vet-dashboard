@@ -5,8 +5,8 @@ import rootReducer from "../reducers/index";
 import { rootStore } from "../stores/mainStore";
 
 import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
 import Typography from '@material-ui/core/Typography';
 
 
@@ -99,13 +99,6 @@ class Trackers extends React.Component{
                     <AddCircleOutlineIcon />
                     NewClinic
                 </Button>
-                {/* <Tooltip title="Refresh">
-                    <IconButton
-                        onClick={ ()=>this.componentDidMount() } size="small"
-                    >
-                        <RefreshIcon color="primary" s />
-                    </IconButton>
-                </Tooltip> */}
                 { 
                     this.viewTabs()
                 }
@@ -117,8 +110,8 @@ class Trackers extends React.Component{
 		)
     }
     
-    handleChange = (event, newValue) => {
-        this.setState({tabValue: newValue});
+    handleTabChange = ( selectedTab ) => {
+        this.setState({tabValue: selectedTab});
     }
 
 	/** 
@@ -128,110 +121,115 @@ class Trackers extends React.Component{
 	viewTabs(){
 		return(
 			<div>
-				<AppBar position="static" color="default">
-                    <Tabs
-                        key={this.state.tabValue}
-                        value={this.state.tabValue}
-                        onChange={ this.handleChange }
-                        indicatorColor="primary"
-                        textColor="primary"
-                        variant="scrollable"
-                        scrollButtons="auto"
-                    >                        
-                        {
-                            (this.props.configData && !this.state.errorGetTrackers)?
-                            this.props.configData.map( tracker => (
-                                <Tab 
-                                    key={ tracker.tracker_id } 
-                                    label={ tracker.name } 
-                                    style={{textTransform: "none"}}
-                                    onClick={ ()=> {
-                                        this.setLastUpdatedTime(tracker.tracker_id);
-                                        this.setState({selectedTrackerToDownload: tracker.tracker_id, viewingTabTrackerId: tracker.tracker_id })
-                                        //this.setState({lastSynced: moment().format('MM/DD/YYYY, HH:mm:ss')})
-                                    }}
-                                />
-                            ))
-                            :(this.state.errorGetTrackers)
-                                ? <Tab 
-                                    key={ 1001 } 
-                                    label={ Error } 
-                                />
-                                :<Tab 
-                                    key={ 1002 } 
-                                    label={ "Trackers Loading..." } 
-                                />
-                        }
-                    </Tabs>
-                </AppBar>
+                {/* <Tabs id="controlled-tab-example" activeKey={key} onSelect={k => setKey(k)}>
+                    <Tab eventKey="home" title="Home">
+                        <Sonnet />
+                    </Tab>
+                </Tabs> */}
+
 
                 {
                     (this.props.configData && !this.state.errorGetTrackers)?
-                    this.props.configData.map( (tracker, trackerIndex) => (
+                        <Tabs 
+                            id="controlled-tab-example" 
+                            activeKey={ this.state.tabValue } 
+                            onSelect={ this.handleTabChange
 
-                        (this.state.tabValue) === trackerIndex && 
-                        <div 
-                            key={ tracker.tracker_id } 
+                                // this.setLastUpdatedTime(tracker.tracker_id);
+                                // this.setState({selectedTrackerToDownload: tracker.tracker_id, viewingTabTrackerId: tracker.tracker_id })
+                            }
                         >
-                            <div float={'right'} align={'right'} style={{padding:"10px 10px 0px 0px"}} >
-                                <span>Last Sync at: { "N/Implemented" }
-                                    
-                                </span><br/>
-                                <span>Last Refresh: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "N/A" }
-                                    <Tooltip title="Refresh">
-                                        <IconButton
-                                            onClick={ ()=> {
-                                                this.setLastUpdatedTime(this.state.viewingTabTrackerId);
-                                                this.setState({selectedTrackerToDownload: this.state.viewingTabTrackerId })
-                                            }}
-                                            size="small"
-                                            style={ {width: "20px", height: "20px"} }
-                                        >
-                                            <RefreshIcon color="primary" style={ {width: "20px", height: "20px"} } />
-                                        </IconButton>
-                                    </Tooltip>
-                                </span>
-                            </div>
+                        {
+                            this.props.configData.map( (tracker, trackerIndex) => (
+                                
 
-                            <div float={'right'} align={'right'}>
-                                <TicketSearch
-                                    tracker_id={ this.state.selectedTrackerToDownload }
-                                    getAllTickets={this.getTicketData}
-                                    dispatchTickets={this.dispatchTicketInstances}
-                                /><br/>
-                            </div>
-                            
-
-                            <div 
-                                //style={{width: '100%', height: '120%'}}
-                                style={{width: '100%', height: '600px'}}
-                            >
-                                <StickyTable 
-                                    stickyHeaderCount={1}
-                                    stickyColumnCount={1}
+                                <Tab eventKey={ trackerIndex } title={ tracker.name } 
+                                    onClick={()=> {
+                                        console.log("XXX")
+                                        this.setState({tabValue: trackerIndex});
+                                        this.setLastUpdatedTime(tracker.tracker_id);
+                                        this.setState({selectedTrackerToDownload: tracker.tracker_id, viewingTabTrackerId: tracker.tracker_id })
+                                    }}
                                 >
-                                    <Row>
-                                        <TrackerTableHeader tracker_id={tracker.tracker_id} key={tracker.tracker_id}>
-                                        </TrackerTableHeader>
-                                    </Row>
-                                    <TrackerTableRow 
-                                        tracker_id={tracker.tracker_id} 
-                                        tracker={ tracker }
-                                        trackerRecordId={null}
+                                <div 
+                                    key={ tracker.tracker_id } 
+                                >
+                                    <div float={'right'} align={'right'} style={{padding:"10px 10px 0px 0px"}} >
+                                        <span>Last Sync at: { "N/Implemented" }
+                                            
+                                        </span><br/>
+                                        <span>Last Refresh: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "N/A" }
+                                            <Tooltip title="Refresh">
+                                                <IconButton
+                                                    onClick={ ()=> {
+                                                        this.setLastUpdatedTime(this.state.viewingTabTrackerId);
+                                                        this.setState({selectedTrackerToDownload: this.state.viewingTabTrackerId })
+                                                    }}
+                                                    size="small"
+                                                    style={ {width: "20px", height: "20px"} }
+                                                >
+                                                    <RefreshIcon color="primary" style={ {width: "20px", height: "20px"} } />
+                                                </IconButton>
+                                            </Tooltip>
+                                        </span>
+                                    </div>
+        
+                                    <div float={'right'} align={'right'}>
+                                        <TicketSearch
+                                            tracker_id={ this.state.selectedTrackerToDownload }
+                                            getAllTickets={this.getTicketData}
+                                            dispatchTickets={this.dispatchTicketInstances}
+                                        /><br/>
+                                    </div>
+                                    
+        
+                                    <div 
+                                        style={{width: '100%', height: '600px'}}
                                     >
-                                    </TrackerTableRow>
-                                </StickyTable>
-                            </div>
-
-                        </div>
-                    ))
+                                        <StickyTable 
+                                            stickyHeaderCount={1}
+                                            stickyColumnCount={1}
+                                        >
+                                            <Row>
+                                                <TrackerTableHeader tracker_id={tracker.tracker_id} key={tracker.tracker_id}>
+                                                </TrackerTableHeader>
+                                            </Row>
+                                            <TrackerTableRow 
+                                                tracker_id={tracker.tracker_id} 
+                                                tracker={ tracker }
+                                                trackerRecordId={null}
+                                            >
+                                            </TrackerTableRow>
+                                        </StickyTable>
+                                    </div>
+        
+                                </div>
+                                </Tab>
+                            ))
+                        }
+                        </Tabs>
                     :(this.state.errorGetTrackers)
-                        ? <div>
-                            { this.state.errorMsgGetTrackers.toString() }
-                        </div>
-                        :<div> 
-                            Loading...
-                        </div>
+                        ? <Tabs 
+                            id="controlled-1" 
+                            activeKey={ this.state.tabValue } 
+                            // onSelect={()=> {
+                            //     this.setLastUpdatedTime(tracker.tracker_id);
+                            //     this.setState({selectedTrackerToDownload: tracker.tracker_id, viewingTabTrackerId: tracker.tracker_id })
+                            // }}
+                        >
+                            <Tab eventKey={ this.state.tabValue } title="err">
+                                <div>{ this.state.errorMsgGetTrackers.toString() }</div>
+                            </Tab>
+                        </Tabs>
+                        : <Tabs 
+                            id="controlled-2" 
+                            activeKey={ this.state.tabValue } 
+                        >
+                            <Tab eventKey={ this.state.tabValue } title="load">
+                                <div>Loading..</div>
+                            </Tab>
+                        </Tabs>
+                        
                 }
 
 			</div>
