@@ -150,7 +150,7 @@ class ticketSearch extends Component {
 					<Grid item sm={2} md={2} xs={2} lg={2} style={ {paddingTop: "10px"}} >
 						
 						<GridContainer>
-							<GridRow>
+							<GridRow style={ { padding: "12px 0px 0px 0px"}} >
 								<GridCol sm={4} lg={4} md={4} style={{padding: "2px 2px 2px 2px"}} >
 									<Tooltip title="Search">
 										<Button
@@ -158,7 +158,7 @@ class ticketSearch extends Component {
 											block={true}
 											style={{}}
 											className={"searchicon"}
-											size="sm"
+											size="md"
 											onClick={ ()=>this.searchTickets() }
 										>
 											<SearchIcon  fontSize="small" />
@@ -170,7 +170,7 @@ class ticketSearch extends Component {
 										<Button
 											variant="outline-warning"
 											block={true}
-											size="sm"
+											size="md"
 											onClick={ ()=>this.props.getAllTickets() }
 										>
 											<HighlightOffIcon fontSize="small" />

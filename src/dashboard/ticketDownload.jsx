@@ -51,7 +51,7 @@ class TicketDownload extends React.Component{
 						<Button						
 							variant="outline-success"
 							block={true}
-							size="sm"
+							size="md"
 							style={ {
 								//paddingTop: "4px"
 								// maxHeight: "20x",

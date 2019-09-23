@@ -64,7 +64,7 @@ class CustomDateRangePicker extends React.Component{
                         startLabel='Beginning'
                         endLabel='Ending'
                     /> */}
-                    <Grid container spacing={1}>
+                    <Grid container spacing={0}>
 					    <Grid item sm={6} md={6} xs={6}>
                         {
                             this.showStartDatePicker()
@@ -88,7 +88,7 @@ class CustomDateRangePicker extends React.Component{
         return(
             <React.Fragment>
                 <Form.Group controlId="formGridKeyword">
-                    <Form.Label>keyword</Form.Label>
+                    <Form.Label>Start Date</Form.Label>
                     <Form.Control
                         type="text"
                         value={ this.state.startDate }
@@ -154,7 +154,7 @@ class CustomDateRangePicker extends React.Component{
         return(
             <React.Fragment>
                 <Form.Group controlId="formGridKeyword2">
-                    <Form.Label>keyword</Form.Label>
+                    <Form.Label>End Date</Form.Label>
                     <Form.Control
                         type="text"
                         value={ this.state.endDate }
