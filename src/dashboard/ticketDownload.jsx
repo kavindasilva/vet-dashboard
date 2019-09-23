@@ -52,7 +52,7 @@ class TicketDownload extends React.Component{
 						block={true}
 						size="sm"
 						style={ {
-							paddingTop: "4px"
+							//paddingTop: "4px"
 							// maxHeight: "20x",
 							// maxWidth: "20x",
 						} }

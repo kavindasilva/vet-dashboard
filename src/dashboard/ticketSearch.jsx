@@ -85,7 +85,7 @@ class ticketSearch extends Component {
 		return (
 			<React.Fragment>
 				<Grid container spacing={0}>
-					<Grid item sm={2} md={2} xs={2} lg={2}></Grid>
+					<Grid item sm={1} md={1} xs={1} lg={1}></Grid>
 					
 					<Grid item sm={3} md={3} xs={3} lg={3}>
 						<InputLabel style={{fontSize:"14px", padding: "2px 10px 0px 0px"}} size="sm">Search by </InputLabel>
@@ -142,44 +142,44 @@ class ticketSearch extends Component {
 					}
 					</Grid>
 					
-					<Grid item sm={1} md={1} xs={1} lg={1} style={ {paddingTop: "10px"}} >
+					<Grid item sm={2} md={2} xs={2} lg={2} style={ {paddingTop: "10px"}} >
 						
-							<GridContainer>
-								<GridRow>
-									<GridCol style={{padding: "0px 0px 0px 0px"}} >
-										<Tooltip title="Search">
-											<Button
-												variant="outline-info"
-												block={true}
-												style={{}}
-												className={"searchicon"}
-												size="sm"
-												onClick={ ()=>this.searchTickets() }
-											>
-												<SearchIcon  fontSize="small" />
-											</Button>
-										</Tooltip>
-									</GridCol>
-									<GridCol style={{padding: "0px 0px 0px 0px"}} >
-										<Tooltip title="Clear">
-											<Button
-												variant="outline-warning"
-												block={true}
-												size="sm"
-												onClick={ ()=>this.props.getAllTickets() }
-											>
-												<HighlightOffIcon fontSize="small" />
-											</Button>
-										</Tooltip>
-									</GridCol>
+						<GridContainer>
+							<GridRow>
+								<GridCol sm={4} lg={4} md={4} style={{padding: "2px 2px 2px 2px"}} >
+									<Tooltip title="Search">
+										<Button
+											variant="outline-info"
+											block={true}
+											style={{}}
+											className={"searchicon"}
+											size="sm"
+											onClick={ ()=>this.searchTickets() }
+										>
+											<SearchIcon  fontSize="small" />
+										</Button>
+									</Tooltip>
+								</GridCol>
+								<GridCol sm={4} lg={4} md={4} style={{padding: "2px 2px 2px 2px"}} >
+									<Tooltip title="Clear">
+										<Button
+											variant="outline-warning"
+											block={true}
+											size="sm"
+											onClick={ ()=>this.props.getAllTickets() }
+										>
+											<HighlightOffIcon fontSize="small" />
+										</Button>
+									</Tooltip>
+								</GridCol>
 
-									<GridCol style={{padding: "0px 0px 0px 0px"}} >
-										<CSVdownloader	
-											tracker_id={ this.props.tracker_id }
-										/>
-									</GridCol>
-								</GridRow>
-							</GridContainer>
+								<GridCol sm={4} lg={4} md={4} style={{padding: "2px 2px 2px 2px"}} >
+									<CSVdownloader	
+										tracker_id={ this.props.tracker_id }
+									/>
+								</GridCol>
+							</GridRow>
+						</GridContainer>
 					</Grid>
 				</Grid>
 			</React.Fragment>

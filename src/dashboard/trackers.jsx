@@ -154,59 +154,59 @@ class Trackers extends React.Component{
                                     //     this.setState({selectedTrackerToDownload: tracker.tracker_id, viewingTabTrackerId: tracker.tracker_id })
                                     // }}
                                 >
-                                <div 
-                                    key={ tracker.tracker_id } 
-                                >
-                                    <div float={'right'} align={'right'} style={{padding:"10px 10px 0px 0px"}} >
-                                        <span>Last Sync at: { "N/Implemented" }
-                                            
-                                        </span><br/>
-                                        <span>Last Refresh: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "N/A" }
-                                            <Tooltip title="Refresh">
-                                                <IconButton
-                                                    onClick={ ()=> {
-                                                        this.setLastUpdatedTime(this.state.viewingTabTrackerId);
-                                                        this.setState({selectedTrackerToDownload: this.state.viewingTabTrackerId })
-                                                    }}
-                                                    size="small"
-                                                    style={ {width: "20px", height: "20px"} }
-                                                >
-                                                    <RefreshIcon color="primary" style={ {width: "20px", height: "20px"} } />
-                                                </IconButton>
-                                            </Tooltip>
-                                        </span>
-                                    </div>
-        
-                                    <div float={'right'} align={'right'}>
-                                        <TicketSearch
-                                            tracker_id={ this.state.selectedTrackerToDownload }
-                                            getAllTickets={this.getTicketData}
-                                            dispatchTickets={this.dispatchTicketInstances}
-                                        /><br/>
-                                    </div>
-                                    
-        
                                     <div 
-                                        style={{width: '100%', height: '600px'}}
+                                        key={ tracker.tracker_id } 
                                     >
-                                        <StickyTable 
-                                            stickyHeaderCount={1}
-                                            stickyColumnCount={1}
+                                        <div float={'right'} align={'right'} style={{padding:"10px 10px 0px 0px"}} >
+                                            <span>Last Sync at: { "N/Implemented" }
+                                                
+                                            </span><br/>
+                                            <span>Last Refresh: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "N/A" }
+                                                <Tooltip title="Refresh">
+                                                    <IconButton
+                                                        onClick={ ()=> {
+                                                            this.setLastUpdatedTime(this.state.viewingTabTrackerId);
+                                                            this.setState({selectedTrackerToDownload: this.state.viewingTabTrackerId })
+                                                        }}
+                                                        size="small"
+                                                        style={ {width: "20px", height: "20px"} }
+                                                    >
+                                                        <RefreshIcon color="primary" style={ {width: "20px", height: "20px"} } />
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </span>
+                                        </div>
+            
+                                        <div float={'right'} align={'right'}>
+                                            <TicketSearch
+                                                tracker_id={ this.state.selectedTrackerToDownload }
+                                                getAllTickets={this.getTicketData}
+                                                dispatchTickets={this.dispatchTicketInstances}
+                                            /><br/>
+                                        </div>
+                                                
+                                        <div 
+                                            float={'right'} align={'left'}
+                                            style={{width: '100%', height: '600px'}}
                                         >
-                                            <Row>
-                                                <TrackerTableHeader tracker_id={tracker.tracker_id} key={tracker.tracker_id}>
-                                                </TrackerTableHeader>
-                                            </Row>
-                                            <TrackerTableRow 
-                                                tracker_id={tracker.tracker_id} 
-                                                tracker={ tracker }
-                                                trackerRecordId={null}
+                                            <StickyTable 
+                                                stickyHeaderCount={1}
+                                                stickyColumnCount={1}
                                             >
-                                            </TrackerTableRow>
-                                        </StickyTable>
+                                                <Row>
+                                                    <TrackerTableHeader tracker_id={tracker.tracker_id} key={tracker.tracker_id}>
+                                                    </TrackerTableHeader>
+                                                </Row>
+                                                <TrackerTableRow 
+                                                    tracker_id={tracker.tracker_id} 
+                                                    tracker={ tracker }
+                                                    trackerRecordId={null}
+                                                >
+                                                </TrackerTableRow>
+                                            </StickyTable>
+                                        </div>
+            
                                     </div>
-        
-                                </div>
                                 </Tab>
                             ))
                         }
