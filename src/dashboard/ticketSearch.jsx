@@ -43,6 +43,11 @@ import GridContainer from 'react-bootstrap/Container'
 import GridRow from 'react-bootstrap/Row'
 import GridCol from 'react-bootstrap/Col'
 
+import Form from 'react-bootstrap/Form'
+// import FormGroup from 'react-bootstrap/FormGroup'
+// import Form from 'react-bootstrap/FormLabel'
+// import Form from 'react-bootstrap/FormControl'
+
 import ticketAPI from "../apicalls/ticketAPI";
 import CSVdownloader from "../dashboard/ticketDownload"
 const ticketAPIObj = new ticketAPI();
@@ -88,28 +93,23 @@ class ticketSearch extends Component {
 					<Grid item sm={1} md={1} xs={1} lg={1}></Grid>
 					
 					<Grid item sm={3} md={3} xs={3} lg={3}>
-						<InputLabel style={{fontSize:"14px", padding: "2px 10px 0px 0px"}} size="sm">Search by </InputLabel>
-						<Select 
-							inputProps={{
-								label: 'Search by2',
-								id: 'search-type-label-placeholder',
-							}}
-							variant="filled"
-							style={ { width: "200px" } }
-							value={ this.state.searchOption } 
-							onChange={ e => {
-								this.setState({
-									searchOption: e.target.value, 
-									searchInputType: e.target.inputtype,
-									searchWord: this.state.searchWordArr[e.target.value]
-								});
-								//console.log("ticketSearch input", e, e.target, e.target.input_type) 
-							}}
-							fullWidth={false}
-						>
+						<Form.Group controlId="formGridSearchType">
+							<Form.Label>Search by</Form.Label>
+							<Form.Control 
+								as="select"
+								onChange={ e => {
+									this.setState({
+										searchOption: e.target.value, 
+										searchInputType: e.target.inputtype,
+										searchWord: this.state.searchWordArr[e.target.value]
+									});
+									//console.log("ticketSearch input", e, e.target, e.target.input_type) 
+								}}
+								value={ this.state.searchOption } 
+							>
 							{
 								ticketSearchParams.map( item =>
-									<MenuItem 
+									<option 
 										key={ item.param } value={ item.param }
 										inputtype={ item.inputType }
 										//onClick={ ()=>this.setState({searchInputType: 'text'}) }
@@ -119,10 +119,11 @@ class ticketSearch extends Component {
 									{ 
 										item.label
 									}
-									</MenuItem>
+									</option>
 								)
 							}
-						</Select>
+							</Form.Control>
+						</Form.Group>
 					</Grid>
 
 					<Grid item sm={6} md={6} xs={6} lg={6}>
@@ -133,12 +134,16 @@ class ticketSearch extends Component {
 							end_date={ this.state.searchWordArr['create_date'].split(';')[1] }
 							changeSearchWord={ this.changeSearchWord }
 						/>
-						:<TextField
-							label={ "keyword" }
-							fullWidth={ true }
-							value={ (this.state.searchOption==="ticket_id") ?this.state.searchWordArr['ticket_id'] :this.state.searchWordArr['clinic_name'] }
-							onChange={ (e)=>this.changeSearchWord(e.target.value, this.state.searchOption) }
-						/>
+						: <Form.Group controlId="formGridKeyword">
+							<Form.Label>keyword</Form.Label>
+							<Form.Control 
+								type="text" 
+								placeholder="Enter keyword" 
+								fullWidth={ true }
+								value={ (this.state.searchOption==="ticket_id") ?this.state.searchWordArr['ticket_id'] :this.state.searchWordArr['clinic_name'] }
+								onChange={ (e)=>this.changeSearchWord(e.target.value, this.state.searchOption) }
+							/>
+						</Form.Group>
 					}
 					</Grid>
 					

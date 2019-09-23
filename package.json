@@ -31,6 +31,8 @@
         "react-addons-css-transition-group": "^15.6.2",
         "react-apollo": "^2.5.5",
         "react-bootstrap": "^1.0.0-beta.8",
+        "react-bootstrap-date-picker": "^5.1.0",
+        "react-bootstrap-date-picker-react16": "^4.0.2",
         "react-csv": "^1.1.1",
         "react-datepicker": "^2.4.0",
         "react-day-picker": "^7.3.0",

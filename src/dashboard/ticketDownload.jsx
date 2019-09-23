@@ -47,24 +47,24 @@ class TicketDownload extends React.Component{
 			console.log("ticketDownload arr", this.prepareDownloadData() );
 			return(
 				<React.Fragment>
-					<Button						
-						variant="outline-success"
-						block={true}
-						size="sm"
-						style={ {
-							//paddingTop: "4px"
-							// maxHeight: "20x",
-							// maxWidth: "20x",
-						} }
-					>
-						<CSVLink 
-							data={ this.prepareDownloadData() }
+					<Tooltip title="Download CSV">
+						<Button						
+							variant="outline-success"
+							block={true}
+							size="sm"
+							style={ {
+								//paddingTop: "4px"
+								// maxHeight: "20x",
+								// maxWidth: "20x",
+							} }
 						>
-							<Tooltip title="Download CSV">
+							<CSVLink 
+								data={ this.prepareDownloadData() }
+							>
 								<CloudDownloadIcon fontSize="small" />
-							</Tooltip>
-						</CSVLink>
-					</Button>
+							</CSVLink>
+						</Button>
+					</Tooltip>
 				</React.Fragment>
 
 			)
