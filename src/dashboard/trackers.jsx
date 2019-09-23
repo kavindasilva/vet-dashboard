@@ -37,7 +37,8 @@ import TrackerTableRow from "../dashboard/trackerTableRow";
 
 import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, IconButton } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, DialogActions, IconButton } from '@material-ui/core';
+import Button from 'react-bootstrap/Button'
 
 import moment from "moment";
 
@@ -93,6 +94,7 @@ class Trackers extends React.Component{
 		return(
 			<div align={"right"} float={"right"} >
                 <Button
+                    variant="secondary"
                     style={{textTransform: "none"}}
                     onClick={ ()=> this.setState({showNewClinicAddForm: true}) }
                 >
@@ -110,8 +112,15 @@ class Trackers extends React.Component{
 		)
     }
     
+    /**
+     * selectedTab: <tracker_id>
+     */
     handleTabChange = ( selectedTab ) => {
-        this.setState({tabValue: selectedTab});
+        //this.setState({tabValue: selectedTab});
+        this.setState({ viewingTabTrackerId: selectedTab, selectedTrackerToDownload: selectedTab }, ()=>{
+            this.setLastUpdatedTime(selectedTab)
+        } );
+        //this.setLastUpdatedTime(tracker.tracker_id);
     }
 
 	/** 
@@ -132,24 +141,18 @@ class Trackers extends React.Component{
                     (this.props.configData && !this.state.errorGetTrackers)?
                         <Tabs 
                             id="controlled-tab-example" 
-                            activeKey={ this.state.tabValue } 
-                            onSelect={ this.handleTabChange
-
-                                // this.setLastUpdatedTime(tracker.tracker_id);
-                                // this.setState({selectedTrackerToDownload: tracker.tracker_id, viewingTabTrackerId: tracker.tracker_id })
-                            }
+                            activeKey={ this.state.viewingTabTrackerId } 
+                            onSelect={ this.handleTabChange }
                         >
                         {
                             this.props.configData.map( (tracker, trackerIndex) => (
-                                
-
-                                <Tab eventKey={ trackerIndex } title={ tracker.name } 
-                                    onClick={()=> {
-                                        console.log("XXX")
-                                        this.setState({tabValue: trackerIndex});
-                                        this.setLastUpdatedTime(tracker.tracker_id);
-                                        this.setState({selectedTrackerToDownload: tracker.tracker_id, viewingTabTrackerId: tracker.tracker_id })
-                                    }}
+                                <Tab 
+                                    eventKey={ tracker.tracker_id } 
+                                    title={ tracker.name } 
+                                    // onClick={()=> {
+                                    //     this.setLastUpdatedTime(tracker.tracker_id);
+                                    //     this.setState({selectedTrackerToDownload: tracker.tracker_id, viewingTabTrackerId: tracker.tracker_id })
+                                    // }}
                                 >
                                 <div 
                                     key={ tracker.tracker_id } 

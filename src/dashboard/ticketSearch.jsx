@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import '@y0c/react-datepicker/assets/styles/calendar.scss';
 
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+//import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -11,7 +11,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Select from '@material-ui/core/Select';
 import Radio from '@material-ui/core/Radio';
-import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 
 import Popup from "reactjs-popup";
@@ -33,11 +32,16 @@ import DateFnsUtils from "@date-io/date-fns";
 import {format} from "date-fns";
 import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
 
-import { MenuItem, IconButton, InputLabel } from "@material-ui/core";
+import { MenuItem, IconButton, InputLabel, Container } from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Tooltip from '@material-ui/core/Tooltip';
 import Grid from '@material-ui/core/Grid';
+import Button from 'react-bootstrap/Button'
+
+import GridContainer from 'react-bootstrap/Container'
+import GridRow from 'react-bootstrap/Row'
+import GridCol from 'react-bootstrap/Col'
 
 import ticketAPI from "../apicalls/ticketAPI";
 import CSVdownloader from "../dashboard/ticketDownload"
@@ -139,32 +143,43 @@ class ticketSearch extends Component {
 					</Grid>
 					
 					<Grid item sm={1} md={1} xs={1} lg={1} style={ {paddingTop: "10px"}} >
-						<Grid item sm={0} md={2} xs={0} lg={4} ></Grid>
-						<Grid item sm={12} md={10} xs={12} lg={8} >
-							<Tooltip title="Search">
-								<IconButton
-									className={"searchicon"}
-									size="small"
-									//onClick={ ()=>console.log("ticketSearch params", this.state.searchOption, this.state.searchWord, this.props.tracker_id) }
-									onClick={ ()=>this.searchTickets() }
-								>
-									<SearchIcon  fontSize="small" />
-								</IconButton>
-							</Tooltip>
-							<Tooltip title="Clear">
-								<IconButton
-									className={ "btn btn-warning" }
-									size="small"
-									onClick={ ()=>this.props.getAllTickets() }
-								>
-									<HighlightOffIcon fontSize="small" />
-								</IconButton>
-							</Tooltip>
+						
+							<GridContainer>
+								<GridRow>
+									<GridCol style={{padding: "0px 0px 0px 0px"}} >
+										<Tooltip title="Search">
+											<Button
+												variant="outline-info"
+												block={true}
+												style={{}}
+												className={"searchicon"}
+												size="sm"
+												onClick={ ()=>this.searchTickets() }
+											>
+												<SearchIcon  fontSize="small" />
+											</Button>
+										</Tooltip>
+									</GridCol>
+									<GridCol style={{padding: "0px 0px 0px 0px"}} >
+										<Tooltip title="Clear">
+											<Button
+												variant="outline-warning"
+												block={true}
+												size="sm"
+												onClick={ ()=>this.props.getAllTickets() }
+											>
+												<HighlightOffIcon fontSize="small" />
+											</Button>
+										</Tooltip>
+									</GridCol>
 
-							<CSVdownloader	
-								tracker_id={ this.props.tracker_id }
-							/>
-						</Grid>
+									<GridCol style={{padding: "0px 0px 0px 0px"}} >
+										<CSVdownloader	
+											tracker_id={ this.props.tracker_id }
+										/>
+									</GridCol>
+								</GridRow>
+							</GridContainer>
 					</Grid>
 				</Grid>
 			</React.Fragment>
