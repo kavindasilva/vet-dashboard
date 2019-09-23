@@ -70,12 +70,13 @@ class InstantPopup extends React.Component{
     render(){
         return(
             <React.Fragment>
+            {/* {
+                this.viewProgressBar()
+            } */}
             {
                 this.viewCell()
             }
-            {
-                this.viewProgressBar()
-            }
+            
             </React.Fragment>
         );
     }

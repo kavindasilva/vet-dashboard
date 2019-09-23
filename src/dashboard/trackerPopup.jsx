@@ -38,17 +38,16 @@ import moment from "moment";
 import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
 import CellHistory from "../dashboard/cellHistory"
+import ProgressBar from "../dashboard/onboardProgress"
 
 //import Rule from "../dashboard/colouringFunctions"
 import  * as Rule from "../dashboard/colouringFunctions"
-import Peg from "../parsers/conditionsParser"
-import cellHistory from "../dashboard/cellHistory";
 
 //export default class TrackerPopup extends Component {
 class TrackerPopup extends Component {
 	state = {
 		/** trackerInstaid. need in dispatching */	ticket_id	:this.props.ticket_id,
-		// /** property name */					columnName		:this.props.ticketProperty.property,
+		/** property name */					columnName		:this.props.ticketProperty.property,
 		// /** property value */     				attributeValue	:this.props.ticketProperty.value,
 		/** element input type */ 				elementType		:this.props.elementType,
 
@@ -86,11 +85,26 @@ class TrackerPopup extends Component {
 					}}
 				>
 					{ this.state.attributeValue2 }
+					{
+						this.viewProgressBar()
+					}
 					{ this.showHoverButtons() }
 				</Cell>
 			</React.Fragment>
 		)
 	}
+
+	viewProgressBar = () => (
+        <React.Fragment>
+            {
+                (this.state.columnName==="clinic_name") && 
+                <ProgressBar
+                    ticket_id={ this.props.ticket_id }
+                    hospital_name={ this.state.attributeValue }
+                />
+            }
+        </React.Fragment>
+    )
 
 	/**
 	 * render edit and history buttons

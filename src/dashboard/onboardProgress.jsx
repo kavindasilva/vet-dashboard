@@ -22,6 +22,7 @@ import  * as Rule from "../dashboard/colouringFunctions"
 import { pipelineSteps } from "../common/constants"
 import { IconButton, Stepper, Step, StepLabel } from "@material-ui/core";
 import StepConnector from '@material-ui/core/StepConnector';
+import InfoIcon from '@material-ui/icons/Info';
 
 const ColorlibConnector = withStyles({
 	alternativeLabel: {
@@ -62,7 +63,7 @@ class onboardProgress extends Component {
 					size="small"
 					onClick={ ()=>this.setState({isOpen: true}) }
 				>
-					o
+					<InfoIcon fontSize="small" />
 					{ this.showPop() }
                 </IconButton>
 
