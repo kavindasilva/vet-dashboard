@@ -17,7 +17,8 @@ import ReportsUI from "../reports/reportsui"
 
 import { userTypeArray } from "../common/constants"
 
-import Button from '@material-ui/core/Button';
+//import Button from '@material-ui/core/Button';
+import Button from 'react-bootstrap/Button';
 
 //import MiniDrawer from "../common/drawer";
 import loginAPI from "../apicalls/loginAPI";
@@ -34,6 +35,8 @@ class Menu extends Component {
 		showPh: false,
 		showNewClinicAddForm: true,
 
+		//activeClass: 
+
 		//componentToShow: 'def',
 		//componentToShow: "trackerConfig",
 		//componentToShow: "currentUserProfile",
@@ -47,9 +50,77 @@ class Menu extends Component {
 			{ 
 				this.viewMenuBar() 
 			}
+			<div class="" style={{margin:"0px 50px 0px 50px"}}>
 			{ 
 				this.renderComponent() 
 			}
+			</div>
+			</React.Fragment>
+		);
+	}
+
+
+	viewMenuBar(){
+		return(
+			<React.Fragment>
+				<nav class="navbar navbar-expand-lg navbar-fixed-top navbar-dark bg-primary " >
+					
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+					</button>
+
+					<div class="collapse navbar-collapse" id="navbarColor03">
+						<ul class="navbar-nav mr-auto">
+							<li class="nav-item" onClick={ ()=>{ this.setState({ componentToShow:'tickets'}) } }>
+								<a class="nav-link" href="#" >Tickets</a>
+							</li>
+							{
+								(
+									this.props.metaData.userInfo 
+									&& this.props.metaData.userInfo.user_type_id===3 //admin
+								) 
+								&&
+								<li class="nav-item"
+									onClick={ ()=>{ this.setState({ componentToShow:'trackerConfig'}) } } 
+								>
+									<a class="nav-link" href="#" >TrackerConfig</a>
+								</li>
+							}
+
+							{
+								(
+									this.props.metaData.userInfo 
+									&& this.props.metaData.userInfo.user_type_id===3 //admin
+								) 
+								&&
+								<li class="nav-item"
+									style={{textTransform: "none"}}
+									onClick={ ()=>{ this.setState({ componentToShow:'users'}) } } 
+									//disabled={true}
+									//hidden={ (this.props.metaData.userInfo && this.props.metaData.userInfo.user_type_id!==3) }
+								>
+									<a class="nav-link" href="#" >UserMgt</a>
+								</li>
+							}
+
+							<li class="nav-item" onClick={ ()=>{ this.setState({ componentToShow:'currentUserProfile'}) } } >
+								<a class="nav-link" href="#">My Profile</a>
+							</li>
+
+						</ul>
+
+						<span style={{align:'right'}}>
+							Hi user ID: ... { this.props.metaData.userId } ...  
+							{ (this.props.metaData.userInfo)? this.props.metaData.userInfo.email:"who you?" }
+						</span>
+						<Button 
+							style={{cursor:'pointer',float:'right',align:'right'}}
+							onClick={ () => { this.logOutUser() } }
+						>
+							LogOut
+						</Button>
+					</div>
+				</nav>
 			</React.Fragment>
 		);
 	}
@@ -57,7 +128,7 @@ class Menu extends Component {
 	/**
 	 * renders the menu bar (temporary menu bar)
 	 */
-	viewMenuBar(){
+	viewMenuBar2(){
 		return(
 			<React.Fragment>
 				{/* <MiniDrawer /> */}
