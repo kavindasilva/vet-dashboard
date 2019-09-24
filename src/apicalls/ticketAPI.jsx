@@ -54,10 +54,13 @@ class ticketAPI extends React.Component{
   updateTicketPropery (ticketPropertyId, data) {
     console.log("ticketAPI - saveToDB", ticketPropertyId, data); //return;
     
-    return axios.patch(uriTicketProperty + ticketPropertyId, data)
-                .then(res => {
-                    console.log(res);
-                });
+    if(ticketPropertyId){
+      return axios.patch(uriTicketProperty + ticketPropertyId, data)
+        .then(res => {
+            console.log(res);
+        });
+    }
+    
   }
 
   /** return the history of a  table cell */

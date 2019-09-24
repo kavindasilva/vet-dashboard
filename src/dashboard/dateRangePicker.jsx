@@ -95,6 +95,7 @@ class CustomDateRangePicker extends React.Component{
                         onClick={ ()=>this.setState(
                                 {isStartDateOpen: true}
                             )}
+                        readOnly={ true }
                     >
                     </Form.Control>
                 </Form.Group>
@@ -161,6 +162,7 @@ class CustomDateRangePicker extends React.Component{
                         onClick={ ()=>this.setState(
                                 {isEndDateOpen: true}
                             )}
+                        readOnly={ true }
                     >
                     </Form.Control>
                 </Form.Group>

@@ -93,8 +93,11 @@ class onboardProgress extends Component {
 										connector={<ColorlibConnector />}
 									>
 										{ 
-											this.state.steps.map(step => (
-												<Step key={step.stage_id}>
+											this.state.steps.map( (step, i) => (
+												<Step 
+													key={ i }
+													//key={step.stage_id}
+												>
 													<StepLabel >{step.label}</StepLabel>
 												</Step>
 											))

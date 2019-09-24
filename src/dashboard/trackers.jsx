@@ -147,6 +147,7 @@ class Trackers extends React.Component{
                         {
                             this.props.configData.map( (tracker, trackerIndex) => (
                                 <Tab 
+                                    key={ trackerIndex } 
                                     eventKey={ tracker.tracker_id } 
                                     title={ tracker.name } 
                                     // onClick={()=> {
