@@ -100,9 +100,15 @@ class TicketDownload extends React.Component{
 					parseInt(permission.user_type_id) === current_user_type
 				));
 	
-				let columnValue = ticket[source_field][column.name];
+				let columnValue = null;
+				columnValue = (source_field==="hs_properties") 
+					?ticket[source_field][column.name] 
+					:( (ticket[source_field][column.name])
+						?ticket[source_field][column.name]['value']
+						:""
+					) ;
 	
-				columnValue = (columnValue)? columnValue : "null";
+				columnValue = (columnValue)? columnValue : ""; // handle null
 	
 				if(userTypeRestriction && !userTypeRestriction.is_read_restricted) { // read allowed
 					ticketRow.push(columnValue)
