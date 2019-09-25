@@ -82,8 +82,10 @@ class ticketSearch extends Component {
 		searchOption: 'create_date',
 		searchWord: '',
 
-		searchWordArr: { create_date:format(new Date(), 'yyyy-MM-dd')+';'+format(new Date(), 'yyyy-MM-dd'), ticket_id:'', clinic_name:'' },
+		searchWordArr: { create_date:format(new Date(), 'yyyy-MM-dd')+';'+format(new Date(), 'yyyy-MM-dd'), ticket_id:'', clinic_name:'' }, // to maintain separate search values
 		searchInputType: 'date',
+
+		searchParam: '',
 	}
 
   	render() {
@@ -141,7 +143,11 @@ class ticketSearch extends Component {
 								placeholder="Enter keyword" 
 								fullWidth={ true }
 								value={ (this.state.searchOption==="ticket_id") ?this.state.searchWordArr['ticket_id'] :this.state.searchWordArr['clinic_name'] }
-								onChange={ (e)=>this.changeSearchWord(e.target.value, this.state.searchOption) }
+								onChange={ (e)=>this.changeSearchWord(
+									e.target.value,
+									this.state.searchOption,
+									this.state.searchOption + ":" + e.target.value
+								)}
 							/>
 						</Form.Group>
 					}
@@ -192,8 +198,9 @@ class ticketSearch extends Component {
 	}
 
 
-	searchTickets = () => {
-		ticketAPIObj.searchTickets( 'param=' +this.state.searchOption+ '&value=' +this.state.searchWord )
+	searchTickets = () => { // create_date_start:2019-09-06,create_date_end:2019-10-10 -- ticket_id:55
+		//ticketAPIObj.searchTickets( this.state.searchOption+ ':' +this.state.searchWord )
+		ticketAPIObj.searchTickets( this.state.searchParam )
 		.then(
 			res => {
 				console.log("ticketSearch res", res);
@@ -211,13 +218,14 @@ class ticketSearch extends Component {
 		)
 	}
 
-	changeSearchWord = (newWord, searchType) => {
+	changeSearchWord = (newWord, searchType, queryParam) => {
 		//console.log("ticketSearch changeWord", newWord, searchType);
 		let newSearchArr = { ...this.state.searchWordArr };
 		newSearchArr[searchType] = newWord;
 		this.setState({
 			searchWord: newWord,
-			searchWordArr: newSearchArr
+			searchWordArr: newSearchArr,
+			searchParam: queryParam
 		}
 		//,()=>console.log("ticketSearch changeWord2", this.state.searchWord, this.state.searchWordArr)
 		);
