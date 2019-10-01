@@ -62,14 +62,16 @@ class onboardProgress extends Component {
 				<IconButton 
 					size="small"
 					onClick={ ()=>this.setState({isOpen: true}) }
+					//onMouseEnter={ this.handlePop }
+					//onMouseLeave={ this.handlePop }
 				>
 					<InfoIcon fontSize="small" />
-					{ this.showPop() }
                 </IconButton>
 
 				<Dialog
                     open={this.state.isOpen}
-                    onClose={this.closePopUp}
+					onClose={this.closePopUp}
+					//onMouseLeave={ ()=>this.setState({isOpen: false}) }
                     aria-labelledby="draggable-dialog-title"
                 >
 					<DialogTitle 
@@ -122,8 +124,9 @@ class onboardProgress extends Component {
 		)
 	}
 
-	showPop(){
-		
+	handlePop = () => {
+		let currentState = this.state.isOpen;
+		this.setState({isOpen: !currentState });
 	}
 
 	componentDidMount(){

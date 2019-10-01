@@ -91,9 +91,13 @@ class TrackerHeader extends React.Component{
 						key={ i /* perviously column id */}
 						style={ { 
 							//width: "200px", 
+							display: "table-cell",
+							textAlign: "center",
+							verticalAlign: "middle",
+
 							color:"#1122ee", 
 							padding: "2px 10px 2px 12px",
-							backgroundColor: "#e3d3cc",
+							backgroundColor: "#95a5a6",
 
 							minHeight: "70px", // not working
 							minWidth: "150px", // working
@@ -118,9 +122,13 @@ class TrackerHeader extends React.Component{
 					<Cell 
 						key={ i }
 						style={ { 
+							//display: "table-cell",
+							textAlign: "center",
+							verticalAlign: "middle",
+
 							color:"#1122ee", 
 							padding: "2px 10px 2px 12px",
-							backgroundColor: "#e3d3cc",
+							backgroundColor: "#95a5a6",
 							
 							minHeight: "70px", // not working
 							minWidth: "150px", // working

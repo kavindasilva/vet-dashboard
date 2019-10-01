@@ -23,17 +23,29 @@ const ticketsDataReducer = (state, action) => {
                     ticket => (ticket.ticket_id === action.payload.ticketId)
                 );
 
-            if (ticketIndex >-1 ) {
-                let update = {};
-                update[action.payload.property] = action.payload.value;
+            if (ticketIndex >-1 && newState.ticketsData[ticketIndex]["properties"] ) {
+                let propertyIndex = newState.ticketsData[ticketIndex]["properties"].findIndex(
+                    prop => (prop.column_name === action.payload.property)
+                )
                 
-		        // update problem occurs in db_properties
-                if(action.payload.data_source==="db_properties")
-                    newState.ticketsData[ticketIndex][action.payload.data_source][action.payload.property]['value'] = action.payload.value;
-                else if(action.payload.data_source==="hs_properties")
-                    newState.ticketsData[ticketIndex][action.payload.data_source][action.payload.property] = action.payload.value;
-
-                updateTicketData(action.payload.ticketPropertyId, { value: action.payload.value, description: 'static'});
+                if(propertyIndex > -1){
+                    newState.ticketsData[ticketIndex]["properties"][propertyIndex]['value'] = action.payload.value;
+                    updateTicketData(action.payload.ticketPropertyId, { value: action.payload.value, description: 'static'});
+                }
+                else{
+                    console.log("trackerInstance: err3")
+                    updateTicketData(null, {
+                        value: action.payload.value, 
+                        description: 'new static',
+                        ticket_id: action.payload.ticketId,
+                        tracker_column_id: action.payload.tracker_column_id
+                    })
+                    .then( res => {
+                        if(res && !res.err && res.data && res.data.ticket_property_id){
+                            // how to refetch tickets?
+                        }
+                    })
+                }
             }
             else
                 console.log("trackerInstance: err2")

@@ -92,7 +92,14 @@ class Trackers extends React.Component{
 
 	render(){
 		return(
-			<div align={"right"} float={"right"} style={{ padding: "10px 0px 0px 0px"}} >
+			<div align={"right"} style={{ padding: "10px 0px 0px 0px"}} >
+                <a target="_blank" href="http://ontrack.dev.io/hubspot/authorize" >
+                    <Button 
+                    >
+                        Authorize Hubspot
+                    </Button>
+                </a><br/>
+
                 <Button
                     variant="secondary"
                     style={{textTransform: "none"}}

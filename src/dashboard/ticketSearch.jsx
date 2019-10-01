@@ -92,43 +92,45 @@ class ticketSearch extends Component {
 		return (
 			<React.Fragment>
 				<Grid container spacing={0}>
-					<Grid item sm={1} md={1} xs={1} lg={1}></Grid>
+					<Grid item sm={1} md={1} xs={1} lg={1} ></Grid>
 					
-					<Grid item sm={3} md={3} xs={3} lg={3}>
-						<Form.Group controlId="formGridSearchType">
-							<Form.Label>Search by</Form.Label>
-							<Form.Control 
-								as="select"
-								onChange={ e => {
-									this.setState({
-										searchOption: e.target.value, 
-										searchInputType: e.target.inputtype,
-										searchWord: this.state.searchWordArr[e.target.value]
-									});
-									//console.log("ticketSearch input", e, e.target, e.target.input_type) 
-								}}
-								value={ this.state.searchOption } 
-							>
-							{
-								ticketSearchParams.map( item =>
-									<option 
-										key={ item.param } value={ item.param }
-										inputtype={ item.inputType }
-										//onClick={ ()=>this.setState({searchInputType: 'text'}) }
-										// onClick={ changeInputType }
-										// data-my-value={123}
-									>
-									{ 
-										item.label
-									}
-									</option>
-								)
-							}
-							</Form.Control>
+					<Grid item sm={3} md={3} xs={3} lg={3} style={ {paddingTop: "12px"}} >
+						<Form.Group controlId="formGridSearchType" as={GridRow} >
+							<Form.Label column sm={3} md={3} xs={3} lg={3}>Search by</Form.Label>
+							<GridCol sm={9} md={9} xs={9} lg={9} >
+								<Form.Control 
+									as="select"
+									onChange={ e => {
+										this.setState({
+											searchOption: e.target.value, 
+											searchInputType: e.target.inputtype,
+											searchWord: this.state.searchWordArr[e.target.value]
+										});
+										//console.log("ticketSearch input", e, e.target, e.target.input_type) 
+									}}
+									value={ this.state.searchOption } 
+								>
+								{
+									ticketSearchParams.map( item =>
+										<option 
+											key={ item.param } value={ item.param }
+											inputtype={ item.inputType }
+											//onClick={ ()=>this.setState({searchInputType: 'text'}) }
+											// onClick={ changeInputType }
+											// data-my-value={123}
+										>
+										{ 
+											item.label
+										}
+										</option>
+									)
+								}
+								</Form.Control>
+							</GridCol>
 						</Form.Group>
 					</Grid>
 
-					<Grid item sm={6} md={6} xs={6} lg={6}>
+					<Grid item sm={6} md={6} xs={6} lg={6} style={ {paddingTop: "12px"}} >
 					{
 						(this.state.searchOption === "create_date") /** unable to change input type with custom props in Menu item  */
 						? <DateRangePicker
@@ -136,27 +138,29 @@ class ticketSearch extends Component {
 							end_date={ this.state.searchWordArr['create_date'].split(';')[1] }
 							changeSearchWord={ this.changeSearchWord }
 						/>
-						: <Form.Group controlId="formGridKeyword">
-							<Form.Label>keyword</Form.Label>
-							<Form.Control 
-								type="text" 
-								placeholder="Enter keyword" 
-								fullWidth={ true }
-								value={ (this.state.searchOption==="ticket_id") ?this.state.searchWordArr['ticket_id'] :this.state.searchWordArr['clinic_name'] }
-								onChange={ (e)=>this.changeSearchWord(
-									e.target.value,
-									this.state.searchOption,
-									this.state.searchOption + ":" + e.target.value
-								)}
-							/>
+						: <Form.Group controlId="formGridKeyword" as={GridRow} >
+							<Form.Label column sm={2} md={2} xs={2} lg={2} >keyword</Form.Label>
+							<GridCol sm={10} md={10} xs={10} lg={10} >
+								<Form.Control 
+									type="text" 
+									placeholder="Enter keyword" 
+									fullWidth={ true }
+									value={ (this.state.searchOption==="ticket_id") ?this.state.searchWordArr['ticket_id'] :this.state.searchWordArr['clinic_name'] }
+									onChange={ (e)=>this.changeSearchWord(
+										e.target.value,
+										this.state.searchOption,
+										this.state.searchOption + ":" + e.target.value
+									)}
+								/>
+							</GridCol>
 						</Form.Group>
 					}
 					</Grid>
 					
-					<Grid item sm={2} md={2} xs={2} lg={2} style={ {paddingTop: "10px"}} >
+					<Grid item sm={2} md={2} xs={2} lg={2} style={ {paddingTop: "11px"}} >
 						
 						<GridContainer>
-							<GridRow style={ { padding: "12px 0px 0px 0px"}} >
+							<GridRow style={ { padding: "0px 0px 0px 0px"}} >
 								<GridCol sm={4} lg={4} md={4} style={{padding: "2px 2px 2px 2px"}} >
 									<Tooltip title="Search">
 										<Button

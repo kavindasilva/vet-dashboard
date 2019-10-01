@@ -63,15 +63,14 @@ class Menu extends Component {
 	viewMenuBar(){
 		return(
 			<React.Fragment>
-				<nav class="navbar navbar-expand-lg navbar-fixed-top navbar-dark bg-primary " >
-					
-					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
+				<nav class="navbar navbar-expand-lg navbar-dark bg-primary " >
+					<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
 					</button>
 
-					<div class="collapse navbar-collapse" id="navbarColor03">
+					<div class="navbar-collapse collapse" id="navbarColor03">
 						<ul class="navbar-nav mr-auto">
-							<li class="nav-item" onClick={ ()=>{ this.setState({ componentToShow:'tickets'}) } }>
+							<li class="nav-item active" onClick={ ()=>{ this.setState({ componentToShow:'tickets'}) } }>
 								<a class="nav-link" href="#" >Tickets</a>
 							</li>
 							{

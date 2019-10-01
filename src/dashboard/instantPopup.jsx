@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { rootStore } from "../stores/mainStore";
 
-import Button from '@material-ui/core/Button';
+import Button from 'react-bootstrap/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -120,39 +120,17 @@ class InstantPopup extends React.Component{
     sendReadOnly(){
         return(
             <Tooltip title="Edit">
-                <IconButton
-                    style={ { position: "absolute" } }        
-                    size="small"
+                <Button
+                    //style={ { position: "absolute" } }        
+                    size="sm"
                     onClick={ ()=> { this.setState({componentState: ""}) } }            
+                    variant="warning"
                 >
-                    <EditIcon />
-                </IconButton>
+                    <EditIcon fontSize="small" />
+                </Button>
             </Tooltip>
         )
     }
-
-    showPop = () => (
-		close => (
-			<div>
-				<a href="#" className="close" onClick={close}> &times; </a>
-				<br/>
-				{ this.makeInputElements() } <br/>
-									
-				<Button onClick={ (e) => { 
-						e.preventDefault();
-						//this.setState({ attributeValue:this.state.attributeValue });
-						this.dispatchUpdate();
-						close(); 
-					} } 
-					variant="text" color="primary"
-					style={this.styleMatUI.closeButton} 
-				>
-					OK
-				</Button>
-
-			</div>
-		)
-	)
 
     dispatchUpdate = () => {
 		rootStore.dispatch({
@@ -162,7 +140,8 @@ class InstantPopup extends React.Component{
 				property: this.state.columnName,
                 value: this.state.attributeValue,
                 data_source: this.state.hs_source_field + "_properties",
-				ticketPropertyId: this.props.ticket_property_id
+                ticketPropertyId: this.props.ticket_property_id,
+                tracker_column_id: this.props.tracker_column_id
 			}
 		});
 	}
@@ -289,30 +268,22 @@ class InstantPopup extends React.Component{
 
 const mapStateToProps = (state, props) => {
     //console.log("instant popup", props);
-    let source_field = props.hs_source_field + "_properties";
 
-    // update problem occurs in db_properties
-    let columnObjValue = null;
+    let ticket_record = null;
+    let prop_record = null;
 
-    if(source_field==="db_properties"){
-        columnObjValue = state.ticketsDataReducer.ticketsData.find(
-            tracker => (tracker.ticket_id === props.ticket_id)
-        )[source_field][props.columnName];
-
-        columnObjValue = (columnObjValue)? columnObjValue['value']: null;
-    }
-    else if(source_field==="hs_properties"){
-        columnObjValue = state.ticketsDataReducer.ticketsData.find(
-            tracker => (tracker.ticket_id === props.ticket_id)
-        )[source_field][props.columnName]
-    }
+    ticket_record = state.ticketsDataReducer.ticketsData.find(
+        tracker => (tracker.ticket_id === props.ticket_id)
+    )
     
-    return {
-        // popValue: state.ticketsDataReducer.ticketsData.find(
-        //         tracker => (tracker.ticket_id === props.ticket_id)
-        //     )[source_field][props.columnName]
+    if(ticket_record && ticket_record.properties){
+        prop_record = ticket_record.properties.find( 
+            property => ( property.column_name === props.columnName )
+        );
+    }
 
-        popValue: columnObjValue
+    return {
+        popValue: (prop_record) ?prop_record.value: null
     };
 }
 

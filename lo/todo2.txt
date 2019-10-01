@@ -88,4 +88,8 @@ https://stackoverflow.com/questions/53499361/how-do-i-call-a-method-from-another
 --sep 18
 https://stackoverflow.com/questions/34623651/how-to-get-value-of-date-picker-from-material-ui/34629423
 
+--sep 30
+https://stackoverflow.com/questions/1611215/remove-a-git-commit-which-has-not-been-pushed 143 shadowbob
+https://stackoverflow.com/questions/22289345/completely-cancel-a-rebase
+
 

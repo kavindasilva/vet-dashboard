@@ -10,7 +10,7 @@ import {format} from "date-fns";
 
 import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
 
-import Button from '@material-ui/core/Button';
+import Button from 'react-bootstrap/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -59,13 +59,14 @@ class CustomDatePicker extends React.Component{
         return(
             <React.Fragment>
                 <Tooltip title="Edit">
-                    <IconButton
-                        style={ { position: "absolute" } }        
-                        size="small"
+                    <Button
+                        //style={ { position: "absolute" } }        
+                        size="sm"
                         onClick={ ()=>this.setState({ isOpen: true }) }
+                        variant="warning"
                     >
-                        <EditIcon />
-                    </IconButton>
+                        <EditIcon fontSize="small" />
+                    </Button>
                 </Tooltip>
 
                 {/* popup modal UI */}
@@ -141,7 +142,8 @@ class CustomDatePicker extends React.Component{
 				property: this.state.columnName,
                 value: this.state.attributeValue,
                 data_source: this.state.hs_source_field + "_properties",
-				ticketPropertyId: this.props.ticket_property_id
+				ticketPropertyId: this.props.ticket_property_id,
+                tracker_column_id: this.props.tracker_column_id
 			}
 		});
 	}
@@ -176,27 +178,23 @@ class CustomDatePicker extends React.Component{
 
 
 const mapStateToProps = (state, props) => {
-    let source_field = props.hs_source_field + "_properties";
+    let ticket_record = null;
+    let prop_record = null;
 
-    // update problem occurs in db_properties
-    let columnObjValue = null;
-
-    if(source_field==="db_properties"){
-        columnObjValue = state.ticketsDataReducer.ticketsData.find(
-            tracker => (tracker.ticket_id === props.ticket_id)
-        )[source_field][props.columnName];
-
-        columnObjValue = (columnObjValue)? columnObjValue['value']: null;
-    }
-    else if(source_field==="hs_properties"){
-        columnObjValue = state.ticketsDataReducer.ticketsData.find(
-            tracker => (tracker.ticket_id === props.ticket_id)
-        )[source_field][props.columnName]
-    }
+    ticket_record = state.ticketsDataReducer.ticketsData.find(
+        tracker => (tracker.ticket_id === props.ticket_id)
+    )
     
+    if(ticket_record && ticket_record.properties){
+        prop_record = ticket_record.properties.find( 
+            property => ( property.column_name === props.columnName )
+        );
+    }
+
     return {
-        dateValue: columnObjValue
+        dateValue: (prop_record) ?prop_record.value: null
     };
+
 }
 
 

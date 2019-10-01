@@ -32,19 +32,19 @@ import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } f
 
 import { trackerPopupDefaultValues, globalStyles } from "../common/constants";
 
-import Moment from 'react-moment';
 import moment from "moment";
 
 import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
 
-//import Rule from "../dashboard/colouringFunctions"
 import  * as Rule from "../dashboard/colouringFunctions"
 import Peg from "../parsers/conditionsParser"
 
 import ticketAPI from "../apicalls/ticketAPI"
-import HistoryIcon from '@material-ui/icons/History';
+import InsertCommentIcon from '@material-ui/icons/InsertComment';
 import { Tooltip, IconButton } from "@material-ui/core";
+import Form from 'react-bootstrap/Form'
+import InputGroup from 'react-bootstrap/InputGroup'
 const ticketAPIObj = new ticketAPI();
 
 
@@ -63,23 +63,25 @@ const useStyles = theme => ({
     },
 });
 
-class CellHistory extends Component {
+class CellComment extends Component {
 	state = {
         isOpen: false,
-        historyData: null,
+        commentData: null,
+
+        newComment: '',
 	}
 
   	render() {
-		//console.log('trackerPopup: Rendering cell content');
+		//console.log('CellComment: Rendering cell content');
 		return (
 			<React.Fragment>
-                <Tooltip title="History">
+                <Tooltip title="Comment">
                     <Button
                         size="sm"
-                        variant="info"
-                        onClick={ ()=>this.getHistoryData() }    
+                        variant="secondary"
+                        onClick={ ()=>this.getCommentsData() }    
                     >
-                        <HistoryIcon fontSize="small" />
+                        <InsertCommentIcon fontSize="small" />
                     </Button>
                 </Tooltip>
 
@@ -91,32 +93,56 @@ class CellHistory extends Component {
                     aria-labelledby="draggable-dialog-title"
                 >
                     <DialogTitle id="draggable-dialog-title" >
-						Cell history
+						Cell Comments
                     </DialogTitle>
 
                     <DialogContent>
                         <div className={this.props.classes.root}>
                             <Paper className={this.props.classes.paper}>
+                                <Form.Group controlId="validationCustomUsername">
+                                    <InputGroup>
+                                        <InputGroup.Prepend>
+                                            <InputGroup.Text id="inputGroupPrepend">Comment</InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Comment"
+                                            aria-describedby="inputGroupPrepend"
+                                            value={ this.state.newComment }
+                                            onChange={ (e)=>this.setState(
+                                                    {newComment: e.target.value }
+                                            )}
+                                        />
+
+                                        <Button
+                                            onClick={ ()=>this.addComment() }
+                                        >
+                                            Add
+                                        </Button>
+ 
+                                    </InputGroup>
+                                </Form.Group>
+
                                 <Table className={this.props.classes.table} size="small">
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>Date</TableCell><TableCell>User</TableCell><TableCell>Value</TableCell><TableCell>Description</TableCell>
+                                            <TableCell>Added date</TableCell><TableCell>User</TableCell><TableCell>Comment</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                     {
-                                        (this.state.historyData && this.state.historyData.length>0 )
+                                        (this.state.commentData && this.state.commentData.length>0 )
                                         ?(
-                                            this.state.historyData.map( (history, i) => (  
+                                            this.state.commentData.map( (comment, i) => (  
                                                 <TableRow key={i} >
-                                                    <TableCell>{history.edit_date}</TableCell>
-                                                    <TableCell>{history.username}</TableCell>
-                                                    <TableCell>{history.value}</TableCell>
-                                                    <TableCell>{history.description}</TableCell>
+                                                    <TableCell>{comment.added_time}</TableCell>
+                                                    <TableCell>{comment.username}</TableCell>
+                                                    <TableCell>{comment.comment}</TableCell>
                                                 </TableRow>
                                             ))
                                         )
-                                        :<TableRow><TableCell colSpan={4}>no history</TableCell></TableRow>
+                                        :<TableRow><TableCell colSpan={4}>no comments</TableCell></TableRow>
                                     }
                                     </TableBody>
                                 </Table>
@@ -139,19 +165,32 @@ class CellHistory extends Component {
 		)
     }
 
+
+    addComment = () => {
+        ticketAPIObj.addCellComment({
+            ticket_property_id: this.props.ticket_property_id,
+            comment: this.state.newComment
+        })
+        .then(
+            res => {
+                this.getCommentsData();
+            }
+        )
+    }
+
     /**
      * opens the popup
      * gets history data from API
      */
-    getHistoryData = () => {
+    getCommentsData = () => {
         this.setState({ isOpen: true });
-        ticketAPIObj.retrieveCellHistory(this.props.ticket_property_id)
+        ticketAPIObj.retrieveCellComments(this.props.ticket_property_id)
         .then(
             res => {
                 if(res && res.data)
-                    this.setState({historyData: res.data})
+                    this.setState({commentData: res.data})
                 else
-                    this.setState({historyDataDump: res})
+                    this.setState({commentDataDump: res})
             }
         );
     }
@@ -163,13 +202,13 @@ class CellHistory extends Component {
 
 
 const mapStateToProps = (state, props) => {
-	//console.log('trackerPopup.jsx-mapStateToProps', state);
-    //console.log('trackerPopup.jsx-props1', props);
+	//console.log('CellComment.jsx-mapStateToProps', state);
+    //console.log('CellComment.jsx-props1', props);
     
     return {};
 }
 
 
-export default connect(mapStateToProps)(withStyles(useStyles)(CellHistory));
+export default connect(mapStateToProps)(withStyles(useStyles)(CellComment));
 
 

@@ -32,12 +32,12 @@ import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } f
 
 import { trackerPopupDefaultValues, globalStyles, ticketCellSize } from "../common/constants";
 
-import Moment from 'react-moment';
 import moment from "moment";
 
 import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
 import CellHistory from "../dashboard/cellHistory"
+import CellComment from "../dashboard/cellComment"
 import ProgressBar from "../dashboard/onboardProgress"
 
 //import Rule from "../dashboard/colouringFunctions"
@@ -82,6 +82,8 @@ class TrackerPopup extends Component {
 						minWidth: ticketCellSize.cellWidth, // working
 						height: ticketCellSize.cellHeight, // working
 						width: "30px", // not working
+
+						padding: "2px 1px 0px 2px"
 					}}
 				>
 					{ this.state.attributeValue2 }
@@ -100,7 +102,7 @@ class TrackerPopup extends Component {
                 (this.state.columnName==="clinic_name") && 
                 <ProgressBar
                     ticket_id={ this.props.ticket_id }
-                    hospital_name={ this.state.attributeValue }
+                    hospital_name={ this.state.attributeValue2 }
                 />
             }
         </React.Fragment>
@@ -111,11 +113,28 @@ class TrackerPopup extends Component {
 	 */
 	showHoverButtons(){
 		return(
-			<div hidden={ !this.state.viewHoverButtons } style={ { width: "100%", minHeight: "18px", color: "#111111"} }>
-				{ this.showPop() }
-				<CellHistory 
-					ticket_property_id = { this.props.ticket_property_id }
-				/>
+			<div 
+				hidden={ !this.state.viewHoverButtons } 
+				style={ { width: "100%", minHeight: "18px", color: "#111111"} }
+			>
+				{
+					this.showPop() 
+				}
+				<span 
+					style={ { width: "100%", minHeight: "18px", color: "#111111"} }
+				>
+					<CellHistory 
+						ticket_property_id = { this.props.ticket_property_id }
+					/>
+				</span>
+
+				<span 
+					style={ { width: "100%", minHeight: "18px", color: "#111111"} }
+				>
+					<CellComment 
+						ticket_property_id = { this.props.ticket_property_id }
+					/>
+				</span>
 			</div>
 		)
 	}
@@ -123,28 +142,34 @@ class TrackerPopup extends Component {
 	showPop(){
 		if(this.state.elementType ==="date" ){
 			return(
-				<div style={ { width: "100%", minHeight: "18px", color: "#111111"} }>
+				<span 
+					style={ { width: "100%", minHeight: "18px", color: "#111111"} }
+				>
 					{ /*this.props.ticketProperty.value */ }
 					<CustomDatePicker
 						ticket_id={ this.props.ticket_id }
 						columnName={ this.props.ticketProperty.property }
+						tracker_column_id={ this.props.ticketProperty.ticketId }
 						value={ this.props.ticketProperty.value }
 						elementType={ this.props.elementType }
 						hs_source_field={ this.props.hs_source_field }
 						ticket_property_id = { this.props.ticket_property_id }
 					/>
-				</div>
+				</span>
 				
 			);
 		}
 		else{
 			return(
-				<div style={ { width: "100%", minHeight: "18px", color: "#111111"} }>
+				<span 
+					style={ { width: "100%", minHeight: "18px", color: "#111111"} }
+				>
 					{/* test{ String(this.props.ticketProperty.value) } */}
 					
 					<InstantPopup
 						ticket_id={ this.props.ticket_id }
 						columnName={ this.props.ticketProperty.property }
+						tracker_column_id={ this.props.ticketProperty.ticketId }
 						value={ this.props.ticketProperty.value }
 						elementType={ this.props.elementType }
 						hs_source_field={ this.props.hs_source_field }
@@ -152,7 +177,7 @@ class TrackerPopup extends Component {
 					>
 					</InstantPopup>
 					
-				</div>
+				</span>
 			);
 		}
 		
@@ -180,12 +205,12 @@ class TrackerPopup extends Component {
 
 	/** check rules available -> map rules -> if true stop */
 	validateExpr = () => {
-        //this.setState({attributeValue: val});
+        //this.setState({attributeValue2: val});
 		let res=null; // pegJS result: JSON
 		let eRes=null; // evaluated pegJS result: any
 
         try { 
-            //res = Peg.parse(this.state.attributeValue);
+            //res = Peg.parse(this.state.attributeValue2);
 			//res = Peg.parse(this.props.configData.rules[0].conditions); //map
 			//res = { type: "function", name:"moment", parameters:[] }
 			res = { type: "function", name:"moment", parameters:[{ type:"string",value:"2012-06-20"}] }
@@ -250,31 +275,20 @@ const mapStateToProps = (state, props) => {
 
 
 	if( ticketIndex > -1 ){
-		let source_field = props.hs_source_field + "_properties";
-
+		let ticket_data = 0;
 		let ticketPropId = 0;
 		if(
 			state.ticketsDataReducer.ticketsData[ticketIndex]
 			&& state.ticketsDataReducer.ticketsData[ticketIndex].properties
 			&& state.ticketsDataReducer.ticketsData[ticketIndex].properties.length>0
 		){
-			ticketPropId = state.ticketsDataReducer.ticketsData[ticketIndex].properties.find( p => (
+			ticket_data = state.ticketsDataReducer.ticketsData[ticketIndex].properties.find( p => (
 				p.tracker_column_id == String(trackerConfig['tracker_column_id'])
 			))
 
-			ticketPropId = (ticketPropId)? ticketPropId.ticket_property_id : null;
+			ticketPropId = (ticket_data)? ticket_data.ticket_property_id : null;
 		}
 		//console.log("trackerPopup mapState", ticketPropId, trackerConfig['tracker_column_id'])
-
-		// update problem occurs in db_properties
-		let columnObjValue = null;
-		let columnObj = state.ticketsDataReducer.ticketsData[ticketIndex][source_field][props.columnName];
-		if(source_field==="db_properties"){
-			columnObjValue = state.ticketsDataReducer.ticketsData[ticketIndex][source_field][props.columnName];
-			columnObjValue = (columnObjValue)? columnObjValue['value']: null;
-		}
-		else if(source_field==="hs_properties")
-			columnObjValue = state.ticketsDataReducer.ticketsData[ticketIndex][source_field][props.columnName];
 		
 		
 		return {
@@ -285,11 +299,11 @@ const mapStateToProps = (state, props) => {
 			/** tracker instance's particular column's data */
 			ticketProperty: {
 				'property'	: props.columnName,
-				'value' 	: columnObjValue,
+				'value' 	: (ticket_data)? ticket_data.value : null,
 				'ticketId'  : state.ticketsDataReducer.ticketsData[ticketIndex]['ticket_id'],
 			},
 
-			propertyValue: columnObjValue,
+			propertyValue: (ticket_data)? ticket_data.value : null,
 
 			ticket_property_id: ticketPropId,
 		};

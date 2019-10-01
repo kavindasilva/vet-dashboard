@@ -7,6 +7,9 @@ const uriTickets = 'http://ontrack.dev.io/rest/tickets/'; //
 
 const uriPropertyHistory = "http://ontrack.dev.io/rest/tickets/getcellhistoryforproperty/"; //http://ontrack.dev.io/rest/tickets/getcellhistoryforproperty/5
 const uriTicketProperty = "http://ontrack.dev.io/rest/ticketproperty/"; //http://ontrack.dev.io/rest/ticketproperty/5
+const uriTicketComments = "http://ontrack.dev.io/rest/cellcomment/getcellcommentsforproperty/"; //http://ontrack.dev.io/rest/cellcomment/getcellcommentsforproperty/
+const uriComments = "http://ontrack.dev.io/rest/cellcomment/"
+
 
 const uriSearchTicket = "http://ontrack.dev.io/rest/tickets/?search="; //http://ontrack.dev.io/rest/tickets/?search=create_date_start:2019-09-06,create_date_end:2019-10-10
 
@@ -60,10 +63,21 @@ class ticketAPI extends React.Component{
             console.log(res);
         });
     }
+    else{
+      return axios.post(uriTicketProperty, data)
+        .then(res => {
+            console.log(res);
+            return res;
+        })
+        .catch(err => {
+          console.log("ticketAPI update prop error", err);
+          return {err:true, errMsg:err};
+        });
+    }
     
   }
 
-  /** return the history of a  table cell */
+  /** return the history of a table cell */
   retrieveCellHistory(propertyId){
     return axios.get( uriPropertyHistory + propertyId )
     .then( res => {
@@ -72,7 +86,26 @@ class ticketAPI extends React.Component{
     } )
   }
 
-  /** return the search result   */
+  /** return the comments on a table cell */
+  retrieveCellComments(propertyId){
+    return axios.get( uriTicketComments + propertyId )
+    .then( res => {
+      console.log("ticketAPI.jsx - retrieveCellComments",res);
+      return res;
+    } )
+  }
+
+  /** add comments on a table cell */
+  addCellComment(data){
+    console.log("ticketAPI.jsx - retrieveCellComments1",uriComments, data);
+    return axios.post( uriComments, data )
+    .then( res => {
+      console.log("ticketAPI.jsx - retrieveCellComments",res);
+      return res;
+    } )
+  }
+
+  /** return the search result  */
   searchTickets(query){
     return axios.get( uriSearchTicket + query )
     .then( res => {

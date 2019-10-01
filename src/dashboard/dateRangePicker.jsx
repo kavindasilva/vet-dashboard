@@ -19,11 +19,13 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Grid, FormControl } from "@material-ui/core";
 
+import GridContainer from 'react-bootstrap/Container'
+import GridRow from 'react-bootstrap/Row'
+import GridCol from 'react-bootstrap/Col'
+
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
-// import DatePicker from "react-datepicker";
-//  import "react-datepicker/dist/react-datepicker.css";
-//var DatePicker = require("react-bootstrap-date-picker");
+
 
 class CustomDateRangePicker extends React.Component{
     state ={
@@ -87,17 +89,19 @@ class CustomDateRangePicker extends React.Component{
     showStartDatePicker = () => {
         return(
             <React.Fragment>
-                <Form.Group controlId="formGridKeyword">
-                    <Form.Label>Start Date</Form.Label>
-                    <Form.Control
-                        type="text"
-                        value={ this.state.startDate }
-                        onClick={ ()=>this.setState(
-                                {isStartDateOpen: true}
-                            )}
-                        readOnly={ true }
-                    >
-                    </Form.Control>
+                <Form.Group controlId="formGridKeyword" as={GridRow} >
+                    <Form.Label column sm={3} md={3} xs={3} lg={3} >Start Date</Form.Label>
+                    <GridCol sm={9} md={9} xs={9} lg={9} >
+                        <Form.Control
+                            type="text"
+                            value={ this.state.startDate }
+                            onClick={ ()=>this.setState(
+                                    {isStartDateOpen: true}
+                                )}
+                            readOnly={ true }
+                        >
+                        </Form.Control>
+                    </GridCol>
                 </Form.Group>
 
                 <Dialog
@@ -154,17 +158,19 @@ class CustomDateRangePicker extends React.Component{
     showEndDatePicker = () => {
         return(
             <React.Fragment>
-                <Form.Group controlId="formGridKeyword2">
-                    <Form.Label>End Date</Form.Label>
-                    <Form.Control
-                        type="text"
-                        value={ this.state.endDate }
-                        onClick={ ()=>this.setState(
-                                {isEndDateOpen: true}
-                            )}
-                        readOnly={ true }
-                    >
-                    </Form.Control>
+                <Form.Group controlId="formGridKeyword2" as={GridRow} >
+                    <Form.Label column sm={3} md={3} xs={3} lg={3} >End Date</Form.Label>
+                    <GridCol sm={9} md={9} xs={9} lg={9} >
+                        <Form.Control
+                            type="text"
+                            value={ this.state.endDate }
+                            onClick={ ()=>this.setState(
+                                    {isEndDateOpen: true}
+                                )}
+                            readOnly={ true }
+                        >
+                        </Form.Control>
+                    </GridCol>
                 </Form.Group>
 
                 <Dialog
