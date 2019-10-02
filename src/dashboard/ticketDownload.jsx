@@ -75,54 +75,54 @@ class TicketDownload extends React.Component{
 
 	prepareDownloadData = () => {
 		let returnArr = [];
-		console.log('ticketDownload props', this.props);
+		// console.log('ticketDownload props', this.props);
 
-		let columnHeaders = []
-		this.props.configData.columns.forEach( column => {
-			columnHeaders.push(column.name)
-		});
-		returnArr.push(columnHeaders);
+		// let columnHeaders = []
+		// this.props.configData.columns.forEach( column => {
+		// 	columnHeaders.push(column.name)
+		// });
+		// returnArr.push(columnHeaders);
 
-		this.props.ticketsData.map( ticket => {
-			let ticketRow = [];
-			this.props.configData.columns.forEach( column => {
-				//each column of trackerConfig
+		// this.props.ticketsData.map( ticket => {
+		// 	let ticketRow = [];
+		// 	this.props.configData.columns.forEach( column => {
+		// 		//each column of trackerConfig
 
-				let source_field = "hs";
-				if(column.hs_source_field === "db")
-					source_field = "db";
-				source_field = source_field + "_properties";
-				//console.log('ticketDownload source-field', source_field);
+		// 		let source_field = "hs";
+		// 		if(column.hs_source_field === "db")
+		// 			source_field = "db";
+		// 		source_field = source_field + "_properties";
+		// 		//console.log('ticketDownload source-field', source_field);
 	
-				/** store user permissions of CURRENT COLUMN of trackerConfig user  */
-				let current_user_type = (this.props.metaData.userInfo)? this.props.metaData.userInfo.user_type_id: 0;
-				let userTypeRestriction = column.permissions.find( permission => (
-					parseInt(permission.user_type_id) === current_user_type
-				));
+		// 		/** store user permissions of CURRENT COLUMN of trackerConfig user  */
+		// 		let current_user_type = (this.props.metaData.userInfo)? this.props.metaData.userInfo.user_type_id: 0;
+		// 		let userTypeRestriction = column.permissions.find( permission => (
+		// 			parseInt(permission.user_type_id) === current_user_type
+		// 		));
 	
-				let columnValue = null;
-				columnValue = (source_field==="hs_properties") 
-					?ticket[source_field][column.name] 
-					:( (ticket[source_field][column.name])
-						?ticket[source_field][column.name]['value']
-						:""
-					) ;
+		// 		let columnValue = null;
+		// 		columnValue = (source_field==="hs_properties") 
+		// 			?ticket[source_field][column.name] 
+		// 			:( (ticket[source_field][column.name])
+		// 				?ticket[source_field][column.name]['value']
+		// 				:""
+		// 			) ;
 	
-				columnValue = (columnValue)? columnValue : ""; // handle null
+		// 		columnValue = (columnValue)? columnValue : ""; // handle null
 	
-				if(userTypeRestriction && !userTypeRestriction.is_read_restricted) { // read allowed
-					ticketRow.push(columnValue)
-				}
-				else if(userTypeRestriction && userTypeRestriction.is_read_restricted) { // read restricted
-					ticketRow.push('forbidden')
-				}
-				else{ // no restrictions defined
-					ticketRow.push(columnValue)
-				}				
-			} )
-			returnArr.push(ticketRow);
+		// 		if(userTypeRestriction && !userTypeRestriction.is_read_restricted) { // read allowed
+		// 			ticketRow.push(columnValue)
+		// 		}
+		// 		else if(userTypeRestriction && userTypeRestriction.is_read_restricted) { // read restricted
+		// 			ticketRow.push('forbidden')
+		// 		}
+		// 		else{ // no restrictions defined
+		// 			ticketRow.push(columnValue)
+		// 		}				
+		// 	} )
+		// 	returnArr.push(ticketRow);
 
-		 } )
+		//  } )
 
 		
 
