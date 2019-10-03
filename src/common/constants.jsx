@@ -126,3 +126,10 @@ export const ticketCellSize = {
     cellWidth: "150px",
 }
 
+/** constant url's */
+export const globalUrls = {
+    hs_auth: "/hubspot/authorize",
+    hs_verify: "/hubspot/verify",
+
+}
+

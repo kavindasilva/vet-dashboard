@@ -14,7 +14,7 @@ import Trackers from "../dashboard/trackers";
 import Users from "../users/users";
 import TrackerConfig from "../config/trackersConfig";
 import ReportsUI from "../reports/reportsui"
-
+import SuperAdmin from "../config/superAdmin"
 import { userTypeArray } from "../common/constants"
 
 //import Button from '@material-ui/core/Button';
@@ -37,10 +37,10 @@ class Menu extends Component {
 
 		//activeClass: 
 
-		//componentToShow: 'def',
+		componentToShow: 'superAdminUi',
 		//componentToShow: "trackerConfig",
 		//componentToShow: "currentUserProfile",
-		componentToShow: "tickets",
+		//componentToShow: "tickets",
 	}
 
 	render() {
@@ -105,6 +105,20 @@ class Menu extends Component {
 							<li class="nav-item" onClick={ ()=>{ this.setState({ componentToShow:'currentUserProfile'}) } } >
 								<a class="nav-link" href="#">My Profile</a>
 							</li>
+
+							{
+								(
+									this.props.metaData.userInfo 
+									&& this.props.metaData.userInfo.user_type_id===3 //admin
+								) 
+								&&
+								<li class="nav-item"
+									style={{textTransform: "none"}}
+									onClick={ ()=>{ this.setState({ componentToShow:'superAdminUi'}) } } 
+								>
+									<a class="nav-link" href="#" >S.Admin</a>
+								</li>
+							}
 
 						</ul>
 
@@ -283,6 +297,8 @@ class Menu extends Component {
 			return <Users />
 		else if( componentToShow==="currentUserProfile" )
 			return <CurrentUser />
+		else if( componentToShow==="superAdminUi" )
+			return <SuperAdmin />
 		else if( componentToShow==="phoenixFailures" )
 			return <Records />
 		else if( componentToShow==="reportsUi" )
