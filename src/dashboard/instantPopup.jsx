@@ -27,6 +27,9 @@ import { MenuItem, RadioGroup, FormControlLabel, FormGroup, IconButton, Tooltip 
 import { trackerPopupDefaultValues } from "../common/constants";
 import ProgressBar from "../dashboard/onboardProgress"
 
+import ticketAPI from "../apicalls/ticketAPI"
+const ticketAPIobj = new ticketAPI();
+
 class InstantPopup extends React.Component{
 
     /** 
@@ -36,23 +39,6 @@ class InstantPopup extends React.Component{
      * */
     columnPredefinedValues = trackerPopupDefaultValues;
 
-    styleMatUI={
-		closeButton: {
-			cursor:'pointer', 
-			float:'right', 
-			marginTop: '5px', 
-			width: '20px',
-			align: 'right'
-		},
-
-		titleBarThin:{
-			padding: "0 24 0 24"
-		},
-
-		titleBarPrimary:{
-			color:"white", "backgroundColor":"#3c4fb0"
-		}
-    }	
     
     state ={
         ticket_id: this.props.ticket_id,
@@ -133,17 +119,57 @@ class InstantPopup extends React.Component{
     }
 
     dispatchUpdate = () => {
-		rootStore.dispatch({
-			type: 'UPDATE_CELL_VALUE',
-			payload: {
-				ticketId: this.state.ticket_id,
-				property: this.state.columnName,
+        if(this.props.ticket_property_id){
+            console.log("instantPopup: update if");
+            rootStore.dispatch({
+                type: 'UPDATE_CELL_VALUE',
+                payload: {
+                    ticketId: this.state.ticket_id,
+                    value: this.state.attributeValue,
+                    property: this.state.columnName,
+                    data_source: this.state.hs_source_field + "_properties",
+                    ticketPropertyId: this.props.ticket_property_id,
+                    tracker_column_id: this.props.tracker_column_id
+                }
+            });
+        }
+        else{ // new property
+            console.log("instantPopup: update else");
+            ticketAPIobj.updateTicketPropery(null, {
                 value: this.state.attributeValue,
-                data_source: this.state.hs_source_field + "_properties",
-                ticketPropertyId: this.props.ticket_property_id,
+                description: 'from datepicker',
+                ticket_id: this.state.ticket_id,
                 tracker_column_id: this.props.tracker_column_id
-			}
-		});
+            })
+            .then(
+                res => {
+                    if(res && !res.err && res.data && res.data.ticket_property_id){
+                        ticketAPIobj.getTicketsAndProperties()
+                        .then(
+                            res => {
+                                if(res && res.err){
+                                    this.setState({
+                                        errorGetTrackers: true,
+                                        errorMsgGetTrackers: res.errMsg.toString()
+                                    });
+                                    return;
+                                }
+
+                                this.setState({ ticketsData: res.data }, function(){
+                                    rootStore.dispatch({
+                                        type: 'GET_TICKETS_FROM_DB',
+                                        payload: {
+                                            data: this.state.ticketsData
+                                        }
+                                    });
+                                });
+                            }
+                        )
+                    }
+                }
+            )
+        }
+
 	}
 
     makeInputElements= () =>{

@@ -33,6 +33,7 @@ export const trackerColumnDataTypes = {
 export const globalStyles = {
     "cell-borders":{
         border: "1px solid #cdcdcd",
+        padding: "2px 1px 0px 4px"
     }
 }
 

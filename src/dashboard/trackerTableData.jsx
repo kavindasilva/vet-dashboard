@@ -100,7 +100,7 @@ class TrackerTableData extends React.Component{
 						<Cell 
 							key={column.name} 
 							style={{
-								//backgroundColor:"#ffffff",
+								backgroundColor:"#ffffff",
 								minWidth: ticketCellSize.cellWidth, 
 								height: ticketCellSize.cellHeight, 
 								

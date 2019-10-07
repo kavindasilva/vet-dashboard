@@ -17,7 +17,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Grid, FormControl } from "@material-ui/core";
+import { Grid, FormControl, Input } from "@material-ui/core";
 
 import GridContainer from 'react-bootstrap/Container'
 import GridRow from 'react-bootstrap/Row'
@@ -25,6 +25,7 @@ import GridCol from 'react-bootstrap/Col'
 
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
+import InputGroup from "react-bootstrap/InputGroup";
 
 
 class CustomDateRangePicker extends React.Component{
@@ -89,19 +90,23 @@ class CustomDateRangePicker extends React.Component{
     showStartDatePicker = () => {
         return(
             <React.Fragment>
-                <Form.Group controlId="formGridKeyword" as={GridRow} >
-                    <Form.Label column sm={3} md={3} xs={3} lg={3} >Start Date</Form.Label>
-                    <GridCol sm={9} md={9} xs={9} lg={9} >
+                <Form.Group  >
+                    <InputGroup>
+                        <InputGroup.Prepend  >
+                            <InputGroup.Text >Start Date</InputGroup.Text>
+                        </InputGroup.Prepend>
+                    
                         <Form.Control
                             type="text"
                             value={ this.state.startDate }
                             onClick={ ()=>this.setState(
                                     {isStartDateOpen: true}
                                 )}
-                            readOnly={ true }
+                            //readOnly={ true }
+                            onChange={ ()=>console.log() }
                         >
                         </Form.Control>
-                    </GridCol>
+                    </InputGroup>
                 </Form.Group>
 
                 <Dialog
@@ -158,19 +163,23 @@ class CustomDateRangePicker extends React.Component{
     showEndDatePicker = () => {
         return(
             <React.Fragment>
-                <Form.Group controlId="formGridKeyword2" as={GridRow} >
-                    <Form.Label column sm={3} md={3} xs={3} lg={3} >End Date</Form.Label>
-                    <GridCol sm={9} md={9} xs={9} lg={9} >
+                <Form.Group >
+                    <InputGroup>
+                        <InputGroup.Prepend  >
+                            <InputGroup.Text >End Date</InputGroup.Text>
+                        </InputGroup.Prepend>
+                    
                         <Form.Control
                             type="text"
                             value={ this.state.endDate }
                             onClick={ ()=>this.setState(
                                     {isEndDateOpen: true}
                                 )}
-                            readOnly={ true }
+                            //readOnly={ true }
+                            onChange={ ()=>console.log() }
                         >
                         </Form.Control>
-                    </GridCol>
+                    </InputGroup>
                 </Form.Group>
 
                 <Dialog
@@ -225,11 +234,17 @@ class CustomDateRangePicker extends React.Component{
 
 
 	changeStartDate = (selectedDate) => {
-        this.setState({ startDate: format(new Date(selectedDate), 'yyyy-MM-dd') }, ()=>this.makeReturnString() );
+        if(new Date(selectedDate) > new Date(this.state.endDate))
+            console.log("dateRange picker err")
+        else
+            this.setState({ startDate: format(new Date(selectedDate), 'yyyy-MM-dd') }, ()=>this.makeReturnString() );
     }
 
     changeEndDate = (selectedDate) => {
-		this.setState({ endDate: format(new Date(selectedDate), 'yyyy-MM-dd') }, ()=>this.makeReturnString() );
+        if(new Date(selectedDate) < new Date(this.state.startDate))
+            console.log("dateRange picker err")
+        else
+		    this.setState({ endDate: format(new Date(selectedDate), 'yyyy-MM-dd') }, ()=>this.makeReturnString() );
     }
 
     closeStartDatePicker = ()=>{

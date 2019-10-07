@@ -2,12 +2,13 @@
 import React from 'react';
 import axios from 'axios';
 
-
-const uriGetConfigData = 'http://ontrack.dev.io/rest/trackers/'; // from db
-const uriGetPipelines  = "http://ontrack.dev.io/rest/trackers/pipes"
+const uriGetConfigData = '/rest/trackers/'; // from db
+const uriGetPipelines  = "/rest/trackers/pipes"
 const uriGetTicketData = '/rest/tickets/'; // 
 const uriCheckHsAuth   = "/hubspot/checkhsauth"
-
+const uriGetLastSynced = '/rest/trackers/getlastupdatedtime'
+const uriRequestToSync = "/rest/trackers/requesthsrefresh"
+const uriSyncPipelines = "/rest/trackers/resyncpipelines";
 
 class trackersAPI extends React.Component{
   
@@ -79,22 +80,6 @@ class trackersAPI extends React.Component{
    * gets only the last updated date with headers
    * with empty body
    */
-  // getTrackerLastUpdated( ticketID ){
-  //   var getUri= uriGetTicketData;
-  //   if( ticketID!="" && ticketID!=null )
-  //     getUri=uriGetTicketData + "?tracker_id=" + ticketID
-
-  //   console.log("trackerAPI lastUpdateCall uri:", getUri);
-  //   return axios.get( getUri )
-  //     .then(result => {
-  //       console.log("trackerAPI.jsx - getTicketLastUpdated",result);
-  //       return result;
-  //     })
-  //     .catch(error => {
-  //       console.log("trackerAPI error", error);
-  //       return {err:true, errMsg:error};
-  //     });
-  // }
   getTrackerLastUpdated( ticketID ){
     var getUri= uriGetTicketData;
     if( ticketID!="" && ticketID!=null )
@@ -107,7 +92,55 @@ class trackersAPI extends React.Component{
         return result;
       })
       .catch(error => {
-        console.log("trackerAPI error", error);
+        console.log("trackerAPI getTicketLastUpdated error", error);
+        return {err:true, errMsg:error};
+      });
+  }
+
+  /**
+   * gets the last synced time
+   * currently works for nva tracker only. 
+   */
+  getTrackerLastsynced( ticketID ){
+    var getUri= uriGetLastSynced;
+    if( ticketID!="" && ticketID!=null )
+      getUri=uriGetLastSynced + "?tracker_id=" + ticketID
+
+    console.log("trackerAPI lastSytnced uri:", getUri);
+    return axios.get( getUri )
+      .then(result => {
+        console.log("trackerAPI.jsx - getTicketLastSynced",result);
+        return result;
+      })
+      .catch(error => {
+        console.log("trackerAPI getTicketLastSynced error", error);
+        return {err:true, errMsg:error};
+      });
+  }
+
+  /** sends a request to synce with hubspot */
+  requestToSync(){
+    console.log("trackerAPI request to syncuri:", uriRequestToSync);
+    return axios.get( uriRequestToSync )
+      .then(result => {
+        console.log("trackerAPI.jsx - requestToSync",result);
+        return result;
+      })
+      .catch(error => {
+        console.log("trackerAPI requestToSync error", error);
+        return {err:true, errMsg:error};
+      });
+  }
+
+  /** resync the pipelines */
+  syncPipelines(){
+    return axios.get( uriSyncPipelines )
+      .then(result => {
+        console.log("trackerAPI.jsx - syncPipelines",result);
+        return result;
+      })
+      .catch(error => {
+        console.log("trackerAPI syncPipelines error", error);
         return {err:true, errMsg:error};
       });
   }

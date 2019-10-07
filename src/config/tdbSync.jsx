@@ -9,7 +9,8 @@ import {format} from "date-fns";
 
 import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
 
-import Button from '@material-ui/core/Button';
+import Button from 'react-bootstrap/Button';
+//import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -28,6 +29,7 @@ import GridRow from "react-bootstrap/Row"
 import NewColumn from "../config/newColumn"
 import NewRule from "../config/newRule"
 import TrackersConfigColumns from "../config/trackersConfigColumns"
+import SyncAltIcon from '@material-ui/icons/Repeat';
 
 import { trackerColumnDataTypes, globalUrls } from "../common/constants"
 
@@ -79,7 +81,7 @@ class TdbSync extends React.Component{
 	componentDidMount(){
 		//console.log("TdbSync - mount. json:", this.state.trackers); 
         //console.log("TdbSync - mount. props.metaData:", this.props.metaData); 
-        this.checkHSAuthStatus();
+        this.setLastSyncedTime();
     }
 
 	render(){
@@ -94,25 +96,51 @@ class TdbSync extends React.Component{
     hsSyncUi(){
         return(
             <React.Fragment>
-                
+                <span>Last Sync at: { (this.state.last_synced)? this.state.last_synced: "N/A" }
+                    <Tooltip title="Sync with Hubspot">
+                        <Button
+                            variant="outline-info"
+                            onClick={ ()=> {
+                                this.sendRequestToSync();
+                            }}
+                            size="sm"
+                            style={ {width: "20px", height: "20px", padding: "0px 0px 0px 0px"} }
+                        >
+                            <SyncAltIcon 
+                                fontSize="small"
+                                style={ {width: "20px", height: "20px"} } 
+                            />
+                        </Button>
+                    </Tooltip>
+                </span><br/>
             </React.Fragment>
         )
     }
 
-    checkHSAuthStatus = () => {
-        trackersAPIobj.checkHSAuthStatus()
+    setLastSyncedTime = (trackerId) => {
+        trackersAPIobj.getTrackerLastsynced(trackerId)
+        .then(
+            res => {
+                if(res && res.data && res.data.last_synced_time){
+                    this.setState({last_synced: res.data.last_synced_time })
+                }
+            }
+        ) 
+    }
+
+    sendRequestToSync = () => {
+        trackersAPIobj.requestToSync()
         .then(
             res => {
                 if(res && res.data){
-                    if(res.data.is_hs_authorized)
-                        this.setState({hsAuthButtonColor: { backgroundColor:"green"} })
-                    else
-                        this.setState({hsAuthButtonColor: { backgroundColor:"red"} })
+                    this.setState({
+                        last_synced: res.data.last_synced_time,
+                        notificationMsg: (res.data.status) ?("Hubspot sync scheduled successfully") :"Error. try Again Later",
+                        showNotification: true,
+                    })
                 }
-                else
-                    this.setState({hsAuthButtonColor: { backgroundColor:"orange"} })
             }
-        )
+        ) 
     }
 
 }

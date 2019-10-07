@@ -16,11 +16,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-
 import { withStyles } from '@material-ui/core/styles';
 
 import GridCol from "react-bootstrap/Col"
@@ -28,6 +23,7 @@ import GridRow from "react-bootstrap/Row"
 import NewColumn from "../config/newColumn"
 import NewRule from "../config/newRule"
 import TrackersConfigColumns from "../config/trackersConfigColumns"
+import TDBSync from "../config/tdbSync"
 
 import { trackerColumnDataTypes, globalUrls } from "../common/constants"
 
@@ -73,7 +69,8 @@ const useStyles = theme => ({
 class SuperAdmin extends React.Component{
     classes=this.props.classes;
 	state = { 
-        hsAuthButtonColor: { backgroundColor:"red"}
+        hsAuthButtonColor: { backgroundColor:"red"},
+        pipelineSyncButtonColor: { backgroundColor: "orange" },
     }
 
 	componentDidMount(){
@@ -96,7 +93,7 @@ class SuperAdmin extends React.Component{
             <React.Fragment>
                 <div align={"center"} style={{ padding: "10px 0px 0px 0px"}} >
                     <GridRow>
-                        <GridCol sm={6} md={6} lg={6} xs={6} >
+                        <GridCol sm={4} md={4} lg={4} xs={4} >
                             <Tooltip title="Authorize Hubspot">
                                 <a target="_blank" href={ globalUrls.hs_auth } >
                                     <Button
@@ -109,35 +106,12 @@ class SuperAdmin extends React.Component{
                             </Tooltip>
                         </GridCol>
 
-                        <GridCol sm={6} md={6} lg={6} xs={6}>
-                            <span>
-                                Last Sync at: { (this.state.last_synced)? this.state.last_synced: "N/A" }
-                            </span><br/>
-                            <Tooltip title="Refresh">
-                                <Button
-                                    variant="outline-info"
-                                    onClick={ ()=> {
-                                        this.setLastSyncedTime(this.state.viewingTabTrackerId);
-                                    }}
-                                    size="sm"
-                                    style={ {width: "20px", height: "20px", padding: "0px 0px 0px 0px"} }
-                                >
-                                    <RefreshIcon 
-                                        fontSize="small"
-                                        style={ {width: "20px", height: "20px"} } 
-                                    />
-                                </Button>
-                            </Tooltip>
-                        </GridCol>
-                    </GridRow>
-
-                    <GridRow>
-                        <GridCol sm={6} md={6} lg={6} xs={6} >
+                        <GridCol sm={4} md={4} lg={4} xs={4} >
                             <Tooltip title="Get Pipelines">
-                                <a target="_blank" href={globalUrls.hs_auth} >
+                                <a href="#" >
                                     <Button
-                                        style={this.state.hsAuthButtonColor} 
-                                        onClick={ ()=>this.checkHSAuthStatus() }
+                                        style={this.state.pipelineSyncButtonColor} 
+                                        onClick={ ()=>this.syncPipelines() }
                                     >
                                         Load Pipelines
                                     </Button>
@@ -145,26 +119,12 @@ class SuperAdmin extends React.Component{
                             </Tooltip>
                         </GridCol>
 
-                        <GridCol sm={6} md={6} lg={6} xs={6}>
-                            <span>
-                                Last Sync at: { (this.state.last_synced)? this.state.last_synced: "N/A" }
-                            </span><br/>
-                            <Tooltip title="Refresh">
-                                <Button
-                                    variant="outline-info"
-                                    onClick={ ()=> {
-                                        this.setLastSyncedTime(this.state.viewingTabTrackerId);
-                                    }}
-                                    size="sm"
-                                    style={ {width: "20px", height: "20px", padding: "0px 0px 0px 0px"} }
-                                >
-                                    <RefreshIcon 
-                                        fontSize="small"
-                                        style={ {width: "20px", height: "20px"} } 
-                                    />
-                                </Button>
-                            </Tooltip>
+                        <GridCol sm={4} md={4} lg={4} xs={4} style={{padding:"8px 0px 0px 0px"}} >
+                            <TDBSync
+                                viewingTabTrackerId={ this.state.viewingTabTrackerId }
+                            />
                         </GridCol>
+
                     </GridRow>
 
                 </div>
@@ -184,6 +144,19 @@ class SuperAdmin extends React.Component{
                 }
                 else
                     this.setState({hsAuthButtonColor: { backgroundColor:"orange"} })
+            }
+        )
+    }
+
+    syncPipelines = () => {
+        trackersAPIobj.syncPipelines()
+        .then(
+            res => {
+                if(res && res.data){
+                    this.setState({pipelineSyncButtonColor: { backgroundColor:"green"} })
+                }
+                else
+                    this.setState({pipelineSyncButtonColor: { backgroundColor:"red"} })
             }
         )
     }

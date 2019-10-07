@@ -135,6 +135,7 @@ const initialTicket=[
     {
         "ticket_id" : 11,
         "tracker_id" : 1,
+        "properties": [],
         "db_properties": [],
         "hs_properties": []
     }

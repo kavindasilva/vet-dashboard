@@ -4,19 +4,19 @@ import React from 'react';
 import axios from 'axios';
 
 
-const APIlistUrl = 'http://ontrack.dev.io/api/list/DB';
-const APIselectUrl = 'http://ontrack.dev.io/api/select/';
+const APIlistUrl = '/api/list/DB';
+const APIselectUrl = '/api/select/';
 
-const APIauthenticateUrl = "http://ontrack.dev.io/login/user/login";
-const altAPIauthenticateUrl = "http://ontrack.dev.io/api/signin";
-const APIlogoutUrl = "http://ontrack.dev.io/login/user/logout";
+const APIauthenticateUrl = "/login/user/login";
+const altAPIauthenticateUrl = "/api/signin";
+const APIlogoutUrl = "/login/user/logout";
 
-const APIisLoggedIn = "http://ontrack.dev.io/login/user/getcurrent";
+const APIisLoggedIn = "/login/user/getcurrent";
 
-const APIrequestPasswordReset = "http://ontrack.dev.io/rest/user/requestpasswordreset"
-const APIPasswordReset = "http://ontrack.dev.io/rest/user/resetpassword"
-const APIforcePasswordReset = "http://ontrack.dev.io/rest/user/forceresetpassword"
-const APIchangePassword = "http://ontrack.dev.io/login/user/changepassword"
+const APIrequestPasswordReset = "/rest/user/requestpasswordreset"
+const APIPasswordReset = "/rest/user/resetpassword"
+const APIforcePasswordReset = "/rest/user/forceresetpassword"
+const APIchangePassword = "/login/user/changepassword"
 
 class loginAPI extends React.Component {
 

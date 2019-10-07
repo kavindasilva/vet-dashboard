@@ -55,6 +55,14 @@ class onboardProgress extends Component {
 		activeStep: 2,
 	}
 
+	showDiv = {
+		display: "block"
+	}
+
+	hideDiv = {
+		display: "none"
+	}
+
   	render() {
 		//console.log('onboardPopup: Rendering cell content');
 		return (
@@ -67,6 +75,12 @@ class onboardProgress extends Component {
 				>
 					<InfoIcon fontSize="small" />
                 </IconButton>
+
+				<div
+					style={ this.hideDiv }
+
+				>uuuuuuuuuuuuuuuuuuuuuuuu
+				</div>
 
 				<Dialog
                     open={this.state.isOpen}

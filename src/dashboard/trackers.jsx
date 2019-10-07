@@ -8,11 +8,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Typography from '@material-ui/core/Typography';
-
-
-
 import { withStyles } from '@material-ui/core/styles';
 //import { styles } from '@material-ui/pickers/DatePicker/components/Calendar';
+
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -20,8 +18,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-import Menu from "../common/menu";
-import Icon from '@material-ui/core/Icon';
+import TDBSync from "../config/tdbSync"
+import SyncAltIcon from '@material-ui/icons/Repeat';
 import { red } from '@material-ui/core/colors';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -37,9 +35,8 @@ import TrackerTableRow from "../dashboard/trackerTableRow";
 
 import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
-import { Dialog, DialogTitle, DialogContent, DialogActions, IconButton } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, DialogActions, IconButton, Snackbar } from '@material-ui/core';
 import Button from 'react-bootstrap/Button'
-
 import moment from "moment";
 
 const ticketAPIobj = new ticketAPI();
@@ -68,6 +65,8 @@ class Trackers extends React.Component{
 	state = { 
         ...this.props.metaData, 
         last_updated: [], // get by tracker_id
+        last_synced: null,
+
         tabValue:0,
         viewingTabTrackerId: 3,
         showNewClinicAddForm: false,
@@ -76,6 +75,9 @@ class Trackers extends React.Component{
         errorMsgGetTrackers: false,
 
         selectedTrackerToDownload: 1,
+
+        showNotification: false,
+        notificationMsg: "kijsdab",
     }
 
 	componentDidMount(){
@@ -88,6 +90,7 @@ class Trackers extends React.Component{
 
         this.getTrackersConfig();
         this.getTicketData();
+        //this.setLastSyncedTime(this.state.viewingTabTrackerId);
 	}
 
 	render(){
@@ -110,6 +113,9 @@ class Trackers extends React.Component{
                 </Button>
                 { 
                     this.viewTabs()
+                }
+                {
+                    this.viewSnackBar()
                 }
                 {
                     this.handleNewClinicAddForm()
@@ -166,9 +172,10 @@ class Trackers extends React.Component{
                                         key={ tracker.tracker_id } 
                                     >
                                         <div float={'right'} align={'right'} style={{padding:"10px 10px 0px 0px"}} >
-                                            <span>Last Sync at: { "N/Implemented" }
-                                                
-                                            </span><br/>
+                                            <TDBSync
+                                                viewingTabTrackerId={ this.state.viewingTabTrackerId }
+                                            />
+
                                             <span>Last Refresh: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "N/A" }
                                                 <Tooltip title="Refresh">
                                                     <Button
@@ -252,6 +259,33 @@ class Trackers extends React.Component{
 		);
     }
 
+    viewSnackBar = () => (
+        <Snackbar
+            open={ this.state.showNotification }
+            aria-describedby="client-snackbar"
+            anchorOrigin={{
+                horizontal: 'center',
+                vertical: 'top'
+            }}
+            message={ 
+                <span style={{color:"red", backgroundColor: "blue"}}>
+                    { this.state.notificationMsg }
+                </span>
+            }
+            action={[
+                <IconButton 
+                    key="close" 
+                    aria-label="close" 
+                    color="inherit" 
+                    onClick={ ()=>this.setState({showNotification: false}) }
+                >
+                    x
+                </IconButton>,
+            ]}
+            
+        />
+    )
+
     /**
 	 * shows the new New clinic adding form in a popup dialog
 	 */
@@ -311,18 +345,12 @@ class Trackers extends React.Component{
 
                     newLastUpdated[trackerId] = res.headers["last-updated"];
                     this.setState({ last_updated: newLastUpdated });
-
-                    this.setState({lastSynced: moment().format('YYYY-MM-DD HH:mm:ss')})
-
                 }
-                else if(res.data)
-                    this.setState({lastSynced: moment().format('YYYY-MM-DD HH:mm:ss')})
-
             }
-        )
-
-        
+        ) 
     }
+
+    
 
     /**
      * retrieve trackers configuration data from DB
@@ -368,6 +396,7 @@ class Trackers extends React.Component{
             }
         )
     }
+    
     
 
     /**

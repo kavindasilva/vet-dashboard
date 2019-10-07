@@ -2,16 +2,16 @@
 import React from 'react';
 import axios from 'axios';
 
-const uriGetTicketData = 'http://ontrack.dev.io/rest/tickets/'; // 
-const uriTickets = 'http://ontrack.dev.io/rest/tickets/'; // 
+const uriGetTicketData = '/rest/tickets/'; // 
+const uriTickets = '/rest/tickets/'; // 
 
-const uriPropertyHistory = "http://ontrack.dev.io/rest/tickets/getcellhistoryforproperty/"; //http://ontrack.dev.io/rest/tickets/getcellhistoryforproperty/5
-const uriTicketProperty = "http://ontrack.dev.io/rest/ticketproperty/"; //http://ontrack.dev.io/rest/ticketproperty/5
-const uriTicketComments = "http://ontrack.dev.io/rest/cellcomment/getcellcommentsforproperty/"; //http://ontrack.dev.io/rest/cellcomment/getcellcommentsforproperty/
-const uriComments = "http://ontrack.dev.io/rest/cellcomment/"
+const uriPropertyHistory = "/rest/tickets/getcellhistoryforproperty/"; //http://ontrack.dev.io/rest/tickets/getcellhistoryforproperty/5
+const uriTicketProperty = "/rest/ticketproperty/"; //http://ontrack.dev.io/rest/ticketproperty/5
+const uriTicketComments = "/rest/cellcomment/getcellcommentsforproperty/"; //http://ontrack.dev.io/rest/cellcomment/getcellcommentsforproperty/
+const uriComments = "/rest/cellcomment/"
 
 
-const uriSearchTicket = "http://ontrack.dev.io/rest/tickets/?search="; //http://ontrack.dev.io/rest/tickets/?search=create_date_start:2019-09-06,create_date_end:2019-10-10
+const uriSearchTicket = "/rest/tickets/?search="; //http://ontrack.dev.io/rest/tickets/?search=create_date_start:2019-09-06,create_date_end:2019-10-10
 
 
 class ticketAPI extends React.Component{

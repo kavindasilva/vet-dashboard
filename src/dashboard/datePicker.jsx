@@ -19,6 +19,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import EditIcon from '@material-ui/icons/Edit';
 import { Tooltip, IconButton } from "@material-ui/core";
 
+import ticketAPI from "../apicalls/ticketAPI"
+const ticketAPIobj = new ticketAPI();
+
 class CustomDatePicker extends React.Component{
 
     styleMatUI={
@@ -38,11 +41,6 @@ class CustomDatePicker extends React.Component{
 			color:"white", "backgroundColor":"#3c4fb0"
 		}
     }
-    styleTD={
-		width: "100%" ,
-		minHeight: "18px",
-		color: "#111111"
-	}
     
     state ={
         ticket_id: this.props.ticket_id,
@@ -62,7 +60,7 @@ class CustomDatePicker extends React.Component{
                     <Button
                         //style={ { position: "absolute" } }        
                         size="sm"
-                        onClick={ ()=>this.setState({ isOpen: true }) }
+                        onClick={ ()=>{this.setState({ isOpen: true }); console.log("datePicker props", this.props)} }
                         variant="warning"
                     >
                         <EditIcon fontSize="small" />
@@ -71,21 +69,10 @@ class CustomDatePicker extends React.Component{
 
                 {/* popup modal UI */}
                 <Dialog
-                    open={this.state.isOpen} // not ok
-                    //open={this.props.show} //ok
+                    open={this.state.isOpen} 
                     onClose={this.closePopUp}
                     aria-labelledby="draggable-dialog-title"
                 >
-                    {/* <AppBar position="relative" ></AppBar> */}
-                    <DialogTitle id="draggable-dialog-title" 
-                    style={
-                        { ...this.styleMatUI.titleBarPrimary,  padding: "18px 24px 16px 24px" }
-                    }
-                    >
-
-                        Change { this.state.attributeName }
-
-                    </DialogTitle>
 
                     <DialogContent>
                         <MuiPickersUtilsProvider 
@@ -97,7 +84,7 @@ class CustomDatePicker extends React.Component{
                                 label="Pet admitted date"
                                 value={ this.state.attributeValue }
                                 onChange={ this.changeDatepickerValue }
-                                onAccept={ this.acceptDatepickerValue }
+                                onAccept={ (e) => this.acceptDatepickerValue(e) }
                                 open={ this.state.isOpen }
                                 onOpen={ () => { this.openDatepicker() } }
                                 onClose={ () => { this.closeDatepicker() } }
@@ -120,7 +107,7 @@ class CustomDatePicker extends React.Component{
                                             
                         <Button onClick={ (e) => { 
                                 e.preventDefault()
-                                this.dispatchUpdate()
+                                this.acceptDatepickerValue(this.state.attributeValue)
                                 this.closePopUp(); 
                             } } 
                             variant="text" color="primary"
@@ -135,17 +122,56 @@ class CustomDatePicker extends React.Component{
     }
 
     dispatchUpdate = () => {
-		rootStore.dispatch({
-			type: 'UPDATE_CELL_VALUE',
-			payload: {
-				ticketId: this.state.ticket_id,
-				property: this.state.columnName,
+        if(this.props.ticket_property_id){
+            console.log("datePicker: update if");
+            rootStore.dispatch({
+                type: 'UPDATE_CELL_VALUE',
+                payload: {
+                    ticketId: this.state.ticket_id,
+                    value: this.state.attributeValue,
+                    property: this.state.columnName,
+                    data_source: this.state.hs_source_field + "_properties",
+                    ticketPropertyId: this.props.ticket_property_id,
+                    tracker_column_id: this.props.tracker_column_id
+                }
+            });
+        }
+        else{ // new property
+            console.log("datePicker: update else");
+            ticketAPIobj.updateTicketPropery(null, {
                 value: this.state.attributeValue,
-                data_source: this.state.hs_source_field + "_properties",
-				ticketPropertyId: this.props.ticket_property_id,
+                description: 'from datepicker',
+                ticket_id: this.state.ticket_id,
                 tracker_column_id: this.props.tracker_column_id
-			}
-		});
+            })
+            .then(
+                res => {
+                    if(res && !res.err && res.data && res.data.ticket_property_id){
+                        ticketAPIobj.getTicketsAndProperties()
+                        .then(
+                            res => {
+                                if(res && res.err){
+                                    this.setState({
+                                        errorGetTrackers: true,
+                                        errorMsgGetTrackers: res.errMsg.toString()
+                                    });
+                                    return;
+                                }
+
+                                this.setState({ ticketsData: res.data }, function(){
+                                    rootStore.dispatch({
+                                        type: 'GET_TICKETS_FROM_DB',
+                                        payload: {
+                                            data: this.state.ticketsData
+                                        }
+                                    });
+                                });
+                            }
+                        )
+                    }
+                }
+            )
+        }
 	}
 
     openDatepicker = () => {
@@ -158,9 +184,11 @@ class CustomDatePicker extends React.Component{
 		this.setState({ attributeValue: format(new Date(selectedDate), 'yyyy-MM-dd') });
 	}
 
-	acceptDatepickerValue = () => {
-        this.dispatchUpdate();
-        this.closeDatepicker();
+	acceptDatepickerValue = ( val ) => {
+		this.setState({ attributeValue: format(new Date(val), 'yyyy-MM-dd') }, () => {
+            this.dispatchUpdate();
+            this.closeDatepicker();
+        });
     }
 
     openPopUp = () => {

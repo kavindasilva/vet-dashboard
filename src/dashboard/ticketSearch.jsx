@@ -44,7 +44,7 @@ import GridRow from 'react-bootstrap/Row'
 import GridCol from 'react-bootstrap/Col'
 
 import Form from 'react-bootstrap/Form'
-// import FormGroup from 'react-bootstrap/FormGroup'
+import InputGroup from 'react-bootstrap/InputGroup'
 // import Form from 'react-bootstrap/FormLabel'
 // import Form from 'react-bootstrap/FormControl'
 
@@ -95,9 +95,11 @@ class ticketSearch extends Component {
 					<Grid item sm={1} md={1} xs={1} lg={1} ></Grid>
 					
 					<Grid item sm={3} md={3} xs={3} lg={3} style={ {paddingTop: "12px"}} >
-						<Form.Group controlId="formGridSearchType" as={GridRow} >
-							<Form.Label column sm={3} md={3} xs={3} lg={3}>Search by</Form.Label>
-							<GridCol sm={9} md={9} xs={9} lg={9} >
+						<Form.Group controlId="formGridSearchType"  >
+							<InputGroup>
+								<InputGroup.Prepend  >
+									<InputGroup.Text >Search By</InputGroup.Text>
+								</InputGroup.Prepend>
 								<Form.Control 
 									as="select"
 									onChange={ e => {
@@ -126,7 +128,8 @@ class ticketSearch extends Component {
 									)
 								}
 								</Form.Control>
-							</GridCol>
+							
+							</InputGroup>
 						</Form.Group>
 					</Grid>
 
@@ -138,9 +141,12 @@ class ticketSearch extends Component {
 							end_date={ this.state.searchWordArr['create_date'].split(';')[1] }
 							changeSearchWord={ this.changeSearchWord }
 						/>
-						: <Form.Group controlId="formGridKeyword" as={GridRow} >
-							<Form.Label column sm={2} md={2} xs={2} lg={2} >keyword</Form.Label>
-							<GridCol sm={10} md={10} xs={10} lg={10} >
+						: <Form.Group controlId="formGridKeyword" >
+							<InputGroup >
+								<InputGroup.Prepend  >
+									<InputGroup.Text >keyword</InputGroup.Text>
+								</InputGroup.Prepend>
+							
 								<Form.Control 
 									type="text" 
 									placeholder="Enter keyword" 
@@ -152,7 +158,7 @@ class ticketSearch extends Component {
 										this.state.searchOption + ":" + e.target.value
 									)}
 								/>
-							</GridCol>
+							</InputGroup>
 						</Form.Group>
 					}
 					</Grid>

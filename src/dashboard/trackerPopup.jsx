@@ -77,13 +77,14 @@ class TrackerPopup extends Component {
 
 					//style={ { backgroundColor: this.evaluateExpr( this.props.configData.rules)} }
 					style={{
+						backgroundColor:"#ffffff",
 						...globalStyles["cell-borders"],
 						minHeight: "70px", // not working
 						minWidth: ticketCellSize.cellWidth, // working
 						height: ticketCellSize.cellHeight, // working
 						width: "30px", // not working
 
-						padding: "2px 1px 0px 2px"
+						//padding: "2px 1px 0px 2px"
 					}}
 				>
 					{ this.state.attributeValue2 }
@@ -149,7 +150,7 @@ class TrackerPopup extends Component {
 					<CustomDatePicker
 						ticket_id={ this.props.ticket_id }
 						columnName={ this.props.ticketProperty.property }
-						tracker_column_id={ this.props.ticketProperty.ticketId }
+						tracker_column_id={ this.props.configData.tracker_column_id }
 						value={ this.props.ticketProperty.value }
 						elementType={ this.props.elementType }
 						hs_source_field={ this.props.hs_source_field }
@@ -169,7 +170,7 @@ class TrackerPopup extends Component {
 					<InstantPopup
 						ticket_id={ this.props.ticket_id }
 						columnName={ this.props.ticketProperty.property }
-						tracker_column_id={ this.props.ticketProperty.ticketId }
+						tracker_column_id={ this.props.configData.tracker_column_id }
 						value={ this.props.ticketProperty.value }
 						elementType={ this.props.elementType }
 						hs_source_field={ this.props.hs_source_field }
@@ -304,7 +305,6 @@ const mapStateToProps = (state, props) => {
 			},
 
 			propertyValue: (ticket_data)? ticket_data.value : null,
-
 			ticket_property_id: ticketPropId,
 		};
 	}

@@ -70,7 +70,10 @@ class Menu extends Component {
 
 					<div class="navbar-collapse collapse" id="navbarColor03">
 						<ul class="navbar-nav mr-auto">
-							<li class="nav-item active" onClick={ ()=>{ this.setState({ componentToShow:'tickets'}) } }>
+							<li 
+								class={"nav-item "+ (this.state.componentToShow==="tickets" && "active") } 
+								onClick={ ()=>{ this.setState({ componentToShow:'tickets'}) } }
+							>
 								<a class="nav-link" href="#" >Tickets</a>
 							</li>
 							{
@@ -79,7 +82,8 @@ class Menu extends Component {
 									&& this.props.metaData.userInfo.user_type_id===3 //admin
 								) 
 								&&
-								<li class="nav-item"
+								<li 
+									class={"nav-item "+ (this.state.componentToShow==="trackerConfig" && "active") }
 									onClick={ ()=>{ this.setState({ componentToShow:'trackerConfig'}) } } 
 								>
 									<a class="nav-link" href="#" >TrackerConfig</a>
@@ -92,7 +96,8 @@ class Menu extends Component {
 									&& this.props.metaData.userInfo.user_type_id===3 //admin
 								) 
 								&&
-								<li class="nav-item"
+								<li 
+									class={"nav-item "+ (this.state.componentToShow==="users" && "active") }
 									style={{textTransform: "none"}}
 									onClick={ ()=>{ this.setState({ componentToShow:'users'}) } } 
 									//disabled={true}
@@ -102,7 +107,10 @@ class Menu extends Component {
 								</li>
 							}
 
-							<li class="nav-item" onClick={ ()=>{ this.setState({ componentToShow:'currentUserProfile'}) } } >
+							<li 
+								class={"nav-item "+ (this.state.componentToShow==="currentUserProfile" && "active") }
+								onClick={ ()=>{ this.setState({ componentToShow:'currentUserProfile'}) } } 
+							>
 								<a class="nav-link" href="#">My Profile</a>
 							</li>
 
@@ -112,7 +120,8 @@ class Menu extends Component {
 									&& this.props.metaData.userInfo.user_type_id===3 //admin
 								) 
 								&&
-								<li class="nav-item"
+								<li 
+									class={"nav-item "+ (this.state.componentToShow==="superAdminUi" && "active") }
 									style={{textTransform: "none"}}
 									onClick={ ()=>{ this.setState({ componentToShow:'superAdminUi'}) } } 
 								>

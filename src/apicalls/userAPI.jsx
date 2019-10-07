@@ -3,19 +3,19 @@ import React from 'react';
 import axios from 'axios';
 
 //const APIGetUrl = 'http://127.0.0.1/ucsc5/vet-dashboard/vet-dashboard/phpApi/getData.php?q=';
-const uriAllUsers = "http://ontrack.dev.io/rest/user/?type_id=6";
-const uriAllPartners="http://ontrack.dev.io/rest/partner"
-const alturiAllUsers = "http://ontrack.dev.io/api/getUsers";
+const uriAllUsers = "/rest/user/?type_id=6";
+const uriAllPartners="/rest/partner"
+const alturiAllUsers = "/api/getUsers";
 
 
-const uriNewUserSave="http://ontrack.dev.io/rest/user"; // post
-const uriNewPartnerSave="http://ontrack.dev.io/rest/partner"; // post
+const uriNewUserSave="/rest/user"; // post
+const uriNewPartnerSave="/rest/partner"; // post
 
-const uriEditUserSave="http://ontrack.dev.io/rest/user/"; // put
-const uriEdiPartnerSave="http://ontrack.dev.io/rest/partner/"; // put
+const uriEditUserSave="/rest/user/"; // put
+const uriEdiPartnerSave="/rest/partner/"; // put
 
-const uriSingleUser="http://ontrack.dev.io/rest/user/" // g
-const uriSinglePartner="http://ontrack.dev.io/rest/partner/" // ge
+const uriSingleUser="/rest/user/" // g
+const uriSinglePartner="/rest/partner/" // ge
 
 
 class userAPI extends React.Component{
