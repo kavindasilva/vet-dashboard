@@ -77,6 +77,7 @@ class CellHistory extends Component {
                     <Button
                         size="sm"
                         variant="info"
+                        disabled={ (this.props.ticket_property_id)? false: true }
                         onClick={ ()=>this.getHistoryData() }    
                     >
                         <HistoryIcon fontSize="small" />

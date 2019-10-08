@@ -110,7 +110,10 @@ class NewTracker extends React.Component{
         .then(
             res => {
                 console.log("newTracker pipelines res:", res.data);
-                this.setState({HSPipelines: res.data });
+                if(res && res.data)
+                    this.setState({HSPipelines: res.data });
+                else
+                    this.setState({HSPipelines: [{"id": "999", "label": "Error loading pipelines"}] });
             }
         )
     }

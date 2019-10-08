@@ -9,7 +9,7 @@ import {format} from "date-fns";
 
 import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
 
-import Button from '@material-ui/core/Button';
+import Button from 'react-bootstrap/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -17,8 +17,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
 import Typography from '@material-ui/core/Typography';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -176,122 +176,111 @@ class TrackersConfig extends React.Component{
                 
 
                 </div>
-                
-
-
-				<AppBar position="static" color="default">
-                    <Tabs
-                        value={this.state.tabValue}
-                        onChange={ this.handleChange }
-                        indicatorColor="primary"
-                        textColor="primary"
-                        variant="scrollable"
-                        scrollButtons="auto"
-                    >    
-                        {
-                            (this.props.trackers)
-                            ? this.props.trackers.map( tracker => (
-                                <Tab 
-                                    label={ tracker.name } 
-                                    key={ tracker.name } 
-                                />
-                            ))
-                            : <Tab
-                                label={"Loading..."}
-                                key={"Loading..."}
-                            />
-
-                        }
-                    </Tabs>
-                </AppBar>
                 {
                     (this.props.trackers && !this.state.errorGetTrackerConfigs)
-                    ? this.props.trackers.map( tracker => (
-                        (this.state.tabValue+1) === tracker.tracker_id && 
-                        <React.Fragment key ={tracker.tracker_id}>
-                            <small> 
-                                ID: {tracker.tracker_id} ,
-                                Name: { tracker.name } 
-                            </small>
-
-
-                            <Button 
-                                style={{
-                                    float: "right",
-                                    align: "right",
-                                }}
-                                onClick={ ()=>{
-                                    this.saveTrackerToDB(tracker.tracker_id)
-                                } }
+                    ? <Tabs 
+                        id="controlled-tab-example" 
+                        activeKey={ this.state.viewingTabTrackerId } 
+                        onSelect={ this.handleTabChange }
+                    >
+                    {
+                        this.props.trackers.map( (tracker, trackerIndex) => (
+                            <Tab 
+                                key={ trackerIndex } 
+                                eventKey={ tracker.tracker_id } 
+                                title={ tracker.name } 
                             >
-                                Save Tracker Config
-                            </Button>
-                            <Button 
-                                style={{
-                                    float: "right",
-                                    align: "right",
-                                }}
-                                onClick={ ()=>{
-                                    this.setState({ trackersConfigData: null }, ()=>{
-                                        this.getTrackersConfig();
-                                    })
-                                    
-                                } }
-                            >
-                                Cancel
-                            </Button>
-                            <NewColumn 
-                                tracker_id={ tracker.tracker_id }
-                            />
-
-
-                            <div>
-                                <TrackersConfigColumns 
+                                <Button 
+                                    style={{
+                                        float: "right",
+                                        align: "right",
+                                        margin: "2px 2px 2px 2px",
+                                    }}
+                                    variant="success"
+                                    onClick={ ()=>{
+                                        this.saveTrackerToDB(tracker.tracker_id)
+                                    } }
+                                >
+                                    Save Tracker Config
+                                </Button>
+                                <Button 
+                                    style={{
+                                        float: "right",
+                                        align: "right",
+                                        margin: "2px 2px 2px 2px",
+                                    }}
+                                    variant="outline-warning"
+                                    onClick={ ()=>{
+                                        this.setState({ trackersConfigData: null }, ()=>{
+                                            this.getTrackersConfig();
+                                        })
+                                        
+                                    } }
+                                >
+                                    Cancel
+                                </Button>
+                                <NewColumn 
                                     tracker_id={ tracker.tracker_id }
                                 />
-                            </div>
 
-                            <Button 
-                                style={{
-                                    float: "right",
-                                    align: "right",
-                                }}
-                                onClick={ ()=>{
-                                    this.saveTrackerToDB(tracker.tracker_id)
-                                } }
-                            >
-                                Save Tracker Config
-                            </Button>
-                            <Button 
-                                style={{
-                                    float: "right",
-                                    align: "right",
-                                }}
-                                onClick={ ()=>{
-                                    this.setState({ trackersConfigData: null }, ()=>{
-                                        this.getTrackersConfig();
-                                    })
-                                    
-                                } }
-                            >
-                                Cancel
-                            </Button>
-                            <NewColumn 
-                                tracker_id={ tracker.tracker_id }
-                            />
-                            
-                        </React.Fragment>
-                    ) )
-                    : (
-                        (this.state.errorGetTrackerConfigs)
-                        ? <React.Fragment>
-                            Data loading Error <hr/>
-                            { this.state.errorMsgGetTrackerConfigs.toString() }
-                        </React.Fragment>
-                        : <React.Fragment>
-                            Loading...
-                        </React.Fragment>
-                    )
+
+                                <div>
+                                    <TrackersConfigColumns 
+                                        tracker_id={ tracker.tracker_id }
+                                    />
+                                </div>
+
+                                <Button 
+                                    style={{
+                                        float: "right",
+                                        align: "right",
+                                    }}
+                                    variant="success"
+                                    onClick={ ()=>{
+                                        this.saveTrackerToDB(tracker.tracker_id)
+                                    } }
+                                >
+                                    Save Tracker Config
+                                </Button>
+                                <Button 
+                                    style={{
+                                        float: "right",
+                                        align: "right",
+                                    }}
+                                    variant="outline-warning"
+                                    onClick={ ()=>{
+                                        this.setState({ trackersConfigData: null }, ()=>{
+                                            this.getTrackersConfig();
+                                        })
+                                        
+                                    } }
+                                >
+                                    Cancel
+                                </Button>
+                                <NewColumn 
+                                    tracker_id={ tracker.tracker_id }
+                                />
+                            </Tab>
+                        ) )
+                    }
+                    </Tabs>
+                    : (this.state.errorGetTrackerConfigs)
+                        ? <Tabs 
+                            id="controlled-1" 
+                            activeKey={ this.state.tabValue } 
+                        >
+                            <Tab eventKey={ this.state.tabValue } title="err">
+                                <div>{ this.state.errorMsgGetTrackerConfigs.toString() }</div>
+                            </Tab>
+                        </Tabs>
+                        : <Tabs 
+                            id="controlled-2" 
+                            activeKey={ this.state.tabValue } 
+                        >
+                            <Tab eventKey={ this.state.tabValue } title="load">
+                                <div>Loading..</div>
+                            </Tab>
+                        </Tabs>
                     
                 }
 
@@ -333,6 +322,10 @@ class TrackersConfig extends React.Component{
         .then(
             this.setState({trackersConfigData:null})
         )
+    }
+
+    handleTabChange = ( selectedTab ) => {
+        this.setState({ viewingTabTrackerId: selectedTab } );
     }
 
     /**

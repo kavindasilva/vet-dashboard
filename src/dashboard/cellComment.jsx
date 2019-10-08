@@ -79,6 +79,7 @@ class CellComment extends Component {
                     <Button
                         size="sm"
                         variant="secondary"
+                        disabled={ (this.props.ticket_property_id)? false: true }
                         onClick={ ()=>this.getCommentsData() }    
                     >
                         <InsertCommentIcon fontSize="small" />

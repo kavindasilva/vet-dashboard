@@ -34,6 +34,7 @@ import NewTracker from "../config/newTracker"
 import ColumnDataType from "../config/columnDataType"
 import NewColumn from "../config/newColumn"
 import NewRule from "../config/newRule"
+import TrackerNewPermission from "../config/trackersNewPermission"
 
 import { trackerColumnDataTypes } from "../common/constants"
 
@@ -82,6 +83,7 @@ class TrackersConfigColumns extends React.Component{
         trackersHash: this.props.trackerColsHash, // this is to fix bug: new column added not shown immediately
         //trackersHash: JSON.stringify(this.props.tracker), 
 
+        userTypesDefinedInPermissions: [], //
         rowCollapsed:[],
     }
    
@@ -209,20 +211,30 @@ class TrackersConfigColumns extends React.Component{
                                     in={true}
                                     //timeout={ { enter:10, exit:10 } }
                                 >
-                                {
-                                    (column) && column.permissions.map( user => (
-                                        <React.Fragment key ={user.user_type_id}>
-                                            <TrackersPemissionsConfig
-                                                tracker_id={ this.props.tracker.tracker_id }
-                                                column_name={ column.name }
-                                                user_type_id ={user.user_type_id}
-                                                key ={user.user_type_id}
-                                            />
-                                            <br/>
-                                        </React.Fragment>
-                                    ) )
+                                    <React.Fragment>
+                                    {
+                                        (column && column.permissions) && column.permissions.map( user => {
+                                            //this.appendToDefinedPermissions( column.name, user.user_type_id)
+                                            return (
+                                                <React.Fragment key ={user.user_type_id}>
+                                                    <TrackersPemissionsConfig
+                                                        tracker_id={ this.props.tracker.tracker_id }
+                                                        column_name={ column.name }
+                                                        user_type_id ={user.user_type_id}
+                                                        key ={user.user_type_id}
+                                                    />
+                                                    <br/>
+                                                </React.Fragment>
+                                            )
+                                         } )
+                                    }
                                     
-                                }
+                                        <TrackerNewPermission
+                                            //definedUserTypes={ this.state.userTypesDefinedInPermissions }
+                                            column_name={ column.name }
+                                            tracker_id={ this.props.tracker.tracker_id }
+                                        />                                    
+                                    </React.Fragment>
                                 </Collapse>
                             </TableCell>
 
@@ -254,6 +266,30 @@ class TrackersConfigColumns extends React.Component{
                 </TableBody>
             </Table>
         );
+    }
+
+    componentDidMount(){
+        // if(this.props.tracker && this.props.tracker.columns){
+        //     this.props.tracker.columns.map( column =>{
+        //         (column && column.permissions) && column.permissions.map( user => {
+        //             this.appendToDefinedPermissions(column.name, user.user_type_id)
+        //         } )
+        //     } )
+        // }
+        console.log("trackerConfigColumns arr", this.state);
+        // (column && column.permissions && column.permissions.length>0) &&
+        //     this.appendToDefinedPermissions(column.permissions)
+        
+    }
+
+    appendToDefinedPermissions = ( column_name, user_type_id) => {
+        let newArr = [...this.state.userTypesDefinedInPermissions];
+
+        if(newArr[column_name]===undefined)
+            newArr[column_name] = [];
+
+        newArr[column_name].push( user_type_id );
+        this.setState({userTypesDefinedInPermissions: newArr});
     }
 
     /**

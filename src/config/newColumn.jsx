@@ -19,7 +19,8 @@ import ColumnDataType from "../config/columnDataType"
 import { trackerColumnDataTypes } from "../common/constants"
 
 import trackersAPI from "../apicalls/trackersAPI";
-import { Table, TableHead, TableCell, TableBody, TableRow, MenuItem, Select, Collapse, Button, Dialog, DialogTitle, DialogContent, DialogActions, Stepper, Typography, Step, StepLabel, TextField, Fab } from '@material-ui/core';
+import { Table, TableHead, TableCell, TableBody, TableRow, MenuItem, Select, Collapse, Dialog, DialogTitle, DialogContent, DialogActions, Stepper, Typography, Step, StepLabel, TextField, Fab } from '@material-ui/core';
+import Button from "react-bootstrap/Button"
 
 import ArrowRight from "@material-ui/icons/ArrowRight"
 import ArrowDown from "@material-ui/icons/ArrowDropDown"
@@ -88,15 +89,17 @@ class NewColumn extends React.Component{
     render(){
         return(
             <React.Fragment>
-                <Fab 
-                    size="small" variant="extended" aria-label="Add"
-                    style={{ float: "right", align: "right",}}
+                <Button 
+                    //size="small" 
+                    //variant="extended" aria-label="Add"
+                    style={{ float: "right", align: "right", margin: "2px 2px 2px 2px", }}
+                    variant="info"
                     onClick={ ()=>(
                         this.setState({ isOpen: true })
                     ) } 
                 >
-                    <AddIcon /> Column
-                </Fab>
+                    <AddIcon fontSize="small" /> Column
+                </Button>
                        
                 {/* popup modal UI */}
                 <Dialog
@@ -189,7 +192,7 @@ class NewColumn extends React.Component{
         rootStore.dispatch({
             type: 'ADD_CONFIG_COLUMN_NEW',
             payload: {
-                trackerId: this.state.trackerId,
+                trackerId: this.props.tracker_id,
                 //columnName: this.state.columnName,
 
                 columnName: this.state.columnName,
@@ -212,17 +215,19 @@ class NewColumn extends React.Component{
 }
 
 const mapStateToProps = (state, props) => {
-    //console.log('NewColumn.jsx-mapStateToProps', state);
+    //console.log('NewColumn.jsx-mapStateToProps', props, state);
     let trackerRes = state.TrackConfigReducer.configData.find( tracker => (
         tracker.tracker_id === parseInt( props.tracker_id )
     ) );
     if(!trackerRes){
         console.log("newColumn tracker not found");
+        return {};
     }
-
-	return {
-        columnData: trackerRes.columns,
-	};
+    else{
+        return {
+            columnData: trackerRes.columns,
+        };
+    }
 }
 
 export default connect(mapStateToProps)(withStyles(useStyles)(NewColumn));
