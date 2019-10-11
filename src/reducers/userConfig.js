@@ -9,19 +9,20 @@ const userAPIObj = new userAPI();
 
 const UserConfigReducer = (state, action) => {
     console.log("UserConfigReducer: state: ", state, "\naction: ", action)
-    let newState = {
-        //userData: false,
-        //userData: userAPIObj.getUsers().data,
-        userData: userConfig,
-        partnerData: null
+    let newState0 = {
+        UserConfigReducer:{
+            userData: false,
+        }
     };
 
     if(state===undefined || isUndefined(state))
         state=newState;
 
+    let newState = { ...state };
+
     switch (action.type) {
         case 'GET_SYSTEM_USERS':
-            newState = { ...state, userData: action.payload.userData }
+            newState = { userData: action.payload.userData }
             console.log("UserConfigReducer GET_SYSTEM_USERS: ", newState);
 
             return newState;
@@ -33,7 +34,7 @@ const UserConfigReducer = (state, action) => {
             return newState;
 
         default:
-            console.log("UserConfigReducer default: ", newState);
+            console.log("UserConfigReducer default: ", newState0);
             return newState;
     }
 

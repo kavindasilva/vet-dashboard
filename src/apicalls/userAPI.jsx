@@ -2,8 +2,8 @@
 import React from 'react';
 import axios from 'axios';
 
-//const APIGetUrl = 'http://127.0.0.1/ucsc5/vet-dashboard/vet-dashboard/phpApi/getData.php?q=';
-const uriAllUsers = "/rest/user/?type_id=6";
+const uriGetPartnerAccount = 'http://ontrack.dev.io/rest/user/?account_id=6';
+const uriAllUsers = "/rest/user/";
 const uriAllPartners="/rest/partner"
 const alturiAllUsers = "/api/getUsers";
 
@@ -46,6 +46,20 @@ class userAPI extends React.Component{
       })
       .catch(error => {
         console.log("userAPI.jsx - getPartners-Err", error);
+        return {err:true, errMsg:error};
+      });
+
+  }
+
+  /** get all in partner account */
+  getPartnersAccount(){
+    return axios.get(uriGetPartnerAccount)
+      .then(result => {
+        console.log("userAPI.jsx - getPartnerAccount", result);
+        return result;
+      })
+      .catch(error => {
+        console.log("userAPI.jsx - getPartnerAccount-Err", error);
         return {err:true, errMsg:error};
       });
 

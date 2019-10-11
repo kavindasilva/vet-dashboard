@@ -143,6 +143,18 @@ const TrackConfigReducer = (state, action) => {
             trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;
             columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
             let userPermitIndex  = getUserPermissionIndex( newState.configData[trackerIndex].columns[columnIndex], action.payload.user_type_id); //userPermitIndex=-1;
+            console.log("trackConfig userPermitInedx", userPermitIndex)
+
+            if( userPermitIndex===null || userPermitIndex===undefined || userPermitIndex===-1){ // add column 
+                userPermitIndex = newState.configData[trackerIndex].columns[columnIndex].permissions.length; 
+
+                newState.configData[trackerIndex].columns[columnIndex].permissions.push({
+                    user_type_id: parseInt(action.payload.user_type_id),
+                    is_read_restricted: false,
+                    is_write_restricted: false,
+                    is_comment_restricted: false,
+                });
+            }
 
             if(action.payload.rwType==="read")
                 newState.configData[trackerIndex].columns[columnIndex].permissions[userPermitIndex]["is_read_restricted"]=action.payload.rwcValue;

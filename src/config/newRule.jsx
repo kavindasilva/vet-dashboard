@@ -5,11 +5,11 @@ import { connect } from "react-redux";
 import { rootStore } from "../stores/mainStore";
 
 
-import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead, TextField, IconButton, MenuItem, Select, Collapse, Button, DialogActions, DialogContent, Dialog } from "@material-ui/core";
+import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead, TextField, IconButton, MenuItem, Select, Collapse, DialogActions, DialogContent, Dialog } from "@material-ui/core";
 
+import Button from "react-bootstrap/Button"
 import TrackerRulesColor from "../config/trackerRulesColor"
 import TrackerRulesCondition from "../config/TrackerRulesCondition"
-
 
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';

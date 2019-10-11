@@ -11,7 +11,7 @@ import {format} from "date-fns";
 
 import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
 
-import Button from '@material-ui/core/Button';
+import Button from 'react-bootstrap/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -27,6 +27,7 @@ import { userTypeArray } from "../common/constants"
 class TrackerNewPermission extends React.Component{    
     state ={
         isOpen: false,
+        trackersHash: null,
 
         trackerId: this.props.tracker_id,
         selected_user_type_id: 0,
@@ -115,18 +116,17 @@ class TrackerNewPermission extends React.Component{
                     </DialogContent>
 
                     <DialogActions>
-                        <Button 
+                        {/* <Button 
                             onClick={ ()=> this.setState({ isOpen: false }) }
                             variant="text"
                             color="primary"
                         >
                             Cancel
-                        </Button>
+                        </Button> */}
 
                         
                         <Button
-                            variant="text"
-                            color="primary"
+                            variant="outline-primary"
                             onClick={ ()=>{
                                 //this.saveNewColumn();
                                 this.setState({ isOpen: false });
@@ -156,6 +156,11 @@ class TrackerNewPermission extends React.Component{
             return false;
     }
 
+    componentWillReceiveProps( newProps ){
+        if( newProps.trackerColsHash !== this.state.trackersHash ){
+            this.setState({trackersHash: newProps.trackerColsHash});
+        }
+    }
 
     componentDidMount(){
         //console.log("trackerUserConfig arr: :", this.props.allUsers );
@@ -178,6 +183,10 @@ const mapStateToProps = (state, props) => {
         allUsers: { ...state.UserConfigReducer.userData, 
             ...state.UserConfigReducer.partnerData 
         },
+
+        trackerColsHash: JSON.stringify(state.TrackConfigReducer.configData.find( tracker => (
+            tracker.tracker_id === props.tracker_id
+        ) )),
     };
 
     function getColumnPermissions (stateConfigData) {

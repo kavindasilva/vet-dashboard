@@ -73,7 +73,9 @@ class Login extends React.Component{
 	state = { 
 		otp:"qaauto", 
 		username:"info@vetstoria.com", 
+		is_otp_required: false,
 		password:"123",
+		
 		serverData: { account_id:0, type:0, user_id:0},
 
 		componentToShow:"", // except login form and menu bar
@@ -129,7 +131,7 @@ class Login extends React.Component{
 		console.log("Login - credentials:", this.state.username, this.state.password );
 		
 		// call to API post
-		loginAPIobj.authenticate(this.state.username, this.state.password, this.state.otp)
+		loginAPIobj.authenticate(this.state.username, this.state.password, this.state.is_otp_required, this.state.otp)
 			.then( res => {
 				console.log("Login - authMsg:", res);
 				this.validateCredentials(res);

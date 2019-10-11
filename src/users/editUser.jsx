@@ -11,7 +11,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Select from '@material-ui/core/Select';
 import { MenuItem, RadioGroup, FormControlLabel, FormGroup } from "@material-ui/core";
 
-import Button from '@material-ui/core/Button';
+import Button from 'react-bootstrap/Button';
 import { withStyles } from '@material-ui/core/styles';
 //import { styles } from '@material-ui/pickers/DatePicker/components/Calendar';
 import Table from '@material-ui/core/Table';
@@ -22,10 +22,9 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Radio from '@material-ui/core/Radio';
 
-
-import MaterialTable from 'material-table';
-import Menu from "../common/menu";
-import InstantInput from "../users/instantInput";
+import GridRow from 'react-bootstrap/Row'
+import GridCol from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form'
 
 import TrackerTableHeader from "../dashboard/trackerHeader";
 import TrackerTableRow from "../dashboard/trackerTableRow";
@@ -70,13 +69,6 @@ class EditUser extends React.Component{
 	componentDidMount(){
 		//console.log("EditUser - mount. props:", this.props); //
         console.log("EditUser - state:", this.state, "props", this.props); 
-        
-        // userAPIObj.getPartners()
-        //     .then(
-        //         res => {
-        //             this.setState({partnerList: res.data });
-        //         }
-        //     )
     }
 
 	render(){

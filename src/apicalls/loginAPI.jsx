@@ -146,12 +146,12 @@ class loginAPI extends React.Component {
 			});
 	}
 
-	authenticate(username, password, otp) {
+	authenticate(username, password, is_otp_req, otp) {
 		let data = {};
 		data = {
 			"account_email": username,
 			"account_password": password,
-			"is_otp_required": true,
+			"is_otp_required": is_otp_req,
 			"otp": otp
 		};
 

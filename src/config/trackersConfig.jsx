@@ -332,13 +332,24 @@ class TrackersConfig extends React.Component{
      * write columns config of single tracker to the DB
      */
     saveTrackerToDB( trackerId ){
-        
-        rootStore.dispatch({
-            type: 'SAVE_CONFIG_TO_DB',
-            payload: {
-                trackerId: trackerId
+        let trackerConfig = this.props.trackers.find( tr=> tr.tracker_id === trackerId);
+        if(!trackerConfig){
+            console.log("trackerConfig find err", trackerId);
+            return;
+        }
+
+        trackersAPIobj.saveTrackerConfig( trackerConfig , trackerId)
+        .then(
+            res => {
+                if(res && !res.err && res.data){
+                    this.getTrackersConfig();
+                }
+                else{
+                    console.log("trackerConfig save err", res);
+                }
             }
-        });
+        )
+
     }
 
 

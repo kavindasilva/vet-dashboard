@@ -12,7 +12,7 @@ import Select from '@material-ui/core/Select';
 import { MenuItem, RadioGroup, FormControlLabel, FormGroup, FormControl } from "@material-ui/core";
 
 import Radio from '@material-ui/core/Radio';
-import Button from '@material-ui/core/Button';
+import Button from 'react-bootstrap/Button';
 import { withStyles } from '@material-ui/core/styles';
 //import { styles } from '@material-ui/pickers/DatePicker/components/Calendar';
 import Table from '@material-ui/core/Table';
@@ -22,9 +22,10 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-import MaterialTable from 'material-table';
-import Menu from "../common/menu";
-import InstantInput from "../users/instantInput";
+import GridRow from 'react-bootstrap/Row'
+import GridCol from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form'
+import InputGroup from 'react-bootstrap/InputGroup'
 
 import TrackerTableHeader from "../dashboard/trackerHeader";
 import TrackerTableRow from "../dashboard/trackerTableRow";
@@ -62,7 +63,8 @@ class NewUser extends React.Component{
     state = {
         ...this.props.metaData, 
         partnerList: this.props.partnerData,
-        newUserType: "partnerForUser",
+        //newUserType: "partnerForUser",
+        newUserType: "partner",
 
         //newUserType: null,
         name:'', //partner name
@@ -79,13 +81,7 @@ class NewUser extends React.Component{
 	componentDidMount(){
 		console.log("NewUser - mount. props:", this.props); //ok
         //console.log("NewUser - mount. props.metaData:", this.props.metaData); 
-        
-        // userAPIObj.getPartners()
-        //     .then(
-        //         res => {
-        //             this.setState({partnerList: res.data });
-        //         }
-        //     )
+
 	}
 
 	render(){
@@ -104,42 +100,6 @@ class NewUser extends React.Component{
     viewNewUserForm(){
         return(
             <Grid container spacing={3}>
-                {/* user type select bar */}
-                {/* <Grid item xs={12} sm={12}>
-                    <Select 
-                        className={  this.props.classes.hiddenField }
-                        value={ this.state.newUserType } 
-                        onChange={ e => this.setState({ newUserType: e.target.value }) }
-                        fullWidth={true}
-                    >
-                        {
-                            (userTypes)
-                            ? userTypes.map( item =>
-                                <MenuItem 
-                                    key={ item.id }
-                                    value={ item.type } 
-                                >
-                                { item.label }
-                                </MenuItem>
-                            )
-                            : <MenuItem key={0} value={0} >
-                                No user types defined in constants
-                            </MenuItem>
-                        }
-                    </Select>
-                </Grid> */}
-
-                {/* <Grid item xs={12} sm={12}>
-                    <TextField
-                        className={  this.props.classes.hiddenField }
-                        disabled={ true} //required
-                        id="id"
-                        name="id"
-                        label="ID"
-                        fullWidth
-                    />
-                </Grid> */}
-
                 {/* user type radio btn */}
                 <Grid item xs={12} sm={12}>
                     <RadioGroup
@@ -230,35 +190,43 @@ class NewUser extends React.Component{
         return(
             <React.Fragment>
                 {/* partner name */}
-                <Grid item xs={12}>
-                    <TextField
-                        type="text"
-                        id="name"
-                        name="name"
-                        label="Partner Name"
-                        fullWidth
-                        value={ this.state.name }
-                        onChange={ (e)=> { 
-                            e.preventDefault(); 
-                            this.setState({name: e.target.value}) 
-                        } }
-                    />
+                <Grid item xs={12} sm={12} md={6} lg={6} >
+                    <Form.Group  >
+                        <InputGroup>
+                            <InputGroup.Prepend  >
+                                <InputGroup.Text >Partner Name</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control 
+                                type="text"
+                                placeholder="Partner Name"
+                                onChange={ (e)=> { 
+                                    e.preventDefault(); 
+                                    this.setState({name: e.target.value}) 
+                                } }
+                                value={ this.state.name } 
+                            />
+                        </InputGroup>
+                    </Form.Group>
                 </Grid>
 
                 {/* partner's email */}
-                <Grid item xs={12}>
-                    <TextField
-                        type="email"
-                        id="account_email"
-                        name="account_email"
-                        label="Partner email Address"
-                        fullWidth
-                        value={ this.state.account_email }
-                        onChange={ (e)=> { 
-                            e.preventDefault(); 
-                            this.setState({account_email: e.target.value}) 
-                        } }
-                    />
+                <Grid item xs={12} sm={12} md={6} lg={6} >
+                    <Form.Group  >
+                        <InputGroup>
+                            <InputGroup.Prepend  >
+                                <InputGroup.Text >Partner email Address</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control 
+                                type="text"
+                                placeholder="Partner email Address"
+                                value={ this.state.account_email }
+                                onChange={ (e)=> { 
+                                    e.preventDefault(); 
+                                    this.setState({account_email: e.target.value}) 
+                                } } 
+                            />
+                        </InputGroup>
+                    </Form.Group>
                 </Grid>
 
                 <Grid item xs={12}>
@@ -266,49 +234,61 @@ class NewUser extends React.Component{
                 </Grid>
                 
                 {/* user first name, last name boxes */}
-                <Grid item xs={6}>
-                    <TextField
-                        //required
-                        id="first_name"
-                        name="first_name"
-                        label="First Name"
-                        fullWidth
-                        value={ this.state.first_name }
-                        onChange={ (e)=> { 
-                            e.preventDefault(); 
-                            this.setState({first_name: e.target.value}) 
-                        } }
-                    />
+                <Grid item xs={12} sm={12} md={6} lg={6} >
+                    <Form.Group  >
+                        <InputGroup>
+                            <InputGroup.Prepend  >
+                                <InputGroup.Text >First Name</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control 
+                                type="text"
+                                placeholder="First Name"
+                                value={ this.state.first_name }
+                                onChange={ (e)=> { 
+                                    e.preventDefault(); 
+                                    this.setState({first_name: e.target.value}) 
+                                } }
+                            />
+                        </InputGroup>
+                    </Form.Group>
                 </Grid>
-                <Grid item xs={6}>
-                    <TextField
-                        //required
-                        id="last_name"
-                        name="last_name"
-                        label="Last Name"
-                        fullWidth
-                        value={ this.state.last_name }
-                        onChange={ (e)=> { 
-                            e.preventDefault(); 
-                            this.setState({last_name: e.target.value}) 
-                        } }
-                    />
+                <Grid item xs={12} sm={12} md={6} lg={6} >
+                    <Form.Group  >
+                        <InputGroup>
+                            <InputGroup.Prepend  >
+                                <InputGroup.Text >Last Name</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control 
+                                type="text"
+                                placeholder="Last Name"
+                                value={ this.state.last_name }
+                                onChange={ (e)=> { 
+                                    e.preventDefault(); 
+                                    this.setState({last_name: e.target.value}) 
+                                } }
+                            />
+                        </InputGroup>
+                    </Form.Group>
                 </Grid>
 
                 {/* user telephone */}
-                <Grid item xs={12}>
-                    <TextField
-                        //required
-                        id="telephone"
-                        name="telephone"
-                        label="Telephone"
-                        fullWidth
-                        value={ this.state.telephone }
-                        onChange={ (e)=> { 
-                            e.preventDefault(); 
-                            this.setState({telephone: e.target.value}) 
-                        } }
-                    />
+                <Grid item xs={12} sm={12} md={6} lg={6} >
+                    <Form.Group  >
+                        <InputGroup>
+                            <InputGroup.Prepend  >
+                                <InputGroup.Text >Telephone</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control 
+                                type="text"
+                                placeholder="Telephone"
+                                value={ this.state.telephone }
+                                onChange={ (e)=> { 
+                                    e.preventDefault(); 
+                                    this.setState({telephone: e.target.value}) 
+                                } }
+                            />
+                        </InputGroup>
+                    </Form.Group>
                 </Grid>
             </React.Fragment>
 
@@ -368,65 +348,81 @@ class NewUser extends React.Component{
                 </Grid> */}
 
                 {/* user first name, last name boxes */}
-                <Grid item xs={6}>
-                    <TextField
-                        //required
-                        id="first_name"
-                        name="first_name"
-                        label="First Name"
-                        fullWidth
-                        value={ this.state.first_name }
-                        onChange={ (e)=> { 
-                            e.preventDefault(); 
-                            this.setState({first_name: e.target.value}) 
-                        } }
-                    />
+                <Grid item xs={12} sm={12} md={6} lg={6} >
+                    <Form.Group  >
+                        <InputGroup>
+                            <InputGroup.Prepend  >
+                                <InputGroup.Text >First Name</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control 
+                                type="text"
+                                placeholder="First Name"
+                                value={ this.state.first_name }
+                                onChange={ (e)=> { 
+                                    e.preventDefault(); 
+                                    this.setState({first_name: e.target.value}) 
+                                } }
+                            />
+                        </InputGroup>
+                    </Form.Group>
                 </Grid>
-                <Grid item xs={6}>
-                    <TextField
-                        //required
-                        id="last_name"
-                        name="last_name"
-                        label="Last Name"
-                        fullWidth
-                        value={ this.state.last_name }
-                        onChange={ (e)=> { 
-                            e.preventDefault(); 
-                            this.setState({last_name: e.target.value}) 
-                        } }
-                    />
+                <Grid item xs={12} sm={12} md={6} lg={6} >
+                    <Form.Group  >
+                        <InputGroup>
+                            <InputGroup.Prepend  >
+                                <InputGroup.Text >Last Name</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control 
+                                type="text"
+                                placeholder="Last Name"
+                                value={ this.state.last_name }
+                                onChange={ (e)=> { 
+                                    e.preventDefault(); 
+                                    this.setState({last_name: e.target.value}) 
+                                } }
+                            />
+                        </InputGroup>
+                    </Form.Group>
                 </Grid>
 
                 {/* email */}
-                <Grid item xs={12}>
-                    <TextField
-                        type="email"
-                        id="email"
-                        name="email"
-                        label="Email Address"
-                        fullWidth
-                        value={ this.state.email }
-                        onChange={ (e)=> { 
-                            e.preventDefault(); 
-                            this.setState({email: e.target.value}) 
-                        } }
-                    />
+                <Grid item xs={12} sm={12} md={6} lg={6} >
+                    <Form.Group  >
+                        <InputGroup>
+                            <InputGroup.Prepend  >
+                                <InputGroup.Text >Email Address</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control 
+                                type="text"
+                                placeholder="Email Address"
+                                value={ this.state.email }
+                                onChange={ (e)=> { 
+                                    e.preventDefault(); 
+                                    this.setState({email: e.target.value}) 
+                                } }
+                            />
+                        </InputGroup>
+                    </Form.Group>
                 </Grid>
 
                 {/* user telephone */}
-                <Grid item xs={12}>
-                    <TextField
-                        //required
-                        id="telephone"
-                        name="telephone"
-                        label="Telephone"
-                        fullWidth
-                        value={ this.state.telephone }
-                        onChange={ (e)=> { 
-                            e.preventDefault(); 
-                            this.setState({telephone: e.target.value}) 
-                        } }
-                    />
+                <Grid item xs={12} sm={12} md={6} lg={6} >
+                    <Form.Group  >
+                        <InputGroup>
+                            <InputGroup.Prepend  >
+                                <InputGroup.Text >Telephone</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control 
+                                type="text"
+                                placeholder="Telephone"
+                                value={ this.state.telephone }
+                                onChange={ (e)=> { 
+                                    e.preventDefault(); 
+                                    this.setState({telephone: e.target.value}) 
+                                } }
+                            />
+                        </InputGroup>
+                    </Form.Group>
                 </Grid>
 
 

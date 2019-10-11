@@ -22,8 +22,8 @@ class RWIcon extends React.Component{
                 size="small"
                 style={
                     (!this.state.rwcValue)?
-                        { "backgroundColor":"green" }
-                        :{ "textDecoration": "line-through", "backgroundColor":"red" }
+                        { "backgroundColor":"green", fontSize:"12px" }
+                        :{ "textDecoration": "line-through", "backgroundColor":"red", fontSize:"12px" }
                 }
                 onClick = { () => { 
                     this.setState({rwcValue: !this.state.rwcValue}, function(){
@@ -51,7 +51,7 @@ class RWIcon extends React.Component{
 				trackerId: this.state.trackerId,
                 columnName: this.state.columnName,
                 
-                user_type_id: this.state.user_type_id,
+                user_type_id: parseInt(this.props.user_type_id),
                 
                 rwType: this.state.rwType,
                 rwcValue: this.state.rwcValue,

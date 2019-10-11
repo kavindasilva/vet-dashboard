@@ -29,7 +29,7 @@ import TrackerTableRow from "../dashboard/trackerTableRow";
 
 import NewUser from "../users/newUser";
 import EditUser from "../users/editUser";
-import { Button } from '@material-ui/core';
+import Button from 'react-bootstrap/Button';
 
 import { userTypeArray } from "../common/constants";
 
@@ -73,7 +73,7 @@ class Users extends React.Component{
     /**
      * retrieve users in from the database
      */
-	componentDidMount(){
+	componentDidMount1(){
         userAPIObj.getUsers()
         .then(
             result => {
@@ -95,40 +95,6 @@ class Users extends React.Component{
                 });
             }
         )
-            
-        // kept for further usage. like getting partners, other users
-        // try{
-        //     userAPIObj.getUsers()
-        //     .then(
-        //         result => {
-        //             let resultArr=[];
-        //             for(var i in result.data){
-        //                 resultArr.push( result.data[i] );
-        //             }
-        //             console.log("users mount2 usersArr", resultArr); // type: arr
-        //             this.setState({allUsers: resultArr }, function(){
-        //                 this.dispatchUsers("users")
-        //             });
-        //         }
-        //     );
-        // }catch(e){
-        //     console.log("user getting failed.",e);
-        // }
-
-        // userAPIObj.getPartners()
-        // .then(
-        //     result => {
-        //         let resultArr=[];
-        //         for(var i in result.data){
-        //             resultArr.push( result.data[i] );
-        //         }
-        //         console.log("users mount2 partnersArr", resultArr); // type: arr
-        //         this.setState({allPartners: resultArr }, function(){
-        //             this.dispatchUsers("partners")
-        //         });
-        //     }
-        // )
-        
         
 		//console.log("Users - mount. props.metaData:", this.props.metaData); 
 	}
@@ -139,9 +105,9 @@ class Users extends React.Component{
 			<React.Fragment>
                 
                 {
-                    (this.props.metaData.userInfo && this.props.metaData.userInfo.user_type_id===3)
-                    ? this.renderUserView() 
-                    : <div>You are not authorixed to view this page</div>
+                    (this.props.metaData.userInfo && this.props.metaData.userInfo.user_type_id!==3)
+                    ? <div>You are not authorixed to view this page</div>
+                    : this.renderUserView()
                 }
 			</React.Fragment>
 		)
@@ -255,6 +221,7 @@ class Users extends React.Component{
                                                     });
                                                     
                                                 } }
+                                                variant="outline-primary"
                                             >
                                                 Edit
                                             </Button>
@@ -263,6 +230,7 @@ class Users extends React.Component{
                                                 onClick={ ()=>{
                                                     this.forceResetPassword( user.email.toString() )
                                                 } }
+                                                variant="outline-warning"
                                             >
                                                 ResetPass
                                             </Button>
