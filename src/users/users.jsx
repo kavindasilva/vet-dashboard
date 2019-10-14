@@ -73,7 +73,7 @@ class Users extends React.Component{
     /**
      * retrieve users in from the database
      */
-	componentDidMount1(){
+	componentDidMount(){
         userAPIObj.getUsers()
         .then(
             result => {
@@ -92,6 +92,20 @@ class Users extends React.Component{
                 console.log("users mount2 usersArr", resultArr); // type: arr
                 this.setState({allUsers: resultArr }, function(){
                     this.dispatchUsers("users")
+                });
+            }
+        )
+
+        userAPIObj.getPartners()
+        .then(
+            result => {
+                if(result && result.err){
+                    console.log("partners - gettingUsers err", result);
+                    return;
+                }
+                console.log("partners mount2 usersArr", result); // type: arr
+                this.setState({allPartners: result.data }, function(){
+                    this.dispatchUsers("partners")
                 });
             }
         )

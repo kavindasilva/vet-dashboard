@@ -73,7 +73,7 @@ class Login extends React.Component{
 	state = { 
 		otp:"qaauto", 
 		username:"info@vetstoria.com", 
-		is_otp_required: false,
+		is_otp_required: true,
 		password:"123",
 		
 		serverData: { account_id:0, type:0, user_id:0},

@@ -31,7 +31,7 @@ import TrackerTableHeader from "../dashboard/trackerHeader";
 import TrackerTableRow from "../dashboard/trackerTableRow";
 
 //import userData from "../config-data/userData.json";
-import { userTypes } from "../common/constants";
+import { userTypes, userTypeArray } from "../common/constants";
 
 import userAPI from "../apicalls/userAPI"
 const userAPIObj = new userAPI();
@@ -70,7 +70,7 @@ class NewUser extends React.Component{
         name:'', //partner name
         account_email: '', //partner email
         user_type_id: '6', // user type id 3-admin, 6-partner
-        account_id:'', // partner id for user
+        selected_partner_id:'', // partner id for user
         email:'', //user email
         telephone:'', //user telephone
         password:'', //user password
@@ -102,6 +102,32 @@ class NewUser extends React.Component{
             <Grid container spacing={3}>
                 {/* user type radio btn */}
                 <Grid item xs={12} sm={12}>
+                    <GridCol sm={10}>
+                    { 
+                        (userTypes)
+                        ?userTypes.map( (val, i) => (
+                            <Form.Check
+                                key={i}
+                                type="radio"
+                                label={ val.label }
+                                value={val.type}
+                                checked={ (this.state.newUserType===val.type) }
+                                name="user_types"
+                                id={val.type}
+                                onChange={ (e)=>{
+                                    this.setState({ newUserType: e.target.value});
+                                } }
+                            />
+                        ) )
+                        : <Form.Check
+                            key={1001}
+                            type="radio"
+                            label={"No users found in constants.jsx"}
+                            name="no_user_types"
+                            id="no_user_types"
+                        />
+                    }
+                    </GridCol>
                     <RadioGroup
                         name="genderSelect"
                         value={ this.state.newUserType }
@@ -137,8 +163,10 @@ class NewUser extends React.Component{
                 }
 
                 {/* save cancel btns */}                
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={12} md={12} lg={12} >
                     <Button
+                        style={ {margin: "2px 2px 2px 2px"} }
+                        variant="outline-primary"
                         onClick={ () => {
                             console.log("newUser", this.state);
                             this.saveNewUserData()
@@ -148,9 +176,10 @@ class NewUser extends React.Component{
                     >
                         Save
                     </Button>
-                </Grid>
-                <Grid item xs={6}>
+
                     <Button 
+                        style={ {margin: "2px 2px 2px 2px"} }
+                        variant="outline-warning"
                         onClick={ () => this.props.cancelForm() }
                         //fullWidth
                     >
@@ -290,6 +319,39 @@ class NewUser extends React.Component{
                         </InputGroup>
                     </Form.Group>
                 </Grid>
+
+                <Grid item xs={12} sm={12} md={6} lg={6} >
+                    <Form.Group controlId="formGridSearchType"  >
+                        <InputGroup>
+                            <InputGroup.Prepend  >
+                                <InputGroup.Text >User Type</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control 
+                                as="select"
+                                onChange={ e => {
+                                    this.setState({
+                                        user_type_id: e.target.value, 
+                                    });
+                                }}
+                                value={ this.state.user_type_id } 
+                            >
+                            {
+                                userTypeArray.map( (item, i) =>
+                                    <option 
+                                        key={ i } value={ i }
+                                        inputtype={ item }
+                                    >
+                                    { 
+                                        item
+                                    }
+                                    </option>
+                                )
+                            }
+                            </Form.Control>
+                        
+                        </InputGroup>
+                    </Form.Group>
+                </Grid>
             </React.Fragment>
 
         );
@@ -300,10 +362,39 @@ class NewUser extends React.Component{
         return(
             <React.Fragment>
                 {/* user type partner/admin */}                
-                <Grid item xs={12} sm={12}>
+                <Grid item xs={12} sm={12} md={12} lg={12} >
+                    <Form.Group   >
+                        <InputGroup>
+                            <InputGroup.Prepend  >
+                                <InputGroup.Text >Select Partner</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control 
+                                as="select"
+                                onChange={ e => {
+                                    this.setState({
+                                        selected_partner_id: e.target.value
+                                    });
+                                }}
+                                value={ this.state.selected_partner_id } 
+                            >
+                            {
+                                (this.state.partnerList)
+                                ? this.state.partnerList.map( (item, i) =>
+                                    <option 
+                                        key={ item.partner_id } value={ item.partner_id }
+                                    >
+                                        { item.partner_id } -- { item.name } -- {item.account_email}
+                                    </option>
+                                )
+                                : <option key={ 1002 } value={ 1002 } >No partners loaded</option>
+                            }
+                            </Form.Control>
+                        </InputGroup>
+                    </Form.Group>
+
                     <Select 
-                        value={ this.state.account_id } 
-                        onChange={ e => this.setState({ account_id: e.target.value }) }
+                        value={ this.state.selected_partner_id } 
+                        onChange={ e => this.setState({ selected_partner_id: e.target.value }) }
                         fullWidth={true}
                     >
                         {
@@ -331,7 +422,7 @@ class NewUser extends React.Component{
                         name="partnerAccountId"
                         label="Partner"
                         fullWidth
-                        value={ this.state.account_id }
+                        value={ this.state.selected_partner_id }
                     />
                 </Grid> */}
 
@@ -425,8 +516,38 @@ class NewUser extends React.Component{
                     </Form.Group>
                 </Grid>
 
-
-
+                <Grid item xs={12} sm={12} md={6} lg={6} >
+                    <Form.Group   >
+                        <InputGroup>
+                            <InputGroup.Prepend  >
+                                <InputGroup.Text >User Type</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control 
+                                as="select"
+                                onChange={ e => {
+                                    this.setState({
+                                        user_type_id: e.target.value, 
+                                    });
+                                }}
+                                value={ this.state.user_type_id } 
+                            >
+                            {
+                                userTypeArray.map( (item, i) =>
+                                    <option 
+                                        key={ i } value={ i }
+                                        inputtype={ item }
+                                    >
+                                    { 
+                                        item
+                                    }
+                                    </option>
+                                )
+                            }
+                            </Form.Control>
+                        
+                        </InputGroup>
+                    </Form.Group>
+                </Grid>
 
             </React.Fragment>
         )
@@ -436,7 +557,7 @@ class NewUser extends React.Component{
 
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, props) => {
 	console.log('users.jsx-mapStateToProps', state);
 	return {
         // userData: state.UserConfigReducer.userData,

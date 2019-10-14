@@ -22,13 +22,19 @@ const UserConfigReducer = (state, action) => {
 
     switch (action.type) {
         case 'GET_SYSTEM_USERS':
-            newState = { userData: action.payload.userData }
+            newState = { 
+                ...state,
+                userData: action.payload.userData 
+            }
             console.log("UserConfigReducer GET_SYSTEM_USERS: ", newState);
 
             return newState;
             
         case 'GET_SYSTEM_PARTNERS':
-            newState = { ...state, partnerData: action.payload.partnerData }
+            newState = { 
+                ...state, 
+                partnerData: action.payload.partnerData 
+            }
             console.log("UserConfigReducer GET_SYSTEM_PARTNERS: ", newState);
 
             return newState;
