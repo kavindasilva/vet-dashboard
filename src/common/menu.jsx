@@ -36,9 +36,9 @@ class Menu extends Component {
 		showNewClinicAddForm: true,
 
 		//activeClass: 
-		//componentToShow: 'users',
+		componentToShow: 'users',
 		//componentToShow: 'superAdminUi',
-		componentToShow: "trackerConfig",
+		//componentToShow: "trackerConfig",
 		//componentToShow: "currentUserProfile",
 		//componentToShow: "tickets",
 	}

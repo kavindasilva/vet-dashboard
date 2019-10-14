@@ -102,32 +102,6 @@ class NewUser extends React.Component{
             <Grid container spacing={3}>
                 {/* user type radio btn */}
                 <Grid item xs={12} sm={12}>
-                    <GridCol sm={10}>
-                    { 
-                        (userTypes)
-                        ?userTypes.map( (val, i) => (
-                            <Form.Check
-                                key={i}
-                                type="radio"
-                                label={ val.label }
-                                value={val.type}
-                                checked={ (this.state.newUserType===val.type) }
-                                name="user_types"
-                                id={val.type}
-                                onChange={ (e)=>{
-                                    this.setState({ newUserType: e.target.value});
-                                } }
-                            />
-                        ) )
-                        : <Form.Check
-                            key={1001}
-                            type="radio"
-                            label={"No users found in constants.jsx"}
-                            name="no_user_types"
-                            id="no_user_types"
-                        />
-                    }
-                    </GridCol>
                     <RadioGroup
                         name="genderSelect"
                         value={ this.state.newUserType }
@@ -392,7 +366,7 @@ class NewUser extends React.Component{
                         </InputGroup>
                     </Form.Group>
 
-                    <Select 
+                    {/* <Select 
                         value={ this.state.selected_partner_id } 
                         onChange={ e => this.setState({ selected_partner_id: e.target.value }) }
                         fullWidth={true}
@@ -411,7 +385,7 @@ class NewUser extends React.Component{
                                 No partners loaded
                             </MenuItem>
                         }
-                    </Select>
+                    </Select> */}
                 </Grid>
 
                 {/* user first name, last name boxes */}
