@@ -81,7 +81,7 @@ class userAPI extends React.Component{
 
   /** save EDIT user data to API. http://ontrack.dev.io/rest/user/9 */
   saveEditUser( data, userId ){
-    console.log("userAPI - saveEditUser", data, userId); return;
+    console.log("userAPI - saveEditUser", data, userId); //return;
     axios.put( uriEditUserSave+userId, data )
       .then(res => {
         console.log(res);
@@ -95,7 +95,7 @@ class userAPI extends React.Component{
 
   /** save EDIT partner data to API. http://ontrack.dev.io/rest/partner/9 */
   saveEditPartner( data, partnerId ){
-    console.log("userAPI - saveEditPartner", data, partnerId); return;
+    console.log("userAPI - saveEditPartner", data, partnerId); //return;
     axios.put( uriEdiPartnerSave+partnerId, data )
       .then(res => {
         console.log(res);
@@ -109,7 +109,7 @@ class userAPI extends React.Component{
 
   /** save new user data to API */
   saveUser( data ){
-    console.log("userAPI - saveUser", data); return;
+    console.log("userAPI - saveUser", data); //return;
     axios.post( uriNewUserSave, data )
       .then(res => {
         console.log(res);
@@ -123,7 +123,7 @@ class userAPI extends React.Component{
 
   /** save new partner user data to API */
   savePartner( data ){
-    console.log("userAPI - savePartner", data); return;
+    console.log("userAPI - savePartner", data); //return;
     axios.post( uriNewPartnerSave, data )
       .then(res => {
         console.log(res);

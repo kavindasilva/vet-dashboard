@@ -39,13 +39,14 @@ import TrackersConfigColumns from "../config/trackersConfigColumns"
 import { trackerColumnDataTypes } from "../common/constants"
 
 import trackersAPI from "../apicalls/trackersAPI";
+import userAPI from "../apicalls/userAPI";
 import { Table, TableHead, TableCell, TableBody, TableRow, MenuItem, Select, Collapse } from '@material-ui/core';
 
 import ArrowRight from "@material-ui/icons/ArrowRight"
 import ArrowDown from "@material-ui/icons/ArrowDropDown"
 
-
 const trackersAPIobj = new trackersAPI();
+const userAPIObj = new userAPI();
 
 const useStyles = theme => ({
     configTopAlignedCell: {
@@ -97,6 +98,7 @@ class TrackersConfig extends React.Component{
 		//console.log("TrackersConfig - mount. json:", this.state.trackers); 
         //console.log("TrackersConfig - mount. props.metaData:", this.props.metaData); 
         this.getTrackersConfig();
+        this.getPartnersList();
     }
     
     componentWillReceiveProps( newProps ){
@@ -321,6 +323,27 @@ class TrackersConfig extends React.Component{
         )
         .then(
             this.setState({trackersConfigData:null})
+        )
+    }
+
+    getPartnersList(){
+        userAPIObj.getPartners()
+        .then(
+            result => {
+                if(result && result.err){
+                    console.log("trakerConfig - gettingUsers err", result);
+                    return;
+                }
+                console.log("trakerConfig mount2 usersArr", result); // type: arr
+                this.setState({allPartners: result.data }, function(){
+                    rootStore.dispatch({
+                        type: 'GET_SYSTEM_PARTNERS',
+                        payload: {
+                            partnerData: this.state.allPartners
+                        }
+                    });
+                });
+            }
         )
     }
 

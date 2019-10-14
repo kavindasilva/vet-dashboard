@@ -31,7 +31,7 @@ import NewUser from "../users/newUser";
 import EditUser from "../users/editUser";
 import Button from 'react-bootstrap/Button';
 
-import { userTypeArray } from "../common/constants";
+//import { userTypeArray } from "../common/constants";
 
 import userAPI from "../apicalls/userAPI"
 import loginAPI from '../apicalls/loginAPI';
@@ -225,7 +225,23 @@ class Users extends React.Component{
                                         <TableCell>{ user.user_id }</TableCell>
                                         <TableCell>{ user.first_name+" "+user.last_name }</TableCell>
                                         <TableCell>{ user.email }</TableCell>
-                                        <TableCell>{ userTypeArray[user.user_type_id] }</TableCell>
+                                        <TableCell>
+                                        { //userTypeArray[user.user_type_id] 
+                                         
+                                            (this.props.partnerList && this.props.partnerList.length>0 )
+                                            ?    /** show user type */
+                                                (   
+                                                    this.props.partnerList.find( partner => (
+                                                        partner.partner_id === user.account_id
+                                                    ) )
+                                                )
+                                                ? this.props.partnerList.find( partner => (
+                                                    partner.partner_id === user.account_id
+                                                ) ).name
+                                                : "not found"
+                                            : "loading.."
+                                        
+                                        }</TableCell>
                                         
                                         <TableCell>
                                             <Button
@@ -313,7 +329,7 @@ const mapStateToProps = state => {
 	return {
         metaData: state.MetaReducer.metaData,
         userData: state.UserConfigReducer.userData,
-        partnerData: state.UserConfigReducer.partnerData,
+        partnerList: state.UserConfigReducer.partnerData,
 
 	};
 }

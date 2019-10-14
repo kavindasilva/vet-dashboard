@@ -21,7 +21,7 @@ import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead, FormControl
 import { spacing } from '@material-ui/system';
 
 import RwIcon from "../config/rwIcon"
-import { userTypeArray } from "../common/constants"
+//import { userTypeArray } from "../common/constants"
 
 //class TrackersPemissionsConfig extends TrackerConfigCell{    
 class TrackersPemissionsConfig extends React.Component{    
@@ -40,10 +40,18 @@ class TrackersPemissionsConfig extends React.Component{
                 <span >
                 { this.props.columnPermissions.user_account_id } . 
                 { 
-                    /** show user type */
-                    (userTypeArray[this.props.columnPermissions.user_account_id])
-                    ? userTypeArray[this.props.columnPermissions.user_account_id]
-                    : "user type not found"
+                    (this.props.partnerList && this.props.partnerList.length>0 )
+                    ?    /** show user type */
+                        (   
+                            this.props.partnerList.find( partner => (
+                                partner.partner_id === this.props.columnPermissions.user_account_id
+                            ) )
+                        )
+                        ? this.props.partnerList.find( partner => (
+                            partner.partner_id === this.props.columnPermissions.user_account_id
+                        ) ).name
+                        : "not found"
+                    : "loading.."
                 }
                 </span>
                     
@@ -103,9 +111,8 @@ const mapStateToProps = (state, props) => {
     return {
         columnPermissions: getColumnPermissions(state.TrackConfigReducer.configData),
 		
-        allUsers: { ...state.UserConfigReducer.userData, 
-            ...state.UserConfigReducer.partnerData 
-        },
+        allUsers: state.UserConfigReducer.userData, 
+        partnerList: state.UserConfigReducer.partnerData,
     };
 
     function getColumnPermissions (stateConfigData) {

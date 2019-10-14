@@ -22,7 +22,7 @@ import GridCol from "react-bootstrap/Col"
 import GridRow from "react-bootstrap/Row"
 
 import RwIcon from "../config/rwIcon"
-import { userTypeArray } from "../common/constants"
+//import { userTypeArray } from "../common/constants"
 
 class TrackerNewPermission extends React.Component{    
     state ={
@@ -60,14 +60,16 @@ class TrackerNewPermission extends React.Component{
                                     value={ this.state.selected_user_account_id }
                                 >
                                 {
-                                    userTypeArray.map( (user, i) => (
+                                    (this.props.partnerAccounts && this.props.partnerAccounts.length>0)
+                                    ? this.props.partnerAccounts.map( (account, i) => (
                                         <option 
                                             key={i}
-                                            value={i} 
+                                            value={ account.partner_id } 
                                         >
-                                            {user}
+                                            { account.name }
                                         </option>
                                     ) )
+                                    : <option key={1003} value={1003} >No accounts</option>
                                 }
                                 </Form.Control>
                             </Form.Group>
@@ -163,7 +165,7 @@ class TrackerNewPermission extends React.Component{
     }
 
     componentDidMount(){
-        //console.log("trackerUserConfig arr: :", this.props.allUsers );
+        //console.log("trackerUserConfig arr: :", this.props.users );
         //console.log("trackerNewPermission mount: props:", this.props, "state:", this.state);
         
         // this.setState({ 
@@ -180,9 +182,8 @@ const mapStateToProps = (state, props) => {
     return {
         columnPermissions: getColumnPermissions(state.TrackConfigReducer.configData),
 		
-        allUsers: { ...state.UserConfigReducer.userData, 
-            ...state.UserConfigReducer.partnerData 
-        },
+        users: state.UserConfigReducer.userData,
+        partnerAccounts: state.UserConfigReducer.partnerData,
 
         trackerColsHash: JSON.stringify(state.TrackConfigReducer.configData.find( tracker => (
             tracker.tracker_id === props.tracker_id

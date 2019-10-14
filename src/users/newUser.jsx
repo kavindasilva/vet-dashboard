@@ -238,26 +238,6 @@ class NewUser extends React.Component{
                     </Form.Group>
                 </Grid>
 
-                {/* partner's email */}
-                <Grid item xs={12} sm={12} md={6} lg={6} >
-                    <Form.Group  >
-                        <InputGroup>
-                            <InputGroup.Prepend  >
-                                <InputGroup.Text >Partner email Address</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <Form.Control 
-                                type="text"
-                                placeholder="Partner email Address"
-                                value={ this.state.account_email }
-                                onChange={ (e)=> { 
-                                    e.preventDefault(); 
-                                    this.setState({account_email: e.target.value}) 
-                                } } 
-                            />
-                        </InputGroup>
-                    </Form.Group>
-                </Grid>
-
                 <Grid item xs={12}>
                     <Grid item xs={12} sm={12}>Initial User</Grid>
                 </Grid>
@@ -300,6 +280,26 @@ class NewUser extends React.Component{
                     </Form.Group>
                 </Grid>
 
+                {/* intial user's email */}
+                <Grid item xs={12} sm={12} md={6} lg={6} >
+                    <Form.Group  >
+                        <InputGroup>
+                            <InputGroup.Prepend  >
+                                <InputGroup.Text >User email Address</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control 
+                                type="text"
+                                placeholder="User email Address"
+                                value={ this.state.account_email }
+                                onChange={ (e)=> { 
+                                    e.preventDefault(); 
+                                    this.setState({account_email: e.target.value}) 
+                                } } 
+                            />
+                        </InputGroup>
+                    </Form.Group>
+                </Grid>
+
                 {/* user telephone */}
                 <Grid item xs={12} sm={12} md={6} lg={6} >
                     <Form.Group  >
@@ -320,7 +320,7 @@ class NewUser extends React.Component{
                     </Form.Group>
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={6} lg={6} >
+                {/* <Grid item xs={12} sm={12} md={6} lg={6} >
                     <Form.Group controlId="formGridSearchType"  >
                         <InputGroup>
                             <InputGroup.Prepend  >
@@ -351,7 +351,7 @@ class NewUser extends React.Component{
                         
                         </InputGroup>
                     </Form.Group>
-                </Grid>
+                </Grid> */}
             </React.Fragment>
 
         );
@@ -413,30 +413,6 @@ class NewUser extends React.Component{
                         }
                     </Select>
                 </Grid>
-
-                {/* user's partner */}                
-                {/* <Grid item xs={6}>
-                    <TextField
-                        className={  this.props.classes.hiddenField }
-                        id="partnerAccountId"
-                        name="partnerAccountId"
-                        label="Partner"
-                        fullWidth
-                        value={ this.state.selected_partner_id }
-                    />
-                </Grid> */}
-
-                {/* user's  */}                
-                {/* <Grid item xs={6}>
-                    <TextField
-                        className={  this.props.classes.hiddenField }
-                        id="partnerAccountId"
-                        name="partnerAccountId"
-                        label="Last Name"
-                        fullWidth
-                        //value={}
-                    />
-                </Grid> */}
 
                 {/* user first name, last name boxes */}
                 <Grid item xs={12} sm={12} md={6} lg={6} >
@@ -516,7 +492,7 @@ class NewUser extends React.Component{
                     </Form.Group>
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={6} lg={6} >
+                {/* <Grid item xs={12} sm={12} md={6} lg={6} >
                     <Form.Group   >
                         <InputGroup>
                             <InputGroup.Prepend  >
@@ -547,7 +523,7 @@ class NewUser extends React.Component{
                         
                         </InputGroup>
                     </Form.Group>
-                </Grid>
+                </Grid> */}
 
             </React.Fragment>
         )
