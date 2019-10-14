@@ -27,7 +27,7 @@ import { userTypeArray } from "../common/constants"
 class TrackersPemissionsConfig extends React.Component{    
     state ={
         trackerId: this.props.tracker_id,
-        user_type_id: this.props.user_type_id,
+        user_account_id: this.props.user_account_id,
         columnName: this.props.column_name,
 
         read: false,
@@ -35,20 +35,14 @@ class TrackersPemissionsConfig extends React.Component{
     }
 
     render(){
-        //console.log('TrackersPemissionsConfig: Rendering cell content');
-        //return(<React.Fragment>x</React.Fragment>);
-        // let user = Object.values(this.props.allUsers).find( allUser => {
-        //     //console.log('this.props.columnPermissions.user_type_id', allUser, this.props, this.props.columnPermissions);
-        //     return allUser.user_id === this.props.columnPermissions.user_type_id;
-        //  } );
         return(
             <React.Fragment>
                 <span >
-                { this.props.columnPermissions.user_type_id } . 
+                { this.props.columnPermissions.user_account_id } . 
                 { 
                     /** show user type */
-                    (userTypeArray[this.props.columnPermissions.user_type_id])
-                    ? userTypeArray[this.props.columnPermissions.user_type_id]
+                    (userTypeArray[this.props.columnPermissions.user_account_id])
+                    ? userTypeArray[this.props.columnPermissions.user_account_id]
                     : "user type not found"
                 }
                 </span>
@@ -57,7 +51,7 @@ class TrackersPemissionsConfig extends React.Component{
                     trackerId={ this.state.trackerId }
                     columnName={ this.state.columnName }
 
-                    user_type_id={ this.state.user_type_id }
+                    user_account_id={ this.state.user_account_id }
                     rwType={ "read" }
                     rwValue={ this.props.columnPermissions.is_read_restricted }
                     label={"R"}
@@ -68,7 +62,7 @@ class TrackersPemissionsConfig extends React.Component{
                     trackerId={ this.state.trackerId }
                     columnName={ this.state.columnName }
 
-                    user_type_id={ this.state.user_type_id }
+                    user_account_id={ this.state.user_account_id }
                     rwType={ "write" }
                     rwValue={ this.props.columnPermissions.is_write_restricted }
                     label={"W"}
@@ -79,7 +73,7 @@ class TrackersPemissionsConfig extends React.Component{
                     trackerId={ this.state.trackerId }
                     columnName={ this.state.columnName }
 
-                    user_type_id={ this.state.user_type_id }
+                    user_account_id={ this.state.user_account_id }
                     rwType={ "comment" }
                     rwValue={ this.props.columnPermissions.is_comment_restricted }
                     label={"C"}
@@ -137,7 +131,7 @@ const mapStateToProps = (state, props) => {
 
         let permissions = columnRes.permissions.find(
                 user => (
-                    user.user_type_id === props.user_type_id
+                    user.user_account_id === props.user_account_id
                 )
             )
         return !permissions ? {} : permissions

@@ -214,14 +214,13 @@ class TrackersConfigColumns extends React.Component{
                                     <React.Fragment>
                                     {
                                         (column && column.permissions) && column.permissions.map( user => {
-                                            //this.appendToDefinedPermissions( column.name, user.user_type_id)
                                             return (
-                                                <React.Fragment key ={user.user_type_id}>
+                                                <React.Fragment key ={user.user_account_id}>
                                                     <TrackersPemissionsConfig
                                                         tracker_id={ this.props.tracker.tracker_id }
                                                         column_name={ column.name }
-                                                        user_type_id ={user.user_type_id}
-                                                        key ={user.user_type_id}
+                                                        user_account_id ={user.user_account_id}
+                                                        key ={user.user_account_id}
                                                     />
                                                     <br/>
                                                 </React.Fragment>
@@ -269,26 +268,16 @@ class TrackersConfigColumns extends React.Component{
     }
 
     componentDidMount(){
-        // if(this.props.tracker && this.props.tracker.columns){
-        //     this.props.tracker.columns.map( column =>{
-        //         (column && column.permissions) && column.permissions.map( user => {
-        //             this.appendToDefinedPermissions(column.name, user.user_type_id)
-        //         } )
-        //     } )
-        // }
         console.log("trackerConfigColumns arr", this.state);
-        // (column && column.permissions && column.permissions.length>0) &&
-        //     this.appendToDefinedPermissions(column.permissions)
-        
     }
 
-    appendToDefinedPermissions = ( column_name, user_type_id) => {
+    appendToDefinedPermissions = ( column_name, user_account_id) => {
         let newArr = [...this.state.userTypesDefinedInPermissions];
 
         if(newArr[column_name]===undefined)
             newArr[column_name] = [];
 
-        newArr[column_name].push( user_type_id );
+        newArr[column_name].push( user_account_id );
         this.setState({userTypesDefinedInPermissions: newArr});
     }
 

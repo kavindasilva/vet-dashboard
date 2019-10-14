@@ -1,0 +1,16 @@
+
+######################### OnTrack - Tracker Dashboard #########################
+
+* Add an SSH key for your BitBucket account. Following link guides you how to
+  add a SSH key.
+    https://confluence.atlassian.com/bitbucket/set-up-an-ssh-key-728138079.html
+* Clone the repository using
+    git clone git@bitbucket.org:vetstoria/tracker-dashboard.git
+* Switch to development branch using
+    git checkout develop
+* Change working directory to project root folder
+    cd tracker-dashboard
+* Install the composer dependencies
+
+* 
+

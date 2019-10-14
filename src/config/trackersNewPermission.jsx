@@ -30,7 +30,7 @@ class TrackerNewPermission extends React.Component{
         trackersHash: null,
 
         trackerId: this.props.tracker_id,
-        selected_user_type_id: 0,
+        selected_user_account_id: 0,
         columnName: this.props.columnName,
 
     }
@@ -55,9 +55,9 @@ class TrackerNewPermission extends React.Component{
                                 <Form.Control 
                                     as="select"
                                     onChange={ (e) => {
-                                        this.setState({selected_user_type_id: e.target.value})
+                                        this.setState({selected_user_account_id: e.target.value})
                                     } }
-                                    value={ this.state.selected_user_type_id }
+                                    value={ this.state.selected_user_account_id }
                                 >
                                 {
                                     userTypeArray.map( (user, i) => (
@@ -77,7 +77,7 @@ class TrackerNewPermission extends React.Component{
                                     trackerId={ this.props.tracker_id }
                                     columnName={ this.props.column_name }
 
-                                    user_type_id={ this.state.selected_user_type_id }
+                                    user_account_id={ this.state.selected_user_account_id }
                                     rwType={ "read" }
                                     rwValue={ this.getRwcValue("is_read_restricted") }
                                     label={"R"}
@@ -90,7 +90,7 @@ class TrackerNewPermission extends React.Component{
                                     trackerId={ this.props.tracker_id }
                                     columnName={ this.props.column_name }
 
-                                    user_type_id={ this.state.selected_user_type_id }
+                                    user_account_id={ this.state.selected_user_account_id }
                                     rwType={ "write" }
                                     rwValue={ this.getRwcValue("is_write_restricted") }
                                     label={"W"}
@@ -104,7 +104,7 @@ class TrackerNewPermission extends React.Component{
                                     trackerId={ this.props.tracker_id }
                                     columnName={ this.props.column_name }
 
-                                    user_type_id={ this.state.selected_user_type_id }
+                                    user_account_id={ this.state.selected_user_account_id }
                                     rwType={ "comment" }
                                     rwValue={ this.getRwcValue("is_comment_restricted") }
                                     label={"C"}
@@ -144,9 +144,9 @@ class TrackerNewPermission extends React.Component{
         let user_type_permission = null;
         if(this.props.columnPermissions && this.props.columnPermissions.permissions && this.props.columnPermissions.permissions.length>0){
             user_type_permission = this.props.columnPermissions.permissions.find( permission => (
-                permission.user_type_id == parseInt(this.state.selected_user_type_id)
+                permission.user_account_id == parseInt(this.state.selected_user_account_id)
             ) );
-            //console.log("trackernewPermission record", this.state.selected_user_type_id, user_type_permission, this.props.columnPermissions)
+            //console.log("trackernewPermission record", this.state.selected_user_account_id, user_type_permission, this.props.columnPermissions)
 
             if(user_type_permission)
                 return user_type_permission[rwc];
@@ -214,7 +214,7 @@ const mapStateToProps = (state, props) => {
 
         let permissions = columnRes.permissions.find(
                 user => (
-                    user.selected_user_type_id === props.selected_user_type_id
+                    user.selected_user_account_id === props.selected_user_account_id
                 )
             )
         return !permissions ? {} : permissions

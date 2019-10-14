@@ -15,7 +15,7 @@ import Users from "../users/users";
 import TrackerConfig from "../config/trackersConfig";
 import ReportsUI from "../reports/reportsui"
 import SuperAdmin from "../config/superAdmin"
-import { userTypeArray } from "../common/constants"
+
 
 //import Button from '@material-ui/core/Button';
 import Button from 'react-bootstrap/Button';
@@ -36,9 +36,9 @@ class Menu extends Component {
 		showNewClinicAddForm: true,
 
 		//activeClass: 
-		componentToShow: 'users',
+		//componentToShow: 'users',
 		//componentToShow: 'superAdminUi',
-		//componentToShow: "trackerConfig",
+		componentToShow: "trackerConfig",
 		//componentToShow: "currentUserProfile",
 		//componentToShow: "tickets",
 	}

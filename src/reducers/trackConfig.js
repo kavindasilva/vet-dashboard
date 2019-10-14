@@ -10,7 +10,7 @@ const defaultPermissions = () => {
     let retArr = [];
     for( var i=0; i<userTypeArray.length; i++) {
         retArr.push({ 
-            user_type_id: i,  
+            user_account_id: i,  
             is_read_restricted: true,
             is_write_restricted: true,
             is_comment_restricted: true
@@ -142,14 +142,14 @@ const TrackConfigReducer = (state, action) => {
             //return state; // to check whether not working update
             trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;
             columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
-            let userPermitIndex  = getUserPermissionIndex( newState.configData[trackerIndex].columns[columnIndex], action.payload.user_type_id); //userPermitIndex=-1;
+            let userPermitIndex  = getUserPermissionIndex( newState.configData[trackerIndex].columns[columnIndex], action.payload.user_account_id); //userPermitIndex=-1;
             console.log("trackConfig userPermitInedx", userPermitIndex)
 
             if( userPermitIndex===null || userPermitIndex===undefined || userPermitIndex===-1){ // add column 
                 userPermitIndex = newState.configData[trackerIndex].columns[columnIndex].permissions.length; 
 
                 newState.configData[trackerIndex].columns[columnIndex].permissions.push({
-                    user_type_id: parseInt(action.payload.user_type_id),
+                    user_account_id: parseInt(action.payload.user_account_id),
                     is_read_restricted: false,
                     is_write_restricted: false,
                     is_comment_restricted: false,
@@ -213,11 +213,11 @@ function getColumnIndex(stt, columnName){
  * 
  * stt: tracker column object
  * 
- * user_type_id: user id to find index
+ * user_account_id: user account id to find index
  */
-function getUserPermissionIndex(stt, user_type_id){
+function getUserPermissionIndex(stt, user_account_id){
     let indexStatus = stt.permissions.findIndex( user => (
-        user.user_type_id === user_type_id
+        user.user_account_id === user_account_id
     ) );
     if(indexStatus > -1)
         return indexStatus;

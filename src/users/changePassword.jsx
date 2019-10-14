@@ -16,7 +16,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 import { Button, TextField, Snackbar, IconButton } from '@material-ui/core';
-import { userTypeArray } from "../common/constants";
+
 
 import userAPI from "../apicalls/userAPI"
 import loginAPI from '../apicalls/loginAPI';

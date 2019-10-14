@@ -96,22 +96,12 @@ export const pipelineSteps = [
  * system user types indexed
  */
 export const userTypeArray=[
-    "USER_NONE", //0
-    "USER_VISITOR",
-    "USER_CLINIC",
-    "USER_ADMIN", 
-    "USER_VG", //4
-    "USER_VENDOR",
-    "USER_PARTNER",
-    "USER_PROXY",
-    "USER_KIOSK", //8
-    "USER_ANY",
-    "usertype10-null",
-    "STANDARD",
-    "CLASS_A",
-    "CLASS_B",
-    "CLASS_C",
-    "CLASS_D"
+    "hc-USER_ADMIN", 
+    "hc-STANDARD",
+    "hc-CLASS_A",
+    "hc-CLASS_B",
+    "hc-CLASS_C",
+    "hc-CLASS_D"
 ]
 
 /** ticket searching options */
