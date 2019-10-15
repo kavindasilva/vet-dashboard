@@ -64,10 +64,10 @@ class NewUser extends React.Component{
         ...this.props.metaData, 
         partnerList: this.props.partnerData,
         //newUserType: "partnerForUser",
-        newUserType: "partner",
+        //newUserType: "partner",
 
         //newUserType: null,
-        name:'', //partner name
+        accountName:'', //account name
         account_email: '', //partner email
         user_type_id: '6', // user type id 3-admin, 6-partner
         selected_partner_id:'', // partner id for user
@@ -129,6 +129,42 @@ class NewUser extends React.Component{
                         }
                         
                     </RadioGroup>
+                </Grid>
+
+                {/* user type partner/admin */}                
+                <Grid item xs={12} sm={12} md={12} lg={12} >
+                    <Form.Group   >
+                        <InputGroup>
+                            <InputGroup.Prepend  >
+                                <InputGroup.Text >Select Partner</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control 
+                                as="select"
+                                onChange={ e => {
+                                    this.setState({
+                                        selected_partner_id: e.target.value,
+                                        //newUserType: e.target.value,
+                                    });
+                                }}
+                                value={ this.state.selected_partner_id } 
+                            >
+                            {
+                                (this.state.partnerList)
+                                ? this.state.partnerList.map( (item, i) =>
+                                    <option 
+                                        key={ item.partner_id } value={ item.partner_id }
+                                    >
+                                        { item.partner_id } -- { item.name } -- {item.account_email}
+                                    </option>
+                                )
+                                : <option key={ 1002 } value={ 0 } >No partners loaded</option>
+                            }
+                                <option key={1005} value={"partner"} 
+                                    //onSelect={ ()=>{ console.log("DKDK"); this.setState({newUserType: "partner"}); } } 
+                                >--New--</option>
+                            </Form.Control>
+                        </InputGroup>
+                    </Form.Group>
                 </Grid>
 
                 {/* display user type specific inputs */}
@@ -197,16 +233,16 @@ class NewUser extends React.Component{
                     <Form.Group  >
                         <InputGroup>
                             <InputGroup.Prepend  >
-                                <InputGroup.Text >Partner Name</InputGroup.Text>
+                                <InputGroup.Text >Account Name</InputGroup.Text>
                             </InputGroup.Prepend>
                             <Form.Control 
                                 type="text"
-                                placeholder="Partner Name"
+                                placeholder="Account Name"
                                 onChange={ (e)=> { 
                                     e.preventDefault(); 
-                                    this.setState({name: e.target.value}) 
+                                    this.setState({accountName: e.target.value}) 
                                 } }
-                                value={ this.state.name } 
+                                value={ this.state.accountName } 
                             />
                         </InputGroup>
                     </Form.Group>
@@ -293,39 +329,6 @@ class NewUser extends React.Component{
                         </InputGroup>
                     </Form.Group>
                 </Grid>
-
-                {/* <Grid item xs={12} sm={12} md={6} lg={6} >
-                    <Form.Group controlId="formGridSearchType"  >
-                        <InputGroup>
-                            <InputGroup.Prepend  >
-                                <InputGroup.Text >User Type</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <Form.Control 
-                                as="select"
-                                onChange={ e => {
-                                    this.setState({
-                                        user_type_id: e.target.value, 
-                                    });
-                                }}
-                                value={ this.state.user_type_id } 
-                            >
-                            {
-                                userTypeArray.map( (item, i) =>
-                                    <option 
-                                        key={ i } value={ i }
-                                        inputtype={ item }
-                                    >
-                                    { 
-                                        item
-                                    }
-                                    </option>
-                                )
-                            }
-                            </Form.Control>
-                        
-                        </InputGroup>
-                    </Form.Group>
-                </Grid> */}
             </React.Fragment>
 
         );
@@ -335,58 +338,6 @@ class NewUser extends React.Component{
     newUserforPartner(){
         return(
             <React.Fragment>
-                {/* user type partner/admin */}                
-                <Grid item xs={12} sm={12} md={12} lg={12} >
-                    <Form.Group   >
-                        <InputGroup>
-                            <InputGroup.Prepend  >
-                                <InputGroup.Text >Select Partner</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <Form.Control 
-                                as="select"
-                                onChange={ e => {
-                                    this.setState({
-                                        selected_partner_id: e.target.value
-                                    });
-                                }}
-                                value={ this.state.selected_partner_id } 
-                            >
-                            {
-                                (this.state.partnerList)
-                                ? this.state.partnerList.map( (item, i) =>
-                                    <option 
-                                        key={ item.partner_id } value={ item.partner_id }
-                                    >
-                                        { item.partner_id } -- { item.name } -- {item.account_email}
-                                    </option>
-                                )
-                                : <option key={ 1002 } value={ 1002 } >No partners loaded</option>
-                            }
-                            </Form.Control>
-                        </InputGroup>
-                    </Form.Group>
-
-                    {/* <Select 
-                        value={ this.state.selected_partner_id } 
-                        onChange={ e => this.setState({ selected_partner_id: e.target.value }) }
-                        fullWidth={true}
-                    >
-                        {
-                            (this.state.partnerList)
-                            ? this.state.partnerList.map( item =>
-                                <MenuItem 
-                                    key={ item.partner_id }
-                                    value={ item.partner_id } 
-                                >
-                                { item.partner_id } -- { item.name } -- {item.account_email}
-                                </MenuItem>
-                            )
-                            : <MenuItem key={0} value={0}>
-                                No partners loaded
-                            </MenuItem>
-                        }
-                    </Select> */}
-                </Grid>
 
                 {/* user first name, last name boxes */}
                 <Grid item xs={12} sm={12} md={6} lg={6} >
@@ -465,39 +416,6 @@ class NewUser extends React.Component{
                         </InputGroup>
                     </Form.Group>
                 </Grid>
-
-                {/* <Grid item xs={12} sm={12} md={6} lg={6} >
-                    <Form.Group   >
-                        <InputGroup>
-                            <InputGroup.Prepend  >
-                                <InputGroup.Text >User Type</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <Form.Control 
-                                as="select"
-                                onChange={ e => {
-                                    this.setState({
-                                        user_type_id: e.target.value, 
-                                    });
-                                }}
-                                value={ this.state.user_type_id } 
-                            >
-                            {
-                                userTypeArray.map( (item, i) =>
-                                    <option 
-                                        key={ i } value={ i }
-                                        inputtype={ item }
-                                    >
-                                    { 
-                                        item
-                                    }
-                                    </option>
-                                )
-                            }
-                            </Form.Control>
-                        
-                        </InputGroup>
-                    </Form.Group>
-                </Grid> */}
 
             </React.Fragment>
         )
