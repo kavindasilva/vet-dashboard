@@ -30,7 +30,8 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import TrackerTableHeader from "../dashboard/trackerHeader";
 import TrackerTableRow from "../dashboard/trackerTableRow";
 
-//import userData from "../config-data/userData.json";
+import FlatlyPopup from "../common/flatlyModal"
+import FlatlyAlert from "../common/flatlyAlert"
 import { userTypes, userTypeArray } from "../common/constants";
 
 import userAPI from "../apicalls/userAPI"
@@ -61,6 +62,11 @@ const predefinedData=[
 
 class NewUser extends React.Component{
     state = {
+        showModal: false,
+        modalTitle: '',
+        modalBody: '',
+        modalType: "",
+
         ...this.props.metaData, 
         //partnerList: this.props.partnerData,
         //newUserType: "userForPartner",
@@ -88,12 +94,20 @@ class NewUser extends React.Component{
 		//this.viewForm() 
 		return(
 			<React.Fragment>
+                
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={12} md={12} lg={12} ></Grid>
                 </Grid>
                 { 
                     this.viewNewUserForm() 
                 }
+                <FlatlyPopup
+                    showModal={ this.state.showModal }
+                    modalTitle={ this.state.modalTitle }
+                    modalBody={ this.state.modalBody }
+                    hideModal={ ()=>this.setState({showModal: false}) }
+                    modalStyle={ this.state.modalType }
+                />
 			</React.Fragment>
 		)
     }
@@ -156,13 +170,14 @@ class NewUser extends React.Component{
                             this.saveNewUserData()
                             .then(
                                 res => {
-                                    console.log("newUser save result", res)
+                                    console.log("newUser save result", res);
+                                    this.setState({showModal: true})
                                     if(res && !res.err){
                                         // show success
                                         this.props.cancelForm()
                                     }
                                     else if(res && res.err){
-                                        this.showErrors()
+                                        this.showErrors(res.errMsg)
                                     }
                                 }
                             )
@@ -187,8 +202,14 @@ class NewUser extends React.Component{
         );
     }
 
-    showErrors = () => {
-
+    showErrors = ( message ) => {
+        this.setState({ 
+                modalTitle: "Error occurred",
+                modalBody: message.toString(),
+                modalType: "warning"
+            }, 
+            ()=>this.setState({showModal: true}) 
+        )
     }
 
     saveNewUserData=()=>{
@@ -201,6 +222,7 @@ class NewUser extends React.Component{
                 break;
             default:
                 console.log("newUser - unknown user type to save", this.state.newUserType);
+                return Promise.resolve({ err:true, errMsg: "error loading users"});
         }
     }
 
@@ -213,7 +235,6 @@ class NewUser extends React.Component{
             case "userForPartner":
                 console.log("newUser - userForPartner selected", this.state.newUserType); 
                 return <React.Fragment></React.Fragment>;
-                //return this.newUserforPartner();
             default:
                 console.log("newUser - unknown user type selected", this.state.newUserType);
         }
