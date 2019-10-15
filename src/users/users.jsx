@@ -71,7 +71,7 @@ class Users extends React.Component{
     propStyle = this.props.classes;
 
     /**
-     * retrieve users in from the database
+     * retrieve users from the database
      */
 	componentDidMount(){
         userAPIObj.getUsers()
@@ -296,6 +296,7 @@ class Users extends React.Component{
 
     cancelForm = () => {
         this.setState({componentToRender: "main"});
+        this.componentDidMount();
     }
 
     /**

@@ -82,10 +82,10 @@ class userAPI extends React.Component{
   /** save EDIT user data to API. http://ontrack.dev.io/rest/user/9 */
   saveEditUser( data, userId ){
     console.log("userAPI - saveEditUser", data, userId); //return;
-    axios.put( uriEditUserSave+userId, data )
+    return axios.patch( uriEditUserSave+userId, data )
       .then(res => {
         console.log(res);
-        console.log(res.data);
+        return res;
       })
       .catch(error => {
         console.log("userAPI.jsx - saveEditUser-Err", error);
@@ -96,10 +96,10 @@ class userAPI extends React.Component{
   /** save EDIT partner data to API. http://ontrack.dev.io/rest/partner/9 */
   saveEditPartner( data, partnerId ){
     console.log("userAPI - saveEditPartner", data, partnerId); //return;
-    axios.put( uriEdiPartnerSave+partnerId, data )
+    return axios.patch( uriEdiPartnerSave+partnerId, data )
       .then(res => {
         console.log(res);
-        console.log(res.data);
+        return res;
       })
       .catch(error => {
         console.log("userAPI.jsx - saveEditPartner-Err", error);
@@ -109,7 +109,7 @@ class userAPI extends React.Component{
 
   /** save new user data to API */
   saveUser( data ){
-    console.log("userAPI - saveUser", data); return;
+    console.log("userAPI - saveUser", data); //return;
     return axios.post( uriNewUserSave, data )
       .then(res => {
         console.log(res);

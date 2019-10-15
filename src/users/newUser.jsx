@@ -73,7 +73,7 @@ class NewUser extends React.Component{
         //newUserType: "partner",
 
         //newUserType: null,
-        accountName:'', //account name
+        name:'', //account name
         account_email: '', //partner email
         user_type_id: '6', // user type id 3-admin, 6-partner
         selected_partner_id:'', // partner id for user
@@ -230,10 +230,10 @@ class NewUser extends React.Component{
     checkNewUserType = () =>{
         switch(this.state.newUserType){
             case "partner":
-                console.log("newUser - partner selected", this.state.newUserType); 
+                //console.log("newUser - partner selected", this.state.newUserType); 
                 return this.newPartner();
             case "userForPartner":
-                console.log("newUser - userForPartner selected", this.state.newUserType); 
+                //console.log("newUser - userForPartner selected", this.state.newUserType); 
                 return <React.Fragment></React.Fragment>;
             default:
                 console.log("newUser - unknown user type selected", this.state.newUserType);
@@ -256,9 +256,9 @@ class NewUser extends React.Component{
                                 placeholder="Account Name"
                                 onChange={ (e)=> { 
                                     e.preventDefault(); 
-                                    this.setState({accountName: e.target.value}) 
+                                    this.setState({name: e.target.value}) 
                                 } }
-                                value={ this.state.accountName } 
+                                value={ this.state.name } 
                             />
                         </InputGroup>
                     </Form.Group>

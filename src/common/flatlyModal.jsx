@@ -26,6 +26,7 @@ export default class FlatlyPopup extends React.Component{
                     style={ this.state.styles[this.props.modalStyle] }
                     closeButton
                 >
+                    { this.props.modalTitle }
                     {/* <Modal.Title id="contained-modal-title-vcenter">
                         Modal heading
                     </Modal.Title> */}
@@ -33,7 +34,6 @@ export default class FlatlyPopup extends React.Component{
                 <Modal.Body
                     style={ this.state.styles[this.props.modalStyle] }
                 >
-                    <h4>{ this.props.modalTitle }</h4>
                     <p>{ this.props.modalBody }</p>
                 </Modal.Body>
                 {/* <Modal.Footer>

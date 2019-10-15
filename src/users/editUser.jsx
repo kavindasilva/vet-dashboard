@@ -34,6 +34,7 @@ import TrackerTableRow from "../dashboard/trackerTableRow";
 import { userTypes } from "../common/constants";
 
 import userAPI from "../apicalls/userAPI"
+import FlatlyPopup from '../common/flatlyModal';
 const userAPIObj = new userAPI();
 
 const styles = theme => ({
@@ -61,10 +62,15 @@ const predefinedData=[
 
 class EditUser extends React.Component{
     state = {
-        ...this.props.metaData, 
+        showModal: false,
+        modalTitle: '',
+        modalBody: '',
+        modalType: "",
+
+        // ...this.props.metaData, 
         ...this.props.userData,
-        partnerList: this.props.partnerData,
-        editUserType: "user",
+        //partnerList: this.props.partnerData,
+        //editUserType: "user",
     }
 
 	componentDidMount(){
@@ -86,43 +92,36 @@ class EditUser extends React.Component{
     viewEditUserForm(){
         return(
             <Grid container spacing={3}>
-                {/* user type radio btn */}
-                <Grid item xs={12} sm={12}>
-                    <RadioGroup
-                        name="genderSelect"
-                        //value={ this.state.user_type_id }
-                        value="partnerForUser"
-                        onChange={ (e)=>{
-                            this.setState({ user_type_id: e.target.value});
-                            //console.log(e)
-                        } }
-                    >	
-                        { 
-                            userTypes.map( val => (
-                                <FormControlLabel
-                                    key={val.id}
-                                    value={ val.type }
-                                    control={<Radio color="primary" />}
-                                    label={ val.label }
-                                    labelPlacement="end"
-                                />
-                            ) )
-                        }
-                        
-                    </RadioGroup>
-                </Grid>
-
                 {/* display user type specific inputs */}
                 {
-                    this.checkEditUserType()
+                    this.editUser()
                 }
+                <FlatlyPopup
+                    showModal={ this.state.showModal }
+                    modalTitle={ this.state.modalTitle }
+                    modalBody={ this.state.modalBody }
+                    hideModal={ ()=>this.setState({showModal: false}) }
+                    modalStyle={ this.state.modalType }
+                />
 
                 {/* save cancel btns */}                
                 <Grid item xs={6}>
                     <Button
                         onClick={ () => {
                             console.log("editUser", this.state);
-                            this.saveEditedUserData();
+                            this.saveEditedUserData()
+                            .then(
+                                res => {
+                                    console.log("editUser save result", res);
+                                    this.setState({showModal: true})
+                                    if(res && !res.err){
+                                        this.props.cancelForm()
+                                    }
+                                    else if(res && res.err){
+                                        this.showErrors(res.errMsg)
+                                    }
+                                }
+                            );
                         } }
                         style={{margin: "0px 2px 0px 2px"}}
                         variant="outline-primary"
@@ -140,125 +139,6 @@ class EditUser extends React.Component{
                 </Grid>
                 
             </Grid>
-        );
-    }
-
-    saveEditedUserData=()=>{
-        switch(this.state.editUserType){
-            case "partner":
-                userAPIObj.saveEditPartner( this.state, this.props.userId ); 
-                break; // not implemented
-            case "user":
-                userAPIObj.saveEditUser( this.state, this.props.userId);
-                break;
-            default:
-                console.log("newUser - unknown user type to saveEdit", this.state.newUserType);
-        }
-    }
-
-    /** determine partner or user */
-    checkEditUserType = () =>{
-        switch(this.state.editUserType){
-            case "partner":
-                return this.editPartner();
-            case "user":
-                    return this.editUser();
-            default:
-                console.log("editUser - unknown user type selected", this.state.editUserType);
-        }
-    }
-
-    /** edit partner - not implemented */
-    editPartner(){
-        return(
-            <React.Fragment>
-                {/* partner name */}
-                <Grid item xs={12}>
-                    <TextField
-                        type="text"
-                        id="name"
-                        name="name"
-                        label="Partner Name"
-                        fullWidth
-                        value={ this.state.name }
-                        onChange={ (e)=> { 
-                            e.preventDefault(); 
-                            this.setState({name: e.target.value}) 
-                        } }
-                    />
-                </Grid>
-
-                {/* partner's email */}
-                <Grid item xs={12}>
-                    <TextField
-                        type="email"
-                        id="account_email"
-                        name="account_email"
-                        label="Partner email Address"
-                        fullWidth
-                        value={ this.state.account_email }
-                        onChange={ (e)=> { 
-                            e.preventDefault(); 
-                            this.setState({account_email: e.target.value}) 
-                        } }
-                    />
-                </Grid>
-
-                <Grid item xs={12}>
-                    <Grid item xs={12} sm={12}>Initial User</Grid>
-                </Grid>
-                
-                {/* user first name, last name boxes */}
-                <Grid item xs={6}>
-                    <TextField
-                        //required
-                        id="first_name"
-                        name="first_name"
-                        label="First Name"
-                        fullWidth
-                        value={ this.state.first_name }
-                        onChange={ (e)=> { 
-                            e.preventDefault(); 
-                            this.setState({first_name: e.target.value}) 
-                        } }
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <TextField
-                        //required
-                        id="last_name"
-                        name="last_name"
-                        label="Last Name"
-                        fullWidth
-                        value={ this.state.last_name }
-                        onChange={ (e)=> { 
-                            e.preventDefault(); 
-                            this.setState({last_name: e.target.value}) 
-                        } }
-                    />
-                </Grid>
-
-                {/* user telephone */}
-                <Grid item xs={12} sm={12} md={6} lg={6} >
-                    <Form.Group  >
-                        <InputGroup>
-                            <InputGroup.Prepend  >
-                                <InputGroup.Text >Telephone</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <Form.Control 
-                                type="text"
-                                placeholder="Telephone"
-                                value={ this.state.telephone }
-                                onChange={ (e)=> { 
-                                    e.preventDefault(); 
-                                    this.setState({telephone: e.target.value}) 
-                                } }
-                            />
-                        </InputGroup>
-                    </Form.Group>
-                </Grid>
-            </React.Fragment>
-
         );
     }
 
@@ -283,8 +163,8 @@ class EditUser extends React.Component{
                                 value={ this.state.account_id } 
                             >
                             {
-                                (this.state.partnerList)
-                                ? this.state.partnerList.map( (item, i) =>
+                                (this.props.partnerData)
+                                ? this.props.partnerData.map( (item, i) =>
                                     <option 
                                         key={ item.partner_id } value={ item.partner_id }
                                     >
@@ -297,29 +177,6 @@ class EditUser extends React.Component{
                         </InputGroup>
                     </Form.Group>
                 </Grid>
-
-                {/* user's partner */}             
-                {/* <Grid item xs={6}>
-                    <TextField
-                        className={  this.props.classes.hiddenField }                        
-                        id="partnerAccountId"
-                        name="partnerAccountId"
-                        label="Partner"
-                        fullWidth
-                        value={ this.state.account_id }
-                    />
-                </Grid>
-                {/* user's  /}                
-                <Grid item xs={6}>
-                    <TextField
-                        className={  this.props.classes.hiddenField }
-                        id="userId"
-                        name="userId"
-                        label="User ID"
-                        fullWidth
-                        value={ this.props.userId }
-                    />
-                </Grid> */}
 
                 {/* user first name, last name boxes */}
                 <Grid item xs={12} sm={12} md={6} lg={6} >
@@ -403,6 +260,10 @@ class EditUser extends React.Component{
         )
     }
 
+    saveEditedUserData=()=>{
+        return userAPIObj.saveEditUser( this.state, this.props.userId ); 
+        //return Promise.resolve({ err:true, errMsg: "error loading users"});
+    }
     
 
 }
