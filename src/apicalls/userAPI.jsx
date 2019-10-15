@@ -109,11 +109,11 @@ class userAPI extends React.Component{
 
   /** save new user data to API */
   saveUser( data ){
-    console.log("userAPI - saveUser", data); //return;
-    axios.post( uriNewUserSave, data )
+    console.log("userAPI - saveUser", data); return;
+    return axios.post( uriNewUserSave, data )
       .then(res => {
         console.log(res);
-        console.log(res.data);
+        return res;
       })
       .catch(error => {
         console.log("userAPI.jsx - saveUser-Err", error);
@@ -124,10 +124,10 @@ class userAPI extends React.Component{
   /** save new partner user data to API */
   savePartner( data ){
     console.log("userAPI - savePartner", data); //return;
-    axios.post( uriNewPartnerSave, data )
+    return axios.post( uriNewPartnerSave, data )
       .then(res => {
         console.log(res);
-        console.log(res.data);
+        return res;
       })
       .catch(error => {
         console.log("userAPI.jsx - savePartner-Err", error);

@@ -1,16 +1,68 @@
 
-######################### OnTrack - Tracker Dashboard #########################
+# OnTrack - Tracker Dashboard
+Tracker Dashboard that extends HubSpot.
+Designed for Vetstoria Application Support Team.
 
-* Add an SSH key for your BitBucket account. Following link guides you how to
-  add a SSH key.
-    https://confluence.atlassian.com/bitbucket/set-up-an-ssh-key-728138079.html
+## Pre requisites
+* A Vetstoria email with BitBucket credentials
+* An active internet connection
+* Sudo / Administrator permissions of working machine
+
+
+## Setup Instructions
+* If you do not have installed Github application, install it using
+```sh
+    $ sudo apt install git
+```
+
+* Create a SSH key and Add the SSH key for your BitBucket account. Following 
+link guides you how to add a SSH key.
+https://confluence.atlassian.com/bitbucket/set-up-an-ssh-key-728138079.html
+
 * Clone the repository using
-    git clone git@bitbucket.org:vetstoria/tracker-dashboard.git
-* Switch to development branch using
-    git checkout develop
-* Change working directory to project root folder
-    cd tracker-dashboard
-* Install the composer dependencies
+```sh
+    $ git clone git@bitbucket.org:vetstoria/tracker-dashboard.git
+```
 
-* 
+* Switch to development branch using
+```sh
+    $ git checkout develop
+```
+
+* Change working directory to project root folder
+```sh
+    $ cd tracker-dashboard
+```
+
+* Setup the runtime environment
+```sh
+    $ sudo ./setup.sh
+```
+> This will do al the software installations and environment configurations in your machine
+
+* Verify TDB container is running
+```sh
+    $ kubectl get pods -l app=ontrack
+```
+```sh
+        NAME                       READY   STATUS    RESTARTS   AGE
+        ontrack-5b4cb9cb75-f4mfw   1/1     Running   83         18d
+```
+
+* Setup the code base for running
+```sh
+    $ kubectl exec -it $(kubectl get pods -l app=ontrack -o \
+     custom-columns=:metadata.name --no-headers=true) \ 
+     -- source /docker/envvars && \ 
+     /var/www/html/app/docker/app/setup.sh
+```
+> This will setup a docker machine to deploy the application. It includes `composer install` 
+
+>   TODO
+>   check installing nodejs 10.x.x, npm 6.x.x 
+>   VERIFY and Include `apt-get install node npm` command(s) to `app/setup.sh`
+>   UnComment npm installation codes in `app/setup.sh`
+
+* Browse the website in your Browser using
+    http://ontrack.dev.io
 

@@ -62,8 +62,8 @@ const predefinedData=[
 class NewUser extends React.Component{
     state = {
         ...this.props.metaData, 
-        partnerList: this.props.partnerData,
-        //newUserType: "partnerForUser",
+        //partnerList: this.props.partnerData,
+        //newUserType: "userForPartner",
         //newUserType: "partner",
 
         //newUserType: null,
@@ -88,7 +88,9 @@ class NewUser extends React.Component{
 		//this.viewForm() 
 		return(
 			<React.Fragment>
-                new user form
+                <Grid container spacing={3}>
+                    <Grid item xs={12} sm={12} md={12} lg={12} ></Grid>
+                </Grid>
                 { 
                     this.viewNewUserForm() 
                 }
@@ -100,37 +102,6 @@ class NewUser extends React.Component{
     viewNewUserForm(){
         return(
             <Grid container spacing={3}>
-                {/* user type radio btn */}
-                <Grid item xs={12} sm={12}>
-                    <RadioGroup
-                        name="genderSelect"
-                        value={ this.state.newUserType }
-                        onChange={ (e)=>{
-                            this.setState({ newUserType: e.target.value});
-                            //console.log(e)
-                        } }
-                    >	
-                        { 
-                            (userTypes)
-                            ?userTypes.map( (val, i) => (
-                                <FormControlLabel
-                                    key={i}
-                                    value={ val.type }
-                                    control={<Radio color="primary" />}
-                                    label={ val.label }
-                                    labelPlacement="end"
-                                />
-                            ) )
-                            : <FormControlLabel
-                                key={1001}
-                                control={<Radio color="primary" />}
-                                value={"No users found in constants.jsx"}
-                            />
-                        }
-                        
-                    </RadioGroup>
-                </Grid>
-
                 {/* user type partner/admin */}                
                 <Grid item xs={12} sm={12} md={12} lg={12} >
                     <Form.Group   >
@@ -143,23 +114,23 @@ class NewUser extends React.Component{
                                 onChange={ e => {
                                     this.setState({
                                         selected_partner_id: e.target.value,
-                                        //newUserType: e.target.value,
+                                        newUserType: (e.target.value==="0")?"partner":"userForPartner",
                                     });
                                 }}
                                 value={ this.state.selected_partner_id } 
                             >
                             {
-                                (this.state.partnerList)
-                                ? this.state.partnerList.map( (item, i) =>
+                                (this.props.partnerData)
+                                ? this.props.partnerData.map( (item, i) =>
                                     <option 
                                         key={ item.partner_id } value={ item.partner_id }
                                     >
                                         { item.partner_id } -- { item.name } -- {item.account_email}
                                     </option>
                                 )
-                                : <option key={ 1002 } value={ 0 } >No partners loaded</option>
+                                : <option key={ 1002 } value={ 1002 } >No partners loaded</option>
                             }
-                                <option key={1005} value={"partner"} 
+                                <option key={1005} value={ "0" } 
                                     //onSelect={ ()=>{ console.log("DKDK"); this.setState({newUserType: "partner"}); } } 
                                 >--New--</option>
                             </Form.Control>
@@ -171,6 +142,9 @@ class NewUser extends React.Component{
                 {
                     this.checkNewUserType()
                 }
+                {
+                    this.newUserforPartner()
+                }
 
                 {/* save cancel btns */}                
                 <Grid item xs={12} sm={12} md={12} lg={12} >
@@ -180,6 +154,18 @@ class NewUser extends React.Component{
                         onClick={ () => {
                             console.log("newUser", this.state);
                             this.saveNewUserData()
+                            .then(
+                                res => {
+                                    console.log("newUser save result", res)
+                                    if(res && !res.err){
+                                        // show success
+                                        this.props.cancelForm()
+                                    }
+                                    else if(res && res.err){
+                                        this.showErrors()
+                                    }
+                                }
+                            )
                             //userAPIObj.saveUser( this.state );
                         } }
                         //fullWidth
@@ -201,12 +187,18 @@ class NewUser extends React.Component{
         );
     }
 
+    showErrors = () => {
+
+    }
+
     saveNewUserData=()=>{
         switch(this.state.newUserType){
             case "partner":
-                userAPIObj.savePartner( this.state ); break;
-            case "partnerForUser":
-                userAPIObj.saveUser( this.state ); break;
+                return userAPIObj.savePartner( this.state )
+                break;
+            case "userForPartner":
+                return userAPIObj.saveUser( this.state ); 
+                break;
             default:
                 console.log("newUser - unknown user type to save", this.state.newUserType);
         }
@@ -216,15 +208,18 @@ class NewUser extends React.Component{
     checkNewUserType = () =>{
         switch(this.state.newUserType){
             case "partner":
+                console.log("newUser - partner selected", this.state.newUserType); 
                 return this.newPartner();
-            case "partnerForUser":
-                    return this.newUserforPartner();
+            case "userForPartner":
+                console.log("newUser - userForPartner selected", this.state.newUserType); 
+                return <React.Fragment></React.Fragment>;
+                //return this.newUserforPartner();
             default:
                 console.log("newUser - unknown user type selected", this.state.newUserType);
         }
     }
 
-    /** add new partner with new user */
+    /** add new partner */
     newPartner(){
         return(
             <React.Fragment>
@@ -247,88 +242,7 @@ class NewUser extends React.Component{
                         </InputGroup>
                     </Form.Group>
                 </Grid>
-
-                <Grid item xs={12}>
-                    <Grid item xs={12} sm={12}>Initial User</Grid>
-                </Grid>
-                
-                {/* user first name, last name boxes */}
-                <Grid item xs={12} sm={12} md={6} lg={6} >
-                    <Form.Group  >
-                        <InputGroup>
-                            <InputGroup.Prepend  >
-                                <InputGroup.Text >First Name</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <Form.Control 
-                                type="text"
-                                placeholder="First Name"
-                                value={ this.state.first_name }
-                                onChange={ (e)=> { 
-                                    e.preventDefault(); 
-                                    this.setState({first_name: e.target.value}) 
-                                } }
-                            />
-                        </InputGroup>
-                    </Form.Group>
-                </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={6} >
-                    <Form.Group  >
-                        <InputGroup>
-                            <InputGroup.Prepend  >
-                                <InputGroup.Text >Last Name</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <Form.Control 
-                                type="text"
-                                placeholder="Last Name"
-                                value={ this.state.last_name }
-                                onChange={ (e)=> { 
-                                    e.preventDefault(); 
-                                    this.setState({last_name: e.target.value}) 
-                                } }
-                            />
-                        </InputGroup>
-                    </Form.Group>
-                </Grid>
-
-                {/* intial user's email */}
-                <Grid item xs={12} sm={12} md={6} lg={6} >
-                    <Form.Group  >
-                        <InputGroup>
-                            <InputGroup.Prepend  >
-                                <InputGroup.Text >User email Address</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <Form.Control 
-                                type="text"
-                                placeholder="User email Address"
-                                value={ this.state.account_email }
-                                onChange={ (e)=> { 
-                                    e.preventDefault(); 
-                                    this.setState({account_email: e.target.value}) 
-                                } } 
-                            />
-                        </InputGroup>
-                    </Form.Group>
-                </Grid>
-
-                {/* user telephone */}
-                <Grid item xs={12} sm={12} md={6} lg={6} >
-                    <Form.Group  >
-                        <InputGroup>
-                            <InputGroup.Prepend  >
-                                <InputGroup.Text >Telephone</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <Form.Control 
-                                type="text"
-                                placeholder="Telephone"
-                                value={ this.state.telephone }
-                                onChange={ (e)=> { 
-                                    e.preventDefault(); 
-                                    this.setState({telephone: e.target.value}) 
-                                } }
-                            />
-                        </InputGroup>
-                    </Form.Group>
-                </Grid>
+                <Grid item xs={12} sm={12} md={6} lg={6} ></Grid>
             </React.Fragment>
 
         );
