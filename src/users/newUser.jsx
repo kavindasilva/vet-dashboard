@@ -177,7 +177,7 @@ class NewUser extends React.Component{
                                         this.props.cancelForm()
                                     }
                                     else if(res && res.err){
-                                        this.showErrors(res.errMsg)
+                                        this.showErrors(res)
                                     }
                                 }
                             )
@@ -202,10 +202,12 @@ class NewUser extends React.Component{
         );
     }
 
-    showErrors = ( message ) => {
+    showErrors = ( messageObject ) => {
+        let advancedMsg = messageObject.errMsg.toString();
+        advancedMsg += (messageObject.errMsg.response && messageObject.errMsg.response.data) && "<br/>\n"+messageObject.errMsg.response.data.toString();
         this.setState({ 
                 modalTitle: "Error occurred",
-                modalBody: message.toString(),
+                modalBody: advancedMsg,
                 modalType: "warning"
             }, 
             ()=>this.setState({showModal: true}) 

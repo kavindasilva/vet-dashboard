@@ -64,7 +64,7 @@ class TrackerTableData extends React.Component{
 	showTableData(){
 		let returnArr=[]; 
 
-		console.log('this.props.configData', this.props.configData);
+		console.log('this.props.configData', this.props.configData, this.props.ticketsData);
 
 		this.props.configData.columns.forEach( column => {
 			//each column of trackerConfig
@@ -75,7 +75,8 @@ class TrackerTableData extends React.Component{
 				parseInt(permission.user_account_id) === current_user_account_type
 			));
 
-			let columnValue = this.props.ticketsData[column.name];
+			//let columnValue = (this.props.ticketsData && this.props.ticketsData.properties && this.props.ticketsData.proper[column.name]);
+			//let columnValue  = this.props.ticketsData[column.name];
 
 			if (userTypeRestriction) {
 				if ( !userTypeRestriction.is_read_restricted && !userTypeRestriction.is_write_restricted ) {
@@ -86,15 +87,22 @@ class TrackerTableData extends React.Component{
 							ticket_id={ this.props.ticketsData.ticket_id }
 							columnName={ column.name }
 							hs_source_field={ column.hs_source_field }
-							value={ (columnValue)?columnValue:"-td-N/A-" }
+							//value={ (columnValue)?columnValue:"-td-N/A1-" }
 							tracker_id={ this.props.tracker_id }
 							elementType={ this.columnDataTypes[column.data_type] }
 						>
-							{ columnValue }
 						</TrackerPopup> 
 					)
 				}
 				else if (!userTypeRestriction.is_read_restricted) {
+
+					let prop_record = (this.props.ticketsData && this.props.ticketsData.properties)? 
+							this.props.ticketsData.properties.find( 
+								property => ( property.column_name === column.name )
+							): 
+							null;
+					let columnValue  = (prop_record)? prop_record.value: "-td-N/A2-";
+
 					// read only permission
 					returnArr.push(
 						<Cell 
@@ -110,7 +118,7 @@ class TrackerTableData extends React.Component{
 							<span 
 								className="read-only-input"	
 							>
-								{ (columnValue)?columnValue:"-td-N/A-" }
+								{ columnValue }
 							</span>
 						</Cell>
 					)
@@ -123,11 +131,10 @@ class TrackerTableData extends React.Component{
 						ticket_id={ this.props.ticketsData.ticket_id }
 						columnName={ column.name }
 						hs_source_field={ column.hs_source_field }
-						value={ (columnValue)?columnValue:"-td-N/A-" }
+						//value={ (columnValue)?columnValue:"-td-N/A3-" }
 						tracker_id={ this.props.tracker_id }
 						elementType={ this.columnDataTypes[column.data_type] }
 					>
-						{ columnValue }
 					</TrackerPopup> 
 				)
 			}			

@@ -265,6 +265,15 @@ class EditUser extends React.Component{
         //return Promise.resolve({ err:true, errMsg: "error loading users"});
     }
     
+    showErrors = ( message ) => {
+        this.setState({ 
+                modalTitle: "Error occurred",
+                modalBody: message.toString(),
+                modalType: "warning"
+            }, 
+            ()=>this.setState({showModal: true}) 
+        )
+    }
 
 }
 
