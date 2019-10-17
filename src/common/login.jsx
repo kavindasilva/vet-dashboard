@@ -319,6 +319,7 @@ class Login extends React.Component{
 									notchedOutline: this.classes.inputError
 								}
 							}}
+							hidden={ true }
 							variant="outlined"
 							margin="normal"
 							required

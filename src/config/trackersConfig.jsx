@@ -116,11 +116,10 @@ class TrackersConfig extends React.Component{
         else
             return(
                 <React.Fragment>
-                    <small>config ui</small>
-                    { 
-                        //this.viewAllTrackers() 
-                        this.showComponent() 
-                    }
+                { 
+                    //this.viewAllTrackers() 
+                    this.showComponent() 
+                }
                 </React.Fragment>
             )
     }
@@ -162,11 +161,12 @@ class TrackersConfig extends React.Component{
 		//console.log("TrackersConfig - viewAllTrackers:", this.state.trackers); 
 
 		return(
-			<div>
-                <div>
+			<div >
+                <div style={{margin: "2px 2px 2px 2px", display: "flex" }}>
                     <Button 
                         style={{
-                            float: "right",
+                            margin: "2px 2px 2px 2px",
+                            
                             align: "right",
                         }}
                         onClick={ ()=>{
@@ -175,9 +175,9 @@ class TrackersConfig extends React.Component{
                     >
                         Add New Tracker
                     </Button>
-                
-
                 </div>
+
+                <div style={{margin: "2px 2px 2px 2px"}}>
                 {
                     (this.props.trackers && !this.state.errorGetTrackerConfigs)
                     ? <Tabs 
@@ -236,6 +236,7 @@ class TrackersConfig extends React.Component{
                                     style={{
                                         float: "right",
                                         align: "right",
+                                        margin: "2px 2px 2px 2px",
                                     }}
                                     variant="success"
                                     onClick={ ()=>{
@@ -248,6 +249,7 @@ class TrackersConfig extends React.Component{
                                     style={{
                                         float: "right",
                                         align: "right",
+                                        margin: "2px 2px 2px 2px",
                                     }}
                                     variant="outline-warning"
                                     onClick={ ()=>{
@@ -262,6 +264,7 @@ class TrackersConfig extends React.Component{
                                 <NewColumn 
                                     tracker_id={ tracker.tracker_id }
                                 />
+
                             </Tab>
                         ) )
                     }
@@ -285,6 +288,7 @@ class TrackersConfig extends React.Component{
                         </Tabs>
                     
                 }
+                </div>
 
 			</div>
 		);
