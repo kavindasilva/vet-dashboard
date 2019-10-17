@@ -30,7 +30,7 @@ class TrackerNewPermission extends React.Component{
         trackersHash: null,
 
         trackerId: this.props.tracker_id,
-        selected_user_account_id: 0,
+        selected_user_account_id: 2,
         columnName: this.props.columnName,
 
     }

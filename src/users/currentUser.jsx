@@ -32,7 +32,7 @@ import EditUser from "../users/editUser";
 import { Button } from '@material-ui/core';
 import ChangePassword from "../users/changePassword"
 
-import { userTypeArray } from "../common/constants";
+//import { userTypeArray } from "../common/constants";
 
 import userAPI from "../apicalls/userAPI"
 const userAPIObj = new userAPI();
@@ -82,6 +82,25 @@ class CurrentUser extends React.Component{
      * function1: get current session's user details and update state
      */
     componentDidMount(){
+        userAPIObj.getPartners()
+        .then(
+            result => {
+                if(result && result.err){
+                    console.log("currentuser partners - gettingUsers err", result);
+                    return;
+                }
+                console.log("currentuser partners mount2 usersArr", result);
+                this.setState({allPartners: result.data }, function(){
+                    rootStore.dispatch({
+                        type: 'GET_SYSTEM_PARTNERS',
+                        payload: {
+                            partnerData: this.state.allPartners
+                        }
+                    });
+                });
+            }
+        );
+
         userAPIObj.getSingleUser(this.props.metaData.userId)
         .then(
             result => {
@@ -130,14 +149,18 @@ class CurrentUser extends React.Component{
                     <TableRow>
                         <TableCell></TableCell>
                         <TableCell>User Type</TableCell>
-                        <TableCell>{ (userTypeArray[userColumns["user_type_id"]]) && userTypeArray[userColumns["user_type_id"].toString()] }</TableCell>
+                        <TableCell>
+                        { 
+                            (this.props.partnerInfo && [userColumns["user_type_id"]]) && this.props.partnerInfo.name 
+                        }
+                        </TableCell>
                     </TableRow>
 
-                    <TableRow>
+                    {/* <TableRow>
                         <TableCell></TableCell>
                         <TableCell>Account</TableCell>
                         <TableCell>{ (userColumns["account"]) && userColumns["account"].toString() }</TableCell>
-                    </TableRow>
+                    </TableRow> */}
 
                     <TableRow>
                         <TableCell></TableCell>
@@ -192,18 +215,27 @@ class CurrentUser extends React.Component{
 				
     }
     
+    
 
 }
 
 const mapStateToProps = state => {
     console.log('currentUser.jsx-mapStateToProps', state);
     //let meta = state.MetaReducer.metaData;
+    let account_id = (state.MetaReducer.metaData && state.MetaReducer.metaData.userInfo) ?state.MetaReducer.metaData.userInfo.account_id :0;
+    let partner_acc = (state.UserConfigReducer.partnerData && state.UserConfigReducer.partnerData.length>0)
+            ? state.UserConfigReducer.partnerData.find(  partner => (
+                partner.partner_id === account_id
+            ) )
+            : null
 	return {
         metaData: state.MetaReducer.metaData,
-        currentUserData: state.UserConfigReducer.userData.find( user => (
-            user.user_id == state.MetaReducer.metaData.userId
-            //user.user_id === 5
-        ) ),
+        partnerInfo: partner_acc,
+        
+        // currentUserData: state.UserConfigReducer.userData.find( user => (
+        //     user.user_id == state.MetaReducer.metaData.userId
+        //     //user.user_id === 5
+        // ) ),
 	};
 }
 

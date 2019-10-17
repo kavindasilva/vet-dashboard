@@ -32,7 +32,7 @@ import TrackerTableRow from "../dashboard/trackerTableRow";
 
 import FlatlyPopup from "../common/flatlyModal"
 import FlatlyAlert from "../common/flatlyAlert"
-import { userTypes, userTypeArray } from "../common/constants";
+//import { userTypes, userTypeArray } from "../common/constants";
 
 import userAPI from "../apicalls/userAPI"
 const userAPIObj = new userAPI();

@@ -61,7 +61,8 @@ const TrackConfigReducer = (state, action) => {
                     "label": action.payload.columnLabel,
                     "type": action.payload.columnDataType,
 
-                    "permissions": defaultPermissions() ,
+                    //"permissions": defaultPermissions() ,
+                    "permissions": [],
                     "color_rules":[]
                 }
             );
