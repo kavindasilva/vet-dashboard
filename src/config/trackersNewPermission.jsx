@@ -41,7 +41,7 @@ class TrackerNewPermission extends React.Component{
                 <Button
                     onClick={ ()=>this.setState({isOpen: true}) }
                 >
-                    add
+                    add new
                 </Button>
 
                 <Dialog

@@ -87,7 +87,10 @@ class TdbSync extends React.Component{
 	render(){
         if(this.props.metaData.userInfo && this.props.metaData.userInfo.user_type_id!==3)
             return(
-                <React.Fragment>You are not auth to view this page</React.Fragment>
+                <React.Fragment>
+                    <span>You cannot sync with Hubspot
+                    </span><br/>
+                </React.Fragment>
             )
         else
             return this.hsSyncUi();

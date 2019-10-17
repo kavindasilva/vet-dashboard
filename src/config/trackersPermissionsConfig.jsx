@@ -32,6 +32,9 @@ class TrackersPemissionsConfig extends React.Component{
 
         read: false,
         write: true,
+        comment: false,
+
+        trackersHash: null,
     }
 
     render(){
@@ -104,6 +107,12 @@ class TrackersPemissionsConfig extends React.Component{
         })
     
     }
+
+    componentWillReceiveProps( newProps ){
+        if( newProps.trackerColsHash !== this.state.trackersHash ){
+            this.setState({trackersHash: newProps.trackerColsHash});
+        }
+    }
 }
 
 
@@ -113,6 +122,10 @@ const mapStateToProps = (state, props) => {
 		
         allUsers: state.UserConfigReducer.userData, 
         partnerList: state.UserConfigReducer.partnerData,
+
+        trackerColsHash: JSON.stringify(state.TrackConfigReducer.configData.find( tracker => (
+            tracker.tracker_id === props.tracker_id
+        ) )),
     };
 
     function getColumnPermissions (stateConfigData) {
