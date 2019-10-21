@@ -121,7 +121,7 @@ class NewUser extends React.Component{
                     <Form.Group   >
                         <InputGroup>
                             <InputGroup.Prepend  >
-                                <InputGroup.Text >Select Partner</InputGroup.Text>
+                                <InputGroup.Text >Select User Group</InputGroup.Text>
                             </InputGroup.Prepend>
                             <Form.Control 
                                 as="select"
@@ -133,6 +133,7 @@ class NewUser extends React.Component{
                                 }}
                                 value={ this.state.selected_partner_id } 
                             >
+                                <option key={ 1006 } value={ 1006 } >--select</option>
                             {
                                 (this.props.partnerData)
                                 ? this.props.partnerData.map( (item, i) =>
@@ -251,7 +252,7 @@ class NewUser extends React.Component{
                     <Form.Group  >
                         <InputGroup>
                             <InputGroup.Prepend  >
-                                <InputGroup.Text >Account Name</InputGroup.Text>
+                                <InputGroup.Text >User Group Name</InputGroup.Text>
                             </InputGroup.Prepend>
                             <Form.Control 
                                 type="text"

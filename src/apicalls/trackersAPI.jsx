@@ -2,7 +2,7 @@
 import React from 'react';
 import axios from 'axios';
 
-const uriGetConfigData = 'http://ontrack.dev.io/rest/trackers/'; // from db
+const uriGetConfigData = '/rest/trackers/'; // from db
 const uriGetPipelines  = "/rest/trackers/pipes"
 const uriGetTicketData = '/rest/tickets/'; // 
 const uriCheckHsAuth   = "/hubspot/checkhsauth"

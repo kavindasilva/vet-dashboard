@@ -2,7 +2,7 @@
 import React from 'react';
 import axios from 'axios';
 
-const uriGetPartnerAccount = 'http://ontrack.dev.io/rest/user/?account_id=6';
+const uriGetPartnerAccount = '/rest/user/?account_id=6';
 const uriAllUsers = "/rest/user/";
 const uriAllPartners="/rest/partner"
 const alturiAllUsers = "/api/getUsers";
