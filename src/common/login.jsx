@@ -198,20 +198,20 @@ class Login extends React.Component{
 			return this.viewMenu();
 		}
 		// this part is only for testing in port 3000. comment in production
-		else if( localStorage.getItem("logged")==="true" && localStorage.getItem("userId")!=="0" ){
-			let loggedData = {
-				account_id:  localStorage.getItem("accountId") ,
-				type: parseInt( localStorage.getItem("userType") ),
-				user_id: parseInt( localStorage.getItem("userId") ),
-			}
-			console.log('login.jsx - handleForm1', loggedData );
+		// else if( localStorage.getItem("logged")==="true" && localStorage.getItem("userId")!=="0" ){
+		// 	let loggedData = {
+		// 		account_id:  localStorage.getItem("accountId") ,
+		// 		type: parseInt( localStorage.getItem("userType") ),
+		// 		user_id: parseInt( localStorage.getItem("userId") ),
+		// 	}
+		// 	console.log('login.jsx - handleForm1', loggedData );
 
-			this.setState({serverData: loggedData}, function(){
-				console.log('login.jsx - handleForm2', this.state.serverData );
-				//this.dispatchLogin();
-				this.getLoggedUserData( this.state.serverData.user_id )
-			});
-		}
+		// 	this.setState({serverData: loggedData}, function(){
+		// 		console.log('login.jsx - handleForm2', this.state.serverData );
+		// 		//this.dispatchLogin();
+		// 		this.getLoggedUserData( this.state.serverData.user_id )
+		// 	});
+		// }
 		else if(this.state.componentToShow === "requestReset"){
 			return(
 				<PasswordResetRequestForm 

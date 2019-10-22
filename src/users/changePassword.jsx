@@ -204,10 +204,10 @@ const mapStateToProps = state => {
     //let meta = state.MetaReducer.metaData;
 	return {
         metaData: state.MetaReducer.metaData,
-        currentUserData: state.UserConfigReducer.userData.find( user => (
-            user.user_id == state.MetaReducer.metaData.userId
-            //user.user_id === 5
-        ) ),
+        // currentUserData: state.UserConfigReducer.userData.find( user => (
+        //     user.user_id == state.MetaReducer.metaData.userId
+        //     //user.user_id === 5
+        // ) ),
 	};
 }
 

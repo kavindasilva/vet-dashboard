@@ -76,7 +76,7 @@ class NewUser extends React.Component{
         name:'', //account name
         account_email: '', //partner email
         user_type_id: '6', // user type id 3-admin, 6-partner
-        selected_partner_id:'', // partner id for user
+        account_id:'', // partner id for user
         email:'', //user email
         telephone:'', //user telephone
         password:'', //user password
@@ -127,11 +127,11 @@ class NewUser extends React.Component{
                                 as="select"
                                 onChange={ e => {
                                     this.setState({
-                                        selected_partner_id: e.target.value,
+                                        account_id: e.target.value,
                                         newUserType: (e.target.value==="0")?"partner":"userForPartner",
                                     });
                                 }}
-                                value={ this.state.selected_partner_id } 
+                                value={ this.state.account_id } 
                             >
                                 <option key={ 1006 } value={ 1006 } >--select</option>
                             {
