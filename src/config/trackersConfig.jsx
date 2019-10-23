@@ -44,6 +44,8 @@ import { Table, TableHead, TableCell, TableBody, TableRow, MenuItem, Select, Col
 
 import ArrowRight from "@material-ui/icons/ArrowRight"
 import ArrowDown from "@material-ui/icons/ArrowDropDown"
+import ReactLoading from 'react-loading';
+
 
 const trackersAPIobj = new trackersAPI();
 const userAPIObj = new userAPI();
@@ -79,6 +81,9 @@ const useStyles = theme => ({
 class TrackersConfig extends React.Component{
     classes=this.props.classes;
 	state = { 
+        isLoadingConfig: true,
+        isLoadingPartners: true,
+
         metaData: this.props.metaData,
         trackerConfigData: this.props.trackers,
 
@@ -158,140 +163,143 @@ class TrackersConfig extends React.Component{
      * View Tabs layout of all trackers
      */
 	viewAllTrackers(){
-		//console.log("TrackersConfig - viewAllTrackers:", this.state.trackers); 
+        //console.log("TrackersConfig - viewAllTrackers:", this.state.trackers); 
+        if(this.state.isLoadingConfig || this.state.isLoadingPartners)
+            return(
+                <center><ReactLoading type={"bars"} color={"green"} height={20} width={22} /></center>)
+        else
+            return(
+                <div >
+                    <div style={{margin: "2px 2px 2px 2px", display: "flex" }}>
+                        <Button 
+                            style={{
+                                margin: "2px 2px 2px 2px",
+                                
+                                align: "right",
+                            }}
+                            onClick={ ()=>{
+                                this.setState({componentToShow: "newTracker"})
+                            } }
+                        >
+                            Add New Tracker
+                        </Button>
+                    </div>
 
-		return(
-			<div >
-                <div style={{margin: "2px 2px 2px 2px", display: "flex" }}>
-                    <Button 
-                        style={{
-                            margin: "2px 2px 2px 2px",
-                            
-                            align: "right",
-                        }}
-                        onClick={ ()=>{
-                            this.setState({componentToShow: "newTracker"})
-                        } }
-                    >
-                        Add New Tracker
-                    </Button>
-                </div>
-
-                <div style={{margin: "2px 2px 2px 2px"}}>
-                {
-                    (this.props.trackers && !this.state.errorGetTrackerConfigs)
-                    ? <Tabs 
-                        id="controlled-tab-example" 
-                        activeKey={ this.state.viewingTabTrackerId } 
-                        onSelect={ this.handleTabChange }
-                    >
+                    <div style={{margin: "2px 2px 2px 2px"}}>
                     {
-                        this.props.trackers.map( (tracker, trackerIndex) => (
-                            <Tab 
-                                key={ trackerIndex } 
-                                eventKey={ tracker.tracker_id } 
-                                title={ tracker.name } 
-                            >
-                                <Button 
-                                    style={{
-                                        float: "right",
-                                        align: "right",
-                                        margin: "2px 2px 2px 2px",
-                                    }}
-                                    variant="success"
-                                    onClick={ ()=>{
-                                        this.saveTrackerToDB(tracker.tracker_id)
-                                    } }
+                        (this.props.trackers && !this.state.errorGetTrackerConfigs)
+                        ? <Tabs 
+                            id="controlled-tab-example" 
+                            activeKey={ this.state.viewingTabTrackerId } 
+                            onSelect={ this.handleTabChange }
+                        >
+                        {
+                            this.props.trackers.map( (tracker, trackerIndex) => (
+                                <Tab 
+                                    key={ trackerIndex } 
+                                    eventKey={ tracker.tracker_id } 
+                                    title={ tracker.name } 
                                 >
-                                    Save Tracker Config
-                                </Button>
-                                <Button 
-                                    style={{
-                                        float: "right",
-                                        align: "right",
-                                        margin: "2px 2px 2px 2px",
-                                    }}
-                                    variant="outline-warning"
-                                    onClick={ ()=>{
-                                        this.setState({ trackersConfigData: null }, ()=>{
-                                            this.getTrackersConfig();
-                                        })
-                                        
-                                    } }
-                                >
-                                    Cancel
-                                </Button>
-                                <NewColumn 
-                                    tracker_id={ tracker.tracker_id }
-                                />
-
-
-                                <div>
-                                    <TrackersConfigColumns 
+                                    <Button 
+                                        style={{
+                                            float: "right",
+                                            align: "right",
+                                            margin: "2px 2px 2px 2px",
+                                        }}
+                                        variant="success"
+                                        onClick={ ()=>{
+                                            this.saveTrackerToDB(tracker.tracker_id)
+                                        } }
+                                    >
+                                        Save Tracker Config
+                                    </Button>
+                                    <Button 
+                                        style={{
+                                            float: "right",
+                                            align: "right",
+                                            margin: "2px 2px 2px 2px",
+                                        }}
+                                        variant="outline-warning"
+                                        onClick={ ()=>{
+                                            this.setState({ trackersConfigData: null }, ()=>{
+                                                this.getTrackersConfig();
+                                            })
+                                            
+                                        } }
+                                    >
+                                        Cancel
+                                    </Button>
+                                    <NewColumn 
                                         tracker_id={ tracker.tracker_id }
                                     />
-                                </div>
 
-                                <Button 
-                                    style={{
-                                        float: "right",
-                                        align: "right",
-                                        margin: "2px 2px 2px 2px",
-                                    }}
-                                    variant="success"
-                                    onClick={ ()=>{
-                                        this.saveTrackerToDB(tracker.tracker_id)
-                                    } }
-                                >
-                                    Save Tracker Config
-                                </Button>
-                                <Button 
-                                    style={{
-                                        float: "right",
-                                        align: "right",
-                                        margin: "2px 2px 2px 2px",
-                                    }}
-                                    variant="outline-warning"
-                                    onClick={ ()=>{
-                                        this.setState({ trackersConfigData: null }, ()=>{
-                                            this.getTrackersConfig();
-                                        })
-                                        
-                                    } }
-                                >
-                                    Cancel
-                                </Button>
-                                <NewColumn 
-                                    tracker_id={ tracker.tracker_id }
-                                />
 
-                            </Tab>
-                        ) )
+                                    <div>
+                                        <TrackersConfigColumns 
+                                            tracker_id={ tracker.tracker_id }
+                                        />
+                                    </div>
+
+                                    <Button 
+                                        style={{
+                                            float: "right",
+                                            align: "right",
+                                            margin: "2px 2px 2px 2px",
+                                        }}
+                                        variant="success"
+                                        onClick={ ()=>{
+                                            this.saveTrackerToDB(tracker.tracker_id)
+                                        } }
+                                    >
+                                        Save Tracker Config
+                                    </Button>
+                                    <Button 
+                                        style={{
+                                            float: "right",
+                                            align: "right",
+                                            margin: "2px 2px 2px 2px",
+                                        }}
+                                        variant="outline-warning"
+                                        onClick={ ()=>{
+                                            this.setState({ trackersConfigData: null }, ()=>{
+                                                this.getTrackersConfig();
+                                            })
+                                            
+                                        } }
+                                    >
+                                        Cancel
+                                    </Button>
+                                    <NewColumn 
+                                        tracker_id={ tracker.tracker_id }
+                                    />
+
+                                </Tab>
+                            ) )
+                        }
+                        </Tabs>
+                        : (this.state.errorGetTrackerConfigs)
+                            ? <Tabs 
+                                id="controlled-1" 
+                                activeKey={ this.state.tabValue } 
+                            >
+                                <Tab eventKey={ this.state.tabValue } title="err">
+                                    <div>{ this.state.errorMsgGetTrackerConfigs.toString() }</div>
+                                </Tab>
+                            </Tabs>
+                            : <Tabs 
+                                id="controlled-2" 
+                                activeKey={ this.state.tabValue } 
+                            >
+                                <Tab eventKey={ this.state.tabValue } title="load">
+                                    <div>Loading..</div>
+                                </Tab>
+                            </Tabs>
+                        
                     }
-                    </Tabs>
-                    : (this.state.errorGetTrackerConfigs)
-                        ? <Tabs 
-                            id="controlled-1" 
-                            activeKey={ this.state.tabValue } 
-                        >
-                            <Tab eventKey={ this.state.tabValue } title="err">
-                                <div>{ this.state.errorMsgGetTrackerConfigs.toString() }</div>
-                            </Tab>
-                        </Tabs>
-                        : <Tabs 
-                            id="controlled-2" 
-                            activeKey={ this.state.tabValue } 
-                        >
-                            <Tab eventKey={ this.state.tabValue } title="load">
-                                <div>Loading..</div>
-                            </Tab>
-                        </Tabs>
-                    
-                }
-                </div>
+                    </div>
 
-			</div>
-		);
+                </div>
+            );
     }
 
    
@@ -302,11 +310,13 @@ class TrackersConfig extends React.Component{
      * Update store with new data
      */
     getTrackersConfig(){
+        this.setState({isLoadingConfig: true});
         trackersAPIobj.getTrackerConfig()
         .then(
             res => {
+                this.setState({isLoadingConfig: false});
                 if(res && res.err){
-                    console.log("users - gettingUsers err", res);
+                    console.log("trackers - config err", res);
                     this.setState({
                         errorGetTrackerConfigs: true,
                         errorMsgGetTrackerConfigs: res.errMsg.toString()
@@ -331,9 +341,11 @@ class TrackersConfig extends React.Component{
     }
 
     getPartnersList(){
+        this.setState({isLoadingPartners: true});
         userAPIObj.getPartners()
         .then(
             result => {
+                this.setState({isLoadingPartners: false});
                 if(result && result.err){
                     console.log("trakerConfig - gettingUsers err", result);
                     return;

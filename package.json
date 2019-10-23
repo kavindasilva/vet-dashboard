@@ -39,6 +39,7 @@
         "react-dom": "16.8.6",
         "react-draggable": "^3.3.0",
         "react-infinite-calendar": "^2.3.1",
+        "react-loading": "^2.0.3",
         "react-modal": "^3.8.1",
         "react-moment": "^0.9.2",
         "react-redux": "^7.0.3",

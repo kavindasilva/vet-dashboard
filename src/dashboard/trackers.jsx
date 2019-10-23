@@ -38,6 +38,7 @@ import 'react-sticky-table/dist/react-sticky-table.css';
 import { Dialog, DialogTitle, DialogContent, DialogActions, IconButton, Snackbar } from '@material-ui/core';
 import Button from 'react-bootstrap/Button'
 import moment from "moment";
+import ReactLoading from 'react-loading';
 
 const ticketAPIobj = new ticketAPI();
 const trackersAPIobj = new trackersAPI();
@@ -63,6 +64,9 @@ const styles = theme => ({
 
 class Trackers extends React.Component{
 	state = { 
+        isLoadingTrackers: true,
+        isLoadingConfigs: true,
+
         ...this.props.metaData, 
         last_updated: [], // get by tracker_id
         last_synced: null,
@@ -113,7 +117,9 @@ class Trackers extends React.Component{
                     NewClinic
                 </Button>
                 { 
-                    this.viewTabs()
+                    (this.state.isLoadingTrackers || this.state.isLoadingConfigs)
+				    ? <center><ReactLoading type={"bars"} color={"green"} height={20} width={22} /></center>
+                    : this.viewTabs()
                 }
                 {
                     this.viewSnackBar()
@@ -357,6 +363,7 @@ class Trackers extends React.Component{
      * retrieve trackers configuration data from DB
      */
     getTrackersConfig(){
+        this.setState({isLoadingConfigs: true});
         trackersAPIobj.getTrackerConfig()
         .then(
             res => {
@@ -364,6 +371,7 @@ class Trackers extends React.Component{
                 //let m=Object.values(res.data);
                 this.setState({ trackersConfigData: res.data }, function(){
                     this.dispatchTrackerConfigs();
+                    this.setState({isLoadingConfigs: false});
                 });
             }
         )
@@ -373,6 +381,7 @@ class Trackers extends React.Component{
      * retrieve tracker instances data from DB
      */
     getTicketData = () => {
+        this.setState({isLoadingTrackers: true});
         ticketAPIobj.getTicketsAndProperties()
         .then(
             res => {
@@ -383,6 +392,7 @@ class Trackers extends React.Component{
                         errorGetTrackers: true,
                         errorMsgGetTrackers: res.errMsg.toString()
                     });
+                    this.setState({isLoadingTrackers: false});
                     return;
                 }
 
@@ -394,6 +404,7 @@ class Trackers extends React.Component{
                 if(res.headers &&  res.headers["last-updated"]){
                     this.setState({last_updated: res.headers["last-updated"]});
                 }
+                this.setState({isLoadingTrackers: false});
             }
         )
     }

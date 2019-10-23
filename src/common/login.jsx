@@ -30,7 +30,7 @@ import userAPI from "../apicalls/userAPI";
 import Trackers from "../dashboard/trackers";
 import { FormLabel, SnackbarContent, IconButton, Snackbar } from '@material-ui/core';
 //import MiniDrawer from "../common/drawer";
-
+import ReactLoading from 'react-loading';
 const loginAPIobj = new loginAPI();
 const userAPIobj = new userAPI();
 
@@ -71,6 +71,8 @@ class Login extends React.Component{
 	classes=this.props.classes;
 
 	state = { 
+		isLoadingLogging: false,
+		
 		otp:"qaauto", 
 		username:"", 
 		is_otp_required: true,
@@ -116,6 +118,11 @@ class Login extends React.Component{
 	render(){
 		return(
 			<React.Fragment>
+
+				<center>
+				<ReactLoading 
+				type={"bars"} color={"green"} height={20} width={22} />
+				</center>
 			{ 
 				this.handleLoginStatus()	
 			}
@@ -128,6 +135,7 @@ class Login extends React.Component{
 	}
 
 	sendCredentials = () => {
+		this.setState({isLoadingLogging: true});
 		console.log("Login - credentials:", this.state.username, this.state.password );
 		
 		// call to API post
@@ -135,6 +143,7 @@ class Login extends React.Component{
 			.then( res => {
 				console.log("Login - authMsg:", res);
 				this.validateCredentials(res);
+				this.setState({isLoadingLogging: false});
 			});
 		//console.log("Login - authMsg:", authMsg);
 	}
@@ -390,8 +399,8 @@ class Login extends React.Component{
 						</Grid>
 					</form>
 				</div>
-				<Box mt={5}>
-					
+				<Box mt={5} hidden={ !this.state.isLoadingLogging }>
+					<center><ReactLoading type={"bars"} color={"green"} height={20} width={22} /></center>
 				</Box>
 			</Container>
 		);
