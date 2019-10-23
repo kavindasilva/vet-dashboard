@@ -84,7 +84,7 @@ class TrackerHeader extends React.Component{
 			//console.log("trackerHeader userVisible", userRestrictedColumns)
 
 			// if userRestrictedColumns not empty
-			if( userRestrictedColumns!==undefined && !userRestrictedColumns.is_read_restricted ){
+			if( userRestrictedColumns===undefined || (userRestrictedColumns!==undefined && !userRestrictedColumns.is_read_restricted) ){
 
 				returnArr.push( 
 					<Cell 
@@ -117,31 +117,31 @@ class TrackerHeader extends React.Component{
 				)
 
 			}
-			else{ // not restricted
-				returnArr.push( 
-					<Cell 
-						key={ i }
-						style={ { 
-							//display: "table-cell",
-							textAlign: "center",
-							verticalAlign: "middle",
+			// else { // not restricted @HotPatch
+			// 	returnArr.push( 
+			// 		<Cell 
+			// 			key={ i }
+			// 			style={ { 
+			// 				//display: "table-cell",
+			// 				textAlign: "center",
+			// 				verticalAlign: "middle",
 
-							color:"#1122ee", 
-							padding: "2px 10px 2px 12px",
-							backgroundColor: "#95a5a6",
+			// 				color:"#1122ee", 
+			// 				padding: "2px 10px 2px 12px",
+			// 				backgroundColor: "#95a5a6",
 							
-							minHeight: "70px", // not working
-							minWidth: "150px", // working
-							height: "50px", // working
-							width: "150px", // not working
+			// 				minHeight: "70px", // not working
+			// 				minWidth: "150px", // working
+			// 				height: "50px", // working
+			// 				width: "150px", // not working
 
-							...globalStyles["cell-borders"]
-						}}
-					>
-						{ column.label }
-					</Cell> 
-				)
-			}
+			// 				...globalStyles["cell-borders"]
+			// 			}}
+			// 		>
+			// 			{ column.label }
+			// 		</Cell> 
+			// 	)
+			// }
 			
 		} );		
 

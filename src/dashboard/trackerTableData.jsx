@@ -16,6 +16,7 @@ import { trackerColumnDataTypes, globalStyles, ticketCellSize } from "../common/
 
 import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
+import ProgressBar from "../dashboard/onboardProgress"
 
 const styles = theme => ({
 	readOnlyColumn: {
@@ -101,7 +102,7 @@ class TrackerTableData extends React.Component{
 								property => ( property.column_name === column.name )
 							): 
 							null;
-					let columnValue  = (prop_record)? prop_record.value: "-td-N/A2-";
+					let columnValue  = (prop_record)? prop_record.value: "-empty-";
 
 					// read only permission
 					returnArr.push(
@@ -119,6 +120,13 @@ class TrackerTableData extends React.Component{
 								className="read-only-input"	
 							>
 								{ columnValue }
+								{
+									(column.name==="clinic_name") && 
+									<ProgressBar
+										ticket_id={ this.props.ticketsData.ticket_id }
+										hospital_name={ columnValue }
+									/>
+								}
 							</span>
 						</Cell>
 					)
@@ -144,6 +152,18 @@ class TrackerTableData extends React.Component{
 		return returnArr;
 	}
 
+	// viewProgressBar = () => (
+    //     <React.Fragment>
+    //         {
+    //             (this.state.columnName==="clinic_name") && 
+    //             <ProgressBar
+    //                 ticket_id={ this.props.ticketsData.ticket_id }
+    //                 hospital_name={ this.state.attributeValue2 }
+    //             />
+    //         }
+    //     </React.Fragment>
+	// )
+	
 }
 
 const mapStateToProps = (state, props) => {

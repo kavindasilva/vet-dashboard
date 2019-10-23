@@ -38,9 +38,9 @@ class Menu extends Component {
 		//activeClass: 
 		//componentToShow: 'users',
 		//componentToShow: 'superAdminUi',
-		componentToShow: "trackerConfig",
+		//componentToShow: "trackerConfig",
 		//componentToShow: "currentUserProfile",
-		//componentToShow: "tickets",
+		componentToShow: "tickets",
 	}
 
 	render() {
