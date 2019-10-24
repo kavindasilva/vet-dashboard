@@ -22,11 +22,24 @@ import 'react-sticky-table/dist/react-sticky-table.css';
 
 class TrackerHeader extends React.Component{
 	state = { 
-        ...this.props.metaData, 
+		...this.props.metaData,
+		metaDataHash: null,
+		
+		colWidth: (this.props.metaData && this.props.metaData.ticketColumnWidth) ?this.props.metaData.ticketColumnWidth : 60,
+		colHeight: (this.props.metaData && this.props.metaData.ticketColumnHeight) ?this.props.metaData.ticketColumnHeight : 60,
 
         tabValue:2,
         TrackerHeader: null,
-    }
+	}
+	
+	componentWillReceiveProps(newProps){
+		if(newProps.metaDataHash !== this.state.metaDataHash){
+			this.setState({
+				colWidth: (newProps.metaData && newProps.metaData.ticketColumnWidth) ?newProps.metaData.ticketColumnWidth : 60,
+				colHeight: (newProps.metaData && newProps.metaData.ticketColumnHeight) ?newProps.metaData.ticketColumnHeight : 60,
+			})
+		}
+	}
 
 	componentDidMount(){
 		//console.log("TrackerHeader - mount. props:", this.props); //ok
@@ -100,9 +113,12 @@ class TrackerHeader extends React.Component{
 							backgroundColor: "#95a5a6",
 
 							//minHeight: "70px", // not working
-							// minWidth: "auto", // working
+							// minWidth: "150px", // working
 							// height: "auto", // working
 							//width: "150px", // not working
+
+							minWidth: this.state.colWidth,
+							height: this.state.colHeight,
 
 							//backgroundColor: "transparent",
 							//border: "0.5pt solid #888888",
@@ -155,6 +171,7 @@ const mapStateToProps = (state, props) => {
 	console.log('state.ticketsDataReducer', state.ticketsDataReducer);
 	return {
 		metaData: state.MetaReducer.metaData,
+		metaDataHash: JSON.stringify(state.MetaReducer.metaData),
 
 		/** filter only the needed tracker tickets */
 		ticketsData: state.ticketsDataReducer.ticketsData.filter( tickets => (

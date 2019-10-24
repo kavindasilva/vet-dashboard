@@ -72,6 +72,8 @@ class Login extends React.Component{
 
 	state = { 
 		isLoadingLogging: false,
+		colWidth: 50,
+		colHeight: 50,
 		
 		otp:"qaauto", 
 		username:"", 

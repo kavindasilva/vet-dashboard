@@ -14,7 +14,10 @@ const MetaReducer = (state, action) => {
             isLoggedIn: false,
             userId: 0,
             username: '',
-            userType: 0
+            userType: 0,
+
+            ticketColumnWidth: '200px',
+            ticketColumnHeight: '200px',
         }
     };
 
@@ -53,6 +56,20 @@ const MetaReducer = (state, action) => {
             }
 
             console.log("MetaReducer LOG_OUT_USER: ", newState);
+            return newState;
+
+        case 'UPDATE_CELL_SIZE':
+            let stateMeta = (state.metaData) && {...state.metaData};
+            newState = {
+                ...state,
+                metaData:{
+                    ...stateMeta,
+                    ticketColumnWidth: action.payload.columnWidth,
+                    ticketColumnHeight: action.payload.columnHeight,
+                }
+            }
+
+            console.log("MetaReducer UPDATE_CELL_SIZE: ", newState);
             return newState;
 
         default:

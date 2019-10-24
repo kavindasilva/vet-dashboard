@@ -39,6 +39,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, IconButton, Snackbar
 import Button from 'react-bootstrap/Button'
 import moment from "moment";
 import ReactLoading from 'react-loading';
+import CellSizeAdjuster from "../dashboard/cellSizeAdjuster"
 
 const ticketAPIobj = new ticketAPI();
 const trackersAPIobj = new trackersAPI();
@@ -64,6 +65,9 @@ const styles = theme => ({
 
 class Trackers extends React.Component{
 	state = { 
+        colWidth: 50,
+        colHeight: 50,
+        
         isLoadingTrackers: true,
         isLoadingConfigs: true,
 
@@ -100,22 +104,17 @@ class Trackers extends React.Component{
 	render(){
 		return(
 			<div align={"right"} style={{ padding: "10px 0px 0px 0px"}} >
-                {/* <a target="_blank" href="http://ontrack.dev.io/hubspot/authorize" >
-                    <Button 
+                <div>
+                    <CellSizeAdjuster />
+                    <Button
+                        variant="secondary"
+                        style={{textTransform: "none"}}
+                        onClick={ ()=> this.setState({showNewClinicAddForm: true}) }
                     >
-                        Authorize Hubspot
+                        <AddCircleOutlineIcon />
+                        New Clinic
                     </Button>
-                </a> */}
-                <br/>
-
-                <Button
-                    variant="secondary"
-                    style={{textTransform: "none"}}
-                    onClick={ ()=> this.setState({showNewClinicAddForm: true}) }
-                >
-                    <AddCircleOutlineIcon />
-                    New Clinic
-                </Button>
+                </div>
                 { 
                     (this.state.isLoadingTrackers || this.state.isLoadingConfigs)
 				    ? <center><ReactLoading type={"bars"} color={"green"} height={20} width={22} /></center>
@@ -142,6 +141,7 @@ class Trackers extends React.Component{
         } );
         //this.setLastUpdatedTime(tracker.tracker_id);
     }
+
 
 	/** 
      * View Tabs layout of trackers
@@ -179,6 +179,7 @@ class Trackers extends React.Component{
                                         key={ tracker.tracker_id } 
                                     >
                                         <div float={'right'} align={'right'} style={{padding:"10px 10px 0px 0px"}} >
+                                            
                                             <TDBSync
                                                 viewingTabTrackerId={ this.state.viewingTabTrackerId }
                                             />
