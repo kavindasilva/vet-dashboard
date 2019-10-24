@@ -114,7 +114,7 @@ class Trackers extends React.Component{
                     onClick={ ()=> this.setState({showNewClinicAddForm: true}) }
                 >
                     <AddCircleOutlineIcon />
-                    NewClinic
+                    New Clinic
                 </Button>
                 { 
                     (this.state.isLoadingTrackers || this.state.isLoadingConfigs)
@@ -183,7 +183,8 @@ class Trackers extends React.Component{
                                                 viewingTabTrackerId={ this.state.viewingTabTrackerId }
                                             />
 
-                                            <span>Last Refresh: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "N/A" }
+                                            <div style={{padding: "2px 0px 0px 0px"}}>
+                                                <span>Last Refresh: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "N/A" } </span>
                                                 <Tooltip title="Refresh">
                                                     <Button
                                                         variant="outline-info"
@@ -201,7 +202,7 @@ class Trackers extends React.Component{
                                                         />
                                                     </Button>
                                                 </Tooltip>
-                                            </span>
+                                            </div>
                                         </div>
             
                                         <div float={'right'} align={'right'}>

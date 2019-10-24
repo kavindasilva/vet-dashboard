@@ -99,10 +99,10 @@ class TrackerHeader extends React.Component{
 							padding: "2px 10px 2px 12px",
 							backgroundColor: "#95a5a6",
 
-							minHeight: "70px", // not working
-							minWidth: "150px", // working
-							height: "50px", // working
-							width: "150px", // not working
+							//minHeight: "70px", // not working
+							// minWidth: "auto", // working
+							// height: "auto", // working
+							//width: "150px", // not working
 
 							//backgroundColor: "transparent",
 							//border: "0.5pt solid #888888",

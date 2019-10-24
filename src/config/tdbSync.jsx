@@ -88,8 +88,8 @@ class TdbSync extends React.Component{
         if(this.props.metaData.userInfo && this.props.metaData.userInfo.user_type_id!==3)
             return(
                 <React.Fragment>
-                    <span>You cannot sync with Hubspot
-                    </span><br/>
+                    <div>You cannot sync with Hubspot
+                    </div>
                 </React.Fragment>
             )
         else
@@ -99,7 +99,8 @@ class TdbSync extends React.Component{
     hsSyncUi(){
         return(
             <React.Fragment>
-                <span>Last Sync at: { (this.state.last_synced)? this.state.last_synced: "N/A" }
+                <div>
+                    <span>Last Sync at: { (this.state.last_synced)? this.state.last_synced: "N/A" } </span>
                     <Tooltip title="Sync with Hubspot">
                         <Button
                             variant="outline-info"
@@ -115,7 +116,7 @@ class TdbSync extends React.Component{
                             />
                         </Button>
                     </Tooltip>
-                </span><br/>
+                </div>
             </React.Fragment>
         )
     }

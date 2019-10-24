@@ -118,10 +118,11 @@ class Login extends React.Component{
 	render(){
 		return(
 			<React.Fragment>
-
 				<center>
-				<ReactLoading 
-				type={"bars"} color={"green"} height={20} width={22} />
+					<ReactLoading 
+						type={"bars"} 
+						color={"green"} height={20} width={22} 
+					/>
 				</center>
 			{ 
 				this.handleLoginStatus()	
@@ -211,7 +212,7 @@ class Login extends React.Component{
 		// 	let loggedData = {
 		// 		account_id:  localStorage.getItem("accountId") ,
 		// 		type: parseInt( localStorage.getItem("userType") ),
-		// 		user_id: parseInt( localStorage.getItem("userId") ),
+		// 		user_id: pzarseInt( localStorage.getItem("userId") ),
 		// 	}
 		// 	console.log('login.jsx - handleForm1', loggedData );
 

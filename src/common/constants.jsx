@@ -113,8 +113,10 @@ export const ticketSearchParams = [
 
 /** ticket cell sizes */
 export const ticketCellSize = {
-    cellHeight: "60px",
-    cellWidth: "150px",
+    // cellHeight: "60px",
+    // cellWidth: "150px",
+    cellHeight: "auto",
+    cellWidth: "auto",
 }
 
 /** constant url's */

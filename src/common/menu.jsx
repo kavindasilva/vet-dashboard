@@ -139,7 +139,7 @@ class Menu extends Component {
 							style={{cursor:'pointer',float:'right',align:'right'}}
 							onClick={ () => { this.logOutUser() } }
 						>
-							LogOut
+							Log Out
 						</Button>
 					</div>
 				</nav>
