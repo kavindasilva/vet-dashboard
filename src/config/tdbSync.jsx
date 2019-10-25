@@ -99,7 +99,7 @@ class TdbSync extends React.Component{
     hsSyncUi(){
         return(
             <React.Fragment>
-                <div>
+                <div style={{ padding: "5px 0px 5px 0px" }} >
                     <span>Last Sync at: { (this.state.last_synced)? this.state.last_synced: "N/A" } </span>
                     <Tooltip title="Sync with Hubspot">
                         <Button
@@ -108,7 +108,12 @@ class TdbSync extends React.Component{
                                 this.sendRequestToSync();
                             }}
                             size="sm"
-                            style={ {width: "20px", height: "20px", padding: "0px 0px 0px 0px"} }
+                            style={ {
+                                width: "20px", 
+                                height: "20px", 
+                                padding: "0px 0px 0px 0px",
+                                marginTop: "-3px",
+                            } }
                         >
                             <SyncAltIcon 
                                 fontSize="small"

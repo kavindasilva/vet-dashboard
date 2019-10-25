@@ -111,8 +111,8 @@ class Trackers extends React.Component{
                         style={{textTransform: "none"}}
                         onClick={ ()=> this.setState({showNewClinicAddForm: true}) }
                     >
-                        <AddCircleOutlineIcon />
-                        New Clinic
+                        <AddCircleOutlineIcon style={{ paddingRight:"6px" }} />
+                        <span>New Clinic</span>
                     </Button>
                 </div>
                 { 
@@ -228,7 +228,7 @@ class Trackers extends React.Component{
                                                 </Row>
                                                 <TrackerTableRow 
                                                     tracker_id={tracker.tracker_id} 
-                                                    tracker={ tracker }
+                                                    //tracker={ tracker }
                                                     trackerRecordId={null}
                                                 >
                                                 </TrackerTableRow>
