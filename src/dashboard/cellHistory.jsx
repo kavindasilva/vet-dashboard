@@ -20,7 +20,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
+import TablePagination from '@material-ui/core/TablePagination';
 import { connect } from "react-redux";
 import rootReducer from "../reducers/index";
 import { rootStore } from "../stores/mainStore";
@@ -67,6 +67,9 @@ class CellHistory extends Component {
 	state = {
         isOpen: false,
         historyData: null,
+
+        page: 0,
+		rowsPerPage: 5,
 	}
 
   	render() {
@@ -108,7 +111,7 @@ class CellHistory extends Component {
                                     {
                                         (this.state.historyData && this.state.historyData.length>0 )
                                         ?(
-                                            this.state.historyData.map( (history, i) => (  
+                                            this.state.historyData.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map( (history, i) => (  
                                                 <TableRow key={i} >
                                                     <TableCell>{history.edit_date}</TableCell>
                                                     <TableCell>{history.username}</TableCell>
@@ -121,6 +124,23 @@ class CellHistory extends Component {
                                     }
                                     </TableBody>
                                 </Table>
+                                <TablePagination
+                                    rowsPerPageOptions={[5, 10, 25, 100]}
+                                    component="div"
+                                    count={(this.state.historyData)? this.state.historyData.length: 0}
+                                    rowsPerPage={this.state.rowsPerPage}
+                                    page={this.state.page}
+                                    backIconButtonProps={{
+                                    'aria-label': 'previous page',
+                                    }}
+                                    nextIconButtonProps={{
+                                    'aria-label': 'next page',
+                                    }}
+                                    onChangePage={ (e, newPage) => { this.setState({page: newPage}) } }
+                                    onChangeRowsPerPage={ (e) => {
+                                        this.setState({rowsPerPage: e.target.value, page: 0 });
+                                    } }
+                                />
                             </Paper>
                         </div>
                     </DialogContent>
