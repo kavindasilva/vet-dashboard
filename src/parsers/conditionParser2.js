@@ -1,6 +1,12 @@
 
 /** Output from Peg.JS */
 
+g: [
+    {ip_port}.isInvalid().not() &&
+    {registration_sent_date}.isEmpty().not() && 
+    {ip_port}.eod().isBefore({registration_sent_date}.eod().addDays(4))
+];
+
 dg_parsed: {
     type : "operator",
     name : "&&",

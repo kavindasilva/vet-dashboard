@@ -9,7 +9,7 @@ const executableFunctions = {
     'moment'            : moment,
     'isBefore'          : functionIsBefore,
     'isAfter'           : functionIsAfter,
-    'addPeriod'         : functionAddPeriod,
+    'addDays'           : functionAddPeriod,
     'substractPeriod'   : functionSubstractPeriod,
     //'isAfter': 
 
@@ -33,13 +33,6 @@ function functionAddPeriod(){
             return moment( arguments[0] ).add( arguments[1], arguments[2] );
             //return moment(moment( arguments[0] ).add( arguments[1], arguments[2] ));
         }
-
-        // else if( arguments.length === 2 
-        //     //&& isDateValid(arguments[0])
-        //     && isNumParameterValid(arguments[0])
-        //     && isTimeUnitValid(arguments[1])
-        // )
-        //     return moment().add( arguments[1], arguments[2] );
     }
     catch(e){ // any kind of handled error
         throw new Error(e);
@@ -119,8 +112,12 @@ export const validateExpression = function (expression) {
     return parseTree;
 }
 
-/** evaluates a valid type PegJS result  */
+/** evaluates a valid type PegJS result . entry point */
 export function evaluateSubTree(subTree) {
+    if (subTree && subTree.type == 'operator') {
+        return evaluateOperator(subTree);
+    }
+    
     if (Array.isArray(subTree)) { 
         return subTree.map(element => {
             return evaluateSubTree(element);
@@ -135,8 +132,34 @@ export function evaluateSubTree(subTree) {
         return evaluateFunctionSubTree(subTree);
     }
 
+    // field, number, string
     return subTree.value;
     
+}
+
+/** evaluate operator. returns bool */
+function evaluateOperator(commandStructure){
+    if ( (commandStructure !== null) && (typeof commandStructure == 'object') && commandStructure.operands && commandStructure.operands.length == 2) { 
+        //if(commandStructure.name)
+        switch(commandStructure.name){
+            case "&&":
+                return evaluateSubTree(commandStructure.operands[0]) && evaluateSubTree(commandStructure.operands[1]);
+            case "||":
+                return evaluateSubTree(commandStructure.operands[0]) || evaluateSubTree(commandStructure.operands[1]);
+            default:
+                throw new Error("Unexpected operator: "+commandStructure.name);
+        }    
+    }
+
+
+    // switch(commandStructure.name){
+    //     case "&&":
+    //         return param1 && param2;
+    //     case "||":
+    //         return param1 || param2;
+    //     default:
+    //         throw new Error("Unexpected operator: "+operator);
+    // }
 }
 
 /** evaluates a function with/without paramters and returns result */
@@ -146,7 +169,7 @@ function evaluateFunctionSubTree(commandStructure) {
     }
     
     //console.log('evaluate', commandStructure, executableFunctions[commandStructure.name]);
-    let evaluatedParameters = evaluateSubTree(commandStructure.parameters);
+    let evaluatedParameters = evaluateSubTree(commandStructure.operands);
     //console.log('evaluatedParameters', evaluatedParameters);
     let result = executableFunctions[commandStructure.name].apply(null, evaluatedParameters);
     //console.log('result', result);
