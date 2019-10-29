@@ -138,14 +138,14 @@ export function evaluateSubTree(subTree) {
 }
 
 /** evaluate operator. returns bool */
-function evaluateOperator(commandStructure){
+function evaluateOperator(commandStructure){ //console.log("eval operator", commandStructure.operands.length);
     if ( (commandStructure !== null) && (typeof commandStructure == 'object') && commandStructure.operands && commandStructure.operands.length == 2) { 
         //if(commandStructure.name)
         switch(commandStructure.name){
             case "&&":
-                return evaluateSubTree(commandStructure.operands[0]) && evaluateSubTree(commandStructure.operands[1]);
+                return Boolean(evaluateSubTree(commandStructure.operands[0])) && Boolean(evaluateSubTree(commandStructure.operands[1]));
             case "||":
-                return evaluateSubTree(commandStructure.operands[0]) || evaluateSubTree(commandStructure.operands[1]);
+                return Boolean(evaluateSubTree(commandStructure.operands[0])) || Boolean(evaluateSubTree(commandStructure.operands[1]));
             default:
                 throw new Error("Unexpected operator: "+commandStructure.name);
         }    
