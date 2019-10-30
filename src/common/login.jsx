@@ -120,12 +120,12 @@ class Login extends React.Component{
 	render(){
 		return(
 			<React.Fragment>
-				<center>
+				{/* <center>
 					<ReactLoading 
 						type={"bars"} 
 						color={"green"} height={20} width={22} 
 					/>
-				</center>
+				</center> */}
 			{ 
 				this.handleLoginStatus()	
 			}
