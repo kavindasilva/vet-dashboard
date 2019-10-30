@@ -141,7 +141,7 @@ test(`number subtree is evaluated correctly`, () => {
         .toBe('1') ;
 });
 
-test.only(`AND operator 0 && 2 evaluated correctly: false`, () => {
+test(`AND operator 0 && 2 evaluated correctly: false`, () => {
     let subTree = {
         type: 'operator',
         name : "&&",
@@ -159,7 +159,7 @@ test.only(`AND operator 0 && 2 evaluated correctly: false`, () => {
     expect(evaluateSubTree(subTree))
         .toBe(false) ;
 });
-test.only(`AND operator "zero" && "" evaluated correctly: false`, () => {
+test(`AND operator "zero" && "" evaluated correctly: false`, () => {
     let subTree = {
         type: 'operator',
         name : "&&",
@@ -177,7 +177,7 @@ test.only(`AND operator "zero" && "" evaluated correctly: false`, () => {
     expect(evaluateSubTree(subTree))
         .toBe(false) ;
 });
-test.only(`AND operator 4 && 2 evaluated correctly: true`, () => {
+test(`AND operator 4 && 2 evaluated correctly: true`, () => {
     let subTree = {
         type: 'operator',
         name : "&&",
@@ -196,7 +196,7 @@ test.only(`AND operator 4 && 2 evaluated correctly: true`, () => {
         .toBe(true) ;
 });
 
-test.only(`OR operator "one" || "" evaluated correctly: true`, () => {
+test(`OR operator "one" || "" evaluated correctly: true`, () => {
     let subTree = {
         type: 'operator',
         name : "||",
@@ -214,7 +214,7 @@ test.only(`OR operator "one" || "" evaluated correctly: true`, () => {
     expect(evaluateSubTree(subTree))
         .toBe(true) ;
 });
-test.only(`OR operator 0 || 5 evaluated correctly: true`, () => {
+test(`OR operator 0 || 5 evaluated correctly: true`, () => {
     let subTree = {
         type: 'operator',
         name : "||",
@@ -232,7 +232,7 @@ test.only(`OR operator 0 || 5 evaluated correctly: true`, () => {
     expect(evaluateSubTree(subTree))
         .toBe(true) ;
 });
-test.only(`OR operator 0 || 0 evaluated correctly: false`, () => {
+test(`OR operator 0 || 0 evaluated correctly: false`, () => {
     let subTree = {
         type: 'operator',
         name : "||",
@@ -251,7 +251,7 @@ test.only(`OR operator 0 || 0 evaluated correctly: false`, () => {
         .toBe(false) ;
 });
 
-test.only(`invalid operator throws exception`, () => {
+test(`invalid operator throws exception`, () => {
     let subTree = {
         type: 'operator',
         name : "Invali",
@@ -269,6 +269,50 @@ test.only(`invalid operator throws exception`, () => {
     expect( () => evaluateSubTree(subTree) )
         .toThrow(/^Unexpected operator/) ;
 });
+
+// test.only
+test(`check not value of "1": false`, () => {
+    let subTree = {
+        type: 'function',
+        name : "not",
+        operands : [
+            {
+                type: 'string',
+                value: "1"
+            }
+        ]
+    }
+    expect( evaluateSubTree(subTree) )
+        .toBe(false);
+})
+test(`check not value of 0: true`, () => {
+    let subTree = {
+        type: 'function',
+        name : "not",
+        operands : [
+            {
+                type: 'number',
+                value: 0
+            }
+        ]
+    }
+    expect( evaluateSubTree(subTree) )
+        .toBe(true);
+})
+test(`check not value of false: true`, () => {
+    let subTree = {
+        type: 'function',
+        name : "not",
+        operands : [
+            {
+                type: 'boolean',
+                value: false
+            }
+        ]
+    }
+    expect( evaluateSubTree(subTree) )
+        .toBe(true);
+})
 
 test(`array subtree is evaluated correctly`, () => {
     let subTree = [

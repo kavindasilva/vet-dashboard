@@ -11,11 +11,26 @@ const executableFunctions = {
     'isAfter'           : functionIsAfter,
     'addDays'           : functionAddPeriod,
     'substractPeriod'   : functionSubstractPeriod,
+    'not'               : functionNot,
     //'isAfter': 
 
 };
 
 const acceptableTimeUnits = [ 'd','days', 'w','weeks', 'M','months'];
+
+function functionNot(){
+    try{
+        if( arguments.length !== 1 
+            // && isDateValid(arguments[0])
+        ){
+            throw new Error("not requires only one arg as params");
+        }
+        return !Boolean(arguments[0]);
+    }
+    catch(e){
+        throw new Error(e);
+    }
+}
 
 /** 
  * adds a date period to a given date. returns a new date 
@@ -130,6 +145,11 @@ export function evaluateSubTree(subTree) {
 
     if (subTree.type == 'function') {
         return evaluateFunctionSubTree(subTree);
+    }
+
+    if (subTree.type == 'field') {
+        return 1;
+        // return field.value
     }
 
     // field, number, string
