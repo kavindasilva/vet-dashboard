@@ -94,6 +94,7 @@ class Menu extends Component {
 								(
 									this.props.metaData.userInfo 
 									&& this.props.metaData.userInfo.user_type_id===3 //admin
+									&& this.props.metaData.userInfo.user_id===1
 								) 
 								&&
 								<li 
