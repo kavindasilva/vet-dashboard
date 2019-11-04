@@ -105,7 +105,7 @@ class Trackers extends React.Component{
 		return(
 			<div align={"right"} style={{ padding: "10px 0px 0px 0px"}} >
                 <div>
-                    <CellSizeAdjuster />
+                    {/* <CellSizeAdjuster /> */}
                     <Button
                         variant="secondary"
                         style={{textTransform: "none"}}
@@ -170,10 +170,6 @@ class Trackers extends React.Component{
                                     key={ trackerIndex } 
                                     eventKey={ tracker.tracker_id } 
                                     title={ tracker.name } 
-                                    // onClick={()=> {
-                                    //     this.setLastUpdatedTime(tracker.tracker_id);
-                                    //     this.setState({selectedTrackerToDownload: tracker.tracker_id, viewingTabTrackerId: tracker.tracker_id })
-                                    // }}
                                 >
                                     <div 
                                         key={ tracker.tracker_id } 
@@ -228,7 +224,6 @@ class Trackers extends React.Component{
                                                 </Row>
                                                 <TrackerTableRow 
                                                     tracker_id={tracker.tracker_id} 
-                                                    //tracker={ tracker }
                                                     trackerRecordId={null}
                                                 >
                                                 </TrackerTableRow>

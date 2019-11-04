@@ -119,7 +119,7 @@ class Users extends React.Component{
 			<React.Fragment>
                 
                 {
-                    (this.props.metaData.userInfo && this.props.metaData.userInfo.user_type_id!==3)
+                    (this.props.metaData.userInfo && this.props.metaData.userInfo.user_type_id!==3 && this.props.metaData.userInfo.user_id!==1)
                     ? <div>You are not authorixed to view this page</div>
                     : this.renderUserView()
                 }

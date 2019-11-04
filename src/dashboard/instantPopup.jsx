@@ -109,7 +109,7 @@ class InstantPopup extends React.Component{
                 <Button
                     //style={ { position: "absolute" } }        
                     size="sm"
-                    onClick={ ()=> { this.setState({componentState: ""}) } }            
+                    onClick={ ()=> { this.setState({componentState: "edit"}) } }            
                     variant="warning"
                 >
                     <EditIcon fontSize="small" />
