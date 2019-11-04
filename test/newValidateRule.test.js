@@ -8,6 +8,8 @@ let expressionToEvaluate = null
  * function to check: evaluateExpression
  */
 
+const sample_data_set1 = { ip_port: "ipp", registration_sent_date:"2010-02-02", web_site: "www" }
+
 /** moment() evaluation */
 test(`validateExpression "moment()" will give a valid parse tree`, () => {
     expect( 
@@ -329,7 +331,20 @@ test(`array subtree is evaluated correctly`, () => {
         .toEqual(expect.arrayContaining(['1','2']));
 });
 
-
+test(`get field value`, () => {
+    let subTree = {
+        type: 'function',
+        name : "not",
+        operands : [
+            {
+                type: 'field',
+                name: 'ip_port'
+            }
+        ]
+    }
+    expect(evaluateSubTree(subTree, sample_data_set1))
+        .toEqual(false);
+});
 
 /** passing empty input */
 test(`empty expression should throw error`, () => {

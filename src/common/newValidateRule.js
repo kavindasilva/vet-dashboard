@@ -4,7 +4,7 @@ import Peg from "../parsers/conditionsParser"
 import moment from "moment";
 import { throws } from "assert";
 
-
+var fieldValuesList = null;
 const executableFunctions = {
     'moment'            : moment,
     'isBefore'          : functionIsBefore,
@@ -17,6 +17,15 @@ const executableFunctions = {
 };
 
 const acceptableTimeUnits = [ 'd','days', 'w','weeks', 'M','months'];
+
+function getFieldValue(fieldName){
+    try{
+        return fieldValuesList[fieldName]
+    }
+    catch(e){
+        throw new Error("filed value not found. field name: "+fieldName+". field values list: "+fieldValuesList)
+    }
+}
 
 function functionNot(){
     try{
@@ -128,7 +137,10 @@ export const validateExpression = function (expression) {
 }
 
 /** evaluates a valid type PegJS result . entry point */
-export function evaluateSubTree(subTree) {
+export function evaluateSubTree(subTree, fieldValues=null) {
+    if(fieldValues)
+        fieldValuesList = fieldValues
+
     if (subTree && subTree.type == 'operator') {
         return evaluateOperator(subTree);
     }
@@ -148,7 +160,8 @@ export function evaluateSubTree(subTree) {
     }
 
     if (subTree.type == 'field') {
-        return 1;
+        // console.log("sub tree ", subTree.name)
+        return getFieldValue(subTree.name);
         // return field.name
     }
 
@@ -171,15 +184,6 @@ function evaluateOperator(commandStructure){ //console.log("eval operator", comm
         }    
     }
 
-
-    // switch(commandStructure.name){
-    //     case "&&":
-    //         return param1 && param2;
-    //     case "||":
-    //         return param1 || param2;
-    //     default:
-    //         throw new Error("Unexpected operator: "+operator);
-    // }
 }
 
 /** evaluates a function with/without paramters and returns result */
