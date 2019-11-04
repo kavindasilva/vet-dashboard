@@ -44,7 +44,7 @@ class TrackerTableRow extends React.Component{
 					{ 
 						this.showTableRows() 
 					}
-					<TablePagination
+					{/* <TablePagination
 						rowsPerPageOptions={[5, 10, 25, 100]}
 						component="div"
 						count={this.props.ticketsData.length}
@@ -60,7 +60,7 @@ class TrackerTableRow extends React.Component{
 						onChangeRowsPerPage={ (e) => {
 							this.setState({rowsPerPage: e.target.value, page: 0 });
 						} }
-					/>
+					/> */}
 				</React.Fragment>
 				
 				//<tr> <td>00</td> <td>00</td> <td>00</td> </tr>
@@ -81,33 +81,33 @@ class TrackerTableRow extends React.Component{
 		let returnArr=[];
 		
 			
-		this.props.ticketsData.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map(record => {
-			returnArr.push(
-				<Row key={record.ticket_id} >
-					<TrackerTableData 
-						key={record.ticket_id} 
-						ticket_id={ record.ticket_id }
-						tracker_id = { record.tracker_id }
-					/>
-				</Row>
-			)
-		})
+		// this.props.ticketsData.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map(record => {
+		// 	returnArr.push(
+		// 		<Row key={record.ticket_id} >
+		// 			<TrackerTableData 
+		// 				key={record.ticket_id} 
+		// 				ticket_id={ record.ticket_id }
+		// 				tracker_id = { record.tracker_id }
+		// 			/>
+		// 		</Row>
+		// 	)
+		// })
 			
 
-		// this.props.ticketsData.map( record => {
-		// 	if( 1 ){ // kept to add user permissions row-wise later
-		// 		returnArr.push(
-		// 			<Row key={record.ticket_id} >
-		// 				<TrackerTableData 
-		// 					key={record.ticket_id} 
-		// 					ticket_id={ record.ticket_id }
-		// 					tracker_id = { record.tracker_id }
-		// 				/>
-		// 			</Row>
-		// 		)
-		// 	}
+		this.props.ticketsData.map( record => {
+			if( 1 ){ // kept to add user permissions row-wise later
+				returnArr.push(
+					<Row key={record.ticket_id} >
+						<TrackerTableData 
+							key={record.ticket_id} 
+							ticket_id={ record.ticket_id }
+							tracker_id = { record.tracker_id }
+						/>
+					</Row>
+				)
+			}
 			
-		// } )
+		} )
 
 		return returnArr;
 	}

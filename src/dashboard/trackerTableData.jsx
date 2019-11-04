@@ -62,22 +62,20 @@ class TrackerTableData extends React.Component{
 		}
     }
 
+	evaluate_expr = ( ast, rules) => {
+		return "#22ffff";
+	}
+
 	showTableData(){
 		let returnArr=[]; 
-
 		console.log('this.props.configData', this.props.configData, this.props.ticketsData);
 
-		this.props.configData.columns.forEach( column => {
-			//each column of trackerConfig
-
+		this.props.configData.columns.forEach( column => { //each column of trackerConfig
 			/** store user permissions of CURRENT COLUMN of trackerConfig user  */
 			let current_user_account_type = (this.props.metaData.userInfo)? this.props.metaData.userInfo.account_id: 0;
 			let userTypeRestriction = column.permissions.find( permission => (
 				parseInt(permission.user_account_id) === current_user_account_type
 			));
-
-			//let columnValue = (this.props.ticketsData && this.props.ticketsData.properties && this.props.ticketsData.proper[column.name]);
-			//let columnValue  = this.props.ticketsData[column.name];
 
 			if (userTypeRestriction) {
 				if ( !userTypeRestriction.is_read_restricted && !userTypeRestriction.is_write_restricted ) {
@@ -88,7 +86,6 @@ class TrackerTableData extends React.Component{
 							ticket_id={ this.props.ticketsData.ticket_id }
 							columnName={ column.name }
 							hs_source_field={ column.hs_source_field }
-							//value={ (columnValue)?columnValue:"-td-N/A1-" }
 							tracker_id={ this.props.tracker_id }
 							elementType={ this.columnDataTypes[column.data_type] }
 						>
@@ -96,7 +93,6 @@ class TrackerTableData extends React.Component{
 					)
 				}
 				else if (!userTypeRestriction.is_read_restricted) {
-
 					let prop_record = (this.props.ticketsData && this.props.ticketsData.properties)? 
 							this.props.ticketsData.properties.find( 
 								property => ( property.column_name === column.name )
@@ -109,7 +105,7 @@ class TrackerTableData extends React.Component{
 						<Cell 
 							key={column.name} 
 							style={{
-								backgroundColor:"#ffffff",
+								backgroundColor: this.evaluate_expr('ast', column.color_rules) ,
 								minWidth: ticketCellSize.cellWidth, 
 								height: ticketCellSize.cellHeight, 
 								
@@ -139,7 +135,6 @@ class TrackerTableData extends React.Component{
 						ticket_id={ this.props.ticketsData.ticket_id }
 						columnName={ column.name }
 						hs_source_field={ column.hs_source_field }
-						//value={ (columnValue)?columnValue:"-td-N/A3-" }
 						tracker_id={ this.props.tracker_id }
 						elementType={ this.columnDataTypes[column.data_type] }
 					>
@@ -152,17 +147,6 @@ class TrackerTableData extends React.Component{
 		return returnArr;
 	}
 
-	// viewProgressBar = () => (
-    //     <React.Fragment>
-    //         {
-    //             (this.state.columnName==="clinic_name") && 
-    //             <ProgressBar
-    //                 ticket_id={ this.props.ticketsData.ticket_id }
-    //                 hospital_name={ this.state.attributeValue2 }
-    //             />
-    //         }
-    //     </React.Fragment>
-	// )
 	
 }
 
@@ -187,8 +171,6 @@ const mapStateToProps = (state, props) => {
 		/** particular tracker related instance data && hubspot data */
 		ticketsData: { ...ticketsData },
 
-
-		
 	};
 }
 

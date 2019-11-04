@@ -149,7 +149,7 @@ export function evaluateSubTree(subTree) {
 
     if (subTree.type == 'field') {
         return 1;
-        // return field.value
+        // return field.name
     }
 
     // field, number, string
