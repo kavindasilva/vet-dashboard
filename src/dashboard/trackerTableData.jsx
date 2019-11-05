@@ -11,7 +11,7 @@ import TrackerPopup from "../dashboard/trackerPopup";
 
 import TableCell from '@material-ui/core/TableCell';
 import { withStyles } from '@material-ui/core/styles';
-
+import { evaluateExpression, validateExpression } from "../common/newValidateRule"
 import { trackerColumnDataTypes, globalStyles, ticketCellSize } from "../common/constants";
 
 import { StickyTable, Row, Cell } from 'react-sticky-table';
@@ -27,9 +27,10 @@ const styles = theme => ({
 
 class TrackerTableData extends React.Component{
 	state = { 
-        ...this.props.metaData, 
+		...this.props.metaData,
+		rowColumnValues: [],
 	}
-	
+	// rowColValue = null;
 	columnDataTypes = trackerColumnDataTypes;
 
 	componentDidMount(){
@@ -63,10 +64,12 @@ class TrackerTableData extends React.Component{
     }
 
 	evaluate_expr = ( ast, rules) => {
+		// return evaluateExpression(rules, ast);
 		return "#22ffff";
 	}
 
 	showTableData(){
+		let rowColValue = {} ;
 		let returnArr=[]; 
 		console.log('this.props.configData', this.props.configData, this.props.ticketsData);
 
@@ -76,6 +79,19 @@ class TrackerTableData extends React.Component{
 			let userTypeRestriction = column.permissions.find( permission => (
 				parseInt(permission.user_account_id) === current_user_account_type
 			));
+
+			let prop_record = (this.props.ticketsData && this.props.ticketsData.properties)? 
+					this.props.ticketsData.properties.find( 
+						property => ( property.column_name === column.name )
+					): 
+					null;
+			let columnValue  = (prop_record)? prop_record.value: "-empty-";
+
+
+			// add column values to state
+			//rowColValue = this.state.rowColumnValues
+			rowColValue[column.name] = (columnValue) ? columnValue : 0; //console.log("trackerTableData rowCol", rowColValue)
+			//this.setState({rowColumnValues: rowColValue});
 
 			if (userTypeRestriction) {
 				if ( !userTypeRestriction.is_read_restricted && !userTypeRestriction.is_write_restricted ) {
@@ -93,19 +109,12 @@ class TrackerTableData extends React.Component{
 					)
 				}
 				else if (!userTypeRestriction.is_read_restricted) {
-					let prop_record = (this.props.ticketsData && this.props.ticketsData.properties)? 
-							this.props.ticketsData.properties.find( 
-								property => ( property.column_name === column.name )
-							): 
-							null;
-					let columnValue  = (prop_record)? prop_record.value: "-empty-";
-
 					// read only permission
 					returnArr.push(
 						<Cell 
 							key={column.name} 
 							style={{
-								backgroundColor: this.evaluate_expr('ast', column.color_rules) ,
+								backgroundColor: this.evaluate_expr(rowColValue, column.color_rules) ,
 								minWidth: ticketCellSize.cellWidth, 
 								height: ticketCellSize.cellHeight, 
 								
@@ -140,7 +149,7 @@ class TrackerTableData extends React.Component{
 					>
 					</TrackerPopup> 
 				)
-			}			
+			}
 			
 		} )
 

@@ -7,11 +7,15 @@ import { throws } from "assert";
 var fieldValuesList = null;
 const executableFunctions = {
     'moment'            : moment,
-    'isBefore'          : functionIsBefore,
+    'isBefore'          : functionIsBefore, //
     'isAfter'           : functionIsAfter,
-    'addDays'           : functionAddPeriod,
+    'addDays'           : functionAddPeriod, //
     'substractPeriod'   : functionSubstractPeriod,
     'not'               : functionNot,
+
+    'isInvalid'         : functionIsInvalid,
+    'isEmpty'           : functionIsEmpty,
+    'eod'               : functionEod,
     //'isAfter': 
 
 };
@@ -26,6 +30,28 @@ function getFieldValue(fieldName){
         throw new Error("filed value not found. field name: "+fieldName+". field values list: "+fieldValuesList)
     }
 }
+
+function functionIsInvalid(){
+    if( arguments.length === 1 
+        && isDateValid(arguments[0])
+    ){
+        return true;
+    }
+    return false;
+    // throw new Error("Invalid date format");
+}
+
+function functionIsEmpty(){
+    if( arguments.length === 1 
+        && arguments[0]
+    ){
+        return true
+    }
+    return false;
+}
+
+// getting eod not working
+function functionEod(){}
 
 function functionNot(){
     try{
@@ -48,13 +74,13 @@ function functionNot(){
  * */
 function functionAddPeriod(){
     try{
-        if( arguments.length === 3 
+        if( arguments.length === 2 
             && isDateValid(arguments[0])
             && isNumParameterValid(arguments[1])
-            && isTimeUnitValid(arguments[2])
+            //&& isTimeUnitValid(arguments[2])
         )
         {
-            return moment( arguments[0] ).add( arguments[1], arguments[2] );
+            return moment( arguments[0] ).add( arguments[1], 'd' );
             //return moment(moment( arguments[0] ).add( arguments[1], arguments[2] ));
         }
     }
@@ -65,12 +91,12 @@ function functionAddPeriod(){
 
 function functionSubstractPeriod(){
     try{
-        if( arguments.length === 3 
+        if( arguments.length === 2 
             && isDateValid(arguments[0])
             && isNumParameterValid(arguments[1])
-            && isTimeUnitValid(arguments[2])
+            //&& isTimeUnitValid(arguments[2])
         ){
-            return moment( arguments[0] ).subtract( arguments[1], arguments[2] );
+            return moment( arguments[0] ).subtract( arguments[1], 'd' );
         }
     }
     catch(e){
@@ -102,9 +128,9 @@ function functionIsBefore() {
 }
 
 /** evaluates the expression and returns the JS result */
-export const evaluateExpression = function (expression) {
+export const evaluateExpression = function (expression, fieldValues=null) {
     let parseTree = Peg.parse(expression);
-    let evaluationResult = evaluateSubTree(parseTree);
+    let evaluationResult = evaluateSubTree(parseTree, fieldValues);
 
     if(typeof evaluationResult !== "boolean") //should return only bool
         throw new Error ("Expression should return only boolean value");
