@@ -8,7 +8,7 @@ let expressionToEvaluate = null
  * function to check: evaluateExpression
  */
 
-const sample_data_set1 = { ip_port: "ipp", registration_sent_date:"2010-02-02", web_site: "www" }
+const sample_data_set1 = { ip_port: "2010-02-01", registration_sent_date:"2010-02-02", web_site: "www" }
 
 /** moment() evaluation */
 test.skip(`validateExpression "moment()" will give a valid parse tree`, () => { //console.log("newVal moment ", validateExpression("moment()"))
@@ -315,6 +315,38 @@ test(`check not value of false: true`, () => {
     expect( evaluateSubTree(subTree) )
         .toBe(true);
 })
+test(`check not value of true: false`, () => {
+    let subTree = {
+        type: 'function',
+        name : "not",
+        operands : [
+            {
+                type: 'boolean',
+                value: true
+            }
+        ]
+    }
+    expect( evaluateSubTree(subTree) )
+        .toBe(false);
+})
+test(`not should get only 1 arg as params`, () => {
+    let subTree = {
+        type: 'function',
+        name : "not",
+        operands : [
+            {
+                type: 'boolean',
+                value: true
+            },
+            {
+                type: 'boolean',
+                value: false
+            }
+        ]
+    }
+    expect( () => evaluateSubTree(subTree) )
+        .toThrow(/not requires only one arg as params/);
+})
 
 test(`array subtree is evaluated correctly`, () => {
     let subTree = [
@@ -331,10 +363,10 @@ test(`array subtree is evaluated correctly`, () => {
         .toEqual(expect.arrayContaining(['1','2']));
 });
 
-test(`get field value`, () => {
+test(`get field value: 2010-02-01`, () => {
     let subTree = {
         type: 'function',
-        name : "not",
+        name : "eod",
         operands : [
             {
                 type: 'field',
@@ -343,8 +375,24 @@ test(`get field value`, () => {
         ]
     }
     expect(evaluateSubTree(subTree, sample_data_set1))
-        .toEqual(false);
+        .toEqual("2010-02-01");
 });
+
+
+// test(`isBefore: true`, () => {
+//     let subTree = {
+//         type: 'function',
+//         name : "isBefore",
+//         operands : [
+//             {
+//                 type: 'boolean',
+//                 value: false
+//             }
+//         ]
+//     }
+//     expect( evaluateSubTree(subTree) )
+//         .toBe(true);
+// })
 
 /** passing empty input */
 test(`empty expression should throw error`, () => {
@@ -406,8 +454,17 @@ test(`expression "moment(1, invalidString)" will throw error`, () => {
 });
 
 /** isBefore 1 argument */
-test.skip(`expression "isBefore('2010-02-01')" should throw args missing error`, () => {
-    expect( ()=> evaluateExpression("isBefore('2010-02-01')") )
+test(`expression "isBefore('2010-02-01')" should throw args missing error`, () => {
+    expect( ()=> evaluateExpression({
+        type: "function",
+        name: "isBefore",
+        operands: [
+            {
+                type: "string",
+                value: '2010-02-01'
+            }
+        ]
+    }) )
     .toThrow("isBefore requires 2 moment() objects as arguments.");
 });
 
@@ -417,9 +474,23 @@ test.skip(`expression "isAfter('2010-03-01')" should throw args missing error`, 
     .toThrow("isAfter requires 2 moment() objects as arguments.");
 });
 
-test.skip(`isAfter(addPeriod(moment('2010-03-01'),5,'days'), moment())`, () => {
-    expect(evaluateExpression("isAfter(addPeriod(moment('2010-03-01'),5,'days'), moment())"))
-    .toBe(false);
+test(`isAfter(addDays(moment('2010-03-01'),5,) throws Expression should return only boolean value`, () => {
+    //expect(evaluateExpression("isAfter(addDays(moment('2010-03-01'),5,'days'), moment())"))
+    expect( ()=> evaluateExpression({
+        type: "function",
+        name: "addDays",
+        operands: [
+            {
+                type: "string",
+                value: '2010-02-01'
+            },
+            {
+                type: "number",
+                value: '10'
+            }
+        ]
+    }))
+    .toThrow(/Expression should return only boolean value/);
 });
 //isAfter(addPeriod(moment('2010-03-01'),5,'days'), moment())
 
@@ -451,4 +522,94 @@ test.skip(`addPeriod(moment('2010-03-31'),3,'d') should not return boolean`, () 
     expect( ()=> evaluateExpression("addPeriod(moment('2010-03-31'),3,'d')") )
     .toThrow();
 });
+
+test.skip(`sample statement 1 with eranga [hardcoded peg]`, () => {
+    let fieldValList = { registration_sent_date:"2015-03-05", ip_port: "2015-05-04" }
+    let stmt1 = {
+        type : "operator",
+        name : "&&",
+        operands : [
+            {
+                type : "operator",
+                name : "&&",
+                operands : [
+                    {
+                        type: "function",
+                        name: "not",
+                        operands: [
+                            {
+                                type: "function",
+                                name: "isInvalid",
+                                operands: [
+                                    {
+                                        type: "field",
+                                        name: "ip_port"
+                                    }
+                                ]
+                            }
+                        ]
+                        
+                    },
+                    {
+                        type: "function",
+                        name: "not",
+                        operands: [
+                            {
+                                type: "function",
+                                name: "isEmpty",
+                                operands: [
+                                    {
+                                        type: "field",
+                                        name: "registration_sent_date"
+                                    }
+                                ]
+                            }
+                        ]
+    
+                        
+                    }
+                ]
+            },
+            {
+                type: "function",
+                name: "isBefore",
+                operands: [
+                    {
+                        type: "function",
+                        name: "eod",
+                        operands: [
+                            {
+                                type: "field",
+                                name: "ip_port"
+                            }
+                        ]
+                    },
+                    {
+                        type: "function",
+                        name: "addDays",
+                        operands: [
+                            {
+                                type: "function",
+                                name: "eod",
+                                operands: [
+                                    {
+                                        type: "field",
+                                        name: "registration_sent_date"
+                                    }
+                                ]
+                            },
+                            {
+                                type: "number",
+                                value: 4
+                            }
+                        ]
+                    }
+                ]
+                
+            }
+        ]
+    }
+    expect( evaluateExpression(stmt1, fieldValList) )
+    .toBe(true);
+})
 

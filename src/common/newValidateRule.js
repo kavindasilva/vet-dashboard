@@ -23,10 +23,10 @@ const executableFunctions = {
 const acceptableTimeUnits = [ 'd','days', 'w','weeks', 'M','months'];
 
 function getFieldValue(fieldName){
-    try{
+    if(fieldValuesList && (fieldName in fieldValuesList) ){
         return fieldValuesList[fieldName]
     }
-    catch(e){
+    else{
         throw new Error("filed value not found. field name: "+fieldName+". field values list: "+fieldValuesList)
     }
 }
@@ -51,7 +51,14 @@ function functionIsEmpty(){
 }
 
 // getting eod not working
-function functionEod(){}
+function functionEod(){
+    if( arguments.length === 1 
+        && isDateValid(arguments[0])
+    ){
+        return arguments[0]; // EoD not working for days other than today
+    }
+    throw new Error("EoD error. args: ", arguments);
+}
 
 function functionNot(){
     try{
@@ -60,7 +67,8 @@ function functionNot(){
         ){
             throw new Error("not requires only one arg as params");
         }
-        return !Boolean(arguments[0]);
+        // return !Boolean(arguments[0]);
+        return !(Boolean( evaluateSubTree( arguments[0] ) ));
     }
     catch(e){
         throw new Error(e);
@@ -123,14 +131,15 @@ function functionIsBefore() {
         ) {
         throw new Error("isBefore requires 2 moment() objects as arguments.")
     }
-    let args = Array.prototype.slice.call(arguments);
+    // let args = Array.prototype.slice.call(arguments);
     return moment(arguments[0]).isBefore(moment(arguments[1]));
 }
 
 /** evaluates the expression and returns the JS result */
 export const evaluateExpression = function (expression, fieldValues=null) {
-    let parseTree = Peg.parse(expression);
-    let evaluationResult = evaluateSubTree(parseTree, fieldValues);
+    // let parseTree = Peg.parse(expression);
+    // let evaluationResult = evaluateSubTree(parseTree, fieldValues);
+    let evaluationResult = evaluateSubTree(expression, fieldValues); // hardcoded
 
     if(typeof evaluationResult !== "boolean") //should return only bool
         throw new Error ("Expression should return only boolean value");
@@ -165,34 +174,38 @@ export const validateExpression = function (expression) {
 /** evaluates a valid type PegJS result . entry point */
 export function evaluateSubTree(subTree, fieldValues=null) {
     if(fieldValues)
-        fieldValuesList = fieldValues
+        fieldValuesList = fieldValues;
 
     if (subTree && subTree.type == 'operator') {
         return evaluateOperator(subTree);
     }
     
-    if (Array.isArray(subTree)) { 
+    else if (subTree.type == 'function') {
+        return evaluateFunctionSubTree(subTree);
+    }
+
+    else if (Array.isArray(subTree)) { 
         return subTree.map(element => {
             return evaluateSubTree(element);
         });
     }
 
-    if ((subTree === null) || (typeof subTree != 'object')) {
-        throw new Error('Command object expected');
+    else if( subTree === null ){
+        throw new Error('Command object expected-received null');
     }
+    // else if (typeof subTree != 'object' ) {
+    //     throw new Error('Command object expected', subTree);
+    // }
 
-    if (subTree.type == 'function') {
-        return evaluateFunctionSubTree(subTree);
-    }
-
-    if (subTree.type == 'field') {
+    
+    else if (subTree.type === 'field') {
         // console.log("sub tree ", subTree.name)
         return getFieldValue(subTree.name);
         // return field.name
     }
 
-    // field, number, string
-    return subTree.value;
+    else // date, number, string
+        return subTree.value;
     
 }
 
@@ -209,6 +222,7 @@ function evaluateOperator(commandStructure){ //console.log("eval operator", comm
                 throw new Error("Unexpected operator: "+commandStructure.name);
         }    
     }
+    throw new Error("evaluate operator error: "+commandStructure);
 
 }
 
@@ -222,7 +236,7 @@ function evaluateFunctionSubTree(commandStructure) {
     let evaluatedParameters = evaluateSubTree(commandStructure.operands);
     //console.log('evaluatedParameters', evaluatedParameters);
     let result = executableFunctions[commandStructure.name].apply(null, evaluatedParameters);
-    //console.log('result', result);
+    // console.log('result', result);
     return result;
 
 }
