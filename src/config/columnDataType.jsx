@@ -22,8 +22,8 @@ class ColumnDataCell extends React.Component{
         trackerId: this.props.tracker_id,
         columnName: this.props.column_name,
 
-        //selectListData: trackerColumnDataTypes,
-        selectListData: this.props.predefinedData,
+        selectListData: trackerColumnDataTypes,
+        //selectListData: this.props.predefinedData,
     }
 
     render(){
@@ -39,7 +39,7 @@ class ColumnDataCell extends React.Component{
                                     trackerId: this.state.trackerId,
                                     columnName: this.state.columnName,
                                     
-                                    value: parseInt(this.state.attributeValue),
+                                    value: this.state.attributeValue,
                                     attribute: this.state.attributeName,
                                 }
                             })
