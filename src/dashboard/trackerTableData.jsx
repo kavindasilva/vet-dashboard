@@ -65,7 +65,14 @@ class TrackerTableData extends React.Component{
 
 	evaluate_expr = ( ast, rules) => {
 		try{
-			return evaluateExpression(rules, ast);
+			// get each colouring rule. if one is true, return color. stop executing
+			if(rules && rules.length>0){
+				rules.forEach( rule => {
+					if(evaluateExpression(rule, ast))
+						return rule.bgcolor;
+				} )
+			}
+			return "#bb2222";
 		}
 		catch(e){
 			console.log("trackerTableData eval_expr error", e);
@@ -109,7 +116,7 @@ class TrackerTableData extends React.Component{
 							hs_source_field={ column.hs_source_field }
 							tracker_id={ this.props.tracker_id }
 							elementType={ this.columnDataTypes[column.data_type] }
-							cell_color={ "#eeeee6" }
+							cell_color={ "#ede6ee" }
 						>
 						</TrackerPopup> 
 					)
