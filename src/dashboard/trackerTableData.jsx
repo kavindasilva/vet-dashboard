@@ -64,8 +64,13 @@ class TrackerTableData extends React.Component{
     }
 
 	evaluate_expr = ( ast, rules) => {
-		// return evaluateExpression(rules, ast);
-		return "#22ffff";
+		try{
+			return evaluateExpression(rules, ast);
+		}
+		catch(e){
+			console.log("trackerTableData eval_expr error", e);
+			return "#22ffff";
+		}
 	}
 
 	showTableData(){
@@ -104,6 +109,7 @@ class TrackerTableData extends React.Component{
 							hs_source_field={ column.hs_source_field }
 							tracker_id={ this.props.tracker_id }
 							elementType={ this.columnDataTypes[column.data_type] }
+							cell_color={ "#eeeee6" }
 						>
 						</TrackerPopup> 
 					)
@@ -146,6 +152,7 @@ class TrackerTableData extends React.Component{
 						hs_source_field={ column.hs_source_field }
 						tracker_id={ this.props.tracker_id }
 						elementType={ this.columnDataTypes[column.data_type] }
+						cell_color={ "#eeeee6" }
 					>
 					</TrackerPopup> 
 				)

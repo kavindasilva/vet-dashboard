@@ -77,7 +77,8 @@ class TrackerPopup extends Component {
 
 					//style={ { backgroundColor: this.evaluateExpr( this.props.configData.rules)} }
 					style={{
-						backgroundColor:"#ffffff",
+						backgroundColor: this.props.cell_color,
+						// backgroundColor:"#ffffff",
 						...globalStyles["cell-borders"],
 						minHeight: "70px", // not working
 						minWidth: ticketCellSize.cellWidth, // working
@@ -155,6 +156,7 @@ class TrackerPopup extends Component {
 						elementType={ this.props.elementType }
 						hs_source_field={ this.props.hs_source_field }
 						ticket_property_id = { this.props.ticket_property_id }
+						cell_color={ this.props.cell_color }
 					/>
 				</span>
 				
@@ -175,6 +177,7 @@ class TrackerPopup extends Component {
 						elementType={ this.props.elementType }
 						hs_source_field={ this.props.hs_source_field }
 						ticket_property_id = { this.props.ticket_property_id }
+						cell_color={ this.props.cell_color }
 					>
 					</InstantPopup>
 					

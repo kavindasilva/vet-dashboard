@@ -524,7 +524,7 @@ test.skip(`addPeriod(moment('2010-03-31'),3,'d') should not return boolean`, () 
 });
 
 test(`sample statement 1 with eranga [hardcoded peg]`, () => {
-    let fieldValList = { registration_sent_date:"2015-08-05", ip_port: "2015-05-04" }
+    let fieldValList = { registration_sent_date:"2015-05-01", ip_port: "2015-05-04" }
     let stmt1 = {
         type : "operator",
         name : "&&",
