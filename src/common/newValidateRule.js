@@ -35,9 +35,9 @@ function functionIsInvalid(){
     if( arguments.length === 1 
         && isDateValid(arguments[0])
     ){
-        return true;
+        return false;
     }
-    return false;
+    return true;
     // throw new Error("Invalid date format");
 }
 
@@ -45,9 +45,9 @@ function functionIsEmpty(){
     if( arguments.length === 1 
         && arguments[0]
     ){
-        return true
+        return false
     }
-    return false;
+    return true;
 }
 
 // getting eod not working
@@ -193,10 +193,6 @@ export function evaluateSubTree(subTree, fieldValues=null) {
     else if( subTree === null ){
         throw new Error('Command object expected-received null');
     }
-    // else if (typeof subTree != 'object' ) {
-    //     throw new Error('Command object expected', subTree);
-    // }
-
     
     else if (subTree.type === 'field') {
         // console.log("sub tree ", subTree.name)
@@ -204,9 +200,20 @@ export function evaluateSubTree(subTree, fieldValues=null) {
         // return field.name
     }
 
-    else // date, number, string
+    else if( subTree.type=='boolean' || subTree.type=='number' || subTree.type=='string' || subTree.type=='date' ) // date, number, string
         return subTree.value;
+
+    else if(typeof subTree == 'boolean' || typeof subTree == 'number' || typeof subTree == 'string' ){ // date, number, string for boolean
+        return subTree;
+    }
     
+    // else if (typeof subTree != 'object' ) {
+    //     throw new Error('Command object expected', subTree);
+    // }
+
+    else {
+        throw new Error('Unexpected subtree', subTree);
+    }
 }
 
 /** evaluate operator. returns bool */
@@ -251,13 +258,15 @@ function evaluateFunctionSubTree(commandStructure) {
 function isDateValid(date){
     if( moment(date).isValid() )
         return true;
-    throw new Error("Invalid date format")
+    //throw new Error("Invalid date format")
+    return false;
 }
 
 function isNumParameterValid(param){
     if(!isNaN(param))
         return true;
-    throw new Error("Invalid parameter value to add/substract")
+    // throw new Error("Invalid parameter value to add/substract")
+    return false;
 }
 
 function isTimeUnitValid(unit){
