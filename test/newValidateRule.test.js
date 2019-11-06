@@ -378,6 +378,21 @@ test(`get field value: 2010-02-01`, () => {
         .toEqual("2010-02-01");
 });
 
+test(`get field value: empty field value list should throw an error`, () => {
+    let subTree = {
+        type: 'function',
+        name : "eod",
+        operands : [
+            {
+                type: 'field',
+                name: 'ip_port'
+            }
+        ]
+    }
+    expect( () => evaluateSubTree(subTree, null))
+        .toThrow(/field values list empty/);
+});
+
 
 // test(`isBefore: true`, () => {
 //     let subTree = {
@@ -613,3 +628,14 @@ test(`sample statement 1 with eranga [hardcoded peg]`, () => {
     .toBe(true);
 })
 
+test.only(`sample statement 2 for tickets [hardcoded peg]`, () => {
+    let fieldValList = { registration_sent_date:"2015-05-01", ip_port: "2015-05-04" }
+    // let stmt1 = JSON.parse('{ type : "operator", name : "&&", operands : [ { type : "operator", name : "&&", operands : [ { type: "function", name: "not", operands: [ { type: "function", name: "isInvalid", operands: [ { type: "field", name: "ip_port" } ] } ] }, { type: "function", name: "not", operands: [ { type: "function", name: "isEmpty", operands: [ { type: "field", name: "registration_sent_date" } ] } ]   } ] }, { type: "function", name: "isBefore", operands: [ { type: "function", name: "eod", operands: [ {   type: "field", name: "ip_port" } ] }, { type: "function", name: "addDays", operands: [ { type: "function", name: "eod", operands: [ { type: "field", name: "registration_sent_date" } ] }, { type: "number", value: 4 } ] } ]  }, ] } ')
+    // let stmt1 = JSON.parse('{ "type" : "operator", "name" : "&&", "operands" : [ { "type" : "operator", "name" : "&&", "operands" : [ { "type": "function", "name": "not", "operands": [ { "type": "function", "name": "isInvalid", "operands": [ { "type": "field", "name": "ip_port" } ] } ] }, { "type": "function", "name": "not", "operands": [ { "type": "function", "name": "isEmpty", "operands": [ { "type": "field", "name": "registration_sent_date" } ] } ]   } ] }, { "type": "function", "name": "isBefore", "operands": [ { "type": "function", "name": "eod", "operands": [ {   "type": "field", "name": "ip_port" } ] }, { "type": "function", "name": "addDays", "operands": [ { "type": "function", "name": "eod", "operands": [ { "type": "field", "name": "registration_sent_date" } ] }, { "type": "number", "value": "4" } ] } ]  }, ] } ')
+
+    let stmt1 = JSON.parse('{"type":"operator","name":"&&","operands":[{"type":"operator","name":"&&","operands":[{"type":"function","name":"not","operands":[{"type":"function","name":"isInvalid","operands":[{"type":"field","name":"ip_port"}]}]},{"type":"function","name":"not","operands":[{"type":"function","name":"isEmpty","operands":[{"type":"field","name":"registration_sent_date"}]}]}]},{"type":"function","name":"isBefore","operands":[{"type":"function","name":"eod","operands":[{"type":"field","name":"ip_port"}]},{"type":"function","name":"addDays","operands":[{"type":"function","name":"eod","operands":[{"type":"field","name":"registration_sent_date"}]},{"type":"number","value":4}]}]}]} ')
+    // let stmt1 = {"type":"operator","name":"&&","operands":[{"type":"operator","name":"&&","operands":[{"type":"function","name":"not","operands":[{"type":"function","name":"isInvalid","operands":[{"type":"field","name":"ip_port"}]}]},{"type":"function","name":"not","operands":[{"type":"function","name":"isEmpty","operands":[{"type":"field","name":"registration_sent_date"}]}]}]},{"type":"function","name":"isBefore","operands":[{"type":"function","name":"eod","operands":[{"type":"field","name":"ip_port"}]},{"type":"function","name":"addDays","operands":[{"type":"function","name":"eod","operands":[{"type":"field","name":"registration_sent_date"}]},{"type":"number","value":4}]}]}]} 
+
+    expect( evaluateExpression(stmt1, fieldValList) )
+    .toBe(true);
+})

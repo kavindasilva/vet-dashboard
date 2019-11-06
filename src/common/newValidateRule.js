@@ -23,11 +23,13 @@ const executableFunctions = {
 const acceptableTimeUnits = [ 'd','days', 'w','weeks', 'M','months'];
 
 function getFieldValue(fieldName){
-    if(fieldValuesList && (fieldName in fieldValuesList) ){
+    if(!fieldValuesList)
+        throw new Error("field values list empty: ")
+    else if(fieldValuesList && (fieldName in fieldValuesList) ){
         return fieldValuesList[fieldName]
     }
     else{
-        throw new Error("filed value not found. field name: "+fieldName+". field values list: "+fieldValuesList)
+        throw new Error("field value not found. field name: "+fieldName+". field values list: ", fieldValuesList)
     }
 }
 

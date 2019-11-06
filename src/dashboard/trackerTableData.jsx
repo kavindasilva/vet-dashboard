@@ -68,15 +68,20 @@ class TrackerTableData extends React.Component{
 			// get each colouring rule. if one is true, return color. stop executing
 			if(rules && rules.length>0){
 				rules.forEach( rule => {
-					if(evaluateExpression(rule, ast))
-						return rule.bgcolor;
+					console.log("trackerTableData eval_expr res", rule.conditions, ast );
+					// console.log("trackerTableData eval_expr res22", evaluateExpression(JSON.parse(rule.conditions), { registration_sent_date: "2015-05-05", ip_port: "2015-05-06" }) );
+					console.log("trackerTableData eval_expr res22", evaluateExpression(JSON.parse(rule.conditions), { registration_sent_date: "2015-05-05", ip_port: "2015-05-06" }) );
+
+					if(evaluateExpression(JSON.parse(rule.conditions), ast))
+					// if(evaluateExpression(JSON.parse(rule.conditions), { registration_sent_date: "2015-05-05", ip_port: "2015-05-06" } ))
+						return "#11ee11";
 				} )
 			}
 			return "#bb2222";
 		}
 		catch(e){
 			console.log("trackerTableData eval_expr error", e);
-			return "#22ffff";
+			return "#2211ff";
 		}
 	}
 
@@ -116,7 +121,8 @@ class TrackerTableData extends React.Component{
 							hs_source_field={ column.hs_source_field }
 							tracker_id={ this.props.tracker_id }
 							elementType={ this.columnDataTypes[column.data_type] }
-							cell_color={ "#ede6ee" }
+							// cell_color={ "#ede6ee" }
+							cell_color={ this.evaluate_expr(rowColValue, column.color_rules) }
 						>
 						</TrackerPopup> 
 					)
@@ -159,7 +165,8 @@ class TrackerTableData extends React.Component{
 						hs_source_field={ column.hs_source_field }
 						tracker_id={ this.props.tracker_id }
 						elementType={ this.columnDataTypes[column.data_type] }
-						cell_color={ "#eeeee6" }
+						// cell_color={ "#eeeee6" }
+						cell_color={ this.evaluate_expr(rowColValue, column.color_rules) }
 					>
 					</TrackerPopup> 
 				)
