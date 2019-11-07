@@ -65,23 +65,30 @@ class TrackerTableData extends React.Component{
 
 	evaluate_expr = ( ast, rules) => {
 		try{
+			let retval = "#bb2222";
+			let continu = true;
 			// get each colouring rule. if one is true, return color. stop executing
 			if(rules && rules.length>0){
 				rules.forEach( rule => {
 					console.log("trackerTableData eval_expr res", rule.conditions, ast );
+					console.log("trackerTableData eval_expr res22", evaluateExpression(JSON.parse(rule.conditions), ast ) );
 					// console.log("trackerTableData eval_expr res22", evaluateExpression(JSON.parse(rule.conditions), { registration_sent_date: "2015-05-05", ip_port: "2015-05-06" }) );
-					console.log("trackerTableData eval_expr res22", evaluateExpression(JSON.parse(rule.conditions), { registration_sent_date: "2015-05-05", ip_port: "2015-05-06" }) );
 
-					if(evaluateExpression(JSON.parse(rule.conditions), ast))
-					// if(evaluateExpression(JSON.parse(rule.conditions), { registration_sent_date: "2015-05-05", ip_port: "2015-05-06" } ))
-						return "#11ee11";
+					if(continu && evaluateExpression(JSON.parse(rule.conditions), ast)){
+					// if(evaluateExpression(JSON.parse(rule.conditions), { registration_sent_date: "2015-05-05", ip_port: "2015-05-06" } )){
+						continu = false;
+						//retval = "#11ee11"; //G
+						retval= rule.bgcolor;
+					}
+					// return '#000011'; //test
 				} )
 			}
-			return "#bb2222";
+			return retval;
+			return "#bb2222"; //R
 		}
 		catch(e){
 			console.log("trackerTableData eval_expr error", e);
-			return "#2211ff";
+			return "#2211ff"; //B
 		}
 	}
 
@@ -107,7 +114,7 @@ class TrackerTableData extends React.Component{
 
 			// add column values to state
 			//rowColValue = this.state.rowColumnValues
-			rowColValue[column.name] = (columnValue) ? columnValue : 0; //console.log("trackerTableData rowCol", rowColValue)
+			rowColValue[ String(column.name) ] = (columnValue) ? columnValue : 0; //console.log("trackerTableData rowCol", rowColValue)
 			//this.setState({rowColumnValues: rowColValue});
 
 			if (userTypeRestriction) {
