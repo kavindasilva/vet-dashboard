@@ -63,7 +63,12 @@ class TrackerTableData extends React.Component{
 		}
     }
 
-	evaluate_expr = ( ast, rules) => {
+	evaluate_expr = ( ast, rules, currentCellValue) => {
+		if(!currentCellValue || currentCellValue==="-empty-"){
+			return "#bb2222";
+		}
+
+		// https://medium.com/front-end-weekly/3-things-you-didnt-know-about-the-foreach-loop-in-js-ff02cec465b1
 		try{
 			let retval = "#bb2222";
 			let continu = true;
@@ -82,6 +87,9 @@ class TrackerTableData extends React.Component{
 					}
 					// return '#000011'; //test
 				} )
+			}
+			else{ // no rules defined
+				retval = "#eeeeee";
 			}
 			return retval;
 			return "#bb2222"; //R
@@ -116,6 +124,7 @@ class TrackerTableData extends React.Component{
 			//rowColValue = this.state.rowColumnValues
 			rowColValue[ String(column.name) ] = (columnValue) ? columnValue : 0; //console.log("trackerTableData rowCol", rowColValue)
 			//this.setState({rowColumnValues: rowColValue});
+			let cellBgColor = this.evaluate_expr(rowColValue, column.color_rules, columnValue);
 
 			if (userTypeRestriction) {
 				if ( !userTypeRestriction.is_read_restricted && !userTypeRestriction.is_write_restricted ) {
@@ -129,7 +138,7 @@ class TrackerTableData extends React.Component{
 							tracker_id={ this.props.tracker_id }
 							elementType={ this.columnDataTypes[column.data_type] }
 							// cell_color={ "#ede6ee" }
-							cell_color={ this.evaluate_expr(rowColValue, column.color_rules) }
+							cell_color={ cellBgColor }
 						>
 						</TrackerPopup> 
 					)
@@ -140,7 +149,7 @@ class TrackerTableData extends React.Component{
 						<Cell 
 							key={column.name} 
 							style={{
-								backgroundColor: this.evaluate_expr(rowColValue, column.color_rules) ,
+								backgroundColor: cellBgColor ,
 								minWidth: ticketCellSize.cellWidth, 
 								height: ticketCellSize.cellHeight, 
 								
@@ -173,7 +182,7 @@ class TrackerTableData extends React.Component{
 						tracker_id={ this.props.tracker_id }
 						elementType={ this.columnDataTypes[column.data_type] }
 						// cell_color={ "#eeeee6" }
-						cell_color={ this.evaluate_expr(rowColValue, column.color_rules) }
+						cell_color={ cellBgColor }
 					>
 					</TrackerPopup> 
 				)

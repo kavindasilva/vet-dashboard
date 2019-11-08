@@ -93,3 +93,8 @@ https://stackoverflow.com/questions/1611215/remove-a-git-commit-which-has-not-be
 https://stackoverflow.com/questions/22289345/completely-cancel-a-rebase
 
 
+--nov 08
+https://stackoverflow.com/questions/10040291/converting-a-unix-timestamp-to-formatted-date-string klit67 15
+
+
+
