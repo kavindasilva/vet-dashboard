@@ -116,7 +116,7 @@ export const ticketCellSize = {
     // cellHeight: "60px",
     // cellWidth: "150px",
     cellHeight: "auto",
-    cellWidth: "auto",
+    cellWidth: "150px",
 }
 
 /** constant url's */
