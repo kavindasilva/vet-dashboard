@@ -25,7 +25,7 @@ class TrackerHeader extends React.Component{
 		...this.props.metaData,
 		metaDataHash: null,
 		
-		colWidth: (this.props.metaData && this.props.metaData.ticketColumnWidth) ?this.props.metaData.ticketColumnWidth : 60,
+		colWidth: (this.props.metaData && this.props.metaData.ticketColumnWidth) ?this.props.metaData.ticketColumnWidth : 150,
 		colHeight: (this.props.metaData && this.props.metaData.ticketColumnHeight) ?this.props.metaData.ticketColumnHeight : 60,
 
         tabValue:2,
@@ -35,7 +35,7 @@ class TrackerHeader extends React.Component{
 	componentWillReceiveProps(newProps){
 		if(newProps.metaDataHash !== this.state.metaDataHash){
 			this.setState({
-				colWidth: (newProps.metaData && newProps.metaData.ticketColumnWidth) ?newProps.metaData.ticketColumnWidth : 60,
+				colWidth: (newProps.metaData && newProps.metaData.ticketColumnWidth) ?newProps.metaData.ticketColumnWidth : 150,
 				colHeight: (newProps.metaData && newProps.metaData.ticketColumnHeight) ?newProps.metaData.ticketColumnHeight : 60,
 			})
 		}
