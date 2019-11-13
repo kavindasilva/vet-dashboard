@@ -65,7 +65,7 @@ class TrackerTableData extends React.Component{
 
 	evaluate_expr = ( ast, rules, currentCellValue) => {
 		if(!currentCellValue || currentCellValue==="-empty-"){
-			return "#bb2222";
+			return "#84aff5";
 		}
 
 		// https://medium.com/front-end-weekly/3-things-you-didnt-know-about-the-foreach-loop-in-js-ff02cec465b1
