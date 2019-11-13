@@ -12,7 +12,7 @@ import TrackerPopup from "../dashboard/trackerPopup";
 import TableCell from '@material-ui/core/TableCell';
 import { withStyles } from '@material-ui/core/styles';
 import { evaluateExpression, validateExpression } from "../common/newValidateRule"
-import { trackerColumnDataTypes, globalStyles, ticketCellSize } from "../common/constants";
+import { trackerColumnDataTypes, globalStyles, ticketCellSize, colouringRuleColors } from "../common/constants";
 
 import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
@@ -65,12 +65,12 @@ class TrackerTableData extends React.Component{
 
 	evaluate_expr = ( ast, rules, currentCellValue) => {
 		if(!currentCellValue || currentCellValue==="-empty-"){
-			return "#84aff5";
+			return "#c7cdff";
 		}
 
 		// https://medium.com/front-end-weekly/3-things-you-didnt-know-about-the-foreach-loop-in-js-ff02cec465b1
 		try{
-			let retval = "#bb2222";
+			let retval = "#ecffc7"; // cream yellow
 			let continu = true;
 			// get each colouring rule. if one is true, return color. stop executing
 			if(rules && rules.length>0){
@@ -92,11 +92,11 @@ class TrackerTableData extends React.Component{
 				retval = "#eeeeee";
 			}
 			return retval;
-			return "#bb2222"; //R
+			// return "#bb2222"; //R
 		}
 		catch(e){
 			console.log("trackerTableData eval_expr error", e);
-			return "#2211ff"; //B
+			return "#ffcec7";
 		}
 	}
 
