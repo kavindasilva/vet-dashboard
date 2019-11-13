@@ -69,9 +69,12 @@ class TrackerTableRow extends React.Component{
 			return(
 				<Row>
 					<Cell>
-						<small>No records available in this tracker</small>
-						this.props.ticketsData: <br/>
-						{this.props.ticketsData}
+						<small>No Tickets available in this tracker to match your search criteria</small>
+						{/* this.props.ticketsData: <br/>
+						{this.props.ticketsData} */}
+						{
+							console.log("trackerTableRow tickets ", this.props.ticketsData)
+						}
 					</Cell>
 				</Row>
 			);

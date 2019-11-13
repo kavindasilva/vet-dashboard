@@ -66,12 +66,15 @@ class TrackerHeader extends React.Component{
 						...globalStyles["cell-borders"]
 					}}
 				>
-					<small>No Table columns available in the config</small>
-					this.props.trackerConfigData: <br/>
+					<small>No Table columns available in this Tracker</small>
+					{/* this.props.trackerConfigData: <br/>
 					{
 						(this.props.trackerConfigData)
 						? JSON.stringify(this.props.trackerConfigData)
 						: "unDefined"
+					} */}
+					{
+						console.log("trackerHeader configData ", this.props.trackerConfigData)
 					}
 				</Cell> 
 			);

@@ -51,12 +51,15 @@ class TrackerTableData extends React.Component{
 		else{
 			return(
 				<Cell>
-					<small>No columns available in the config</small>
-					this.props.configData : <br/>
+					<small>No columns available in this Tracker</small>
+					{/* this.props.configData : <br/>
 					{
 						(this.props.configData)
 						? JSON.stringify(this.props.configData)
 						: "unDefined"
+					} */}
+					{
+						console.log("trackerTableData configData ", this.props.configData)
 					}
 				</Cell>
 			)
