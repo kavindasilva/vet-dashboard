@@ -55,7 +55,7 @@ class TrackerRulesColor extends React.Component{
                     Object.keys(this.state.selectListData).map( item =>
                         <MenuItem 
                             key={ item } 
-                            value={ item } 
+                            value={ this.state.selectListData[item].colorCode.toString() } 
                         >
                             <StopIcon
                                 style={ {

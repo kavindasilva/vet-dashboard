@@ -32,7 +32,7 @@ class NewRule extends React.Component{
         isOpen: this.props.show,
 
         conditions: "",
-        bgcolor: "grey",
+        bgcolor: "#5e6875",
         precedence: this.props.nextPrecedence, //auto increment
 
         //columnRules: this.props.columnRules,
@@ -86,7 +86,7 @@ class NewRule extends React.Component{
                                                 Object.keys(colouringRuleColors).map( item =>
                                                     <MenuItem 
                                                         key={ item } 
-                                                        value={ item } 
+                                                        value={ colouringRuleColors[item].colorCode.toString() } 
                                                     >
                                                         <StopIcon
                                                             style={ {
