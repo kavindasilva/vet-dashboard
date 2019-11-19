@@ -76,14 +76,17 @@ class CellComment extends Component {
 		return (
 			<React.Fragment>
                 <Tooltip title="Comment">
-                    <Button
-                        size="sm"
-                        variant="secondary"
-                        disabled={ (this.props.ticket_property_id)? false: true }
-                        onClick={ ()=>this.getCommentsData() }    
-                    >
-                        <InsertCommentIcon fontSize="small" />
-                    </Button>
+                    <span>
+                        <Button
+                            size="sm"
+                            style={ !this.props.ticket_property_id ? { pointerEvents: "none" } : {}}
+                            variant="secondary"
+                            disabled={ (this.props.ticket_property_id)? false: true }
+                            onClick={ ()=>this.getCommentsData() }    
+                        >
+                            <InsertCommentIcon fontSize="small" />
+                        </Button>
+                    </span>
                 </Tooltip>
 
                 <Dialog

@@ -77,14 +77,17 @@ class CellHistory extends Component {
 		return (
 			<React.Fragment>
                 <Tooltip title="History">
-                    <Button
-                        size="sm"
-                        variant="info"
-                        disabled={ (this.props.ticket_property_id)? false: true }
-                        onClick={ ()=>this.getHistoryData() }    
-                    >
-                        <HistoryIcon fontSize="small" />
-                    </Button>
+                    <span>
+                        <Button
+                            size="sm"
+                            style={ !this.props.ticket_property_id ? { pointerEvents: "none" } : {}}
+                            variant="info"
+                            disabled={ (this.props.ticket_property_id)? false: true }
+                            onClick={ ()=>this.getHistoryData() }    
+                        >
+                            <HistoryIcon fontSize="small" />
+                        </Button>
+                    </span>
                 </Tooltip>
 
                 <Dialog
