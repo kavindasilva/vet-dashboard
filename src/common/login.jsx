@@ -137,7 +137,8 @@ class Login extends React.Component{
 		console.log("Login - formData:",event);
 	}
 
-	sendCredentials = () => {
+	sendCredentials = (e) => {
+		e.preventDefault();
 		this.setState({isLoadingLogging: true});
 		console.log("Login - credentials:", this.state.username, this.state.password );
 		
@@ -285,7 +286,9 @@ class Login extends React.Component{
 
 					<form className={this.classes.form} 
 						//noValidate={ true } 
-						onSubmit={ this.getFormData }
+						method={"post"}
+						// onSubmit={ this.getFormData }
+						onSubmit={ this.sendCredentials }
 					>
 						<TextField
 							variant="outlined"
@@ -353,7 +356,7 @@ class Login extends React.Component{
 						</FormLabel>
 						
 						<Button
-							type="button"
+							type="submit"
 							fullWidth
 							variant="contained"
 							color="primary"

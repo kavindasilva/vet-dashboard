@@ -49,7 +49,9 @@ class ChangePassword extends React.Component{
      
         serverMsg: "",
 		viewMsg: false,
-		msgHasError: true,
+        msgHasError: true,
+        
+        viewConfirmPasswordError: true, // frontend validation
     }
 
 	render(){
@@ -103,6 +105,17 @@ class ChangePassword extends React.Component{
         )
     }
 
+    validateConfirmPassword = () => {
+        if(this.state.new_password_1 === this.state.new_password_2)
+            this.setState({
+                // serverMsg: "Confirm password should same as new password",
+                // msgHasError: true,
+                viewConfirmPasswordError: false
+            });
+        else
+            this.setState({ viewConfirmPasswordError: true });
+    }
+
     viewPasswordChangeUI(){
         return(
             <React.Fragment>
@@ -116,7 +129,7 @@ class ChangePassword extends React.Component{
                             <TableCell>Current Password</TableCell>
                             <TableCell>
                                 <TextField
-                                    //type={"password"}
+                                    type={"password"}
                                     value={ this.state.current_password }
                                     onChange={ (e)=>this.setState({current_password: e.target.value}) }
                                 />
@@ -128,7 +141,7 @@ class ChangePassword extends React.Component{
                             <TableCell>New Password</TableCell>
                             <TableCell>
                                 <TextField
-                                    //type={"password"}
+                                    type={"password"}
                                     value={ this.state.new_password_1 }
                                     onChange={ (e)=>this.setState({new_password_1: e.target.value}) }
                                 />
@@ -138,12 +151,15 @@ class ChangePassword extends React.Component{
                         <TableRow>
                             <TableCell></TableCell>
                             <TableCell>Confirm Password</TableCell>
-                            <TableCell>
+                            <TableCell style={{minWidth: "400px"}}>
                                 <TextField
-                                    //type={"password"}
+                                    type={"password"}
                                     value={ this.state.new_password_2 }
-                                    onChange={ (e)=>this.setState({new_password_2: e.target.value}) }
-                                />
+                                    onChange={ (e)=>this.setState({new_password_2: e.target.value}, ()=>this.validateConfirmPassword() ) }
+                                /> <br/>
+                                <span hidden={ !this.state.viewConfirmPasswordError } style={{color:"#ee0011"}} >
+                                    Confirm password should same as new password
+                                </span>
                             </TableCell>
                         </TableRow>
 

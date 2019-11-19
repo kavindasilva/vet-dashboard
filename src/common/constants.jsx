@@ -19,7 +19,7 @@ export default function Records(){
 export const trackerColumnDataTypes = {
     'text'      : 'text',
     'number'    : 'number',
-    'radio'     : 'radio',
+    // 'radio'     : 'radio',
     'date'      : 'date'
 };
 

@@ -67,15 +67,11 @@ class TrackerPopup extends Component {
 				<Cell
 					onMouseEnter={ ()=>this.handleHoverButtons() }
 					onClick={ ()=>this.setState({viewHoverButtons: true}) }
-					onMouseLeave={ ()=> {
-						//console.log("trackerPopup mouse leave");
-						this.setState({viewHoverButtons: false});
-						clearTimeout(this.state.hoverTimeOut)
-					}}
+					onMouseLeave={ ()=> this.hideHoverButtons() }
+					onBlur={ ()=> this.hideHoverButtons() }
 					//onMouseLeave={ ()=>this.setState({viewHoverButtons: false}) }
 					align={ isNaN(this.props.ticketProperty.value) ? 'left' : 'right' }
 
-					//style={ { backgroundColor: this.evaluateExpr( this.props.configData.rules)} }
 					style={{
 						backgroundColor: this.props.cell_color,
 						// backgroundColor:"#ffffff",
@@ -96,6 +92,12 @@ class TrackerPopup extends Component {
 				</Cell>
 			</React.Fragment>
 		)
+	}
+
+	hideHoverButtons = () => {
+		//console.log("trackerPopup hide hover");
+		this.setState({viewHoverButtons: false});
+		clearTimeout(this.state.hoverTimeOut)
 	}
 
 	viewProgressBar = () => (
@@ -207,41 +209,9 @@ class TrackerPopup extends Component {
 
 	}
 
-	/** check rules available -> map rules -> if true stop */
-	validateExpr = () => {
-        //this.setState({attributeValue2: val});
-		let res=null; // pegJS result: JSON
-		let eRes=null; // evaluated pegJS result: any
-
-        try { 
-            //res = Peg.parse(this.state.attributeValue2);
-			//res = Peg.parse(this.props.configData.rules[0].conditions); //map
-			//res = { type: "function", name:"moment", parameters:[] }
-			res = { type: "function", name:"moment", parameters:[{ type:"string",value:"2012-06-20"}] }
-			//res = { type:"function",name:"moment",parameters:[ { type:"string",value:"20120620"},{type:"string",value:"YYYYMMDD"}]}
-			
-			//Rule.tes();
-			eRes = Rule.main( res );
-
-            this.setState({statementError: false});
-        } catch (ex) {
-            res = ex.message;
-            this.setState({statementError: true});
-        }
-
-        //console.log("TrackerPopup expr res",  res);
-        //console.log("TrackerPopup expr evaluatedRes",  eRes.toString() );
-    }
-	/** evaluates expressions and returns color */
-	evaluateExpr = (rules) => {
-		return "#eeeeee";
-	}
-
 	componentDidMount(){
 		//console.log("trackerPopup didmount props:", this.props);
 
-		//this.evaluateExpr(null);
-		//this.validateExpr();
 	}
 
 	componentWillReceiveProps(newProps){

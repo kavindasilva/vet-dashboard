@@ -187,7 +187,10 @@ class ticketSearch extends Component {
 											variant="outline-warning"
 											block={true}
 											size="md"
-											onClick={ ()=>this.props.getAllTickets() }
+											onClick={ ()=>{
+												this.setState({ searchWordArr: { create_date:format(new Date(), 'yyyy-MM-dd')+';'+format(new Date(), 'yyyy-MM-dd'), ticket_id:'', clinic_name:'' } })
+												this.props.getAllTickets();
+											}}
 										>
 											<HighlightOffIcon fontSize="small" />
 										</Button>

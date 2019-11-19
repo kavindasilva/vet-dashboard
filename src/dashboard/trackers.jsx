@@ -186,9 +186,14 @@ class Trackers extends React.Component{
                                                     <Button
                                                         variant="outline-info"
                                                         onClick={ ()=> {
+                                                            this.getTrackersConfig();
                                                             this.getTicketData();
                                                             this.setLastUpdatedTime(this.state.viewingTabTrackerId);
-                                                            this.setState({selectedTrackerToDownload: this.state.viewingTabTrackerId })
+                                                            this.setState({
+                                                                selectedTrackerToDownload: this.state.viewingTabTrackerId,
+                                                                isLoadingConfigs: true,
+                                                                isLoadingTrackers: true,
+                                                            })
                                                         }}
                                                         size="sm"
                                                         style={ {width: "20px", height: "20px", padding: "0px 0px 0px 0px"} }
@@ -306,7 +311,7 @@ class Trackers extends React.Component{
                 fullWidth={ true }
             >
                 <DialogTitle>
-                    Add new VG
+                    Add new Clinic
                 </DialogTitle>
 
                 <DialogContent>
@@ -360,7 +365,7 @@ class Trackers extends React.Component{
      * retrieve trackers configuration data from DB
      */
     getTrackersConfig(){
-        this.setState({isLoadingConfigs: true});
+        // this.setState({isLoadingConfigs: true});
         trackersAPIobj.getTrackerConfig()
         .then(
             res => {
@@ -378,7 +383,7 @@ class Trackers extends React.Component{
      * retrieve tracker instances data from DB
      */
     getTicketData = () => {
-        this.setState({isLoadingTrackers: true});
+        // this.setState({isLoadingTrackers: true});
         ticketAPIobj.getTicketsAndProperties()
         .then(
             res => {
