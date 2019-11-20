@@ -167,7 +167,11 @@ const initialState = {
             username: '',
             userType: 0
         } // change login.jsx
-    } 
+    },
+
+    PipeReducer: {
+        pipelineData: false
+    }
 };
 
 export const rootStore = createStore(rootReducer, initialState);

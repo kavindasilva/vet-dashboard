@@ -19,10 +19,13 @@ import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
 
 import  * as Rule from "../dashboard/colouringFunctions"
-import { pipelineSteps } from "../common/constants"
+// import { pipelineSteps } from "../common/constants"
 import { IconButton, Stepper, Step, StepLabel } from "@material-ui/core";
 import StepConnector from '@material-ui/core/StepConnector';
 import InfoIcon from '@material-ui/icons/Info';
+
+import TrackerAPI from "../apicalls/trackersAPI";
+const TrackerAPIObj = new TrackerAPI();
 
 const ColorlibConnector = withStyles({
 	alternativeLabel: {
@@ -51,7 +54,7 @@ const ColorlibConnector = withStyles({
 class onboardProgress extends Component {
 	state = {
 		isOpen: false,
-		steps: pipelineSteps,
+		steps: this.props.pipelineSteps,
 		activeStep: 2,
 	}
 
@@ -103,22 +106,26 @@ class onboardProgress extends Component {
 							(this.props.pipelineData && this.props.pipelineData.stage_id) &&
 							<div>
 								<div >
+								{
+									(this.props.pipelineSteps && this.props.pipelineSteps.stages && this.props.pipelineSteps.stages.length>0)?
 									<Stepper 
 										alternativeLabel 
-										activeStep={ this.state.steps.findIndex( s => (s.id === this.props.pipelineData.stage_id) ) } 
+										activeStep={ this.props.pipelineSteps.stages.findIndex( s => (s.stage_id === this.props.pipelineData.stage_id) ) } 
 										connector={<ColorlibConnector />}
 									>
 										{ 
-											this.state.steps.map( (step, i) => (
+											this.props.pipelineSteps.stages.map( (step, i) => (
 												<Step 
 													key={ i }
 													//key={step.stage_id}
 												>
-													<StepLabel >{step.label}</StepLabel>
+													<StepLabel >{step.stage_label}</StepLabel>
 												</Step>
 											))
 										}
-									</Stepper>
+									</Stepper>:
+									<span>Error: No steps loaded</span>
+								}
 								</div>
 							</div>
 						}
@@ -158,14 +165,17 @@ const mapStateToProps = (state, props) => {
 	let ticketData = state.ticketsDataReducer.ticketsData.find( ticket => (
 		ticket.ticket_id === props.ticket_id
 	) );
+	// let pipelineSta
 
 	if(ticketData && ticketData.hs_pipeline_stage && ticketData.hs_pipeline_stage.stage_id){
 		return{
-			pipelineData: ticketData.hs_pipeline_stage
+			pipelineData: ticketData.hs_pipeline_stage,
+			pipelineSteps: {...state.PipeReducer},
 		}
 	}
 	return {
-		pipelineData: null
+		pipelineData: null,
+		pipelineSteps: {...state.PipeReducer},
 	}
 }
 

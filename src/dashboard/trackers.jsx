@@ -68,7 +68,7 @@ class Trackers extends React.Component{
         colWidth: 50,
         colHeight: 50,
         
-        isLoadingTrackers: true,
+        isLoadingTickets: true,
         isLoadingConfigs: true,
 
         ...this.props.metaData, 
@@ -98,6 +98,7 @@ class Trackers extends React.Component{
 
         this.getTrackersConfig();
         this.getTicketData();
+        this.getPipelineData();
         //this.setLastSyncedTime(this.state.viewingTabTrackerId);
 	}
 
@@ -116,7 +117,7 @@ class Trackers extends React.Component{
                     </Button>
                 </div>
                 { 
-                    (this.state.isLoadingTrackers || this.state.isLoadingConfigs)
+                    (this.state.isLoadingTickets || this.state.isLoadingConfigs)
 				    ? <center><ReactLoading type={"bars"} color={"green"} height={20} width={22} /></center>
                     : this.viewTabs()
                 }
@@ -394,7 +395,7 @@ class Trackers extends React.Component{
                         errorGetTrackers: true,
                         errorMsgGetTrackers: res.errMsg.toString()
                     });
-                    this.setState({isLoadingTrackers: false});
+                    this.setState({isLoadingTickets: false});
                     return;
                 }
 
@@ -406,7 +407,21 @@ class Trackers extends React.Component{
                 if(res.headers &&  res.headers["last-updated"]){
                     this.setState({last_updated: res.headers["last-updated"]});
                 }
-                this.setState({isLoadingTrackers: false});
+                this.setState({isLoadingTickets: false});
+            }
+        )
+    }
+
+    getPipelineData = () => {
+        this.setState({isLoadingConfigs: true});
+        trackersAPIobj.getAvailablePipelines()
+        .then(
+            res => {
+                console.log("pipes config res:", res.data);
+                this.setState({ pipelines: res.data }, function(){
+                    this.dispatchPipelineData();
+                    this.setState({isLoadingConfigs: false});
+                });
             }
         )
     }
@@ -427,6 +442,15 @@ class Trackers extends React.Component{
 			type: 'GET_CONFIG_FROM_DB',
 			payload: {
 				data: this.state.trackersConfigData
+			}
+		});
+    }
+
+    dispatchPipelineData = () => {
+		rootStore.dispatch({
+			type: 'LOAD_PIPELINE_DATA_FROM_DB',
+			payload: {
+				pipesData: this.state.pipelines
 			}
 		});
     }
