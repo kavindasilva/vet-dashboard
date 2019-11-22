@@ -34,7 +34,7 @@ import { trackerPopupDefaultValues, globalStyles } from "../common/constants";
 
 import Moment from 'react-moment';
 import moment from "moment";
-
+import ReactLoading from 'react-loading';
 import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
 
@@ -107,23 +107,29 @@ class CellHistory extends Component {
                                 <Table className={this.props.classes.table} size="small">
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>Date</TableCell><TableCell>User</TableCell><TableCell>Value</TableCell><TableCell>Description</TableCell>
+                                            <TableCell>Date</TableCell><TableCell>User</TableCell><TableCell>Value</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                     {
-                                        (this.state.historyData && this.state.historyData.length>0 )
-                                        ?(
-                                            this.state.historyData.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map( (history, i) => (  
-                                                <TableRow key={i} >
-                                                    <TableCell>{history.edit_date}</TableCell>
-                                                    <TableCell>{history.username}</TableCell>
-                                                    <TableCell>{history.value}</TableCell>
-                                                    <TableCell>{history.description}</TableCell>
-                                                </TableRow>
-                                            ))
-                                        )
-                                        :<TableRow><TableCell colSpan={4}>no history</TableCell></TableRow>
+                                        (!this.state.historyData) 
+                                            ?
+                                            <TableRow><TableCell colSpan={3} align="center" >
+                                                <center><ReactLoading type={"bars"} color={"green"} height={20} width={22} /></center>
+                                            </TableCell></TableRow>
+                                            :
+                                            (this.state.historyData && this.state.historyData.length>0 )
+                                            ?(
+                                                this.state.historyData.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map( (history, i) => (  
+                                                    <TableRow key={i} >
+                                                        <TableCell>{history.edit_date}</TableCell>
+                                                        <TableCell>{history.username}</TableCell>
+                                                        <TableCell>{history.value}</TableCell>
+                                                        {/* <TableCell>{history.description}</TableCell> */}
+                                                    </TableRow>
+                                                ))
+                                            )
+                                            :<TableRow><TableCell colSpan={3}>No history available</TableCell></TableRow>
                                     }
                                     </TableBody>
                                 </Table>

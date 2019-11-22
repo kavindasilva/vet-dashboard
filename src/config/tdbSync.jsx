@@ -40,6 +40,7 @@ import ArrowRight from "@material-ui/icons/ArrowRight"
 import ArrowDown from "@material-ui/icons/ArrowDropDown"
 import RefreshIcon from "@material-ui/icons/Refresh"
 import Container from 'react-bootstrap/Container';
+import { Snackbar, IconButton } from '@material-ui/core';
 
 
 const trackersAPIobj = new trackersAPI();
@@ -75,7 +76,7 @@ const useStyles = theme => ({
 class TdbSync extends React.Component{
     classes=this.props.classes;
 	state = { 
-        hsAuthButtonColor: { backgroundColor:"red"}
+        notificationMsgStyle: { color:"red"}
     }
 
 	componentDidMount(){
@@ -122,6 +123,31 @@ class TdbSync extends React.Component{
                         </Button>
                     </Tooltip>
                 </div>
+
+                <Snackbar
+                    open={ this.state.showNotification }
+                    aria-describedby="client-snackbar"
+                    anchorOrigin={{
+                        horizontal: 'center',
+                        vertical: 'top'
+                    }}
+                    message={ 
+                        <span style={ this.state.notificationMsgStyle } >
+                            {this.state.notificationMsg}
+                        </span>
+                    }
+                    action={[
+                        <IconButton 
+                            key="close" 
+                            aria-label="close" 
+                            color="inherit" 
+                            onClick={ ()=>this.setState({showNotification: false}) }
+                        >
+                            x
+                        </IconButton>,
+                    ]}
+                    
+                />
             </React.Fragment>
         )
     }
@@ -144,7 +170,8 @@ class TdbSync extends React.Component{
                 if(res && res.data){
                     this.setState({
                         last_synced: res.data.last_synced_time,
-                        notificationMsg: (res.data.status) ?("Hubspot sync scheduled successfully") :"Error. try Again Later",
+                        notificationMsg: (res.data.status) ?("Hubspot sync scheduled successfully. Refresh after 120 seconds") :"Error. try Again Later",
+                        notificationMsgStyle: (res.data.status) ?{ color:"green"} :{ color:"red"},
                         showNotification: true,
                     })
                 }
