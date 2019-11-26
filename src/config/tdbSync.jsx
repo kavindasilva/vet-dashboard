@@ -175,6 +175,13 @@ class TdbSync extends React.Component{
                         showNotification: true,
                     })
                 }
+                else{// some other error
+                    this.setState({
+                        notificationMsg: "Error. try Again Later. "+(res) && res.toString() ,
+                        notificationMsgStyle: {color:"red"},
+                        showNotification: true,
+                    })
+                }
             }
         ) 
     }

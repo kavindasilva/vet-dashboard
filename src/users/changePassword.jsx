@@ -51,7 +51,7 @@ class ChangePassword extends React.Component{
 		viewMsg: false,
         msgHasError: true,
         
-        viewConfirmPasswordError: true, // frontend validation
+        viewConfirmPasswordError: false, // frontend validation
     }
 
 	render(){
@@ -69,6 +69,15 @@ class ChangePassword extends React.Component{
      * sends data to API and gets reponse
      */
     handlePasswordChanging = () => {
+        if( this.state.current_password==="" || this.state.new_password_1==="" || this.state.viewConfirmPasswordError ){
+            this.setState({
+                serverMsg: "Password fields cannot be empty",
+                msgHasError: true,
+                viewMsg: true,
+            });
+            return;
+        }
+
         let data = {
             old_password: this.state.current_password,
             new_password_1: this.state.new_password_1,
