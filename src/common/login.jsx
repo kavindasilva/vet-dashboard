@@ -94,12 +94,27 @@ class Login extends React.Component{
 	 */
 	componentDidMount(){
 		//console.log("Login - mount. classes:", this.classes);
-		this.checkAuthStatus();
-
-		setInterval( () => {
-			this.checkLoggedInStatus();
-		}, 100000)
-		
+		loginAPIobj.isLoggedIn()
+		.then(
+			res => {
+				console.log("login - mount - isloggedIn", res);
+				if(!res.err && res.user_id){
+					let validatedServerResponse={
+						account_id: res.account_id, 
+						type:res.user_type_id, 
+						user_id:res.user_id
+					}
+					this.setState({serverData: validatedServerResponse}, ()=>{
+						this.getLoggedUserData( this.state.serverData.user_id )
+					});
+				}
+				else{
+					rootStore.dispatch({
+						type: 'LOG_OUT_USER'
+					})
+				}
+			}
+		)
 	}
 
 	render(){
@@ -226,48 +241,6 @@ class Login extends React.Component{
 	viewMenu(){
 		return(
 			<Menu />
-		)
-	}
-
-	/** periodically check for session finished status */
-	checkLoggedInStatus = () => {
-		loginAPIobj.isLoggedIn()
-		.then(
-			res => {
-				if(!res.err && res.user_id){
-					return true;
-				}
-				else{
-					rootStore.dispatch({
-						type: 'LOG_OUT_USER'
-					})
-				}
-			}
-		)
-	}
-
-	/** checks authentication status on page refresh */
-	checkAuthStatus = () => {
-		loginAPIobj.isLoggedIn()
-		.then(
-			res => {
-				console.log("login - mount - isloggedIn", res);
-				if(!res.err && res.user_id){
-					let validatedServerResponse={
-						account_id: res.account_id, 
-						type:res.user_type_id, 
-						user_id:res.user_id
-					}
-					this.setState({serverData: validatedServerResponse}, ()=>{
-						this.getLoggedUserData( this.state.serverData.user_id )
-					});
-				}
-				else{
-					rootStore.dispatch({
-						type: 'LOG_OUT_USER'
-					})
-				}
-			}
 		)
 	}
 

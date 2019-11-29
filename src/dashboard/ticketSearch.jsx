@@ -117,9 +117,7 @@ class ticketSearch extends Component {
 										<option 
 											key={ item.param } value={ item.param }
 											inputtype={ item.inputType }
-											//onClick={ ()=>this.setState({searchInputType: 'text'}) }
-											// onClick={ changeInputType }
-											// data-my-value={123}
+
 										>
 										{ 
 											item.label
@@ -157,6 +155,7 @@ class ticketSearch extends Component {
 										this.state.searchOption,
 										this.state.searchOption + ":" + e.target.value
 									)}
+									onKeyDown={ this.detectEnterButtonPressed }
 								/>
 							</InputGroup>
 						</Form.Group>
@@ -229,6 +228,13 @@ class ticketSearch extends Component {
 				}
 			}
 		)
+	}
+
+	detectEnterButtonPressed = (e) => {
+		// console.log("ticketSearch btn press", e);
+		if(e.keyCode === 13){ // enter key
+			this.searchTickets();
+		}
 	}
 
 	changeSearchWord = (newWord, searchType, queryParam) => {
