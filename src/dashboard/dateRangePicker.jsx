@@ -252,15 +252,15 @@ class CustomDateRangePicker extends React.Component{
     }
 
     /** makes the return string and sets it to parent */
-	makeReturnString = () => {
+	makeReturnString = ( callAPI=true ) => {
         let queryParam = "create_date_start:" + this.state.startDate + ",create_date_end:" + this.state.endDate;
         let combinedDate = this.state.startDate + ";" + this.state.endDate
-        this.props.changeSearchWord(combinedDate, 'create_date', queryParam);
+        this.props.changeSearchWord(combinedDate, 'create_date', queryParam, callAPI);
     }
     
     componentDidMount(){
         //console.log("CustomDateRangePicker mount: props:", this.props, "state:", this.state);
-        this.makeReturnString();
+        this.makeReturnString(false);
     }
 }
 

@@ -237,16 +237,23 @@ class ticketSearch extends Component {
 		}
 	}
 
-	changeSearchWord = (newWord, searchType, queryParam) => {
+	changeSearchWord = (newWord, searchType, queryParam, callSearch=false) => {
 		//console.log("ticketSearch changeWord", newWord, searchType);
 		let newSearchArr = { ...this.state.searchWordArr };
 		newSearchArr[searchType] = newWord;
 		this.setState({
 			searchWord: newWord,
 			searchWordArr: newSearchArr,
-			searchParam: queryParam
+			searchParam: queryParam,
+			callAPIsearch: callSearch,
 		}
-		//,()=>console.log("ticketSearch changeWord2", this.state.searchWord, this.state.searchWordArr)
+			//,()=>console.log("ticketSearch changeWord2", this.state.searchWord, this.state.searchWordArr)
+			,() => {
+				if(this.state.callAPIsearch){
+					this.setState({callAPIsearch: false});
+					this.searchTickets();
+				}
+			}
 		);
 	}
 
