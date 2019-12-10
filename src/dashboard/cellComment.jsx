@@ -118,6 +118,7 @@ class CellComment extends Component {
                                             onChange={ (e)=>this.setState(
                                                     {newComment: e.target.value }
                                             )}
+                                            onKeyDown={ this.submitComment }
                                         />
 
                                         <Button
@@ -185,9 +186,17 @@ class CellComment extends Component {
         .then(
             res => {
                 this.getCommentsData();
+                this.setState({newComment: ""});
             }
         )
     }
+
+    submitComment = (e) => {
+		// console.log("ticketSearch btn press", e);
+		if(e.keyCode === 13){ // enter key
+			this.addComment();
+		}
+	}
 
     /**
      * opens the popup
