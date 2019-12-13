@@ -31,7 +31,6 @@ import {format} from "date-fns";
 import {  DatePicker,  TimePicker,  DateTimePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
 
 import { trackerPopupDefaultValues, globalStyles } from "../common/constants";
-import ReactLoading from 'react-loading';
 
 import moment from "moment";
 
@@ -118,7 +117,6 @@ class CellComment extends Component {
                                             onChange={ (e)=>this.setState(
                                                     {newComment: e.target.value }
                                             )}
-                                            onKeyDown={ this.submitComment }
                                         />
 
                                         <Button
@@ -138,23 +136,17 @@ class CellComment extends Component {
                                     </TableHead>
                                     <TableBody>
                                     {
-                                        (!this.state.commentData)
-                                        ?
-                                        <TableRow><TableCell colSpan={3} align="center" >
-                                            <center><ReactLoading type={"bars"} color={"green"} height={20} width={22} /></center>
-                                        </TableCell></TableRow>
-                                        :
-                                            (this.state.commentData && this.state.commentData.length>0 )
-                                            ?(
-                                                this.state.commentData.map( (comment, i) => (  
-                                                    <TableRow key={i} >
-                                                        <TableCell>{comment.added_time}</TableCell>
-                                                        <TableCell>{comment.username}</TableCell>
-                                                        <TableCell>{comment.comment}</TableCell>
-                                                    </TableRow>
-                                                ))
-                                            )
-                                            :<TableRow><TableCell colSpan={4}>no comments</TableCell></TableRow>
+                                        (this.state.commentData && this.state.commentData.length>0 )
+                                        ?(
+                                            this.state.commentData.map( (comment, i) => (  
+                                                <TableRow key={i} >
+                                                    <TableCell>{comment.added_time}</TableCell>
+                                                    <TableCell>{comment.username}</TableCell>
+                                                    <TableCell>{comment.comment}</TableCell>
+                                                </TableRow>
+                                            ))
+                                        )
+                                        :<TableRow><TableCell colSpan={4}>no comments</TableCell></TableRow>
                                     }
                                     </TableBody>
                                 </Table>
@@ -186,17 +178,9 @@ class CellComment extends Component {
         .then(
             res => {
                 this.getCommentsData();
-                this.setState({newComment: ""});
             }
         )
     }
-
-    submitComment = (e) => {
-		// console.log("ticketSearch btn press", e);
-		if(e.keyCode === 13){ // enter key
-			this.addComment();
-		}
-	}
 
     /**
      * opens the popup
