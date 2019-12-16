@@ -11,12 +11,9 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 //import { styles } from '@material-ui/pickers/DatePicker/components/Calendar';
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import GridCol from "react-bootstrap/Col"
+import GridRow from "react-bootstrap/Row"
+
 
 import TDBSync from "../config/tdbSync"
 import SyncAltIcon from '@material-ui/icons/Repeat';
@@ -108,8 +105,8 @@ class Trackers extends React.Component{
                 <div>
                     {/* <CellSizeAdjuster /> */}
                     <Button
-                        variant="secondary"
-                        style={{textTransform: "none"}}
+                        variant="info"
+                        style={{textTransform: "none", padding: "6px 20px 6px 20px"}}
                         onClick={ ()=> this.setState({showNewClinicAddForm: true}) }
                     >
                         <AddCircleOutlineIcon style={{ paddingRight:"6px" }} />
@@ -151,13 +148,6 @@ class Trackers extends React.Component{
 	viewTabs(){
 		return(
 			<div>
-                {/* <Tabs id="controlled-tab-example" activeKey={key} onSelect={k => setKey(k)}>
-                    <Tab eventKey="home" title="Home">
-                        <Sonnet />
-                    </Tab>
-                </Tabs> */}
-
-
                 {
                     (this.props.configData && !this.state.errorGetTrackers)?
                         <Tabs 
@@ -176,36 +166,48 @@ class Trackers extends React.Component{
                                         key={ tracker.tracker_id } 
                                     >
                                         <div float={'right'} align={'right'} style={{padding:"10px 10px 0px 0px"}} >
-                                            
-                                            <TDBSync
-                                                viewingTabTrackerId={ this.state.viewingTabTrackerId }
-                                            />
+                                            <GridRow>
+                                                <GridCol xs={12} sm={6} md={3} lg={3}></GridCol>
+                                                <GridCol xs={12} sm={6} md={3} lg={3}></GridCol>
 
-                                            <div style={{padding: "2px 0px 0px 0px"}}>
-                                                <span>Last Refresh: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "N/A" } </span>
-                                                <Tooltip title="Refresh">
-                                                    <Button
-                                                        variant="outline-info"
-                                                        onClick={ ()=> {
-                                                            this.getTrackersConfig();
-                                                            this.getTicketData();
-                                                            this.setLastUpdatedTime(this.state.viewingTabTrackerId);
-                                                            this.setState({
-                                                                selectedTrackerToDownload: this.state.viewingTabTrackerId,
-                                                                isLoadingConfigs: true,
-                                                                isLoadingTrackers: true,
-                                                            })
-                                                        }}
-                                                        size="sm"
-                                                        style={ {width: "20px", height: "20px", padding: "0px 0px 0px 0px"} }
-                                                    >
-                                                        <RefreshIcon 
-                                                            fontSize="small"
-                                                            style={ {width: "20px", height: "20px"} } 
-                                                        />
-                                                    </Button>
-                                                </Tooltip>
-                                            </div>
+                                                <GridCol xs={12} sm={6} md={3} lg={3}>
+                                                    <span style={{padding: "2px 0px 0px 0px"}}>
+                                                        <span>Last Refresh: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "N/A" } </span>
+                                                        <Tooltip title="Refresh">
+                                                            <Button
+                                                                variant="outline-info"
+                                                                onClick={ ()=> {
+                                                                    this.getTrackersConfig();
+                                                                    this.getTicketData();
+                                                                    this.setLastUpdatedTime(this.state.viewingTabTrackerId);
+                                                                    this.setState({
+                                                                        selectedTrackerToDownload: this.state.viewingTabTrackerId,
+                                                                        isLoadingConfigs: true,
+                                                                        isLoadingTrackers: true,
+                                                                    })
+                                                                }}
+                                                                size="sm"
+                                                                style={ {width: "20px", height: "20px", padding: "0px 0px 0px 0px"} }
+                                                            >
+                                                                <RefreshIcon 
+                                                                    fontSize="small"
+                                                                    style={ {width: "20px", height: "20px"} } 
+                                                                />
+                                                            </Button>
+                                                        </Tooltip>
+                                                    </span>
+                                                </GridCol>
+
+                                                <GridCol xs={12} sm={6} md={3} lg={3}>
+                                                    <TDBSync
+                                                        viewingTabTrackerId={ this.state.viewingTabTrackerId }
+                                                    />
+                                                </GridCol>
+                                            </GridRow>
+                                            
+
+                                           
+
                                         </div>
             
                                         <div float={'right'} align={'right'}>

@@ -92,7 +92,7 @@ class ticketSearch extends Component {
 		return (
 			<React.Fragment>
 				<Grid container spacing={0}>
-					<Grid item sm={1} md={1} xs={1} lg={1} ></Grid>
+					{/* <Grid item sm={1} md={0} xs={1} lg={0} ></Grid> */}
 					
 					<Grid item sm={3} md={3} xs={3} lg={3} style={ {paddingTop: "12px"}} >
 						<Form.Group controlId="formGridSearchType"  >
@@ -162,14 +162,14 @@ class ticketSearch extends Component {
 					}
 					</Grid>
 					
-					<Grid item sm={2} md={2} xs={2} lg={2} style={ {paddingTop: "11px"}} >
+					<Grid item sm={2} md={3} xs={2} lg={3} style={ {paddingTop: "11px"}} >
 						
 						<GridContainer>
 							<GridRow style={ { padding: "0px 0px 0px 0px"}} >
 								<GridCol sm={4} lg={4} md={4} style={{padding: "2px 2px 2px 2px"}} >
 									<Tooltip title="Search">
 										<Button
-											variant="outline-info"
+											variant="info"
 											block={true}
 											style={{}}
 											className={"searchicon"}
@@ -183,7 +183,7 @@ class ticketSearch extends Component {
 								<GridCol sm={4} lg={4} md={4} style={{padding: "2px 2px 2px 2px"}} >
 									<Tooltip title="Clear">
 										<Button
-											variant="outline-warning"
+											variant="warning"
 											block={true}
 											size="md"
 											onClick={ ()=>{

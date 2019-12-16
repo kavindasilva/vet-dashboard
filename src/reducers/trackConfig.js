@@ -80,16 +80,6 @@ const TrackConfigReducer = (state, action) => {
                 }
             );
             return newState;
-
-        case "DELETE_CONFIG_RULE":
-            //return newState;
-            trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;
-            columnIndex  =  getColumnIndex( newState.configData[trackerIndex], action.payload.columnName); //columnIndex=-1;
-            precedenceIndex  =  getRulesIndex( newState.configData[trackerIndex].columns[columnIndex], action.payload.precedenceId); //precedenceIndex=-1;
-
-            newState.configData[trackerIndex].columns[columnIndex].color_rules.splice(precedenceIndex, 1);
-
-            return newState;
         
         case "UPDATE_CONFIG_RULE_CONDITION": // can be generalized with RULE_COLOR
             trackerIndex  = getTrackerIndex(newState, action.payload.trackerId); //trackerIndex=-1;

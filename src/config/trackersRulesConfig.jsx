@@ -21,7 +21,7 @@ import { Table, TableBody, TableRow, TableCell, Checkbox, TableHead, TextField, 
 import TrackerRulesColor from "../config/trackerRulesColor"
 import TrackerRulesCondition from "../config/TrackerRulesCondition"
 import NewRule from "../config/newRule"
-import TrackerRuleRemove from "../config/trackerRuleRemove"
+
 
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
@@ -101,14 +101,6 @@ class TrackersRulesConfig extends React.Component{
                                     {/* conditions */}
                                     <TableCell m={0} p={0} size="small">
                                         <TrackerRulesCondition
-                                            tracker_id={ this.state.trackerId }
-                                            column_name={ this.state.columnName }
-                                            precedence_id={ rule.precedence }
-
-                                            value={ rule.conditions }
-                                            attribute="conditions"
-                                        />
-                                        <TrackerRuleRemove 
                                             tracker_id={ this.state.trackerId }
                                             column_name={ this.state.columnName }
                                             precedence_id={ rule.precedence }

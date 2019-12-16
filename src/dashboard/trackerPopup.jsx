@@ -119,6 +119,7 @@ class TrackerPopup extends Component {
 		return(
 			<div 
 				hidden={ !this.state.viewHoverButtons } 
+				align="center"
 				style={ { width: "100%", minHeight: "18px", color: "#111111"} }
 			>
 				{

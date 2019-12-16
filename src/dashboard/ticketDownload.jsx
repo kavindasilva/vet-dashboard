@@ -49,19 +49,21 @@ class TicketDownload extends React.Component{
 				<React.Fragment>
 					<Tooltip title="Download CSV">
 						<Button						
-							variant="outline-success"
+							variant="success"
 							block={true}
 							size="md"
 							style={ {
-								//paddingTop: "4px"
+								paddingLeft: "1px",
+								paddingRight: "1px"
 								// maxHeight: "20x",
 								// maxWidth: "20x",
 							} }
 						>
 							<CSVLink 
 								data={ this.prepareDownloadData() }
+								style={{width: "100%"}}
 							>
-								<CloudDownloadIcon fontSize="small" />
+								<CloudDownloadIcon style={{color: "#ffffff", width: "100%"}} fontSize="small" />
 							</CSVLink>
 						</Button>
 					</Tooltip>
@@ -89,9 +91,9 @@ class TicketDownload extends React.Component{
 				//each column of trackerConfig
 	
 				/** store user permissions of CURRENT COLUMN of trackerConfig user  */
-				let current_user_type = (this.props.metaData.userInfo)? this.props.metaData.userInfo.user_type_id: 0;
+				let current_user_account_type = (this.props.metaData.userInfo)? this.props.metaData.userInfo.account_id: 0;
 				let userTypeRestriction = column.permissions.find( permission => (
-					parseInt(permission.user_type_id) === current_user_type
+					parseInt(permission.user_account_id) === current_user_account_type
 				));
 	
 				let columnIndex = null;
