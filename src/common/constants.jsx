@@ -34,6 +34,10 @@ export const globalStyles = {
     "cell-borders":{
         border: "1px solid #cdcdcd",
         padding: "2px 1px 0px 4px"
+    },
+    "ticket-headers":{
+        color:"#1122ee",
+        backgroundColor: "#e0e0d1"
     }
 }
 
@@ -43,6 +47,17 @@ export const colouringRuleColors = {
     "red": { label:"Red", colorCode:"#fc1c1c"},
     "blue": { label:"Blue", colorCode:"#4a90ed"},
     "grey": { label:"Grey", colorCode:"#5e6875"},
+}
+
+export const ticketCellbgColors = {
+    "green": { label:"Green", colorCode:"#5aed58"},
+    "amber": { label:"Amber", colorCode:"#fcba03"},
+    "red": { label:"Red", colorCode:"#fc1c1c"},
+    "blue": { label:"Blue", colorCode:"#4a90ed"},
+    "grey": { label:"Grey", colorCode:"#5e6875"},
+    "error_white": { label:"Error White", colorCode: "#ffffcc"},
+    "white": { label:"White", colorCode: "#ffffff"},
+
 }
 
 /**

@@ -111,9 +111,10 @@ class TrackerHeader extends React.Component{
 							textAlign: "center",
 							verticalAlign: "middle",
 
-							color:"#1122ee", 
+							// color:"#1122ee",
+							// backgroundColor: "#e0e0d1", 
+							...globalStyles["ticket-headers"],
 							padding: "2px 10px 2px 12px",
-							backgroundColor: "#95a5a6",
 
 							//minHeight: "70px", // not working
 							// minWidth: "150px", // working

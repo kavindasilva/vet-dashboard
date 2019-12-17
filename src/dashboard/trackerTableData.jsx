@@ -12,7 +12,7 @@ import TrackerPopup from "../dashboard/trackerPopup";
 import TableCell from '@material-ui/core/TableCell';
 import { withStyles } from '@material-ui/core/styles';
 import { evaluateExpression, validateExpression } from "../common/newValidateRule"
-import { trackerColumnDataTypes, globalStyles, ticketCellSize, colouringRuleColors } from "../common/constants";
+import { trackerColumnDataTypes, globalStyles, ticketCellSize, colouringRuleColors, ticketCellbgColors } from "../common/constants";
 
 import { StickyTable, Row, Cell } from 'react-sticky-table';
 import 'react-sticky-table/dist/react-sticky-table.css';
@@ -68,14 +68,14 @@ class TrackerTableData extends React.Component{
 
 	evaluate_expr = ( ast, rules, currentCellValue) => {
 		if(!currentCellValue || currentCellValue==="-empty-"){
-			// return "#c7cdff";
-			return "#eeeeee";
+			return ticketCellbgColors["white"].colorCode;
 		}
 
 		// https://medium.com/front-end-weekly/3-things-you-didnt-know-about-the-foreach-loop-in-js-ff02cec465b1
 		try{
 			let retval = "#ecffc7"; // cream yellow
 			let continu = true;
+
 			// get each colouring rule. if one is true, return color. stop executing
 			if(rules && rules.length>0){
 				rules.forEach( rule => {
@@ -86,21 +86,18 @@ class TrackerTableData extends React.Component{
 					if(continu && evaluateExpression(JSON.parse(rule.conditions), ast)){
 					// if(evaluateExpression(JSON.parse(rule.conditions), { registration_sent_date: "2015-05-05", ip_port: "2015-05-06" } )){
 						continu = false;
-						//retval = "#11ee11"; //G
 						retval= rule.bgcolor;
 					}
-					// return '#000011'; //test
 				} )
 			}
 			else{ // no rules defined
-				retval = "#eeeeee";
+				return ticketCellbgColors["white"].colorCode;
 			}
 			return retval;
-			// return "#bb2222"; //R
 		}
 		catch(e){
 			console.log("trackerTableData eval_expr error", e);
-			return "#ffcec7";
+			return ticketCellbgColors["error_white"].colorCode;
 		}
 	}
 
