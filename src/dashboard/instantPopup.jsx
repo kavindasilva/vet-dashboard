@@ -92,6 +92,20 @@ class InstantPopup extends React.Component{
         </React.Fragment>
     )
 
+    detectButtonPressed = (e) => {
+		// console.log("ticketSearch btn press", e);
+		if(e.keyCode === 13){ // enter key
+            this.dispatchUpdate(); 
+            this.setState({componentState:"read"});
+        }
+        else if(e.keyCode === 27){
+            this.setState({
+                attributeValue: this.props.value,
+                componentState:"read"
+            })
+        }
+	}
+
     sendTextBox(){
         return(
             <TextField
@@ -99,6 +113,7 @@ class InstantPopup extends React.Component{
                 value={ this.state.attributeValue }
                 onChange={ (e)=>{ this.setState({attributeValue: e.target.value}) } }
                 onBlur={ ()=>{ this.dispatchUpdate(); this.setState({componentState:"read"}); } }
+                onKeyDown={ this.detectButtonPressed }
             />
         )
     }
@@ -119,173 +134,48 @@ class InstantPopup extends React.Component{
     }
 
     dispatchUpdate = () => {
-        if(this.props.ticket_property_id){
-            console.log("instantPopup: update if");
-            rootStore.dispatch({
-                type: 'UPDATE_CELL_VALUE',
-                payload: {
-                    ticketId: this.state.ticket_id,
-                    value: this.state.attributeValue,
-                    property: this.state.columnName,
-                    data_source: this.state.hs_source_field + "_properties",
-                    ticketPropertyId: this.props.ticket_property_id,
-                    tracker_column_id: this.props.tracker_column_id
+        this.dispatchUpdateToStore();
+
+        ticketAPIobj.updateTicketPropery( this.props.ticket_property_id, {
+            value: this.state.attributeValue,
+            ticket_id : this.state.ticket_id,
+            tracker_column_id: this.props.tracker_column_id
+        })
+        .then(
+            res => {
+                if(res && !res.err && res.data && res.data.ticket_property_id){
+                    // if(this.props.ticket_property_id)
+                    //     this.dispatchUpdateToStore() // no need here
+                    // else{
+                        rootStore.dispatch({
+                            type: 'ADD_CELL_TICKET_PROPERTY_ID',
+                            payload: {
+                                ticketId: this.state.ticket_id,
+                                value: this.state.attributeValue,
+                                property: this.state.columnName,
+                                ticketPropertyId: res.data.ticket_property_id,
+                                tracker_column_id: this.props.tracker_column_id,
+                            }
+                        });
+                    // }
                 }
-            });
-        }
-        else{ // new property
-            console.log("instantPopup: update else");
-            ticketAPIobj.updateTicketPropery(null, {
-                value: this.state.attributeValue,
-                description: 'from datepicker',
-                ticket_id: this.state.ticket_id,
-                tracker_column_id: this.props.tracker_column_id
-            })
-            .then(
-                res => {
-                    if(res && !res.err && res.data && res.data.ticket_property_id){
-                        ticketAPIobj.getTicketsAndProperties()
-                        .then(
-                            res => {
-                                if(res && res.err){
-                                    this.setState({
-                                        errorGetTrackers: true,
-                                        errorMsgGetTrackers: res.errMsg.toString()
-                                    });
-                                    return;
-                                }
+            }
+        )
 
-                                this.setState({ ticketsData: res.data }, function(){
-                                    rootStore.dispatch({
-                                        type: 'GET_TICKETS_FROM_DB',
-                                        payload: {
-                                            data: this.state.ticketsData
-                                        }
-                                    });
-                                });
-                            }
-                        )
-                    }
-                }
-            )
-        }
-
-	}
-
-    makeInputElements= () =>{
-        switch (this.props.elementType) {
-            case "text":
-            case "number":
-                return(
-                    <TextField
-                        label={ this.props.attributeName }
-                        value={this.state.attributeValue}
-                        onChange={ e => (
-                            e.preventDefault(),
-                            this.setState({ attributeValue: e.target.value }),
-                            //(APP_MODE==="DEBUG")&&
-                            console.log('New Value', e.target.value, this.state.attributeValue)
-                            ) }
-
-                        type={ this.props.elementType }
-                        //type="number"
-                    />
-                );
-
-            case "select":
-                return (
-                    <React.Fragment>
-                        <br />
-                        <Select value={ this.state.attributeValue } 
-                            onChange={ e => this.setState({ attributeValue: e.target.value }) }
-                            fullWidth={true}
-                        >
-                            {
-                                this.props.data.valueSet.map( item =>
-                                        <MenuItem key={ item.value } value={ item.value } >{ item.label }</MenuItem>
-                                    )
-                            }
-                        </Select>
-                    </React.Fragment>
-                );
-
-            case "radio": //popup
-                return (
-                    <RadioGroup
-                        name="genderSelect"
-                        value={ this.state.attributeValue }
-                        onChange={ (e)=>{
-                            this.setState({ attributeValue: e.target.value});
-                            console.log(e)
-                            }
-                        }
-                    >	
-                        { this.columnPredefinedValues["completedStatus"].map( val => (
-                            <FormControlLabel
-                                key={ String(val.name) }
-                                value={ String(val.name) }
-                                control={<Radio color="primary" />}
-                                label={ val.value }
-                                labelPlacement="end"
-                                />
-                            )
-                        )}
-                        
-                    </RadioGroup>
-                );
-
-            case "checkBox":
-                return(
-                    <FormGroup>
-                        {this.props.data.valueSet.map( (val, index) => (
-                            <div key={index} >
-                                <FormControlLabel
-                                    control={ 
-                                        <Checkbox
-                                            key={index}
-                                            checked={
-                                                this.state.attributeValue.includes( val.name)/**/
-                                            }
-                                            onChange={ (e)=>{
-                                                if(e.target.checked){
-                                                        this.setState({
-                                                                attributeValue: [...this.state.attributeValue, e.target.value]
-                                                        })
-                                                }
-                                                else{ 
-                                                        var index = this.state.attributeValue.indexOf(e.target.value);
-                                                        if (index > -1) {
-                                                            //prevState.list.filter( itm=> itm != index);
-                                                            let newArr = [...this.state.attributeValue]; //
-                                                                newArr.splice(index, 1);
-                                                                this.setState({
-                                                                        attributeValue: newArr
-                                                                })
-                                                        } 
-                                                }
-                                            }}
-
-                                            value={val.name}
-                                            color="primary"
-                                        />
-                                    }
-                                    style={ { width: "100%" } }
-                                    label={ val.value }
-                                >
-                                </FormControlLabel>
-
-                            </div>
-                        )
-                        )}
-                    </FormGroup>
-                );
-            
-            default:
-                console.log("invalid case. elemetType: ", this.props.elementType);
-                break;
-        }
     }
-    
+
+    dispatchUpdateToStore = () => {
+        rootStore.dispatch({
+            type: 'UPDATE_CELL_VALUE',
+            payload: {
+                ticketId: this.state.ticket_id,
+                value: this.state.attributeValue,
+                property: this.state.columnName,
+                tracker_column_id: this.props.tracker_column_id,
+            }
+        });
+    }
+
     componentDidMount(){
         //console.log("instant popup mount:", this.props);
     }

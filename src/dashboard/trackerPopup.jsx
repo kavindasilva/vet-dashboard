@@ -218,6 +218,9 @@ class TrackerPopup extends Component {
 	componentWillReceiveProps(newProps){
 		console.log("trackerPopup newProps")
         if(newProps.ticketProperty && newProps.ticketProperty.value!== this.state.attributeValue2)
+			this.setState({attributeValue2: newProps.propertyValue})
+		
+		if(newProps.propertyValue !== this.state.attributeValue2)
             this.setState({attributeValue2: newProps.propertyValue})
 	}
 	
@@ -280,6 +283,8 @@ const mapStateToProps = (state, props) => {
 
 			propertyValue: (ticket_data)? ticket_data.value : null,
 			ticket_property_id: ticketPropId,
+
+			ticketPropertyHash: JSON.stringify(ticket_data),
 		};
 	}
 	else

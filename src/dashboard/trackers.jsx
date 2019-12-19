@@ -106,7 +106,7 @@ class Trackers extends React.Component{
                     {/* <CellSizeAdjuster /> */}
                     <Button
                         variant="info"
-                        style={{textTransform: "none", padding: "6px 20px 6px 20px"}}
+                        style={{textTransform: "none", padding: "6px 20px 6px 20px", borderRadius: "2px"}}
                         onClick={ ()=> this.setState({showNewClinicAddForm: true}) }
                     >
                         <AddCircleOutlineIcon style={{ paddingRight:"6px" }} />
@@ -172,7 +172,9 @@ class Trackers extends React.Component{
 
                                                 <GridCol xs={12} sm={6} md={3} lg={3}>
                                                     <span style={{padding: "2px 0px 0px 0px"}}>
-                                                        <span>Last Refresh: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "N/A" } </span>
+                                                        <span style={{font: "Regular 12px/24px Basis Grotesque Pro !important" }} >
+                                                            Last Refresh: { (this.state.last_updated[tracker.tracker_id])? (this.state.last_updated[tracker.tracker_id]): "N/A" } 
+                                                        </span>
                                                         <Tooltip title="Refresh">
                                                             <Button
                                                                 variant="outline-info"

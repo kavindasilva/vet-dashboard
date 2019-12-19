@@ -69,6 +69,10 @@ const useStyles = theme => ({
 		'$:hover':{
 			backgroundColor: "red"
 		}
+	},
+	prependStyle: {
+		color: "#000000 !important",
+		font: "Regular 14px/24px Basis Grotesque Pro !important",
 	}
 });
 
@@ -96,9 +100,9 @@ class ticketSearch extends Component {
 					
 					<Grid item sm={3} md={3} xs={3} lg={3} style={ {paddingTop: "12px"}} >
 						<Form.Group controlId="formGridSearchType"  >
-							<InputGroup>
+							<InputGroup style={{borderRadius: "12px"}}>
 								<InputGroup.Prepend  >
-									<InputGroup.Text >Search By</InputGroup.Text>
+									<InputGroup.Text className={ this.props.classes.prependStyle } >Search By</InputGroup.Text>
 								</InputGroup.Prepend>
 								<Form.Control 
 									as="select"
@@ -131,7 +135,7 @@ class ticketSearch extends Component {
 						</Form.Group>
 					</Grid>
 
-					<Grid item sm={6} md={6} xs={6} lg={6} style={ {paddingTop: "12px"}} >
+					<Grid item sm={6} md={6} xs={6} lg={6} style={ {paddingTop: "12px", paddingLeft: "20px"}} >
 					{
 						(this.state.searchOption === "create_date") /** unable to change input type with custom props in Menu item  */
 						? <DateRangePicker
@@ -142,7 +146,7 @@ class ticketSearch extends Component {
 						: <Form.Group controlId="formGridKeyword" >
 							<InputGroup >
 								<InputGroup.Prepend  >
-									<InputGroup.Text >keyword</InputGroup.Text>
+									<InputGroup.Text className={ this.props.classes.prependStyle } >keyword</InputGroup.Text>
 								</InputGroup.Prepend>
 							
 								<Form.Control 
@@ -166,12 +170,12 @@ class ticketSearch extends Component {
 						
 						<GridContainer>
 							<GridRow style={ { padding: "0px 0px 0px 0px"}} >
-								<GridCol sm={4} lg={4} md={4} style={{padding: "2px 2px 2px 2px"}} >
+								<GridCol sm={4} lg={4} md={4} style={{padding: "2px 2px 2px 20px"}} >
 									<Tooltip title="Search">
 										<Button
 											variant="info"
 											block={true}
-											style={{}}
+											style={{borderRadius: "2px"}}
 											className={"searchicon"}
 											size="md"
 											onClick={ ()=>this.searchTickets() }
@@ -180,11 +184,12 @@ class ticketSearch extends Component {
 										</Button>
 									</Tooltip>
 								</GridCol>
-								<GridCol sm={4} lg={4} md={4} style={{padding: "2px 2px 2px 2px"}} >
+								<GridCol sm={4} lg={4} md={4} style={{padding: "2px 2px 2px 20px"}} >
 									<Tooltip title="Clear">
 										<Button
 											variant="warning"
 											block={true}
+											style={{borderRadius: "2px"}}
 											size="md"
 											onClick={ ()=>{
 												this.setState({ searchWordArr: { create_date:format(new Date(), 'yyyy-MM-dd')+';'+format(new Date(), 'yyyy-MM-dd'), ticket_id:'', clinic_name:'' } })
@@ -196,7 +201,7 @@ class ticketSearch extends Component {
 									</Tooltip>
 								</GridCol>
 
-								<GridCol sm={4} lg={4} md={4} style={{padding: "2px 2px 2px 2px"}} >
+								<GridCol sm={4} lg={4} md={4} style={{padding: "2px 2px 2px 20px"}} >
 									<CSVdownloader	
 										tracker_id={ this.props.tracker_id }
 									/>
@@ -258,7 +263,7 @@ class ticketSearch extends Component {
 	}
 
 	componentDidMount(){
-		//console.log("ticketSearch didmount props:", this.props);
+		// console.log("ticketSearch didmount props:", this.props);
 	}
 
 	// componentWillReceiveProps(newProps){

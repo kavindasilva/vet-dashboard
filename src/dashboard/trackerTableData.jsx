@@ -29,14 +29,21 @@ class TrackerTableData extends React.Component{
 	state = { 
 		...this.props.metaData,
 		rowColumnValues: [],
+		ticketHash: this.props.ticketsDataHash
 	}
-	// rowColValue = null;
 	columnDataTypes = trackerColumnDataTypes;
 
 	componentDidMount(){
 		console.log("TrackerTableData - mount. props:", this.props); //ok
 		//console.log("TrackerTableData - mount. props.metaData:", this.props.metaData); 
 	}
+
+	componentWillReceiveProps( newProps ){
+        console.log("TrackerTableData - receiveNewProps:", newProps); 
+        if( newProps.ticketsDataHash !== this.state.ticketHash ){
+            this.setState({ticketHash: newProps.ticketHash});
+        }
+    }
 
 	render(){
 		if(
@@ -217,6 +224,8 @@ const mapStateToProps = (state, props) => {
 
 		/** particular tracker related instance data && hubspot data */
 		ticketsData: { ...ticketsData },
+
+		ticketsDataHash: JSON.stringify(ticketsData),
 
 	};
 }

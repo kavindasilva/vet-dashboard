@@ -134,15 +134,14 @@ class Menu extends Component {
 						
 						
 						<span style={{align:'right', color:"#ffffff"}}>
-							<ul class="navbar-nav mr-auto">
-								<span class="nav-link" >
+							<ul class="navbar-nav">
+								<span class="nav-link" style={{font: "Normal 12px/24px Basis Grotesque Pro" }} >
 									User ID: { this.props.metaData.userId }
 								</span>
-								{/*   */}
-								<span class="nav-link" >
+
+								<span class="nav-link" style={{font: " 12px/24px Basis Grotesque Pro" }} >
 									User Name: { (this.props.metaData.userInfo)? this.props.metaData.userInfo.email:"who you?" }
 								</span>
-							{/* User Name: { (this.props.metaData.userInfo)? this.props.metaData.userInfo.email:"who you?" } */}
 							</ul>
 						</span>
 						<Button 

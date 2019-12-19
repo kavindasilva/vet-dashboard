@@ -26,7 +26,32 @@ import GridCol from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import InputGroup from "react-bootstrap/InputGroup";
+import { withStyles } from '@material-ui/core/styles';
 
+
+const useStyles = theme => ({
+    root: {
+      width: '100%',
+    },
+    paper: {
+      marginTop: theme.spacing(3),
+      width: '100%',
+      overflowX: 'auto',
+      marginBottom: theme.spacing(2),
+    },
+    table: {
+      minWidth: 650,
+	},
+	searchicon: {
+		'$:hover':{
+			backgroundColor: "red"
+		}
+	},
+	prependStyle: {
+		color: "#000000 !important",
+		font: "Regular 14px/24px Basis Grotesque Pro !important",
+	}
+});
 
 class CustomDateRangePicker extends React.Component{
     state ={
@@ -73,7 +98,7 @@ class CustomDateRangePicker extends React.Component{
                             this.showStartDatePicker()
                         }
                         </Grid>
-                        <Grid item sm={6} md={6} xs={6}>
+                        <Grid item sm={6} md={6} xs={6} style={ {paddingLeft: "20px"}} >
                         {
                             this.showEndDatePicker()
                         }
@@ -93,7 +118,7 @@ class CustomDateRangePicker extends React.Component{
                 <Form.Group  >
                     <InputGroup>
                         <InputGroup.Prepend  >
-                            <InputGroup.Text >Start Date</InputGroup.Text>
+                            <InputGroup.Text className={ this.props.classes.prependStyle } >Start Date</InputGroup.Text>
                         </InputGroup.Prepend>
                     
                         <Form.Control
@@ -166,7 +191,7 @@ class CustomDateRangePicker extends React.Component{
                 <Form.Group >
                     <InputGroup>
                         <InputGroup.Prepend  >
-                            <InputGroup.Text >End Date</InputGroup.Text>
+                            <InputGroup.Text className={ this.props.classes.prependStyle } >End Date</InputGroup.Text>
                         </InputGroup.Prepend>
                     
                         <Form.Control
@@ -270,6 +295,6 @@ const mapStateToProps = (state, props) => {
 }
 
 
-export default connect(mapStateToProps)(CustomDateRangePicker);
+export default connect(mapStateToProps)(withStyles(useStyles)(CustomDateRangePicker));
 
 

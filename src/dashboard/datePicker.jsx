@@ -121,58 +121,76 @@ class CustomDatePicker extends React.Component{
         )
     }
 
-    dispatchUpdate = () => {
-        if(this.props.ticket_property_id){
-            console.log("datePicker: update if");
-            rootStore.dispatch({
-                type: 'UPDATE_CELL_VALUE',
-                payload: {
-                    ticketId: this.state.ticket_id,
-                    value: this.state.attributeValue,
-                    property: this.state.columnName,
-                    data_source: this.state.hs_source_field + "_properties",
-                    ticketPropertyId: this.props.ticket_property_id,
-                    tracker_column_id: this.props.tracker_column_id
-                }
-            });
-        }
-        else{ // new property
-            console.log("datePicker: update else");
-            ticketAPIobj.updateTicketPropery(null, {
-                value: this.state.attributeValue,
-                description: 'from datepicker',
-                ticket_id: this.state.ticket_id,
-                tracker_column_id: this.props.tracker_column_id
-            })
-            .then(
-                res => {
-                    if(res && !res.err && res.data && res.data.ticket_property_id){
-                        ticketAPIobj.getTicketsAndProperties()
-                        .then(
-                            res => {
-                                if(res && res.err){
-                                    this.setState({
-                                        errorGetTrackers: true,
-                                        errorMsgGetTrackers: res.errMsg.toString()
-                                    });
-                                    return;
-                                }
+    dispatchUpdate = () => { // two dispatches. one for update cell value, other to update new prop id
+        this.dispatchUpdateToStore();
 
-                                this.setState({ ticketsData: res.data }, function(){
-                                    rootStore.dispatch({
-                                        type: 'GET_TICKETS_FROM_DB',
-                                        payload: {
-                                            data: this.state.ticketsData
-                                        }
-                                    });
-                                });
+        console.log("datePicker: update if");
+        ticketAPIobj.updateTicketPropery( this.props.ticket_property_id, {
+            value: this.state.attributeValue,
+            ticket_id : this.state.ticket_id,
+            tracker_column_id: this.props.tracker_column_id
+        })
+        .then(
+            res => {
+                if(res && !res.err && res.data && res.data.ticket_property_id){
+                    // if(this.props.ticket_property_id)
+                    //     this.dispatchUpdateToStore() // no need here
+                    // else{
+                        rootStore.dispatch({
+                            type: 'ADD_CELL_TICKET_PROPERTY_ID',
+                            payload: {
+                                ticketId: this.state.ticket_id,
+                                value: this.state.attributeValue,
+                                property: this.state.columnName,
+                                ticketPropertyId: res.data.ticket_property_id,
+                                tracker_column_id: this.props.tracker_column_id,
                             }
-                        )
-                    }
+                        });
+                    // }
                 }
-            )
-        }
-	}
+            }
+        )
+        // if(this.props.ticket_property_id){
+            
+        // }
+        // else{ // new property
+        //     console.log("datePicker: update else");
+        //     ticketAPIobj.updateTicketPropery(null, {
+        //         value: this.state.attributeValue,
+        //         description: 'datepicker new',
+        //         ticket_id: this.state.ticket_id,
+        //         tracker_column_id: this.props.tracker_column_id
+        //     })
+        //     .then(
+        //         res => {
+        //             if(res && !res.err && res.data && res.data.ticket_property_id){
+        //                 rootStore.dispatch({
+        //                     type: 'ADD_CELL_VALUE',
+        //                     payload: {
+        //                         ticketId: this.state.ticket_id,
+        //                         value: this.state.attributeValue,
+        //                         property: this.state.columnName,
+        //                         ticketPropertyId: res.data.ticket_property_id,
+        //                         tracker_column_id: this.props.tracker_column_id,
+        //                     }
+        //                 });
+        //             }
+        //         }
+        //     )
+        // }
+    }
+    
+    dispatchUpdateToStore = () => {
+        rootStore.dispatch({
+            type: 'UPDATE_CELL_VALUE',
+            payload: {
+                ticketId: this.state.ticket_id,
+                value: this.state.attributeValue,
+                property: this.state.columnName,
+                tracker_column_id: this.props.tracker_column_id,
+            }
+        });
+    }
 
     openDatepicker = () => {
 		this.setState({ isOpen: true})

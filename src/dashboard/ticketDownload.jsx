@@ -22,7 +22,6 @@ import { Tooltip, IconButton } from '@material-ui/core';
 import Button from 'react-bootstrap/Button'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 
-
 class TicketDownload extends React.Component{
 	state = { 
 		...this.props.metaData, 
@@ -54,7 +53,8 @@ class TicketDownload extends React.Component{
 							size="md"
 							style={ {
 								paddingLeft: "1px",
-								paddingRight: "1px"
+								paddingRight: "1px",
+								borderRadius: "2px",
 								// maxHeight: "20x",
 								// maxWidth: "20x",
 							} }

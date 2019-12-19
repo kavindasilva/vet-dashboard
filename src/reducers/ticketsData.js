@@ -16,36 +16,33 @@ const ticketsDataReducer = (state, action) => {
         state=null;
 
     let newState = { ...state };
+    let ticketIndex = null;
+    let propertyIndex = null;
+
 
     switch (action.type) {
         case 'UPDATE_CELL_VALUE': // update cell value changes
-            let ticketIndex = state.ticketsData.findIndex(
-                    ticket => (ticket.ticket_id === action.payload.ticketId)
-                );
+            ticketIndex = getTicketIndexById(newState, action.payload.ticketId);
 
             if (ticketIndex >-1 && newState.ticketsData[ticketIndex]["properties"] ) {
-                let propertyIndex = newState.ticketsData[ticketIndex]["properties"].findIndex(
-                    prop => (prop.column_name === action.payload.property)
-                )
-                
+                propertyIndex = getPropertyIndexByColumnName(newState, ticketIndex, action.payload.property)
+
                 if(propertyIndex > -1){
                     newState.ticketsData[ticketIndex]["properties"][propertyIndex]['value'] = action.payload.value;
-                    updateTicketData(action.payload.ticketPropertyId, { value: action.payload.value, description: 'static'});
                 }
                 else{
                     console.log("trackerInstance: err3")
-                    updateTicketData(null, {
-                        value: action.payload.value, 
-                        description: 'new static',
+                    let tempObj ={
+                        ticket_property_id: 4294967295,
                         ticket_id: action.payload.ticketId,
+                        value: action.payload.value,
+                        column_name: action.payload.property,
                         tracker_column_id: action.payload.tracker_column_id
-                    })
-                    .then( res => {
-                        if(res && !res.err && res.data && res.data.ticket_property_id){
-                            // how to refetch tickets?
-                        }
-                    })
+                    };
+                    
+                    state.ticketsData[ticketIndex]["properties"].push(tempObj);
                 }
+
             }
             else
                 console.log("trackerInstance: err2")
@@ -53,17 +50,37 @@ const ticketsDataReducer = (state, action) => {
             console.log("ticketsDataReducer UPDATE_CELL_VALUE: ", newState);
             return newState;
 
-
-        case 'GET_HUBSPOT_TICKETS': // currently not used
-            newState = {
-                ...state,
-                hubspotTickets: action.payload.ticketData.map(
-                    record => { return record }
-                )
-            };
-            console.log("ticketsDataReducer GET_HUBSPOT_TICKETS: ", newState);
-            return newState;
         
+        case "ADD_CELL_TICKET_PROPERTY_ID":
+            ticketIndex = getTicketIndexById(newState, action.payload.ticketId);
+
+            if (ticketIndex >-1 && newState.ticketsData[ticketIndex]["properties"] ) {
+                propertyIndex = getPropertyIndexByColumnName(newState, ticketIndex, action.payload.property);
+
+                if(propertyIndex > -1){
+                    newState.ticketsData[ticketIndex]["properties"][propertyIndex]['value'] = action.payload.value;
+                    newState.ticketsData[ticketIndex]["properties"][propertyIndex]['ticket_property_id'] = action.payload.ticketPropertyId;
+                }
+                else{
+                    console.log("trackerInstance: err7")
+                    // let tempObj ={
+                    //     ticket_property_id: 9999,
+                    //     ticket_id: action.payload.ticketId,
+                    //     value: action.payload.value,
+                    //     column_name: action.payload.property,
+                    //     tracker_column_id: action.payload.tracker_column_id
+                    // };
+                    
+                    // state.ticketsData[ticketIndex]["properties"].push(tempObj);
+                }
+            }
+            else
+                console.log("trackerInstance: err6")
+
+            console.log("ticketsDataReducer ADD_CELL_TICKET_PROPERTY_ID: ", newState);
+            return newState;
+
+
 
         case "GET_TICKETS_FROM_DB": // get tickets data from DB
             newState = {
@@ -81,12 +98,57 @@ const ticketsDataReducer = (state, action) => {
     }
 
 }
+
+const getTicketIndexById = (state, ticketId) => {
+    return state.ticketsData.findIndex(
+        ticket => (ticket.ticket_id === ticketId)
+    );
+}
+
+const getPropertyIndexByColumnName = (state, ticketIndex, columnName) => {
+    return state.ticketsData[ticketIndex]["properties"].findIndex(
+        prop => (prop.column_name === columnName)
+    )
+}
+
 /**
  * should call to ticket updating API endpoint
  */
-const updateTicketData = (ticketPropertyId, data) => {
+const updateTicketData = (state, ticketPropertyId, data, metadata) => {
     console.log("ticketData updateTicketData - saveToDB", data);
-    return ticketAPIobj.updateTicketPropery(ticketPropertyId, data);
+    // let response = ticketAPIobj.updateTicketPropery(ticketPropertyId, data);
+
+    // let state = {} // get the actual state, update ticket property id
+    let ticketIndex = getTicketIndexById(state, metadata.ticketId);
+
+    if(ticketIndex > -1){
+        let propertyIndex = state.ticketsData[ticketIndex]["properties"].findIndex(
+            prop => (prop.column_name === metadata.propertyName)
+        )
+
+        if ( metadata.newProp ) { // new property
+            let tempObj ={
+                ticket_property_id: ticketPropertyId,
+                ticket_id: metadata.ticketId,
+                value: data.value,
+                column_name: metadata.propertyName,
+                tracker_column_id: data.tracker_column_id
+            };
+            
+            state.ticketsData[ticketIndex]["properties"].push(tempObj);
+            return state;    
+        }
+        else{
+            // console.log("trackerInstance: update ticketIndex err1")
+            state.ticketsData[ticketIndex]["properties"][propertyIndex]['value'] = data.value;
+            return state;
+        }
+    }
+    else{
+        console.log("trackerInstance: update ticketIndex err1")
+    }
+
+    // return state
 }
 
 

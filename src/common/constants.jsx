@@ -32,12 +32,15 @@ export const trackerColumnDataTypes = {
 
 export const globalStyles = {
     "cell-borders":{
-        border: "1px solid #cdcdcd",
+        // border: "1px solid #cdcdcd",
+        border: "0.5px solid rgba(136,136,136, 0.4)",
         padding: "2px 1px 0px 4px"
     },
     "ticket-headers":{
-        color:"#1122ee",
-        backgroundColor: "#e0e0d1"
+        color: "#1122ee !important",
+        // backgroundColor: "rgba(44, 61, 81, 0.11)", // horizontal scrolling column visible problem
+        backgroundColor: "rgba(226, 226, 226, 1)",
+        font: "Regular 14px/24px Basis Grotesque Pro",
     }
 }
 

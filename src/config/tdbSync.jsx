@@ -101,7 +101,9 @@ class TdbSync extends React.Component{
         return(
             <React.Fragment>
                 <span style={{ padding: "5px 0px 5px 0px" }} >
-                    <span>Last Sync at: { (this.state.last_synced)? this.state.last_synced: "N/A" } </span>
+                    <span style={{font: "Regular 12px/24px Basis Grotesque Pro" }} >
+                        Last Sync at: { (this.state.last_synced)? this.state.last_synced: "N/A" } 
+                    </span>
                     <Tooltip title="Sync with Hubspot">
                         <Button
                             variant="outline-info"
