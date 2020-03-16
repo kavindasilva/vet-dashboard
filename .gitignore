@@ -27,3 +27,8 @@ $RECYCLE.BIN/
 # =========================
 # Operating System Files
 # =========================
+
+# package manager files
+yarn.list
+yarn.lock
+package-lock.json
