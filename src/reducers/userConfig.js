@@ -15,8 +15,8 @@ const UserConfigReducer = (state, action) => {
         }
     };
 
-    if(state===undefined || isUndefined(state))
-        state=newState;
+    // if(state===undefined || isUndefined(state))
+    //     state=newState;
 
     let newState = { ...state };
 
