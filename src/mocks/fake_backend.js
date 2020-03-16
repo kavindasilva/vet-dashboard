@@ -1,5 +1,5 @@
 // var jwt = require(‘jsonwebtoken’);
-import jwt from "jsonwebtoken";
+// import jwt from "jsonwebtoken";
 
 export function configureFakeBackend() {
     let users = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' }];
@@ -29,11 +29,7 @@ export function configureFakeBackend() {
                             lastName: user.lastName,
                             token: 'fake-jwt-token'
                         };
-
-                        let encResponseJson = jwt.sign(responseJson, 'sexret', {
-                            expiresIn: 60 * 60 * 24 // expires in 24 hours
-                        });
-                        //encResponseJson = responseJson;
+                        let encResponseJson = responseJson;
                         
                         resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(encResponseJson)) });
                     } else {
@@ -46,18 +42,7 @@ export function configureFakeBackend() {
 
                 // get users
                 if (url.endsWith('/users') && opts.method === 'GET') {
-                    // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
-                    if (opts.headers && opts.headers.Authorization.match(/^Bearer.*/) && opts.headers.Authorization.split(' ')[1] ) {
-                        jwt.verify(opts.headers.Authorization.split(' ')[1], 'sexret', function(err, user){
-                            if (err){ console.log('err', opts.headers.Authorization.split(' ')[1], err); throw err; }
-
-                            resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(users))});
-                        })
-                    } else {
-                        // return 401 not authorised if token is null or invalid
-                        reject('Unauthorised '+opts.headers.Authorization );
-                    }
-
+                    resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(users))});
                     return;
                 }
 

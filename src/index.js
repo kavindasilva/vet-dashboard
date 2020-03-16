@@ -15,7 +15,8 @@ import Login from "./common/login"
 import StaticFixedTable from "./dashboard/staticFixedTable"
 
 //import { rootStore } from "./stores/rootStore";
-
+import { configureFakeBackend } from "./mocks/fake_backend"
+configureFakeBackend();
 
 const render = () => {
   console.log('index.js-rendering');
